@@ -76,24 +76,26 @@ export function PortfolioSection() {
               className="group overflow-visible hover-elevate transition-all duration-300"
               data-testid={`card-project-${project.id}`}
             >
-              <div className={`h-40 rounded-t-md bg-gradient-to-br ${project.gradient} flex items-center justify-center`}>
-                <div className="w-16 h-16 rounded-xl bg-background/80 backdrop-blur flex items-center justify-center">
-                  <span className="font-display font-bold text-2xl text-primary">
-                    {project.title.charAt(0)}
-                  </span>
+              <div className={`relative h-48 rounded-t-md bg-gradient-to-br ${project.gradient} overflow-hidden`}>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-20 h-20 rounded-2xl bg-background/90 backdrop-blur-sm flex items-center justify-center shadow-lg">
+                    <span className="font-display font-bold text-3xl text-primary">
+                      {project.title.charAt(0)}
+                    </span>
+                  </div>
+                </div>
+                <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/60 transition-all duration-300 flex items-center justify-center">
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2 px-4 py-2 rounded-full bg-background text-foreground text-sm font-medium">
+                    <ExternalLink className="w-4 h-4" />
+                    Смотреть проект
+                  </div>
                 </div>
               </div>
               <div className="p-5">
-                <div className="flex items-center justify-between gap-2 mb-2">
+                <div className="flex items-center justify-between gap-2 mb-3">
                   <Badge variant="secondary" className="text-xs">
                     {project.category}
                   </Badge>
-                  <button
-                    className="opacity-0 group-hover:opacity-100 transition-opacity"
-                    aria-label="Смотреть проект"
-                  >
-                    <ExternalLink className="w-4 h-4 text-muted-foreground" />
-                  </button>
                 </div>
                 <h3 className="font-display font-semibold text-lg text-foreground mb-2">
                   {project.title}
