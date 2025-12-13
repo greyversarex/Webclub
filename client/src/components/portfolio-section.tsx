@@ -89,7 +89,7 @@ export function PortfolioSection() {
             Портфолио
           </span>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-500 bg-clip-text text-transparent">
+            <span className="text-slate-800 dark:text-slate-200">
               Наши проекты
             </span>
           </h2>
