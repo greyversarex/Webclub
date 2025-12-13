@@ -11,13 +11,12 @@ import geometricBg from "@assets/Визитки_Personal_(1)_1765668694348.png";
 export default function Home() {
   return (
     <div className="min-h-screen bg-background relative">
-      {/* Геометрический фон */}
-      <div 
-        className="fixed inset-0 pointer-events-none bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${geometricBg})` }}
+      {/* Геометрический фон - картинка */}
+      <img 
+        src={geometricBg} 
+        alt="" 
+        className="fixed inset-0 w-full h-full object-cover pointer-events-none"
       />
-      {/* Лёгкий оверлей для читабельности */}
-      <div className="fixed inset-0 bg-white/30 pointer-events-none" />
       
       <div className="relative">
         <Header />
