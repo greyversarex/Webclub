@@ -44,7 +44,7 @@ export function Footer() {
                 alt="WEBCLUB Logo" 
                 className="w-14 h-14 object-contain"
               />
-              <span className="font-display font-bold text-xl bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
+              <span className="font-display font-bold text-xl bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-500 bg-clip-text text-transparent">
                 WEBCLUB
               </span>
             </button>
