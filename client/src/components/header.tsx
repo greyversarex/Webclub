@@ -34,8 +34,8 @@ export function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-gradient-to-r from-gray-100 via-gray-50 to-gray-100 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 backdrop-blur-md border-b border-gray-200 dark:border-gray-600/50 shadow-lg"
-          : "bg-gradient-to-r from-gray-100/95 via-gray-50/95 to-gray-100/95 dark:from-gray-800/95 dark:via-gray-700/95 dark:to-gray-800/95 backdrop-blur-sm"
+          ? "bg-gradient-to-r from-slate-300 via-slate-200 to-slate-300 dark:from-slate-800 dark:via-slate-700 dark:to-slate-800 backdrop-blur-md border-b border-slate-400/50 dark:border-slate-600/50 shadow-lg"
+          : "bg-gradient-to-r from-slate-300/95 via-slate-200/95 to-slate-300/95 dark:from-slate-800/95 dark:via-slate-700/95 dark:to-slate-800/95 backdrop-blur-sm"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
@@ -64,7 +64,7 @@ export function Header() {
               <button
                 key={item.href}
                 onClick={() => scrollToSection(item.href)}
-                className="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors rounded-md hover:bg-gray-200/50 dark:hover:bg-white/10"
+                className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white transition-colors rounded-md hover:bg-slate-400/30 dark:hover:bg-white/10"
                 data-testid={`link-nav-${item.label.toLowerCase()}`}
               >
                 {item.label}
@@ -77,7 +77,7 @@ export function Header() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="px-2 text-xs font-medium text-gray-900 dark:text-white hover:bg-gray-200/50 dark:hover:bg-white/10"
+                className="px-2 text-xs font-medium text-slate-800 dark:text-white hover:bg-slate-400/30 dark:hover:bg-white/10"
                 data-testid="button-lang-ru"
               >
                 RU
@@ -86,7 +86,7 @@ export function Header() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="px-2 text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200/50 dark:hover:bg-white/10"
+                className="px-2 text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-400/30 dark:hover:bg-white/10"
                 data-testid="button-lang-en"
               >
                 EN
@@ -112,7 +112,7 @@ export function Header() {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden text-gray-700 dark:text-white hover:bg-gray-200/50 dark:hover:bg-white/10"
+              className="md:hidden text-slate-800 dark:text-white hover:bg-slate-400/30 dark:hover:bg-white/10"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Открыть меню"
               data-testid="button-mobile-menu"
@@ -128,13 +128,13 @@ export function Header() {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-gradient-to-b from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 border-b border-gray-200 dark:border-gray-700/50">
+        <div className="md:hidden bg-gradient-to-b from-slate-300 to-slate-400 dark:from-slate-800 dark:to-slate-900 border-b border-slate-400/50 dark:border-slate-700/50">
           <nav className="flex flex-col p-4 gap-2">
             {navItems.map((item) => (
               <button
                 key={item.href}
                 onClick={() => scrollToSection(item.href)}
-                className="px-4 py-3 text-left text-base font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200/50 dark:hover:bg-white/10 rounded-md transition-colors"
+                className="px-4 py-3 text-left text-base font-medium text-slate-800 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white hover:bg-slate-500/30 dark:hover:bg-white/10 rounded-md transition-colors"
                 data-testid={`link-mobile-nav-${item.label.toLowerCase()}`}
               >
                 {item.label}
