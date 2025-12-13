@@ -39,8 +39,7 @@ const services = [
 export function ServicesSection() {
   return (
     <section id="services" className="py-16 md:py-24 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-violet-900/10 via-transparent to-cyan-900/10" />
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
         <div className="text-center mb-12 md:mb-16">
           <span className="inline-block px-4 py-2 rounded-full bg-violet-500/20 border border-violet-500/30 text-violet-300 text-sm font-medium mb-4">
             Наши услуги

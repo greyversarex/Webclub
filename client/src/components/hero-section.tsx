@@ -31,11 +31,6 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex items-center pt-20 pb-16 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-violet-900/30 via-background to-cyan-900/20" />
-      
-      <div className="absolute top-20 right-0 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-20 left-0 w-72 h-72 bg-cyan-500/15 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
