@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Phone, Globe } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 
@@ -34,27 +34,27 @@ export function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-background/80 backdrop-blur-md border-b border-border"
-          : "bg-transparent"
+          ? "bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 backdrop-blur-md border-b border-slate-700/50 shadow-lg"
+          : "bg-gradient-to-r from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-sm"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
         <div className="flex items-center justify-between h-16 md:h-20 gap-4">
           <a
             href="#"
-            className="flex items-center gap-2 flex-shrink-0"
+            className="flex items-center gap-3 flex-shrink-0"
             data-testid="link-logo"
             onClick={(e) => {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
           >
-            <div className="w-10 h-10 md:w-12 md:h-12 rounded-md bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-display font-bold text-lg md:text-xl">
-                WC
-              </span>
-            </div>
-            <span className="font-display font-bold text-lg md:text-xl text-foreground">
+            <img 
+              src="/logo.png" 
+              alt="WEBCLUB Logo" 
+              className="w-10 h-10 md:w-12 md:h-12 object-contain"
+            />
+            <span className="font-display font-bold text-lg md:text-xl text-white">
               WEBCLUB
             </span>
           </a>
@@ -64,7 +64,7 @@ export function Header() {
               <button
                 key={item.href}
                 onClick={() => scrollToSection(item.href)}
-                className="px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover-elevate active-elevate-2 rounded-md"
+                className="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white transition-colors rounded-md hover:bg-white/10"
                 data-testid={`link-nav-${item.label.toLowerCase()}`}
               >
                 {item.label}
@@ -77,16 +77,16 @@ export function Header() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="px-2 text-xs font-medium"
+                className="px-2 text-xs font-medium text-white hover:bg-white/10"
                 data-testid="button-lang-ru"
               >
                 RU
               </Button>
-              <span className="text-muted-foreground">/</span>
+              <span className="text-slate-500">/</span>
               <Button
                 variant="ghost"
                 size="sm"
-                className="px-2 text-xs font-medium text-muted-foreground"
+                className="px-2 text-xs font-medium text-slate-400 hover:text-white hover:bg-white/10"
                 data-testid="button-lang-en"
               >
                 EN
@@ -100,7 +100,11 @@ export function Header() {
               className="hidden sm:flex"
               data-testid="link-phone-header"
             >
-              <Button variant="outline" size="default">
+              <Button 
+                variant="outline" 
+                size="default"
+                className="border-slate-600 text-white hover:bg-white/10 hover:border-slate-500"
+              >
                 <Phone className="w-4 h-4 mr-2" />
                 876-220-100
               </Button>
@@ -109,7 +113,7 @@ export function Header() {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden"
+              className="md:hidden text-white hover:bg-white/10"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Открыть меню"
               data-testid="button-mobile-menu"
@@ -125,13 +129,13 @@ export function Header() {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-background/95 backdrop-blur-md border-b border-border">
+        <div className="md:hidden bg-gradient-to-b from-slate-800 to-slate-900 border-b border-slate-700/50">
           <nav className="flex flex-col p-4 gap-2">
             {navItems.map((item) => (
               <button
                 key={item.href}
                 onClick={() => scrollToSection(item.href)}
-                className="px-4 py-3 text-left text-base font-medium text-foreground hover-elevate active-elevate-2 rounded-md"
+                className="px-4 py-3 text-left text-base font-medium text-slate-200 hover:text-white hover:bg-white/10 rounded-md transition-colors"
                 data-testid={`link-mobile-nav-${item.label.toLowerCase()}`}
               >
                 {item.label}

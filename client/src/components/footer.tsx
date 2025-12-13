@@ -30,25 +30,25 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-card border-t border-card-border">
+    <footer className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-t border-slate-700/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-12 md:py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           <div className="col-span-2 md:col-span-1">
             <button
               onClick={() => scrollToSection("#")}
-              className="flex items-center gap-2 mb-4"
+              className="flex items-center gap-3 mb-4"
               data-testid="link-footer-logo"
             >
-              <div className="w-10 h-10 rounded-md bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-display font-bold text-lg">
-                  WC
-                </span>
-              </div>
-              <span className="font-display font-bold text-lg text-foreground">
+              <img 
+                src="/logo.png" 
+                alt="WEBCLUB Logo" 
+                className="w-10 h-10 object-contain"
+              />
+              <span className="font-display font-bold text-lg text-white">
                 WEBCLUB
               </span>
             </button>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-slate-400 mb-4">
               Компания по IT-разработкам. Создаём современные решения для вашего
               бизнеса.
             </p>
@@ -57,33 +57,33 @@ export function Footer() {
                 href="https://t.me/webclub"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-md bg-muted flex items-center justify-center hover-elevate active-elevate-2"
+                className="w-9 h-9 rounded-md bg-slate-700/50 flex items-center justify-center hover:bg-slate-600/50 transition-colors"
                 aria-label="Telegram"
                 data-testid="link-footer-telegram"
               >
-                <SiTelegram className="w-4 h-4 text-muted-foreground" />
+                <SiTelegram className="w-4 h-4 text-slate-300" />
               </a>
               <a
                 href="https://wa.me/876220100"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-md bg-muted flex items-center justify-center hover-elevate active-elevate-2"
+                className="w-9 h-9 rounded-md bg-slate-700/50 flex items-center justify-center hover:bg-slate-600/50 transition-colors"
                 aria-label="WhatsApp"
                 data-testid="link-footer-whatsapp"
               >
-                <SiWhatsapp className="w-4 h-4 text-muted-foreground" />
+                <SiWhatsapp className="w-4 h-4 text-slate-300" />
               </a>
             </div>
           </div>
 
           <div>
-            <h4 className="font-semibold text-foreground mb-4">Навигация</h4>
+            <h4 className="font-semibold text-white mb-4">Навигация</h4>
             <ul className="space-y-2">
               {links.map((link) => (
                 <li key={link.href}>
                   <button
                     onClick={() => scrollToSection(link.href)}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    className="text-sm text-slate-400 hover:text-white transition-colors"
                     data-testid={`link-footer-${link.label.toLowerCase()}`}
                   >
                     {link.label}
@@ -94,13 +94,13 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold text-foreground mb-4">Услуги</h4>
+            <h4 className="font-semibold text-white mb-4">Услуги</h4>
             <ul className="space-y-2">
               {services.map((service, index) => (
                 <li key={index}>
                   <button
                     onClick={() => scrollToSection(service.href)}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors text-left"
+                    className="text-sm text-slate-400 hover:text-white transition-colors text-left"
                     data-testid={`link-footer-service-${index}`}
                   >
                     {service.label}
@@ -111,12 +111,12 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold text-foreground mb-4">Контакты</h4>
+            <h4 className="font-semibold text-white mb-4">Контакты</h4>
             <ul className="space-y-3">
               <li>
                 <a
                   href="tel:876-220-100"
-                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
                   data-testid="link-footer-phone"
                 >
                   <Phone className="w-4 h-4" />
@@ -128,7 +128,7 @@ export function Footer() {
                   href="https://webclub.ink"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
                   data-testid="link-footer-website"
                 >
                   <Globe className="w-4 h-4" />
@@ -138,7 +138,7 @@ export function Footer() {
               <li>
                 <a
                   href="mailto:info@webclub.ink"
-                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
                   data-testid="link-footer-email"
                 >
                   <Mail className="w-4 h-4" />
@@ -149,20 +149,20 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-border">
+        <div className="mt-12 pt-8 border-t border-slate-700/50">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-slate-500">
               © {currentYear} WEBCLUB. Все права защищены.
             </p>
             <div className="flex gap-6">
               <button
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="text-sm text-slate-500 hover:text-slate-300 transition-colors"
                 data-testid="link-privacy"
               >
                 Политика конфиденциальности
               </button>
               <button
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="text-sm text-slate-500 hover:text-slate-300 transition-colors"
                 data-testid="link-terms"
               >
                 Условия использования
