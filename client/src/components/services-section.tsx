@@ -1,30 +1,34 @@
-import { ShoppingCart, Building2, Smartphone, Shield } from "lucide-react";
 import { Card } from "@/components/ui/card";
+
+import onlineStoreImg from "@assets/generated_images/online_store_illustration.png";
+import corporateWebsiteImg from "@assets/generated_images/corporate_website_illustration.png";
+import mobileAppsImg from "@assets/generated_images/mobile_apps_illustration.png";
+import bankingSecurityImg from "@assets/generated_images/banking_security_illustration.png";
 
 const services = [
   {
-    icon: ShoppingCart,
+    image: onlineStoreImg,
     title: "Интернет-магазины",
     description:
       "Создаём современные интернет-магазины с удобным каталогом, корзиной, оплатой и интеграцией с CRM-системами.",
     showBadges: false,
   },
   {
-    icon: Building2,
+    image: corporateWebsiteImg,
     title: "Корпоративные сайты",
     description:
       "Разрабатываем сайты для бизнеса, образовательных учреждений и компаний любого масштаба.",
     showBadges: false,
   },
   {
-    icon: Smartphone,
+    image: mobileAppsImg,
     title: "Мобильные приложения",
     description:
       "Нативные и кроссплатформенные приложения для Android, iOS и Windows с публикацией в магазинах.",
     showBadges: true,
   },
   {
-    icon: Shield,
+    image: bankingSecurityImg,
     title: "Банковские и госпроекты",
     description:
       "Разработка защищённых IT-систем для банков и государственных организаций.",
@@ -53,34 +57,40 @@ export function ServicesSection() {
           {services.map((service, index) => (
             <Card
               key={index}
-              className="group p-6 hover-elevate transition-all duration-300"
+              className="group overflow-hidden hover-elevate transition-all duration-300"
               data-testid={`card-service-${index}`}
             >
-              <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
-                <service.icon className="w-7 h-7 text-primary" />
+              <div className="h-40 overflow-hidden bg-muted/50">
+                <img 
+                  src={service.image} 
+                  alt={service.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
               </div>
-              <h3 className="font-display font-semibold text-xl text-foreground mb-3">
-                {service.title}
-              </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                {service.description}
-              </p>
-              {service.showBadges && (
-                <div className="flex gap-2 mt-auto">
-                  <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-muted text-xs">
-                    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
-                      <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
-                    </svg>
-                    <span>App Store</span>
+              <div className="p-5">
+                <h3 className="font-display font-semibold text-xl text-foreground mb-3">
+                  {service.title}
+                </h3>
+                <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                  {service.description}
+                </p>
+                {service.showBadges && (
+                  <div className="flex gap-2 mt-auto">
+                    <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-muted text-xs">
+                      <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+                        <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                      </svg>
+                      <span>App Store</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-muted text-xs">
+                      <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+                        <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 010 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/>
+                      </svg>
+                      <span>Google Play</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-muted text-xs">
-                    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
-                      <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 010 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/>
-                    </svg>
-                    <span>Google Play</span>
-                  </div>
-                </div>
-              )}
+                )}
+              </div>
             </Card>
           ))}
         </div>

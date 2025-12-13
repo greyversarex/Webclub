@@ -2,6 +2,13 @@ import { ExternalLink } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
+import ecommercePlatform from "@assets/generated_images/e-commerce_platform_mockup.png";
+import bankingApp from "@assets/generated_images/banking_mobile_app_interface.png";
+import corporatePortal from "@assets/generated_images/corporate_portal_dashboard.png";
+import educationPlatform from "@assets/generated_images/education_platform_interface.png";
+import govServices from "@assets/generated_images/government_services_portal.png";
+import logisticsSystem from "@assets/generated_images/logistics_system_dashboard.png";
+
 const projects = [
   {
     id: 1,
@@ -9,7 +16,8 @@ const projects = [
     category: "Интернет-магазин",
     description: "Современная платформа электронной коммерции с интеграцией платежных систем и CRM",
     tags: ["React", "Node.js", "PostgreSQL"],
-    gradient: "from-blue-500/20 to-cyan-500/20",
+    image: ecommercePlatform,
+    bgColor: "bg-blue-50 dark:bg-blue-950/30",
   },
   {
     id: 2,
@@ -17,7 +25,8 @@ const projects = [
     category: "Финтех",
     description: "Мобильное приложение для управления финансами с высоким уровнем безопасности",
     tags: ["React Native", "TypeScript", "AWS"],
-    gradient: "from-emerald-500/20 to-teal-500/20",
+    image: bankingApp,
+    bgColor: "bg-emerald-50 dark:bg-emerald-950/30",
   },
   {
     id: 3,
@@ -25,7 +34,8 @@ const projects = [
     category: "Бизнес",
     description: "Многофункциональный портал для крупной компании с системой управления документами",
     tags: ["Vue.js", "Python", "Docker"],
-    gradient: "from-violet-500/20 to-purple-500/20",
+    image: corporatePortal,
+    bgColor: "bg-violet-50 dark:bg-violet-950/30",
   },
   {
     id: 4,
@@ -33,7 +43,8 @@ const projects = [
     category: "EdTech",
     description: "Онлайн-платформа для дистанционного обучения с видеоконференциями",
     tags: ["Next.js", "WebRTC", "MongoDB"],
-    gradient: "from-orange-500/20 to-amber-500/20",
+    image: educationPlatform,
+    bgColor: "bg-orange-50 dark:bg-orange-950/30",
   },
   {
     id: 5,
@@ -41,7 +52,8 @@ const projects = [
     category: "GovTech",
     description: "Цифровой сервис для государственных услуг с электронной подписью",
     tags: ["Angular", "Java", "Oracle"],
-    gradient: "from-rose-500/20 to-pink-500/20",
+    image: govServices,
+    bgColor: "bg-rose-50 dark:bg-rose-950/30",
   },
   {
     id: 6,
@@ -49,7 +61,8 @@ const projects = [
     category: "Логистика",
     description: "Система управления складом и доставкой с GPS-трекингом",
     tags: ["React", "Go", "Redis"],
-    gradient: "from-sky-500/20 to-indigo-500/20",
+    image: logisticsSystem,
+    bgColor: "bg-sky-50 dark:bg-sky-950/30",
   },
 ];
 
@@ -76,14 +89,12 @@ export function PortfolioSection() {
               className="group overflow-visible hover-elevate transition-all duration-300"
               data-testid={`card-project-${project.id}`}
             >
-              <div className={`relative h-48 rounded-t-md bg-gradient-to-br ${project.gradient} overflow-hidden`}>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-20 h-20 rounded-2xl bg-background/90 backdrop-blur-sm flex items-center justify-center shadow-lg">
-                    <span className="font-display font-bold text-3xl text-primary">
-                      {project.title.charAt(0)}
-                    </span>
-                  </div>
-                </div>
+              <div className={`relative h-48 rounded-t-md ${project.bgColor} overflow-hidden`}>
+                <img 
+                  src={project.image} 
+                  alt={project.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
                 <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/60 transition-all duration-300 flex items-center justify-center">
                   <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2 px-4 py-2 rounded-full bg-background text-foreground text-sm font-medium">
                     <ExternalLink className="w-4 h-4" />
