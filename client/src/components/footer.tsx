@@ -54,7 +54,7 @@ export function Footer() {
             </p>
             <div className="flex gap-2">
               <a
-                href="https://t.me/+992987622010"
+                href="https://t.me/+992876220100"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-md bg-gradient-to-br from-violet-600 to-purple-600 flex items-center justify-center hover:shadow-lg hover:shadow-violet-500/30 transition-all"
@@ -64,7 +64,7 @@ export function Footer() {
                 <SiTelegram className="w-4 h-4 text-white" />
               </a>
               <a
-                href="https://wa.me/992987622010"
+                href="https://wa.me/992876220100"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-md bg-gradient-to-br from-cyan-600 to-blue-600 flex items-center justify-center hover:shadow-lg hover:shadow-cyan-500/30 transition-all"
@@ -115,12 +115,12 @@ export function Footer() {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="tel:+992987622010"
+                  href="tel:+992876220100"
                   className="flex items-center gap-2 text-sm text-muted-foreground hover:text-cyan-400 transition-colors"
                   data-testid="link-footer-phone"
                 >
                   <Phone className="w-4 h-4" />
-                  +992 987 622 0100
+                  +992 87 622 0100
                 </a>
               </li>
               <li>

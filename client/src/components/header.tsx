@@ -96,7 +96,7 @@ export function Header() {
             <ThemeToggle />
             
             <a
-              href="tel:+992987622010"
+              href="tel:+992876220100"
               className="hidden sm:flex"
               data-testid="link-phone-header"
             >
@@ -104,7 +104,7 @@ export function Header() {
                 size="default"
               >
                 <Phone className="w-4 h-4 mr-2" />
-                +992 987 622 0100
+                +992 87 622 0100
               </Button>
             </a>
 
@@ -140,13 +140,13 @@ export function Header() {
               </button>
             ))}
             <a
-              href="tel:+992987622010"
+              href="tel:+992876220100"
               className="mt-2"
               data-testid="link-phone-mobile"
             >
               <Button className="w-full">
                 <Phone className="w-4 h-4 mr-2" />
-                Позвонить: +992 987 622 0100
+                Позвонить: +992 87 622 0100
               </Button>
             </a>
           </nav>

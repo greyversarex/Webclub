@@ -203,7 +203,7 @@ export function ContactSection() {
 
               <div className="space-y-5">
                 <a
-                  href="tel:+9929876220100"
+                  href="tel:+992876220100"
                   className="flex items-center gap-4 p-4 rounded-lg bg-violet-500/10 border border-violet-500/20 hover-elevate active-elevate-2 transition-all hover:border-violet-500/40"
                   data-testid="link-phone-contact"
                 >
@@ -213,7 +213,7 @@ export function ContactSection() {
                   <div>
                     <div className="text-sm text-muted-foreground">Телефон</div>
                     <div className="font-semibold text-foreground text-lg">
-                      +992 987 622 0100
+                      +992 87 622 0100
                     </div>
                   </div>
                 </a>
@@ -246,7 +246,7 @@ export function ContactSection() {
 
               <div className="flex flex-wrap gap-3">
                 <a
-                  href="https://t.me/+9929876220100"
+                  href="https://t.me/+992876220100"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Telegram"
@@ -263,7 +263,7 @@ export function ContactSection() {
                 </a>
 
                 <a
-                  href="https://wa.me/9929876220100"
+                  href="https://wa.me/992876220100"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="WhatsApp"
@@ -280,7 +280,7 @@ export function ContactSection() {
                 </a>
 
                 <a
-                  href="viber://chat?number=9929876220100"
+                  href="viber://chat?number=992876220100"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Viber"
