@@ -47,7 +47,7 @@ export function HeroSection() {
 
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
               Создаём{" "}
-              <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">IT-решения</span>
+              <span className="bg-gradient-to-r from-violet-600 via-purple-600 to-violet-500 bg-clip-text text-transparent">IT-решения</span>
               {" "}для вашего бизнеса
             </h1>
 

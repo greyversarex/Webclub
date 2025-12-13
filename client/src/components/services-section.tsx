@@ -46,7 +46,7 @@ export function ServicesSection() {
             Наши услуги
           </span>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">Что мы делаем</span>
+            <span className="bg-gradient-to-r from-violet-600 via-purple-600 to-violet-500 bg-clip-text text-transparent">Что мы делаем</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Полный спектр IT-услуг для вашего бизнеса: от разработки сайтов до
