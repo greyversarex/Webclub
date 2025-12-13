@@ -35,14 +35,14 @@ export function HeroSection() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="order-2 lg:order-1">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-500/20 border border-violet-500/30 text-violet-300 text-sm font-medium mb-6 backdrop-blur-sm">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-lg shadow-cyan-400/50" />
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-600/10 border border-slate-500/20 text-slate-600 text-sm font-medium mb-6 backdrop-blur-sm">
+              <span className="w-2 h-2 rounded-full bg-sky-500 animate-pulse shadow-lg shadow-sky-500/50" />
               Компания по IT-разработкам
             </div>
 
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-800 leading-tight mb-6">
               Создаём{" "}
-              <span className="text-blue-700 dark:text-blue-400">IT-решения</span>
+              <span className="bg-gradient-to-r from-sky-600 via-cyan-500 to-teal-500 bg-clip-text text-transparent">IT-решения</span>
               {" "}для вашего бизнеса
             </h1>
 
@@ -59,7 +59,7 @@ export function HeroSection() {
                   className="flex items-start gap-3 text-foreground"
                   data-testid={`text-feature-${index}`}
                 >
-                  <CheckCircle2 className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-5 h-5 text-sky-400 flex-shrink-0 mt-0.5" />
                   <span>{feature}</span>
                 </li>
               ))}
@@ -84,10 +84,10 @@ export function HeroSection() {
               </Button>
             </div>
 
-            <div className="flex flex-wrap gap-8 pt-8 border-t border-border">
+            <div className="flex flex-wrap gap-8 pt-8 border-t border-slate-400/30">
               {stats.map((stat, index) => (
                 <div key={index} data-testid={`stat-${index}`}>
-                  <div className="font-display text-3xl font-bold bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
+                  <div className="font-display text-3xl font-bold bg-gradient-to-r from-slate-700 via-sky-600 to-cyan-600 bg-clip-text text-transparent">
                     {stat.value}
                   </div>
                   <div className="text-sm text-muted-foreground">
@@ -100,10 +100,10 @@ export function HeroSection() {
 
           <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
             <div className="relative w-full max-w-md lg:max-w-lg">
-              <div className="absolute inset-0 bg-gradient-to-tr from-violet-500/20 to-cyan-500/10 rounded-3xl transform rotate-3" />
-              <div className="relative bg-card/80 backdrop-blur-sm border border-violet-500/20 rounded-3xl p-8 shadow-lg shadow-violet-500/10">
+              <div className="absolute inset-0 bg-gradient-to-tr from-slate-400/20 to-sky-400/15 rounded-3xl transform rotate-3" />
+              <div className="relative bg-white/60 backdrop-blur-sm border border-slate-300/50 rounded-3xl p-8 shadow-lg shadow-slate-400/20">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-violet-600 via-purple-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-violet-500/30">
+                  <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-slate-600 via-slate-700 to-zinc-700 flex items-center justify-center shadow-lg shadow-slate-600/30">
                     <span className="text-white font-display font-bold text-2xl">
                       WC
                     </span>
@@ -119,38 +119,38 @@ export function HeroSection() {
                 </div>
 
                 <div className="space-y-4">
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-violet-500/10 border border-violet-500/20">
-                    <div className="w-10 h-10 rounded-md bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center shadow-md shadow-violet-500/30">
+                  <div className="flex items-center gap-3 p-3 rounded-lg bg-slate-200/60 border border-slate-300/50">
+                    <div className="w-10 h-10 rounded-md bg-gradient-to-br from-slate-500 to-slate-600 flex items-center justify-center shadow-md shadow-slate-500/30">
                       <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                       </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="h-2 bg-violet-400/40 rounded-full w-3/4" />
+                      <div className="h-2 bg-slate-400/40 rounded-full w-3/4" />
                       <div className="h-2 bg-muted rounded-full w-1/2 mt-2" />
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-cyan-500/10 border border-cyan-500/20">
-                    <div className="w-10 h-10 rounded-md bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center shadow-md shadow-cyan-500/30">
+                  <div className="flex items-center gap-3 p-3 rounded-lg bg-sky-100/60 border border-sky-300/50">
+                    <div className="w-10 h-10 rounded-md bg-gradient-to-br from-sky-500 to-cyan-600 flex items-center justify-center shadow-md shadow-sky-500/30">
                       <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
                       </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="h-2 bg-cyan-400/40 rounded-full w-2/3" />
+                      <div className="h-2 bg-sky-400/40 rounded-full w-2/3" />
                       <div className="h-2 bg-muted rounded-full w-2/5 mt-2" />
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
-                    <div className="w-10 h-10 rounded-md bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-md shadow-purple-500/30">
+                  <div className="flex items-center gap-3 p-3 rounded-lg bg-zinc-200/60 border border-zinc-300/50">
+                    <div className="w-10 h-10 rounded-md bg-gradient-to-br from-zinc-500 to-zinc-600 flex items-center justify-center shadow-md shadow-zinc-500/30">
                       <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                       </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="h-2 bg-purple-400/40 rounded-full w-4/5" />
+                      <div className="h-2 bg-zinc-400/40 rounded-full w-4/5" />
                       <div className="h-2 bg-muted rounded-full w-3/5 mt-2" />
                     </div>
                   </div>
