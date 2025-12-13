@@ -17,7 +17,7 @@ const projects = [
     description: "Современная платформа электронной коммерции с интеграцией платежных систем и CRM",
     tags: ["React", "Node.js", "PostgreSQL"],
     image: ecommercePlatform,
-    bgColor: "bg-blue-50 dark:bg-blue-950/30",
+    accent: "violet" as const,
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const projects = [
     description: "Мобильное приложение для управления финансами с высоким уровнем безопасности",
     tags: ["React Native", "TypeScript", "AWS"],
     image: bankingApp,
-    bgColor: "bg-emerald-50 dark:bg-emerald-950/30",
+    accent: "cyan" as const,
   },
   {
     id: 3,
@@ -35,7 +35,7 @@ const projects = [
     description: "Многофункциональный портал для крупной компании с системой управления документами",
     tags: ["Vue.js", "Python", "Docker"],
     image: corporatePortal,
-    bgColor: "bg-violet-50 dark:bg-violet-950/30",
+    accent: "violet" as const,
   },
   {
     id: 4,
@@ -44,7 +44,7 @@ const projects = [
     description: "Онлайн-платформа для дистанционного обучения с видеоконференциями",
     tags: ["Next.js", "WebRTC", "MongoDB"],
     image: educationPlatform,
-    bgColor: "bg-orange-50 dark:bg-orange-950/30",
+    accent: "cyan" as const,
   },
   {
     id: 5,
@@ -53,7 +53,7 @@ const projects = [
     description: "Цифровой сервис для государственных услуг с электронной подписью",
     tags: ["Angular", "Java", "Oracle"],
     image: govServices,
-    bgColor: "bg-rose-50 dark:bg-rose-950/30",
+    accent: "violet" as const,
   },
   {
     id: 6,
@@ -62,20 +62,36 @@ const projects = [
     description: "Система управления складом и доставкой с GPS-трекингом",
     tags: ["React", "Go", "Redis"],
     image: logisticsSystem,
-    bgColor: "bg-sky-50 dark:bg-sky-950/30",
+    accent: "cyan" as const,
   },
 ];
 
+const accentStyles = {
+  violet: {
+    card: "hover:border-violet-500/40 hover:shadow-lg hover:shadow-violet-500/10",
+    badge: "bg-violet-500/10 text-violet-400 border border-violet-500/20",
+  },
+  cyan: {
+    card: "hover:border-cyan-500/40 hover:shadow-lg hover:shadow-cyan-500/10",
+    badge: "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20",
+  },
+};
+
 export function PortfolioSection() {
   return (
-    <section id="portfolio" className="py-16 md:py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+    <section id="portfolio" className="py-16 md:py-24 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-violet-500/5 to-transparent pointer-events-none" />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
         <div className="text-center mb-12 md:mb-16">
-          <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-400 text-sm font-medium mb-4">
+            <span className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
             Портфолио
           </span>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Наши проекты
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+            <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
+              Наши проекты
+            </span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Примеры успешно реализованных проектов для различных отраслей бизнеса
@@ -83,50 +99,58 @@ export function PortfolioSection() {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {projects.map((project) => (
-            <Card
-              key={project.id}
-              className="group overflow-visible hover-elevate transition-all duration-300"
-              data-testid={`card-project-${project.id}`}
-            >
-              <div className={`relative h-48 rounded-t-md ${project.bgColor} overflow-hidden`}>
-                <img 
-                  src={project.image} 
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/60 transition-all duration-300 flex items-center justify-center">
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2 px-4 py-2 rounded-full bg-background text-foreground text-sm font-medium">
-                    <ExternalLink className="w-4 h-4" />
-                    Смотреть проект
+          {projects.map((project) => {
+            const styles = accentStyles[project.accent];
+            
+            return (
+              <Card
+                key={project.id}
+                className={`group overflow-visible hover-elevate transition-all duration-300 bg-background/50 backdrop-blur-sm border-violet-500/20 ${styles.card}`}
+                data-testid={`card-project-${project.id}`}
+              >
+                <div className="relative h-48 rounded-t-md bg-gradient-to-br from-violet-950/50 to-cyan-950/50 overflow-hidden">
+                  <img 
+                    src={project.image} 
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-90"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/60 transition-all duration-300 flex items-center justify-center">
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2 px-4 py-2 rounded-full bg-violet-500/90 text-white text-sm font-medium shadow-lg shadow-violet-500/30">
+                      <ExternalLink className="w-4 h-4" />
+                      Смотреть проект
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="p-5">
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <Badge variant="secondary" className="text-xs">
-                    {project.category}
-                  </Badge>
-                </div>
-                <h3 className="font-display font-semibold text-lg text-foreground mb-2">
-                  {project.title}
-                </h3>
-                <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2 py-1 text-xs rounded bg-muted text-muted-foreground"
+                <div className="p-5">
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <Badge 
+                      variant="secondary" 
+                      className={`text-xs ${styles.badge}`}
                     >
-                      {tag}
-                    </span>
-                  ))}
+                      {project.category}
+                    </Badge>
+                  </div>
+                  <h3 className="font-display font-semibold text-lg text-foreground mb-2 group-hover:text-violet-400 transition-colors">
+                    {project.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+                    {project.description}
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2 py-1 text-xs rounded bg-violet-500/10 text-violet-300/80 border border-violet-500/10"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </Card>
-          ))}
+              </Card>
+            );
+          })}
         </div>
       </div>
     </section>

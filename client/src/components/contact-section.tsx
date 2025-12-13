@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Phone, Globe, Send, MessageCircle, Loader2 } from "lucide-react";
+import { Phone, Globe, Send, Loader2, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -67,14 +67,19 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-16 md:py-24 bg-muted/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+    <section id="contact" className="py-16 md:py-24 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/5 via-violet-500/5 to-transparent pointer-events-none" />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
         <div className="text-center mb-12 md:mb-16">
-          <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-400 text-sm font-medium mb-4">
+            <span className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
             Контакты
           </span>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Свяжитесь с нами
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+            <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
+              Свяжитесь с нами
+            </span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Готовы обсудить ваш проект? Оставьте заявку или свяжитесь с нами
@@ -83,8 +88,9 @@ export function ContactSection() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12">
-          <Card className="p-6 md:p-8">
-            <h3 className="font-display font-semibold text-xl text-foreground mb-6">
+          <Card className="p-6 md:p-8 bg-background/50 backdrop-blur-sm border-violet-500/20 hover:border-violet-500/40 transition-colors shadow-lg shadow-violet-500/5">
+            <h3 className="font-display font-semibold text-xl text-foreground mb-6 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-cyan-400" />
               Оставить заявку
             </h3>
             <form onSubmit={handleSubmit} className="space-y-5">
@@ -103,6 +109,7 @@ export function ContactSection() {
                   value={formData.name}
                   onChange={handleChange}
                   required
+                  className="bg-background/50 border-violet-500/20 focus:border-violet-500/50 focus:ring-violet-500/20"
                   data-testid="input-name"
                 />
               </div>
@@ -121,6 +128,7 @@ export function ContactSection() {
                   placeholder="example@email.com"
                   value={formData.email}
                   onChange={handleChange}
+                  className="bg-background/50 border-violet-500/20 focus:border-violet-500/50 focus:ring-violet-500/20"
                   data-testid="input-email"
                 />
               </div>
@@ -140,6 +148,7 @@ export function ContactSection() {
                   value={formData.phone}
                   onChange={handleChange}
                   required
+                  className="bg-background/50 border-violet-500/20 focus:border-violet-500/50 focus:ring-violet-500/20"
                   data-testid="input-phone"
                 />
               </div>
@@ -158,7 +167,7 @@ export function ContactSection() {
                   rows={4}
                   value={formData.message}
                   onChange={handleChange}
-                  className="resize-none"
+                  className="resize-none bg-background/50 border-violet-500/20 focus:border-violet-500/50 focus:ring-violet-500/20"
                   data-testid="input-message"
                 />
               </div>
@@ -186,19 +195,20 @@ export function ContactSection() {
           </Card>
 
           <div className="space-y-6">
-            <Card className="p-6 md:p-8">
-              <h3 className="font-display font-semibold text-xl text-foreground mb-6">
+            <Card className="p-6 md:p-8 bg-background/50 backdrop-blur-sm border-cyan-500/20 hover:border-cyan-500/40 transition-colors shadow-lg shadow-cyan-500/5">
+              <h3 className="font-display font-semibold text-xl text-foreground mb-6 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-violet-400" />
                 Контактная информация
               </h3>
 
               <div className="space-y-5">
                 <a
-                  href="tel:+992987622010"
-                  className="flex items-center gap-4 p-4 rounded-lg bg-muted/50 hover-elevate active-elevate-2 transition-colors"
+                  href="tel:+9929876220100"
+                  className="flex items-center gap-4 p-4 rounded-lg bg-violet-500/10 border border-violet-500/20 hover-elevate active-elevate-2 transition-all hover:border-violet-500/40"
                   data-testid="link-phone-contact"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-6 h-6 text-primary" />
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500/30 to-violet-600/20 flex items-center justify-center flex-shrink-0 border border-violet-500/30">
+                    <Phone className="w-6 h-6 text-violet-400" />
                   </div>
                   <div>
                     <div className="text-sm text-muted-foreground">Телефон</div>
@@ -212,11 +222,11 @@ export function ContactSection() {
                   href="https://webclub.ink"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-4 rounded-lg bg-muted/50 hover-elevate active-elevate-2 transition-colors"
+                  className="flex items-center gap-4 p-4 rounded-lg bg-cyan-500/10 border border-cyan-500/20 hover-elevate active-elevate-2 transition-all hover:border-cyan-500/40"
                   data-testid="link-website"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Globe className="w-6 h-6 text-primary" />
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500/30 to-cyan-600/20 flex items-center justify-center flex-shrink-0 border border-cyan-500/30">
+                    <Globe className="w-6 h-6 text-cyan-400" />
                   </div>
                   <div>
                     <div className="text-sm text-muted-foreground">Сайт</div>
@@ -228,14 +238,15 @@ export function ContactSection() {
               </div>
             </Card>
 
-            <Card className="p-6 md:p-8">
-              <h3 className="font-display font-semibold text-xl text-foreground mb-6">
+            <Card className="p-6 md:p-8 bg-background/50 backdrop-blur-sm border-violet-500/20 hover:border-violet-500/40 transition-colors shadow-lg shadow-violet-500/5">
+              <h3 className="font-display font-semibold text-xl text-foreground mb-6 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-cyan-400" />
                 Мессенджеры
               </h3>
 
               <div className="flex flex-wrap gap-3">
                 <a
-                  href="https://t.me/+992987622010"
+                  href="https://t.me/+9929876220100"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Telegram"
@@ -244,15 +255,15 @@ export function ContactSection() {
                   <Button
                     variant="outline"
                     size="lg"
-                    className="gap-2"
+                    className="gap-2 border-violet-500/30 hover:border-violet-500/50 hover:bg-violet-500/10"
                   >
-                    <SiTelegram className="w-5 h-5 text-[#0088cc]" />
+                    <SiTelegram className="w-5 h-5 text-violet-400" />
                     Telegram
                   </Button>
                 </a>
 
                 <a
-                  href="https://wa.me/992987622010"
+                  href="https://wa.me/9929876220100"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="WhatsApp"
@@ -261,15 +272,15 @@ export function ContactSection() {
                   <Button
                     variant="outline"
                     size="lg"
-                    className="gap-2"
+                    className="gap-2 border-cyan-500/30 hover:border-cyan-500/50 hover:bg-cyan-500/10"
                   >
-                    <SiWhatsapp className="w-5 h-5 text-[#25D366]" />
+                    <SiWhatsapp className="w-5 h-5 text-cyan-400" />
                     WhatsApp
                   </Button>
                 </a>
 
                 <a
-                  href="viber://chat?number=992987622010"
+                  href="viber://chat?number=9929876220100"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Viber"
@@ -278,19 +289,19 @@ export function ContactSection() {
                   <Button
                     variant="outline"
                     size="lg"
-                    className="gap-2"
+                    className="gap-2 border-purple-500/30 hover:border-purple-500/50 hover:bg-purple-500/10"
                   >
-                    <SiViber className="w-5 h-5 text-[#665CAC]" />
+                    <SiViber className="w-5 h-5 text-purple-400" />
                     Viber
                   </Button>
                 </a>
               </div>
             </Card>
 
-            <div className="p-6 rounded-xl bg-primary/5 border border-primary/10">
+            <div className="p-6 rounded-xl bg-gradient-to-r from-violet-500/10 to-cyan-500/10 border border-violet-500/20 backdrop-blur-sm">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <span className="text-primary text-lg">⏰</span>
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-500/30 to-cyan-600/20 flex items-center justify-center flex-shrink-0 border border-cyan-500/30">
+                  <Clock className="w-5 h-5 text-cyan-400" />
                 </div>
                 <div>
                   <h4 className="font-semibold text-foreground mb-1">
