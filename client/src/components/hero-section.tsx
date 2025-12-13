@@ -107,8 +107,8 @@ export function HeroSection() {
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-primary/5 rounded-3xl transform rotate-3" />
               <div className="relative bg-card border border-card-border rounded-3xl p-8 shadow-lg">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-xl bg-primary flex items-center justify-center">
-                    <span className="text-primary-foreground font-display font-bold text-2xl">
+                  <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-slate-700 via-slate-600 to-slate-700 flex items-center justify-center">
+                    <span className="text-white font-display font-bold text-2xl">
                       WC
                     </span>
                   </div>
@@ -124,31 +124,37 @@ export function HeroSection() {
 
                 <div className="space-y-4">
                   <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
-                    <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center">
-                      <span className="text-primary text-lg">🛒</span>
+                    <div className="w-10 h-10 rounded-md bg-gradient-to-br from-slate-600 to-slate-500 flex items-center justify-center">
+                      <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                      </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="h-2 bg-primary/20 rounded-full w-3/4" />
+                      <div className="h-2 bg-slate-500/30 rounded-full w-3/4" />
                       <div className="h-2 bg-muted rounded-full w-1/2 mt-2" />
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
-                    <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center">
-                      <span className="text-primary text-lg">📱</span>
+                    <div className="w-10 h-10 rounded-md bg-gradient-to-br from-slate-600 to-slate-500 flex items-center justify-center">
+                      <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                      </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="h-2 bg-primary/20 rounded-full w-2/3" />
+                      <div className="h-2 bg-slate-500/30 rounded-full w-2/3" />
                       <div className="h-2 bg-muted rounded-full w-2/5 mt-2" />
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
-                    <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center">
-                      <span className="text-primary text-lg">🏢</span>
+                    <div className="w-10 h-10 rounded-md bg-gradient-to-br from-slate-600 to-slate-500 flex items-center justify-center">
+                      <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                      </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="h-2 bg-primary/20 rounded-full w-4/5" />
+                      <div className="h-2 bg-slate-500/30 rounded-full w-4/5" />
                       <div className="h-2 bg-muted rounded-full w-3/5 mt-2" />
                     </div>
                   </div>

@@ -102,7 +102,7 @@ export function Header() {
             >
               <Button 
                 size="default"
-                className="bg-slate-800 hover:bg-slate-700 text-white border-slate-700"
+                className="bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 text-white border-slate-600"
               >
                 <Phone className="w-4 h-4 mr-2" />
                 876-220-100
@@ -145,7 +145,7 @@ export function Header() {
               className="mt-2"
               data-testid="link-phone-mobile"
             >
-              <Button className="w-full bg-slate-800 hover:bg-slate-700 text-white">
+              <Button className="w-full bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 text-white border-slate-600">
                 <Phone className="w-4 h-4 mr-2" />
                 Позвонить: 876-220-100
               </Button>

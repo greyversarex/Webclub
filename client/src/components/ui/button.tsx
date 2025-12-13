@@ -11,7 +11,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground border border-primary-border",
+          "bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 text-white border border-slate-600",
         destructive:
           "bg-destructive text-destructive-foreground border border-destructive-border",
         outline:
