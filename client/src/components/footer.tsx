@@ -30,7 +30,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gradient-to-br from-slate-300 via-slate-200 to-slate-300 dark:from-slate-800 dark:via-slate-700 dark:to-slate-800 border-t border-slate-400/50 dark:border-slate-600/50">
+    <footer className="bg-background border-t border-violet-500/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-12 md:py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           <div className="col-span-2 md:col-span-1">
@@ -44,11 +44,11 @@ export function Footer() {
                 alt="WEBCLUB Logo" 
                 className="w-14 h-14 object-contain"
               />
-              <span className="font-display font-bold text-xl text-gray-900 dark:text-white">
+              <span className="font-display font-bold text-xl bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
                 WEBCLUB
               </span>
             </button>
-            <p className="text-sm text-slate-700 dark:text-slate-400 mb-4">
+            <p className="text-sm text-muted-foreground mb-4">
               Компания по IT-разработкам. Создаём современные решения для вашего
               бизнеса.
             </p>
@@ -57,7 +57,7 @@ export function Footer() {
                 href="https://t.me/+992987622010"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-md bg-slate-700 flex items-center justify-center hover:bg-slate-600 transition-colors"
+                className="w-9 h-9 rounded-md bg-gradient-to-br from-violet-600 to-purple-600 flex items-center justify-center hover:shadow-lg hover:shadow-violet-500/30 transition-all"
                 aria-label="Telegram"
                 data-testid="link-footer-telegram"
               >
@@ -67,7 +67,7 @@ export function Footer() {
                 href="https://wa.me/992987622010"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-md bg-slate-700 flex items-center justify-center hover:bg-slate-600 transition-colors"
+                className="w-9 h-9 rounded-md bg-gradient-to-br from-cyan-600 to-blue-600 flex items-center justify-center hover:shadow-lg hover:shadow-cyan-500/30 transition-all"
                 aria-label="WhatsApp"
                 data-testid="link-footer-whatsapp"
               >
@@ -77,13 +77,13 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-4">Навигация</h4>
+            <h4 className="font-semibold text-foreground mb-4">Навигация</h4>
             <ul className="space-y-2">
               {links.map((link) => (
                 <li key={link.href}>
                   <button
                     onClick={() => scrollToSection(link.href)}
-                    className="text-sm text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+                    className="text-sm text-muted-foreground hover:text-violet-400 transition-colors"
                     data-testid={`link-footer-${link.label.toLowerCase()}`}
                   >
                     {link.label}
@@ -94,13 +94,13 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-4">Услуги</h4>
+            <h4 className="font-semibold text-foreground mb-4">Услуги</h4>
             <ul className="space-y-2">
               {services.map((service, index) => (
                 <li key={index}>
                   <button
                     onClick={() => scrollToSection(service.href)}
-                    className="text-sm text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors text-left"
+                    className="text-sm text-muted-foreground hover:text-violet-400 transition-colors text-left"
                     data-testid={`link-footer-service-${index}`}
                   >
                     {service.label}
@@ -111,12 +111,12 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold text-gray-900 dark:text-white mb-4">Контакты</h4>
+            <h4 className="font-semibold text-foreground mb-4">Контакты</h4>
             <ul className="space-y-3">
               <li>
                 <a
                   href="tel:+992987622010"
-                  className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-cyan-400 transition-colors"
                   data-testid="link-footer-phone"
                 >
                   <Phone className="w-4 h-4" />
@@ -128,7 +128,7 @@ export function Footer() {
                   href="https://webclub.ink"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-cyan-400 transition-colors"
                   data-testid="link-footer-website"
                 >
                   <Globe className="w-4 h-4" />
@@ -138,7 +138,7 @@ export function Footer() {
               <li>
                 <a
                   href="mailto:info@webclub.ink"
-                  className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-cyan-400 transition-colors"
                   data-testid="link-footer-email"
                 >
                   <Mail className="w-4 h-4" />
@@ -149,20 +149,20 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-slate-400/50 dark:border-slate-600/50">
+        <div className="mt-12 pt-8 border-t border-violet-500/10">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-slate-600 dark:text-slate-500">
+            <p className="text-sm text-muted-foreground">
               © {currentYear} WEBCLUB. Все права защищены.
             </p>
             <div className="flex gap-6">
               <button
-                className="text-sm text-slate-600 dark:text-slate-500 hover:text-slate-800 dark:hover:text-slate-300 transition-colors"
+                className="text-sm text-muted-foreground hover:text-violet-400 transition-colors"
                 data-testid="link-privacy"
               >
                 Политика конфиденциальности
               </button>
               <button
-                className="text-sm text-slate-600 dark:text-slate-500 hover:text-slate-800 dark:hover:text-slate-300 transition-colors"
+                className="text-sm text-muted-foreground hover:text-violet-400 transition-colors"
                 data-testid="link-terms"
               >
                 Условия использования

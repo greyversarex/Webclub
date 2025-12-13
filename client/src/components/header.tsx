@@ -34,8 +34,8 @@ export function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-gradient-to-r from-slate-300 via-slate-200 to-slate-300 dark:from-slate-800 dark:via-slate-700 dark:to-slate-800 backdrop-blur-md border-b border-slate-400/50 dark:border-slate-600/50 shadow-lg"
-          : "bg-gradient-to-r from-slate-300/95 via-slate-200/95 to-slate-300/95 dark:from-slate-800/95 dark:via-slate-700/95 dark:to-slate-800/95 backdrop-blur-sm"
+          ? "bg-background/80 backdrop-blur-xl border-b border-violet-500/20 shadow-lg shadow-violet-500/5"
+          : "bg-background/60 backdrop-blur-md"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
@@ -54,7 +54,7 @@ export function Header() {
               alt="WEBCLUB Logo" 
               className="w-12 h-12 md:w-16 md:h-16 object-contain"
             />
-            <span className="font-display font-bold text-xl md:text-2xl text-gray-900 dark:text-white">
+            <span className="font-display font-bold text-xl md:text-2xl bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
               WEBCLUB
             </span>
           </a>
@@ -64,7 +64,7 @@ export function Header() {
               <button
                 key={item.href}
                 onClick={() => scrollToSection(item.href)}
-                className="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white transition-colors rounded-md hover:bg-slate-400/30 dark:hover:bg-white/10"
+                className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-violet-500/10"
                 data-testid={`link-nav-${item.label.toLowerCase()}`}
               >
                 {item.label}
@@ -77,16 +77,16 @@ export function Header() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="px-2 text-xs font-medium text-slate-800 dark:text-white hover:bg-slate-400/30 dark:hover:bg-white/10"
+                className="px-2 text-xs font-medium text-foreground hover:bg-violet-500/10"
                 data-testid="button-lang-ru"
               >
                 RU
               </Button>
-              <span className="text-gray-400 dark:text-gray-500">/</span>
+              <span className="text-muted-foreground">/</span>
               <Button
                 variant="ghost"
                 size="sm"
-                className="px-2 text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-400/30 dark:hover:bg-white/10"
+                className="px-2 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-violet-500/10"
                 data-testid="button-lang-en"
               >
                 EN
@@ -102,7 +102,6 @@ export function Header() {
             >
               <Button 
                 size="default"
-                className="bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 text-white border-slate-600"
               >
                 <Phone className="w-4 h-4 mr-2" />
                 +992 987 622 0100
@@ -112,7 +111,7 @@ export function Header() {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden text-slate-800 dark:text-white hover:bg-slate-400/30 dark:hover:bg-white/10"
+              className="md:hidden text-foreground hover:bg-violet-500/10"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Открыть меню"
               data-testid="button-mobile-menu"
@@ -128,13 +127,13 @@ export function Header() {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-gradient-to-b from-slate-300 to-slate-400 dark:from-slate-800 dark:to-slate-900 border-b border-slate-400/50 dark:border-slate-700/50">
+        <div className="md:hidden bg-background/95 backdrop-blur-xl border-b border-violet-500/20">
           <nav className="flex flex-col p-4 gap-2">
             {navItems.map((item) => (
               <button
                 key={item.href}
                 onClick={() => scrollToSection(item.href)}
-                className="px-4 py-3 text-left text-base font-medium text-slate-800 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white hover:bg-slate-500/30 dark:hover:bg-white/10 rounded-md transition-colors"
+                className="px-4 py-3 text-left text-base font-medium text-muted-foreground hover:text-foreground hover:bg-violet-500/10 rounded-md transition-colors"
                 data-testid={`link-mobile-nav-${item.label.toLowerCase()}`}
               >
                 {item.label}
@@ -145,7 +144,7 @@ export function Header() {
               className="mt-2"
               data-testid="link-phone-mobile"
             >
-              <Button className="w-full bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 text-white border-slate-600">
+              <Button className="w-full">
                 <Phone className="w-4 h-4 mr-2" />
                 Позвонить: +992 987 622 0100
               </Button>
