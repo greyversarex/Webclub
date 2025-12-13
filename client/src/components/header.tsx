@@ -52,9 +52,9 @@ export function Header() {
             <img 
               src="/logo.png" 
               alt="WEBCLUB Logo" 
-              className="w-10 h-10 md:w-12 md:h-12 object-contain"
+              className="w-12 h-12 md:w-16 md:h-16 object-contain"
             />
-            <span className="font-display font-bold text-lg md:text-xl text-gray-900 dark:text-white">
+            <span className="font-display font-bold text-xl md:text-2xl text-gray-900 dark:text-white">
               WEBCLUB
             </span>
           </a>
@@ -96,7 +96,7 @@ export function Header() {
             <ThemeToggle />
             
             <a
-              href="tel:876-220-100"
+              href="tel:+992987622010"
               className="hidden sm:flex"
               data-testid="link-phone-header"
             >
@@ -105,7 +105,7 @@ export function Header() {
                 className="bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 text-white border-slate-600"
               >
                 <Phone className="w-4 h-4 mr-2" />
-                876-220-100
+                +992 987 622 0100
               </Button>
             </a>
 
@@ -141,13 +141,13 @@ export function Header() {
               </button>
             ))}
             <a
-              href="tel:876-220-100"
+              href="tel:+992987622010"
               className="mt-2"
               data-testid="link-phone-mobile"
             >
               <Button className="w-full bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 text-white border-slate-600">
                 <Phone className="w-4 h-4 mr-2" />
-                Позвонить: 876-220-100
+                Позвонить: +992 987 622 0100
               </Button>
             </a>
           </nav>

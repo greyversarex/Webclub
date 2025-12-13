@@ -53,25 +53,25 @@ export function ServicesSection() {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10">
           {services.map((service, index) => (
             <Card
               key={index}
               className="group overflow-hidden hover-elevate transition-all duration-300"
               data-testid={`card-service-${index}`}
             >
-              <div className="h-40 overflow-hidden bg-muted/50">
+              <div className="h-56 md:h-64 overflow-hidden bg-muted/50">
                 <img 
                   src={service.image} 
                   alt={service.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="p-5">
-                <h3 className="font-display font-semibold text-xl text-foreground mb-3">
+              <div className="p-6 md:p-8">
+                <h3 className="font-display font-semibold text-2xl md:text-3xl text-foreground mb-4">
                   {service.title}
                 </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-4">
                   {service.description}
                 </p>
                 {service.showBadges && (

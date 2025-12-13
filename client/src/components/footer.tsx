@@ -42,9 +42,9 @@ export function Footer() {
               <img 
                 src="/logo.png" 
                 alt="WEBCLUB Logo" 
-                className="w-10 h-10 object-contain"
+                className="w-14 h-14 object-contain"
               />
-              <span className="font-display font-bold text-lg text-gray-900 dark:text-white">
+              <span className="font-display font-bold text-xl text-gray-900 dark:text-white">
                 WEBCLUB
               </span>
             </button>
@@ -54,7 +54,7 @@ export function Footer() {
             </p>
             <div className="flex gap-2">
               <a
-                href="https://t.me/webclub"
+                href="https://t.me/+992987622010"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-md bg-slate-700 flex items-center justify-center hover:bg-slate-600 transition-colors"
@@ -64,7 +64,7 @@ export function Footer() {
                 <SiTelegram className="w-4 h-4 text-white" />
               </a>
               <a
-                href="https://wa.me/876220100"
+                href="https://wa.me/992987622010"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-md bg-slate-700 flex items-center justify-center hover:bg-slate-600 transition-colors"
@@ -115,12 +115,12 @@ export function Footer() {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="tel:876-220-100"
+                  href="tel:+992987622010"
                   className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
                   data-testid="link-footer-phone"
                 >
                   <Phone className="w-4 h-4" />
-                  876-220-100
+                  +992 987 622 0100
                 </a>
               </li>
               <li>

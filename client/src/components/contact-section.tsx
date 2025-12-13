@@ -136,7 +136,7 @@ export function ContactSection() {
                   id="phone"
                   name="phone"
                   type="tel"
-                  placeholder="+7 (___) ___-__-__"
+                  placeholder="+992 (__) ___-__-__"
                   value={formData.phone}
                   onChange={handleChange}
                   required
@@ -193,7 +193,7 @@ export function ContactSection() {
 
               <div className="space-y-5">
                 <a
-                  href="tel:876-220-100"
+                  href="tel:+992987622010"
                   className="flex items-center gap-4 p-4 rounded-lg bg-muted/50 hover-elevate active-elevate-2 transition-colors"
                   data-testid="link-phone-contact"
                 >
@@ -203,7 +203,7 @@ export function ContactSection() {
                   <div>
                     <div className="text-sm text-muted-foreground">Телефон</div>
                     <div className="font-semibold text-foreground text-lg">
-                      876-220-100
+                      +992 987 622 0100
                     </div>
                   </div>
                 </a>
@@ -235,7 +235,7 @@ export function ContactSection() {
 
               <div className="flex flex-wrap gap-3">
                 <a
-                  href="https://t.me/webclub"
+                  href="https://t.me/+992987622010"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Telegram"
@@ -252,7 +252,7 @@ export function ContactSection() {
                 </a>
 
                 <a
-                  href="https://wa.me/876220100"
+                  href="https://wa.me/992987622010"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="WhatsApp"
@@ -269,7 +269,7 @@ export function ContactSection() {
                 </a>
 
                 <a
-                  href="viber://chat?number=876220100"
+                  href="viber://chat?number=992987622010"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Viber"
