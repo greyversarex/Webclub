@@ -285,9 +285,9 @@ export function ContactSection() {
                   <Button
                     variant="outline"
                     size="lg"
-                    className="gap-2 border-purple-300 text-purple-700 bg-purple-50"
+                    className="gap-2 border-slate-300 text-slate-700 bg-slate-50"
                   >
-                    <SiViber className="w-5 h-5 text-purple-600" />
+                    <SiViber className="w-5 h-5 text-slate-600" />
                     Viber
                   </Button>
                 </a>
