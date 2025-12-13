@@ -35,14 +35,12 @@ export function AdvantagesSection() {
     <section id="advantages" className="py-16 md:py-24 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
         <div className="text-center mb-12 md:mb-16">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-4">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-100 border border-teal-200 text-teal-700 text-sm font-medium mb-4">
+            <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse" />
             Почему мы
           </span>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-            <span className="text-slate-800 dark:text-slate-200">
-              Наши преимущества
-            </span>
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-800">
+            Наши преимущества
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Работаем качественно, быстро и с полной отдачей для достижения
@@ -53,9 +51,9 @@ export function AdvantagesSection() {
         <div className="grid md:grid-cols-3 gap-8 md:gap-12 mb-16">
           {advantages.map((advantage, index) => {
             const colorClasses = {
-              violet: "from-violet-500/20 to-violet-600/10 border-violet-500/30 text-violet-400",
-              cyan: "from-cyan-500/20 to-cyan-600/10 border-cyan-500/30 text-cyan-400",
-              purple: "from-purple-500/20 to-purple-600/10 border-purple-500/30 text-purple-400",
+              violet: "from-sky-100 to-sky-50 border-sky-200 text-sky-600",
+              cyan: "from-teal-100 to-teal-50 border-teal-200 text-teal-600",
+              purple: "from-indigo-100 to-indigo-50 border-indigo-200 text-indigo-600",
             };
             const colors = colorClasses[advantage.color as keyof typeof colorClasses];
             
@@ -68,7 +66,7 @@ export function AdvantagesSection() {
                 <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${colors} border flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
                   <advantage.icon className="w-8 h-8" />
                 </div>
-                <h3 className="font-display font-semibold text-xl text-foreground mb-3 group-hover:text-violet-400 transition-colors">
+                <h3 className="font-display font-semibold text-xl text-slate-800 mb-3 group-hover:text-sky-600 transition-colors">
                   {advantage.title}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
@@ -79,9 +77,9 @@ export function AdvantagesSection() {
           })}
         </div>
 
-        <div className="relative rounded-2xl p-8 md:p-12 bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,0.3),transparent_50%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(34,211,238,0.2),transparent_50%)]" />
+        <div className="relative rounded-2xl p-8 md:p-12 bg-gradient-to-r from-sky-500 via-blue-500 to-indigo-500 overflow-hidden shadow-xl shadow-sky-500/20">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.2),transparent_50%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(255,255,255,0.1),transparent_50%)]" />
           
           <div className="grid sm:grid-cols-3 gap-8 relative">
             {stats.map((stat, index) => (

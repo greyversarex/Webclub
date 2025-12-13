@@ -70,32 +70,30 @@ export function ContactSection() {
     <section id="contact" className="py-16 md:py-24 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
         <div className="text-center mb-12 md:mb-16">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-400 text-sm font-medium mb-4">
-            <span className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-100 border border-sky-200 text-sky-700 text-sm font-medium mb-4">
+            <span className="w-2 h-2 rounded-full bg-sky-500 animate-pulse" />
             Контакты
           </span>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-            <span className="text-slate-800 dark:text-slate-200">
-              Свяжитесь с нами
-            </span>
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-800">
+            Свяжитесь с нами
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-slate-600 text-lg max-w-2xl mx-auto">
             Готовы обсудить ваш проект? Оставьте заявку или свяжитесь с нами
             любым удобным способом
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12">
-          <Card className="p-6 md:p-8 bg-background/50 backdrop-blur-sm border-violet-500/20 hover:border-violet-500/40 transition-colors shadow-lg shadow-violet-500/5">
-            <h3 className="font-display font-semibold text-xl text-foreground mb-6 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-cyan-400" />
+          <Card className="p-6 md:p-8 bg-white/80 backdrop-blur-sm border-slate-200 hover:border-sky-300 transition-colors shadow-lg shadow-slate-300/20">
+            <h3 className="font-display font-semibold text-xl text-slate-800 mb-6 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-sky-500" />
               Оставить заявку
             </h3>
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label
                   htmlFor="name"
-                  className="block text-sm font-medium text-foreground mb-2"
+                  className="block text-sm font-medium text-slate-700 mb-2"
                 >
                   Имя *
                 </label>
@@ -107,7 +105,7 @@ export function ContactSection() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="bg-background/50 border-violet-500/20 focus:border-violet-500/50 focus:ring-violet-500/20"
+                  className="bg-white/70 border-slate-300 focus:border-sky-500 focus:ring-sky-500/20 text-slate-800 placeholder:text-slate-400"
                   data-testid="input-name"
                 />
               </div>
@@ -115,7 +113,7 @@ export function ContactSection() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-foreground mb-2"
+                  className="block text-sm font-medium text-slate-700 mb-2"
                 >
                   Email
                 </label>
@@ -126,7 +124,7 @@ export function ContactSection() {
                   placeholder="example@email.com"
                   value={formData.email}
                   onChange={handleChange}
-                  className="bg-background/50 border-violet-500/20 focus:border-violet-500/50 focus:ring-violet-500/20"
+                  className="bg-white/70 border-slate-300 focus:border-sky-500 focus:ring-sky-500/20 text-slate-800 placeholder:text-slate-400"
                   data-testid="input-email"
                 />
               </div>
@@ -134,7 +132,7 @@ export function ContactSection() {
               <div>
                 <label
                   htmlFor="phone"
-                  className="block text-sm font-medium text-foreground mb-2"
+                  className="block text-sm font-medium text-slate-700 mb-2"
                 >
                   Телефон *
                 </label>
@@ -146,7 +144,7 @@ export function ContactSection() {
                   value={formData.phone}
                   onChange={handleChange}
                   required
-                  className="bg-background/50 border-violet-500/20 focus:border-violet-500/50 focus:ring-violet-500/20"
+                  className="bg-white/70 border-slate-300 focus:border-sky-500 focus:ring-sky-500/20 text-slate-800 placeholder:text-slate-400"
                   data-testid="input-phone"
                 />
               </div>
@@ -154,7 +152,7 @@ export function ContactSection() {
               <div>
                 <label
                   htmlFor="message"
-                  className="block text-sm font-medium text-foreground mb-2"
+                  className="block text-sm font-medium text-slate-700 mb-2"
                 >
                   Сообщение
                 </label>
@@ -165,7 +163,7 @@ export function ContactSection() {
                   rows={4}
                   value={formData.message}
                   onChange={handleChange}
-                  className="resize-none bg-background/50 border-violet-500/20 focus:border-violet-500/50 focus:ring-violet-500/20"
+                  className="resize-none bg-white/70 border-slate-300 focus:border-sky-500 focus:ring-sky-500/20 text-slate-800 placeholder:text-slate-400"
                   data-testid="input-message"
                 />
               </div>
@@ -173,7 +171,7 @@ export function ContactSection() {
               <Button
                 type="submit"
                 size="lg"
-                className="w-full"
+                className="w-full bg-sky-600 hover:bg-sky-700 text-white"
                 disabled={isSubmitting}
                 data-testid="button-submit-contact"
               >
@@ -193,24 +191,24 @@ export function ContactSection() {
           </Card>
 
           <div className="space-y-6">
-            <Card className="p-6 md:p-8 bg-background/50 backdrop-blur-sm border-cyan-500/20 hover:border-cyan-500/40 transition-colors shadow-lg shadow-cyan-500/5">
-              <h3 className="font-display font-semibold text-xl text-foreground mb-6 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-violet-400" />
+            <Card className="p-6 md:p-8 bg-white/80 backdrop-blur-sm border-slate-200 hover:border-teal-300 transition-colors shadow-lg shadow-slate-300/20">
+              <h3 className="font-display font-semibold text-xl text-slate-800 mb-6 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-teal-500" />
                 Контактная информация
               </h3>
 
               <div className="space-y-5">
                 <a
                   href="tel:+992876220100"
-                  className="flex items-center gap-4 p-4 rounded-lg bg-violet-500/10 border border-violet-500/20 hover-elevate active-elevate-2 transition-all hover:border-violet-500/40"
+                  className="flex items-center gap-4 p-4 rounded-lg bg-sky-50 border border-sky-200 hover-elevate active-elevate-2 transition-all hover:border-sky-400"
                   data-testid="link-phone-contact"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500/30 to-violet-600/20 flex items-center justify-center flex-shrink-0 border border-violet-500/30">
-                    <Phone className="w-6 h-6 text-violet-400" />
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-sky-400 to-sky-500 flex items-center justify-center flex-shrink-0 shadow-md shadow-sky-500/20">
+                    <Phone className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <div className="text-sm text-muted-foreground">Телефон</div>
-                    <div className="font-semibold text-foreground text-lg">
+                    <div className="text-sm text-slate-500">Телефон</div>
+                    <div className="font-semibold text-slate-800 text-lg">
                       +992 87 622 0100
                     </div>
                   </div>
@@ -220,15 +218,15 @@ export function ContactSection() {
                   href="https://webclub.ink"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-4 rounded-lg bg-cyan-500/10 border border-cyan-500/20 hover-elevate active-elevate-2 transition-all hover:border-cyan-500/40"
+                  className="flex items-center gap-4 p-4 rounded-lg bg-teal-50 border border-teal-200 hover-elevate active-elevate-2 transition-all hover:border-teal-400"
                   data-testid="link-website"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500/30 to-cyan-600/20 flex items-center justify-center flex-shrink-0 border border-cyan-500/30">
-                    <Globe className="w-6 h-6 text-cyan-400" />
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-teal-400 to-teal-500 flex items-center justify-center flex-shrink-0 shadow-md shadow-teal-500/20">
+                    <Globe className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <div className="text-sm text-muted-foreground">Сайт</div>
-                    <div className="font-semibold text-foreground text-lg">
+                    <div className="text-sm text-slate-500">Сайт</div>
+                    <div className="font-semibold text-slate-800 text-lg">
                       webclub.ink
                     </div>
                   </div>
@@ -236,9 +234,9 @@ export function ContactSection() {
               </div>
             </Card>
 
-            <Card className="p-6 md:p-8 bg-background/50 backdrop-blur-sm border-violet-500/20 hover:border-violet-500/40 transition-colors shadow-lg shadow-violet-500/5">
-              <h3 className="font-display font-semibold text-xl text-foreground mb-6 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-cyan-400" />
+            <Card className="p-6 md:p-8 bg-white/80 backdrop-blur-sm border-slate-200 hover:border-sky-300 transition-colors shadow-lg shadow-slate-300/20">
+              <h3 className="font-display font-semibold text-xl text-slate-800 mb-6 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-sky-500" />
                 Мессенджеры
               </h3>
 
@@ -253,9 +251,9 @@ export function ContactSection() {
                   <Button
                     variant="outline"
                     size="lg"
-                    className="gap-2 border-violet-500/30 hover:border-violet-500/50 hover:bg-violet-500/10"
+                    className="gap-2 border-sky-300 text-sky-700 bg-sky-50"
                   >
-                    <SiTelegram className="w-5 h-5 text-violet-400" />
+                    <SiTelegram className="w-5 h-5 text-sky-600" />
                     Telegram
                   </Button>
                 </a>
@@ -270,9 +268,9 @@ export function ContactSection() {
                   <Button
                     variant="outline"
                     size="lg"
-                    className="gap-2 border-cyan-500/30 hover:border-cyan-500/50 hover:bg-cyan-500/10"
+                    className="gap-2 border-teal-300 text-teal-700 bg-teal-50"
                   >
-                    <SiWhatsapp className="w-5 h-5 text-cyan-400" />
+                    <SiWhatsapp className="w-5 h-5 text-teal-600" />
                     WhatsApp
                   </Button>
                 </a>
@@ -287,25 +285,25 @@ export function ContactSection() {
                   <Button
                     variant="outline"
                     size="lg"
-                    className="gap-2 border-purple-500/30 hover:border-purple-500/50 hover:bg-purple-500/10"
+                    className="gap-2 border-purple-300 text-purple-700 bg-purple-50"
                   >
-                    <SiViber className="w-5 h-5 text-purple-400" />
+                    <SiViber className="w-5 h-5 text-purple-600" />
                     Viber
                   </Button>
                 </a>
               </div>
             </Card>
 
-            <div className="p-6 rounded-xl bg-gradient-to-r from-violet-500/10 to-cyan-500/10 border border-violet-500/20 backdrop-blur-sm">
+            <div className="p-6 rounded-xl bg-gradient-to-r from-sky-50 to-teal-50 border border-sky-200 backdrop-blur-sm">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-500/30 to-cyan-600/20 flex items-center justify-center flex-shrink-0 border border-cyan-500/30">
-                  <Clock className="w-5 h-5 text-cyan-400" />
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-sky-400 to-teal-500 flex items-center justify-center flex-shrink-0 shadow-md shadow-sky-500/20">
+                  <Clock className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-foreground mb-1">
+                  <h4 className="font-semibold text-slate-800 mb-1">
                     Быстрый ответ
                   </h4>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-slate-600">
                     Среднее время ответа на заявку — 48 часов. Работаем с
                     понедельника по пятницу с 9:00 до 18:00.
                   </p>
