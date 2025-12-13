@@ -34,8 +34,8 @@ export function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-background/80 backdrop-blur-xl border-b border-violet-500/20 shadow-lg shadow-violet-500/5"
-          : "bg-background/60 backdrop-blur-md"
+          ? "bg-white/80 backdrop-blur-xl border-b border-slate-200 shadow-lg shadow-slate-300/20"
+          : "bg-white/50 backdrop-blur-md"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
@@ -64,7 +64,7 @@ export function Header() {
               <button
                 key={item.href}
                 onClick={() => scrollToSection(item.href)}
-                className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-violet-500/10"
+                className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors rounded-md hover:bg-slate-100"
                 data-testid={`link-nav-${item.label.toLowerCase()}`}
               >
                 {item.label}
@@ -77,7 +77,7 @@ export function Header() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="px-2 text-xs font-medium text-foreground hover:bg-violet-500/10"
+                className="px-2 text-xs font-medium text-slate-800 hover:bg-slate-100"
                 data-testid="button-lang-ru"
               >
                 RU
@@ -86,7 +86,7 @@ export function Header() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="px-2 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-violet-500/10"
+                className="px-2 text-xs font-medium text-slate-500 hover:text-slate-800 hover:bg-slate-100"
                 data-testid="button-lang-en"
               >
                 EN
@@ -111,7 +111,7 @@ export function Header() {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden text-foreground hover:bg-violet-500/10"
+              className="md:hidden text-slate-700 hover:bg-slate-100"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Открыть меню"
               data-testid="button-mobile-menu"
@@ -127,13 +127,13 @@ export function Header() {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-background/95 backdrop-blur-xl border-b border-violet-500/20">
+        <div className="md:hidden bg-white/95 backdrop-blur-xl border-b border-slate-200">
           <nav className="flex flex-col p-4 gap-2">
             {navItems.map((item) => (
               <button
                 key={item.href}
                 onClick={() => scrollToSection(item.href)}
-                className="px-4 py-3 text-left text-base font-medium text-muted-foreground hover:text-foreground hover:bg-violet-500/10 rounded-md transition-colors"
+                className="px-4 py-3 text-left text-base font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-colors"
                 data-testid={`link-mobile-nav-${item.label.toLowerCase()}`}
               >
                 {item.label}

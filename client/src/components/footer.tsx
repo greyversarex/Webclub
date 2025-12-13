@@ -30,7 +30,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-background border-t border-violet-500/20">
+    <footer className="bg-white/70 backdrop-blur-sm border-t border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-12 md:py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           <div className="col-span-2 md:col-span-1">
@@ -57,7 +57,7 @@ export function Footer() {
                 href="https://t.me/+992876220100"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-md bg-gradient-to-br from-violet-600 to-purple-600 flex items-center justify-center hover:shadow-lg hover:shadow-violet-500/30 transition-all"
+                className="w-9 h-9 rounded-md bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center hover:shadow-lg hover:shadow-sky-400/30 transition-all"
                 aria-label="Telegram"
                 data-testid="link-footer-telegram"
               >
@@ -67,7 +67,7 @@ export function Footer() {
                 href="https://wa.me/992876220100"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 rounded-md bg-gradient-to-br from-cyan-600 to-blue-600 flex items-center justify-center hover:shadow-lg hover:shadow-cyan-500/30 transition-all"
+                className="w-9 h-9 rounded-md bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center hover:shadow-lg hover:shadow-emerald-400/30 transition-all"
                 aria-label="WhatsApp"
                 data-testid="link-footer-whatsapp"
               >
@@ -83,7 +83,7 @@ export function Footer() {
                 <li key={link.href}>
                   <button
                     onClick={() => scrollToSection(link.href)}
-                    className="text-sm text-muted-foreground hover:text-violet-400 transition-colors"
+                    className="text-sm text-slate-500 hover:text-sky-600 transition-colors"
                     data-testid={`link-footer-${link.label.toLowerCase()}`}
                   >
                     {link.label}
@@ -100,7 +100,7 @@ export function Footer() {
                 <li key={index}>
                   <button
                     onClick={() => scrollToSection(service.href)}
-                    className="text-sm text-muted-foreground hover:text-violet-400 transition-colors text-left"
+                    className="text-sm text-slate-500 hover:text-sky-600 transition-colors text-left"
                     data-testid={`link-footer-service-${index}`}
                   >
                     {service.label}
@@ -116,7 +116,7 @@ export function Footer() {
               <li>
                 <a
                   href="tel:+992876220100"
-                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-cyan-400 transition-colors"
+                  className="flex items-center gap-2 text-sm text-slate-500 hover:text-sky-600 transition-colors"
                   data-testid="link-footer-phone"
                 >
                   <Phone className="w-4 h-4" />
@@ -128,7 +128,7 @@ export function Footer() {
                   href="https://webclub.ink"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-cyan-400 transition-colors"
+                  className="flex items-center gap-2 text-sm text-slate-500 hover:text-sky-600 transition-colors"
                   data-testid="link-footer-website"
                 >
                   <Globe className="w-4 h-4" />
@@ -138,7 +138,7 @@ export function Footer() {
               <li>
                 <a
                   href="mailto:info@webclub.ink"
-                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-cyan-400 transition-colors"
+                  className="flex items-center gap-2 text-sm text-slate-500 hover:text-sky-600 transition-colors"
                   data-testid="link-footer-email"
                 >
                   <Mail className="w-4 h-4" />
@@ -149,20 +149,20 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-violet-500/10">
+        <div className="mt-12 pt-8 border-t border-slate-200">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-slate-500">
               © {currentYear} WEBCLUB. Все права защищены.
             </p>
             <div className="flex gap-6">
               <button
-                className="text-sm text-muted-foreground hover:text-violet-400 transition-colors"
+                className="text-sm text-slate-500 hover:text-sky-600 transition-colors"
                 data-testid="link-privacy"
               >
                 Политика конфиденциальности
               </button>
               <button
-                className="text-sm text-muted-foreground hover:text-violet-400 transition-colors"
+                className="text-sm text-slate-500 hover:text-sky-600 transition-colors"
                 data-testid="link-terms"
               >
                 Условия использования
