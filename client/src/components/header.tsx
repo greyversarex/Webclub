@@ -32,10 +32,10 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`header-shimmer fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-gradient-to-r from-slate-100 via-gray-200 to-slate-100 dark:from-slate-800 dark:via-gray-900 dark:to-slate-800 backdrop-blur-xl border-b border-slate-300 dark:border-slate-700 shadow-lg shadow-slate-300/20 dark:shadow-slate-900/30"
-          : "bg-gradient-to-r from-slate-50 via-gray-100 to-slate-50 dark:from-slate-900 dark:via-gray-950 dark:to-slate-900 backdrop-blur-md"
+          ? "bg-gradient-to-r from-slate-200 via-slate-100 via-50% to-slate-200 dark:from-slate-800 dark:via-slate-700 dark:via-50% dark:to-slate-800 backdrop-blur-xl border-b border-slate-300/50 dark:border-slate-600/50 shadow-lg shadow-slate-400/20 dark:shadow-black/30"
+          : "bg-gradient-to-r from-slate-100 via-white via-50% to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:via-50% dark:to-slate-900 backdrop-blur-md border-b border-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
@@ -127,7 +127,7 @@ export function Header() {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-gradient-to-r from-slate-100 via-gray-200 to-slate-100 dark:from-slate-800 dark:via-gray-900 dark:to-slate-800 backdrop-blur-xl border-b border-slate-300 dark:border-slate-700">
+        <div className="md:hidden bg-gradient-to-r from-slate-200 via-slate-100 via-50% to-slate-200 dark:from-slate-800 dark:via-slate-700 dark:via-50% dark:to-slate-800 backdrop-blur-xl border-b border-slate-300/50 dark:border-slate-600/50">
           <nav className="flex flex-col p-4 gap-2">
             {navItems.map((item) => (
               <button
