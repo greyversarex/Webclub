@@ -34,8 +34,8 @@ export function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/80 backdrop-blur-xl border-b border-slate-200 shadow-lg shadow-slate-300/20"
-          : "bg-white/50 backdrop-blur-md"
+          ? "bg-gradient-to-r from-slate-100 via-gray-200 to-slate-100 dark:from-slate-800 dark:via-gray-900 dark:to-slate-800 backdrop-blur-xl border-b border-slate-300 dark:border-slate-700 shadow-lg shadow-slate-300/20 dark:shadow-slate-900/30"
+          : "bg-gradient-to-r from-slate-50 via-gray-100 to-slate-50 dark:from-slate-900 dark:via-gray-950 dark:to-slate-900 backdrop-blur-md"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
@@ -127,7 +127,7 @@ export function Header() {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white/95 backdrop-blur-xl border-b border-slate-200">
+        <div className="md:hidden bg-gradient-to-r from-slate-100 via-gray-200 to-slate-100 dark:from-slate-800 dark:via-gray-900 dark:to-slate-800 backdrop-blur-xl border-b border-slate-300 dark:border-slate-700">
           <nav className="flex flex-col p-4 gap-2">
             {navItems.map((item) => (
               <button
