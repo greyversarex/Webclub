@@ -2,12 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-@keyframes shimmer {
+@keyframes glint {
   0% {
-    background-position: -200% 0;
+    transform: translateX(-100%);
   }
   100% {
-    background-position: 200% 0;
+    transform: translateX(200%);
   }
 }
 
@@ -19,17 +19,21 @@
 .header-shimmer::before {
   content: "";
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.4) 25%,
-    rgba(255, 255, 255, 0.6) 50%,
-    rgba(255, 255, 255, 0.4) 75%,
+    rgba(255, 255, 255, 0.15) 20%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.15) 80%,
     transparent 100%
   );
-  background-size: 200% 100%;
-  animation: shimmer 4s ease-in-out infinite;
+  transform: translateX(-100%);
+  animation: glint 5s ease-in-out infinite;
+  animation-delay: 1s;
   pointer-events: none;
   z-index: 1;
 }
@@ -38,13 +42,11 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.08) 25%,
-    rgba(255, 255, 255, 0.15) 50%,
-    rgba(255, 255, 255, 0.08) 75%,
+    rgba(255, 255, 255, 0.05) 20%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.05) 80%,
     transparent 100%
   );
-  background-size: 200% 100%;
-  animation: shimmer 4s ease-in-out infinite;
 }
 
 /* COLD SILVER THEME - Light & Expressive */
