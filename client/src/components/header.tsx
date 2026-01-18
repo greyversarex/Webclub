@@ -34,8 +34,8 @@ export function Header() {
     <header
       className={`header-shimmer fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-gradient-to-r from-slate-800 via-slate-700 via-50% to-slate-800 backdrop-blur-xl border-b border-slate-600/50 shadow-lg shadow-black/30"
-          : "bg-gradient-to-r from-slate-800/95 via-slate-700/95 via-50% to-slate-800/95 backdrop-blur-md border-b border-transparent"
+          ? "bg-gradient-to-r from-slate-600 via-slate-500 via-50% to-slate-600 backdrop-blur-xl border-b border-slate-400/50 shadow-lg shadow-black/20"
+          : "bg-gradient-to-r from-slate-600/95 via-slate-500/95 via-50% to-slate-600/95 backdrop-blur-md border-b border-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
@@ -127,7 +127,7 @@ export function Header() {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-gradient-to-r from-slate-800 via-slate-700 via-50% to-slate-800 backdrop-blur-xl border-b border-slate-600/50">
+        <div className="md:hidden bg-gradient-to-r from-slate-600 via-slate-500 via-50% to-slate-600 backdrop-blur-xl border-b border-slate-400/50">
           <nav className="flex flex-col p-4 gap-2">
             {navItems.map((item) => (
               <button
