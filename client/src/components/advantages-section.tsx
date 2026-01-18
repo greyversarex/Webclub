@@ -1,4 +1,4 @@
-import { Zap, Sparkles, HeadphonesIcon, Clock, Users, Award } from "lucide-react";
+import { Zap, Sparkles, HeadphonesIcon } from "lucide-react";
 
 const advantages = [
   {
@@ -24,21 +24,11 @@ const advantages = [
   },
 ];
 
-const stats = [
-  { icon: Users, value: "876+", label: "Довольных клиентов" },
-  { icon: Award, value: "99%", label: "Успешных проектов" },
-  { icon: Clock, value: "48ч", label: "Среднее время ответа" },
-];
-
 export function AdvantagesSection() {
   return (
     <section id="advantages" className="py-16 md:py-24 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
         <div className="text-center mb-12 md:mb-16">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-100 border border-teal-200 text-teal-700 text-sm font-medium mb-4">
-            <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse" />
-            Почему мы
-          </span>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-800">
             Наши преимущества
           </h2>
@@ -75,31 +65,6 @@ export function AdvantagesSection() {
               </div>
             );
           })}
-        </div>
-
-        <div className="relative rounded-2xl p-8 md:p-12 bg-gradient-to-r from-sky-500 via-blue-500 to-indigo-500 overflow-hidden shadow-xl shadow-sky-500/20">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.2),transparent_50%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(255,255,255,0.1),transparent_50%)]" />
-          
-          <div className="grid sm:grid-cols-3 gap-8 relative">
-            {stats.map((stat, index) => (
-              <div
-                key={index}
-                className="text-center"
-                data-testid={`stat-advantage-${index}`}
-              >
-                <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center mx-auto mb-4 border border-white/20">
-                  <stat.icon className="w-6 h-6 text-white" />
-                </div>
-                <div className="font-display text-4xl md:text-5xl font-bold text-white mb-2 drop-shadow-lg">
-                  {stat.value}
-                </div>
-                <div className="text-white/80 text-sm md:text-base">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </section>

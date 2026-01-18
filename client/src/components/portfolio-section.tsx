@@ -82,10 +82,6 @@ export function PortfolioSection() {
     <section id="portfolio" className="py-16 md:py-24 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
         <div className="text-center mb-12 md:mb-16">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-100 border border-sky-200 text-sky-700 text-sm font-medium mb-4">
-            <span className="w-2 h-2 rounded-full bg-sky-500 animate-pulse" />
-            Портфолио
-          </span>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-800">
             Наши проекты
           </h2>

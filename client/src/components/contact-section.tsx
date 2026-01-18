@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Phone, Globe, Send, Loader2, Clock } from "lucide-react";
+import { Phone, Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { SiTelegram, SiWhatsapp, SiViber } from "react-icons/si";
+import { SiTelegram, SiWhatsapp } from "react-icons/si";
 import { apiRequest } from "@/lib/queryClient";
 
 interface ContactFormData {
@@ -214,23 +214,6 @@ export function ContactSection() {
                   </div>
                 </a>
 
-                <a
-                  href="https://webclub.ink"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-4 rounded-lg bg-teal-50 border border-teal-200 hover-elevate active-elevate-2 transition-all hover:border-teal-400"
-                  data-testid="link-website"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-teal-400 to-teal-500 flex items-center justify-center flex-shrink-0 shadow-md shadow-teal-500/20">
-                    <Globe className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <div className="text-sm text-slate-500">Сайт</div>
-                    <div className="font-semibold text-slate-800 text-lg">
-                      webclub.ink
-                    </div>
-                  </div>
-                </a>
               </div>
             </Card>
 
@@ -275,41 +258,9 @@ export function ContactSection() {
                   </Button>
                 </a>
 
-                <a
-                  href="viber://chat?number=992876220100"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Viber"
-                  data-testid="link-viber"
-                >
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="gap-2 border-slate-300 text-slate-700 bg-slate-50"
-                  >
-                    <SiViber className="w-5 h-5 text-slate-600" />
-                    Viber
-                  </Button>
-                </a>
               </div>
             </Card>
 
-            <div className="p-6 rounded-xl bg-gradient-to-r from-sky-50 to-teal-50 border border-sky-200 backdrop-blur-sm">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-sky-400 to-teal-500 flex items-center justify-center flex-shrink-0 shadow-md shadow-sky-500/20">
-                  <Clock className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-slate-800 mb-1">
-                    Быстрый ответ
-                  </h4>
-                  <p className="text-sm text-slate-600">
-                    Среднее время ответа на заявку — 48 часов. Работаем с
-                    понедельника по пятницу с 9:00 до 18:00.
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
