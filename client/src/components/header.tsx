@@ -102,6 +102,7 @@ export function Header() {
             >
               <Button 
                 size="default"
+                className="bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 text-slate-800 border-slate-300 shadow-lg shadow-slate-300/25"
               >
                 <Phone className="w-4 h-4 mr-2" />
                 +992 87 622 0100
@@ -144,7 +145,7 @@ export function Header() {
               className="mt-2"
               data-testid="link-phone-mobile"
             >
-              <Button className="w-full">
+              <Button className="w-full bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 text-slate-800 border-slate-300 shadow-lg shadow-slate-300/25">
                 <Phone className="w-4 h-4 mr-2" />
                 Позвонить: +992 87 622 0100
               </Button>
