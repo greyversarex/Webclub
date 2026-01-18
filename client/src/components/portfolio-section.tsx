@@ -107,19 +107,19 @@ export function PortfolioSection() {
             return (
               <Card
                 key={project.id}
-                className={`group overflow-visible hover-elevate transition-all duration-500 bg-white/80 backdrop-blur-sm border-slate-200 ${styles.card} ${
+                className={`group overflow-visible hover-elevate transition-all duration-500 bg-gradient-to-r from-slate-400 via-slate-200 to-slate-400 backdrop-blur-sm border-slate-300 ${styles.card} ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
                 style={{ transitionDelay: isVisible ? `${200 + index * 80}ms` : '0ms' }}
                 data-testid={`card-project-${project.id}`}
               >
-                <div className="relative h-48 rounded-t-md bg-gradient-to-br from-slate-100 to-slate-50 overflow-hidden">
+                <div className="relative h-48 rounded-t-md bg-gradient-to-br from-slate-300 to-slate-200 overflow-hidden">
                   <img 
                     src={project.image} 
                     alt={project.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-300 via-transparent to-transparent" />
                 </div>
                 <div className="p-5">
                   <div className="flex items-center justify-between gap-2 mb-3">
@@ -130,17 +130,17 @@ export function PortfolioSection() {
                       {project.category}
                     </Badge>
                   </div>
-                  <h3 className="font-display font-semibold text-lg text-slate-800 mb-2 group-hover:text-violet-600 transition-colors">
+                  <h3 className="font-display font-semibold text-lg text-white mb-2 group-hover:text-violet-200 transition-colors">
                     {project.title}
                   </h3>
-                  <p className="text-slate-600 text-sm mb-4 line-clamp-2">
+                  <p className="text-white/90 text-sm mb-4 line-clamp-2">
                     {project.description}
                   </p>
                   <div className="flex flex-wrap gap-1.5">
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-2 py-1 text-xs rounded bg-slate-100 text-slate-600 border border-slate-200"
+                        className="px-2 py-1 text-xs rounded bg-slate-500/30 text-white border border-slate-400/50"
                       >
                         {tag}
                       </span>

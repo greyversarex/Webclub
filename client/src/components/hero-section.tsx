@@ -119,10 +119,10 @@ export function HeroSection() {
               {miniServices.map((service, index) => (
                 <Card
                   key={index}
-                  className="group overflow-hidden bg-white/90 backdrop-blur-sm border-slate-200 hover:border-violet-400 hover:shadow-xl transition-all duration-300"
+                  className="group overflow-hidden bg-gradient-to-r from-slate-400 via-slate-200 to-slate-400 backdrop-blur-sm border-slate-300 hover:border-violet-400 hover:shadow-xl transition-all duration-300"
                   data-testid={`hero-mini-card-${index}`}
                 >
-                  <div className="h-32 sm:h-36 overflow-hidden bg-gradient-to-br from-slate-100 to-slate-50">
+                  <div className="h-32 sm:h-36 overflow-hidden bg-gradient-to-br from-slate-300 to-slate-200">
                     <img 
                       src={service.image} 
                       alt={service.title}
@@ -130,7 +130,7 @@ export function HeroSection() {
                     />
                   </div>
                   <div className="p-3 sm:p-4">
-                    <h4 className="font-display font-semibold text-sm sm:text-base text-slate-800 leading-tight text-center">
+                    <h4 className="font-display font-semibold text-sm sm:text-base text-white leading-tight text-center">
                       {service.title}
                     </h4>
                   </div>
