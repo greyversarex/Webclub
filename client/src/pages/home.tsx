@@ -5,7 +5,6 @@ import { TechStackSection } from "@/components/tech-stack-section";
 import { AdvantagesSection } from "@/components/advantages-section";
 import { ContactSection } from "@/components/contact-section";
 import { Footer } from "@/components/footer";
-import { DNAHelix } from "@/components/dna-helix";
 import geometricBg from "@assets/Визитки_Personal_(1)_1765668694348.png";
 
 export default function Home() {
@@ -17,10 +16,6 @@ export default function Home() {
         alt="" 
         className="fixed inset-0 w-full h-full object-cover pointer-events-none"
       />
-      
-      {/* ДНК спирали по бокам */}
-      <DNAHelix side="left" />
-      <DNAHelix side="right" />
       
       <div className="relative">
         <Header />

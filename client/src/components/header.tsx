@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { FallingNumbers } from "@/components/falling-numbers";
 
 const navItems = [
   { label: "Услуги", href: "#services" },
@@ -38,7 +39,8 @@ export function Header() {
           : "bg-gradient-to-r from-slate-200/95 via-slate-100/95 via-50% to-slate-200/95 backdrop-blur-md border-b border-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+      <FallingNumbers direction="down" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         <div className="flex items-center justify-between h-16 md:h-20 gap-4">
           <a
             href="#"

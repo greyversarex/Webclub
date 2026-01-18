@@ -11,45 +11,37 @@
   }
 }
 
-@keyframes dnaRotateLeft {
-  0%, 100% {
-    transform: translateX(-50%) translateX(-20px);
-    opacity: 0.3;
+@keyframes fallDown {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
   }
-  50% {
-    transform: translateX(-50%) translateX(20px);
+  10% {
     opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(80px);
+    opacity: 0;
   }
 }
 
-@keyframes dnaRotateRight {
-  0%, 100% {
-    transform: translateX(-50%) translateX(20px);
-    opacity: 0.3;
+@keyframes fallUp {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
   }
-  50% {
-    transform: translateX(-50%) translateX(-20px);
+  10% {
     opacity: 1;
   }
-}
-
-@keyframes dnaFade {
-  0%, 100% {
-    opacity: 0.3;
-    transform: scale(0.8);
-  }
-  50% {
+  90% {
     opacity: 1;
-    transform: scale(1);
   }
-}
-
-@keyframes dnaPulse {
-  0%, 100% {
-    opacity: 0.2;
-  }
-  50% {
-    opacity: 0.5;
+  100% {
+    transform: translateY(-80px);
+    opacity: 0;
   }
 }
 
