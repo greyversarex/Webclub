@@ -5,9 +5,10 @@ interface IntroAnimationProps {
 }
 
 export function IntroAnimation({ onComplete }: IntroAnimationProps) {
-  const [phase, setPhase] = useState<"coding" | "forming" | "complete">("coding");
+  const [phase, setPhase] = useState<"coding" | "forming" | "glowing" | "complete">("coding");
   const [displayText, setDisplayText] = useState<string[]>([]);
   const [opacity, setOpacity] = useState(1);
+  const [glowIndex, setGlowIndex] = useState(-1);
   
   const targetText = "WEBCLUB";
   const chars = "01アイウエオカキクケコサシスセソタチツテト0123456789";
@@ -50,10 +51,27 @@ export function IntroAnimation({ onComplete }: IntroAnimationProps) {
   useEffect(() => {
     if (phase === "forming") {
       const timer = setTimeout(() => {
-        setPhase("complete");
-        setOpacity(0);
-      }, 800);
+        setPhase("glowing");
+      }, 400);
       return () => clearTimeout(timer);
+    }
+  }, [phase]);
+
+  useEffect(() => {
+    if (phase === "glowing") {
+      let currentIndex = 0;
+      const glowInterval = setInterval(() => {
+        setGlowIndex(currentIndex);
+        currentIndex++;
+        if (currentIndex > targetText.length + 3) {
+          clearInterval(glowInterval);
+          setTimeout(() => {
+            setPhase("complete");
+            setOpacity(0);
+          }, 300);
+        }
+      }, 80);
+      return () => clearInterval(glowInterval);
     }
   }, [phase]);
 
@@ -81,24 +99,37 @@ export function IntroAnimation({ onComplete }: IntroAnimationProps) {
 
       <div className="relative z-10 text-center">
         <div className="flex items-center justify-center gap-1 md:gap-2">
-          {displayText.map((char, index) => (
-            <span
-              key={index}
-              className={`
-                text-4xl md:text-6xl lg:text-8xl font-bold font-mono
-                transition-all duration-300
-                ${char === targetText[index] 
-                  ? "text-[#3B82F6] drop-shadow-[0_0_20px_rgba(59,130,246,0.8)]" 
-                  : "text-[#3B82F6]/60"
-                }
-              `}
-              style={{
-                animationDelay: `${index * 100}ms`,
-              }}
-            >
-              {char}
-            </span>
-          ))}
+          {displayText.map((char, index) => {
+            const isGlowing = phase === "glowing" && Math.abs(index - glowIndex) <= 1;
+            const hasGlowed = phase === "glowing" && index < glowIndex - 1;
+            const glowIntensity = isGlowing ? (1 - Math.abs(index - glowIndex) * 0.3) : 0;
+            
+            return (
+              <span
+                key={index}
+                className={`
+                  text-4xl md:text-6xl lg:text-8xl font-bold font-mono
+                  transition-all duration-150
+                  ${char === targetText[index] 
+                    ? "text-[#3B82F6]" 
+                    : "text-[#3B82F6]/60"
+                  }
+                `}
+                style={{
+                  textShadow: isGlowing 
+                    ? `0 0 ${30 + glowIntensity * 40}px rgba(59,130,246,${0.8 + glowIntensity * 0.2}), 0 0 ${60 + glowIntensity * 60}px rgba(59,130,246,${0.6 + glowIntensity * 0.2}), 0 0 ${100 + glowIntensity * 80}px rgba(59,130,246,${0.4 + glowIntensity * 0.2})`
+                    : hasGlowed 
+                      ? '0 0 20px rgba(59,130,246,0.8)'
+                      : char === targetText[index] 
+                        ? '0 0 20px rgba(59,130,246,0.8)' 
+                        : 'none',
+                  transform: isGlowing ? `scale(${1 + glowIntensity * 0.15})` : 'scale(1)',
+                }}
+              >
+                {char}
+              </span>
+            );
+          })}
         </div>
         
         <div className="mt-6 flex items-center justify-center gap-2">
