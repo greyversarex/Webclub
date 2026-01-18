@@ -54,7 +54,7 @@ export function Header() {
               alt="WEBCLUB Logo" 
               className="w-12 h-12 md:w-16 md:h-16 object-contain"
             />
-            <span className="font-display font-bold text-xl md:text-2xl bg-gradient-to-r from-slate-700 via-cyan-500 to-cyan-400 bg-clip-text text-transparent">
+            <span className="font-display font-bold text-xl md:text-2xl text-cyan-600">
               WEBCLUB
             </span>
           </a>

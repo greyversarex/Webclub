@@ -103,7 +103,7 @@ export function HeroSection() {
             <div className="flex flex-wrap gap-8 pt-8 border-t border-slate-400/30">
               {stats.map((stat, index) => (
                 <div key={index} data-testid={`stat-${index}`}>
-                  <div className="font-display text-3xl font-bold bg-gradient-to-r from-slate-700 via-cyan-500 to-cyan-400 bg-clip-text text-transparent">
+                  <div className="font-display text-3xl font-bold text-cyan-600">
                     {stat.value}
                   </div>
                   <div className="text-sm text-muted-foreground">
