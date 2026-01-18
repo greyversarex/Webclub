@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 
@@ -94,20 +94,6 @@ export function Header() {
             </div>
             
             <ThemeToggle />
-            
-            <a
-              href="tel:+992876220100"
-              className="hidden sm:flex"
-              data-testid="link-phone-header"
-            >
-              <Button 
-                size="default"
-                className="bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 text-slate-800 border-slate-300 shadow-lg shadow-slate-300/25"
-              >
-                <Phone className="w-4 h-4 mr-2" />
-                +992 87 622 0100
-              </Button>
-            </a>
 
             <Button
               variant="ghost"
@@ -140,16 +126,6 @@ export function Header() {
                 {item.label}
               </button>
             ))}
-            <a
-              href="tel:+992876220100"
-              className="mt-2"
-              data-testid="link-phone-mobile"
-            >
-              <Button className="w-full bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 text-slate-800 border-slate-300 shadow-lg shadow-slate-300/25">
-                <Phone className="w-4 h-4 mr-2" />
-                Позвонить: +992 87 622 0100
-              </Button>
-            </a>
           </nav>
         </div>
       )}
