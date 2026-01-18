@@ -182,7 +182,7 @@ export function ContactSection() {
               <Button
                 type="submit"
                 size="lg"
-                className="w-full bg-violet-600 hover:bg-violet-700 text-white"
+                className="w-full bg-gradient-to-r from-slate-400 via-slate-200 to-slate-400 text-slate-800 border-slate-300 shadow-lg shadow-slate-400/25"
                 disabled={isSubmitting}
                 data-testid="button-submit-contact"
               >
@@ -219,8 +219,8 @@ export function ContactSection() {
                   className="flex items-center gap-4 p-4 rounded-lg bg-violet-50 border border-violet-200 hover-elevate active-elevate-2 transition-all hover:border-violet-400"
                   data-testid="link-phone-contact"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-400 to-violet-500 flex items-center justify-center flex-shrink-0 shadow-md shadow-violet-500/20">
-                    <Phone className="w-6 h-6 text-white" />
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-slate-400 via-slate-200 to-slate-400 flex items-center justify-center flex-shrink-0 shadow-md shadow-slate-400/20">
+                    <Phone className="w-6 h-6 text-slate-700" />
                   </div>
                   <div>
                     <div className="text-sm text-slate-500">Телефон</div>

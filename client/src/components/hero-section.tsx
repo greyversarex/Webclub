@@ -84,6 +84,7 @@ export function HeroSection() {
               <Button
                 size="lg"
                 onClick={scrollToContact}
+                className="bg-gradient-to-r from-slate-400 via-slate-200 to-slate-400 text-slate-800 border-slate-300 shadow-lg shadow-slate-400/25"
                 data-testid="button-discuss-project"
               >
                 Обсудить проект
