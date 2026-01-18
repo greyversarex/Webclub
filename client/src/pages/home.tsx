@@ -5,18 +5,15 @@ import { TechStackSection } from "@/components/tech-stack-section";
 import { AdvantagesSection } from "@/components/advantages-section";
 import { ContactSection } from "@/components/contact-section";
 import { Footer } from "@/components/footer";
-import videoBg from "@assets/Пин_на_доске_Quick_saves_1768768732798.mp4";
+import geometricBg from "@assets/8a718984ed15e6bb3218e620d6cc183b_1768767114416.jpg";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-background relative">
-      {/* Видео-фон */}
-      <video 
-        src={videoBg} 
-        autoPlay 
-        loop 
-        muted 
-        playsInline
+      {/* Геометрический фон */}
+      <img 
+        src={geometricBg} 
+        alt="" 
         className="fixed inset-0 w-full h-full object-cover pointer-events-none"
       />
       
