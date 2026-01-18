@@ -5,7 +5,7 @@ import { TechStackSection } from "@/components/tech-stack-section";
 import { AdvantagesSection } from "@/components/advantages-section";
 import { ContactSection } from "@/components/contact-section";
 import { Footer } from "@/components/footer";
-import geometricBg from "@assets/8a718984ed15e6bb3218e620d6cc183b_1768767114416.jpg";
+import geometricBg from "@assets/Визитки_Personal_(1)_1765668694348.png";
 
 export default function Home() {
   return (
