@@ -50,14 +50,9 @@ export function HeroSection() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="order-2 lg:order-1">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-600/10 border border-violet-500/20 text-violet-700 text-sm font-medium mb-6 backdrop-blur-sm">
-              <span className="w-2 h-2 rounded-full bg-violet-500 animate-pulse shadow-lg shadow-violet-500/50" />
-              Компания по IT-разработкам
-            </div>
-
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-800 leading-tight mb-6">
               Создаём{" "}
-              <span className="bg-gradient-to-r from-violet-600 via-violet-500 to-emerald-500 bg-clip-text text-transparent">IT-решения</span>
+              <span className="text-cyan-800">IT-решения</span>
               {" "}для вашего бизнеса
             </h1>
 
