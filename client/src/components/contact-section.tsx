@@ -91,12 +91,12 @@ export function ContactSection() {
 
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12">
           <Card 
-            className={`p-6 md:p-8 bg-gradient-to-r from-slate-400 via-slate-200 to-slate-400 backdrop-blur-sm border-slate-300 hover:border-violet-300 transition-all duration-500 shadow-lg shadow-slate-400/20 ${
+            className={`p-6 md:p-8 bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 backdrop-blur-sm border-slate-300 hover:border-violet-300 transition-all duration-500 shadow-lg shadow-slate-300/20 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
             style={{ transitionDelay: isVisible ? '200ms' : '0ms' }}
           >
-            <h3 className="font-display font-semibold text-xl text-white mb-6 flex items-center gap-2">
+            <h3 className="font-display font-semibold text-xl text-slate-800 mb-6 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-violet-500" />
               Оставить заявку
             </h3>
@@ -104,7 +104,7 @@ export function ContactSection() {
               <div>
                 <label
                   htmlFor="name"
-                  className="block text-sm font-medium text-white mb-2"
+                  className="block text-sm font-medium text-slate-700 mb-2"
                 >
                   Имя *
                 </label>
@@ -124,7 +124,7 @@ export function ContactSection() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-white mb-2"
+                  className="block text-sm font-medium text-slate-700 mb-2"
                 >
                   Email
                 </label>
@@ -143,7 +143,7 @@ export function ContactSection() {
               <div>
                 <label
                   htmlFor="phone"
-                  className="block text-sm font-medium text-white mb-2"
+                  className="block text-sm font-medium text-slate-700 mb-2"
                 >
                   Телефон *
                 </label>
@@ -163,7 +163,7 @@ export function ContactSection() {
               <div>
                 <label
                   htmlFor="message"
-                  className="block text-sm font-medium text-white mb-2"
+                  className="block text-sm font-medium text-slate-700 mb-2"
                 >
                   Сообщение
                 </label>
@@ -182,7 +182,7 @@ export function ContactSection() {
               <Button
                 type="submit"
                 size="lg"
-                className="w-full bg-gradient-to-r from-slate-400 via-slate-200 to-slate-400 text-slate-800 border-slate-300 shadow-lg shadow-slate-400/25"
+                className="w-full bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 text-slate-800 border-slate-300 shadow-lg shadow-slate-300/25"
                 disabled={isSubmitting}
                 data-testid="button-submit-contact"
               >
@@ -203,12 +203,12 @@ export function ContactSection() {
 
           <div className="space-y-6">
             <Card 
-              className={`p-6 md:p-8 bg-gradient-to-r from-slate-400 via-slate-200 to-slate-400 backdrop-blur-sm border-slate-300 hover:border-emerald-300 transition-all duration-500 shadow-lg shadow-slate-400/20 ${
+              className={`p-6 md:p-8 bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 backdrop-blur-sm border-slate-300 hover:border-emerald-300 transition-all duration-500 shadow-lg shadow-slate-300/20 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
               style={{ transitionDelay: isVisible ? '300ms' : '0ms' }}
             >
-              <h3 className="font-display font-semibold text-xl text-white mb-6 flex items-center gap-2">
+              <h3 className="font-display font-semibold text-xl text-slate-800 mb-6 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-500" />
                 Контактная информация
               </h3>
@@ -219,12 +219,12 @@ export function ContactSection() {
                   className="flex items-center gap-4 p-4 rounded-lg bg-violet-50 border border-violet-200 hover-elevate active-elevate-2 transition-all hover:border-violet-400"
                   data-testid="link-phone-contact"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-slate-400 via-slate-200 to-slate-400 flex items-center justify-center flex-shrink-0 shadow-md shadow-slate-400/20">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 flex items-center justify-center flex-shrink-0 shadow-md shadow-slate-300/20">
                     <Phone className="w-6 h-6 text-slate-700" />
                   </div>
                   <div>
-                    <div className="text-sm text-white/80">Телефон</div>
-                    <div className="font-semibold text-white text-lg">
+                    <div className="text-sm text-slate-600">Телефон</div>
+                    <div className="font-semibold text-slate-800 text-lg">
                       +992 87 622 0100
                     </div>
                   </div>
@@ -234,12 +234,12 @@ export function ContactSection() {
             </Card>
 
             <Card 
-              className={`p-6 md:p-8 bg-gradient-to-r from-slate-400 via-slate-200 to-slate-400 backdrop-blur-sm border-slate-300 hover:border-violet-300 transition-all duration-500 shadow-lg shadow-slate-400/20 ${
+              className={`p-6 md:p-8 bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 backdrop-blur-sm border-slate-300 hover:border-violet-300 transition-all duration-500 shadow-lg shadow-slate-300/20 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
               style={{ transitionDelay: isVisible ? '400ms' : '0ms' }}
             >
-              <h3 className="font-display font-semibold text-xl text-white mb-6 flex items-center gap-2">
+              <h3 className="font-display font-semibold text-xl text-slate-800 mb-6 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-violet-500" />
                 Мессенджеры
               </h3>
