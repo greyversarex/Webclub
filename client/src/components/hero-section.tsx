@@ -52,7 +52,7 @@ export function HeroSection() {
           <div className="order-2 lg:order-1">
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-800 leading-tight mb-6">
               Создаём{" "}
-              <span className="text-cyan-800">IT-решения</span>
+              <span className="text-cyan-700">IT-решения</span>
               {" "}для вашего бизнеса
             </h1>
 
