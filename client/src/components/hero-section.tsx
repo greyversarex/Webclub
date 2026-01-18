@@ -1,5 +1,11 @@
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+
+import onlineStoreImg from "@assets/generated_images/online_store_illustration.png";
+import corporateWebsiteImg from "@assets/generated_images/corporate_website_illustration.png";
+import mobileAppsImg from "@assets/generated_images/mobile_apps_illustration.png";
+import bankingSecurityImg from "@assets/generated_images/banking_security_illustration.png";
 
 const features = [
   "Интернет-магазины",
@@ -12,6 +18,13 @@ const stats = [
   { value: "100+", label: "Проектов" },
   { value: "5+", label: "Лет опыта" },
   { value: "24/7", label: "Поддержка" },
+];
+
+const miniServices = [
+  { image: onlineStoreImg, title: "Интернет-магазины" },
+  { image: corporateWebsiteImg, title: "Корпоративные сайты" },
+  { image: mobileAppsImg, title: "Мобильные приложения" },
+  { image: bankingSecurityImg, title: "Банковские проекты" },
 ];
 
 export function HeroSection() {
@@ -35,14 +48,14 @@ export function HeroSection() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="order-2 lg:order-1">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-600/10 border border-slate-500/20 text-slate-600 text-sm font-medium mb-6 backdrop-blur-sm">
-              <span className="w-2 h-2 rounded-full bg-sky-500 animate-pulse shadow-lg shadow-sky-500/50" />
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-600/10 border border-violet-500/20 text-violet-700 text-sm font-medium mb-6 backdrop-blur-sm">
+              <span className="w-2 h-2 rounded-full bg-violet-500 animate-pulse shadow-lg shadow-violet-500/50" />
               Компания по IT-разработкам
             </div>
 
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-800 leading-tight mb-6">
               Создаём{" "}
-              <span className="bg-gradient-to-r from-sky-600 via-cyan-500 to-teal-500 bg-clip-text text-transparent">IT-решения</span>
+              <span className="bg-gradient-to-r from-violet-600 via-violet-500 to-emerald-500 bg-clip-text text-transparent">IT-решения</span>
               {" "}для вашего бизнеса
             </h1>
 
@@ -59,7 +72,7 @@ export function HeroSection() {
                   className="flex items-start gap-3 text-foreground"
                   data-testid={`text-feature-${index}`}
                 >
-                  <CheckCircle2 className="w-5 h-5 text-sky-400 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-5 h-5 text-violet-500 flex-shrink-0 mt-0.5" />
                   <span>{feature}</span>
                 </li>
               ))}
@@ -87,7 +100,7 @@ export function HeroSection() {
             <div className="flex flex-wrap gap-8 pt-8 border-t border-slate-400/30">
               {stats.map((stat, index) => (
                 <div key={index} data-testid={`stat-${index}`}>
-                  <div className="font-display text-3xl font-bold bg-gradient-to-r from-slate-700 via-sky-600 to-cyan-600 bg-clip-text text-transparent">
+                  <div className="font-display text-3xl font-bold bg-gradient-to-r from-slate-700 via-violet-600 to-emerald-600 bg-clip-text text-transparent">
                     {stat.value}
                   </div>
                   <div className="text-sm text-muted-foreground">
@@ -99,78 +112,27 @@ export function HeroSection() {
           </div>
 
           <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-md lg:max-w-lg">
-              <div className="absolute inset-0 bg-gradient-to-tr from-slate-400/20 to-sky-400/15 rounded-3xl transform rotate-3" />
-              <div className="relative bg-white/60 backdrop-blur-sm border border-slate-300/50 rounded-3xl p-8 shadow-lg shadow-slate-400/20">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-slate-600 via-slate-700 to-zinc-700 flex items-center justify-center shadow-lg shadow-slate-600/30">
-                    <span className="text-white font-display font-bold text-2xl">
-                      WC
-                    </span>
+            <div className="grid grid-cols-2 gap-3 w-full max-w-md lg:max-w-lg">
+              {miniServices.map((service, index) => (
+                <Card
+                  key={index}
+                  className="group overflow-hidden bg-white/80 backdrop-blur-sm border-slate-200 hover:border-violet-300 hover:shadow-lg transition-all duration-300"
+                  data-testid={`hero-mini-card-${index}`}
+                >
+                  <div className="h-24 sm:h-28 overflow-hidden bg-gradient-to-br from-slate-100 to-slate-50">
+                    <img 
+                      src={service.image} 
+                      alt={service.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
                   </div>
-                  <div>
-                    <h3 className="font-display font-bold text-xl text-foreground">
-                      WEBCLUB
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      IT-разработка
-                    </p>
+                  <div className="p-2 sm:p-3">
+                    <h4 className="font-display font-semibold text-xs sm:text-sm text-slate-800 leading-tight">
+                      {service.title}
+                    </h4>
                   </div>
-                </div>
-
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-slate-200/60 border border-slate-300/50">
-                    <div className="w-10 h-10 rounded-md bg-gradient-to-br from-slate-500 to-slate-600 flex items-center justify-center shadow-md shadow-slate-500/30">
-                      <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                      </svg>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="h-2 bg-slate-400/40 rounded-full w-3/4" />
-                      <div className="h-2 bg-muted rounded-full w-1/2 mt-2" />
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-sky-100/60 border border-sky-300/50">
-                    <div className="w-10 h-10 rounded-md bg-gradient-to-br from-sky-500 to-cyan-600 flex items-center justify-center shadow-md shadow-sky-500/30">
-                      <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="h-2 bg-sky-400/40 rounded-full w-2/3" />
-                      <div className="h-2 bg-muted rounded-full w-2/5 mt-2" />
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 p-3 rounded-lg bg-zinc-200/60 border border-zinc-300/50">
-                    <div className="w-10 h-10 rounded-md bg-gradient-to-br from-zinc-500 to-zinc-600 flex items-center justify-center shadow-md shadow-zinc-500/30">
-                      <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                      </svg>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="h-2 bg-zinc-400/40 rounded-full w-4/5" />
-                      <div className="h-2 bg-muted rounded-full w-3/5 mt-2" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-6 flex gap-3">
-                  <div className="flex-1 h-12 rounded-lg bg-foreground/5 dark:bg-white/5 flex items-center justify-center px-3">
-                    <svg viewBox="0 0 120 40" className="h-8 w-auto opacity-80">
-                      <rect fill="currentColor" opacity="0.1" width="120" height="40" rx="6"/>
-                      <text x="60" y="25" textAnchor="middle" className="fill-current text-xs font-medium">App Store</text>
-                    </svg>
-                  </div>
-                  <div className="flex-1 h-12 rounded-lg bg-foreground/5 dark:bg-white/5 flex items-center justify-center px-3">
-                    <svg viewBox="0 0 135 40" className="h-8 w-auto opacity-80">
-                      <rect fill="currentColor" opacity="0.1" width="135" height="40" rx="6"/>
-                      <text x="67" y="25" textAnchor="middle" className="fill-current text-xs font-medium">Google Play</text>
-                    </svg>
-                  </div>
-                </div>
-              </div>
+                </Card>
+              ))}
             </div>
           </div>
         </div>
