@@ -216,10 +216,10 @@ export function ContactSection() {
               <div className="space-y-5">
                 <a
                   href="tel:+992876220100"
-                  className="flex items-center gap-4 p-4 rounded-lg bg-violet-50 border border-violet-200 hover-elevate active-elevate-2 transition-all hover:border-violet-400"
+                  className="flex items-center gap-4 p-4 rounded-lg bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 border border-slate-300 hover-elevate active-elevate-2 transition-all hover:border-violet-400"
                   data-testid="link-phone-contact"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 flex items-center justify-center flex-shrink-0 shadow-md shadow-slate-300/20">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-slate-300 via-slate-200 to-slate-300 flex items-center justify-center flex-shrink-0 shadow-md shadow-slate-300/20">
                     <Phone className="w-6 h-6 text-slate-700" />
                   </div>
                   <div>
