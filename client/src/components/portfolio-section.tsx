@@ -1,4 +1,3 @@
-import { ExternalLink } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
@@ -121,12 +120,6 @@ export function PortfolioSection() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
-                  <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/60 transition-all duration-300 flex items-center justify-center">
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2 px-4 py-2 rounded-full bg-violet-500 text-white text-sm font-medium shadow-lg shadow-violet-500/30">
-                      <ExternalLink className="w-4 h-4" />
-                      Смотреть проект
-                    </div>
-                  </div>
                 </div>
                 <div className="p-5">
                   <div className="flex items-center justify-between gap-2 mb-3">
