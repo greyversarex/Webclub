@@ -25,6 +25,8 @@ const miniServices = [
   { image: corporateWebsiteImg, title: "Корпоративные сайты" },
   { image: mobileAppsImg, title: "Мобильные приложения" },
   { image: bankingSecurityImg, title: "Банковские проекты" },
+  { image: corporateWebsiteImg, title: "CRM системы" },
+  { image: onlineStoreImg, title: "Автоматизация бизнеса" },
 ];
 
 export function HeroSection() {
@@ -112,14 +114,14 @@ export function HeroSection() {
           </div>
 
           <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
-            <div className="grid grid-cols-2 gap-3 w-full max-w-md lg:max-w-lg">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full max-w-xl lg:max-w-2xl">
               {miniServices.map((service, index) => (
                 <Card
                   key={index}
                   className="group overflow-hidden bg-white/80 backdrop-blur-sm border-slate-200 hover:border-violet-300 hover:shadow-lg transition-all duration-300"
                   data-testid={`hero-mini-card-${index}`}
                 >
-                  <div className="h-24 sm:h-28 overflow-hidden bg-gradient-to-br from-slate-100 to-slate-50">
+                  <div className="h-28 sm:h-32 overflow-hidden bg-gradient-to-br from-slate-100 to-slate-50">
                     <img 
                       src={service.image} 
                       alt={service.title}
@@ -127,7 +129,7 @@ export function HeroSection() {
                     />
                   </div>
                   <div className="p-2 sm:p-3">
-                    <h4 className="font-display font-semibold text-xs sm:text-sm text-slate-800 leading-tight">
+                    <h4 className="font-display font-semibold text-xs sm:text-sm text-slate-800 leading-tight text-center">
                       {service.title}
                     </h4>
                   </div>
