@@ -1,4 +1,5 @@
 import { SiReact, SiNodedotjs, SiTypescript, SiPython, SiPostgresql, SiMongodb, SiDocker, SiAmazon, SiVuedotjs, SiAngular, SiGo, SiKubernetes } from "react-icons/si";
+import { useEffect, useRef, useState } from "react";
 
 const technologies = [
   { name: "React", icon: SiReact, color: "#61DAFB" },
@@ -16,30 +17,69 @@ const technologies = [
 ];
 
 export function TechStackSection() {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="py-16 md:py-24">
+    <section ref={sectionRef} className="py-16 md:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+          <h2 
+            className={`font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 transition-all duration-700 ${
+              isVisible 
+                ? 'opacity-100 translate-y-0' 
+                : 'opacity-0 translate-y-8'
+            }`}
+          >
             Наш стек технологий
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p 
+            className={`text-muted-foreground text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
+              isVisible 
+                ? 'opacity-100 translate-y-0' 
+                : 'opacity-0 translate-y-8'
+            }`}
+          >
             Используем современные и проверенные технологии для создания надёжных решений
           </p>
         </div>
 
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 md:gap-6">
-          {technologies.map((tech) => (
+          {technologies.map((tech, index) => (
             <div
               key={tech.name}
-              className="flex flex-col items-center p-4 md:p-6 rounded-xl bg-card border border-card-border hover-elevate transition-all duration-300"
+              className={`flex flex-col items-center p-4 md:p-6 transition-all duration-500 group ${
+                isVisible 
+                  ? 'opacity-100 translate-y-0 scale-100' 
+                  : 'opacity-0 translate-y-8 scale-90'
+              }`}
+              style={{ 
+                transitionDelay: isVisible ? `${index * 50}ms` : '0ms'
+              }}
               data-testid={`tech-${tech.name.toLowerCase().replace(/\./g, '')}`}
             >
               <tech.icon
-                className="w-10 h-10 md:w-12 md:h-12 mb-3"
+                className="w-12 h-12 md:w-16 md:h-16 mb-3 transition-transform duration-300 group-hover:scale-110"
                 style={{ color: tech.color }}
               />
-              <span className="text-xs md:text-sm font-medium text-muted-foreground text-center">
+              <span className="text-xs md:text-sm font-medium text-muted-foreground text-center group-hover:text-foreground transition-colors">
                 {tech.name}
               </span>
             </div>
