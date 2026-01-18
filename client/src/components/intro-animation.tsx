@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 interface IntroAnimationProps {
   onComplete: () => void;
@@ -71,8 +71,11 @@ export function IntroAnimation({ onComplete }: IntroAnimationProps) {
       data-testid="intro-animation"
     >
       <div className="absolute inset-0 overflow-hidden">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <MatrixColumn key={i} index={i} />
+        {Array.from({ length: 15 }).map((_, i) => (
+          <FallingColumn key={`fall-${i}`} index={i} total={15} />
+        ))}
+        {Array.from({ length: 15 }).map((_, i) => (
+          <RisingColumn key={`rise-${i}`} index={i} total={15} />
         ))}
       </div>
 
@@ -118,16 +121,33 @@ export function IntroAnimation({ onComplete }: IntroAnimationProps) {
   );
 }
 
-function MatrixColumn({ index }: { index: number }) {
+function FallingColumn({ index, total }: { index: number; total: number }) {
   const [chars, setChars] = useState<string[]>([]);
-  
+  const [offset, setOffset] = useState(0);
+  const animationRef = useRef<number>();
+  const startTimeRef = useRef(Date.now());
+  const speedRef = useRef(1 + Math.random() * 2);
+  const delayRef = useRef(Math.random() * 1000);
+
   useEffect(() => {
-    const columnChars = Array.from({ length: 25 }, () => 
-      Math.random() > 0.5 ? String(Math.floor(Math.random() * 10)) : ""
+    const charCount = 30;
+    const columnChars = Array.from({ length: charCount }, () => 
+      Math.random() > 0.4 ? String(Math.floor(Math.random() * 10)) : ""
     );
     setChars(columnChars);
 
-    const interval = setInterval(() => {
+    const animate = () => {
+      const elapsed = Date.now() - startTimeRef.current - delayRef.current;
+      if (elapsed > 0) {
+        const newOffset = (elapsed * speedRef.current * 0.05) % 100;
+        setOffset(newOffset);
+      }
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    animationRef.current = requestAnimationFrame(animate);
+
+    const charInterval = setInterval(() => {
       setChars(prev => {
         const newChars = [...prev];
         const randomIndex = Math.floor(Math.random() * newChars.length);
@@ -136,30 +156,119 @@ function MatrixColumn({ index }: { index: number }) {
           : "";
         return newChars;
       });
-    }, 100 + Math.random() * 100);
+    }, 80 + Math.random() * 120);
 
-    return () => clearInterval(interval);
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+      clearInterval(charInterval);
+    };
   }, []);
+
+  const leftPosition = ((index + 0.5) / total) * 100;
 
   return (
     <div
-      className="absolute top-0 flex flex-col items-center text-[#3B82F6]/20 font-mono text-sm"
+      className="absolute flex flex-col items-center font-mono text-sm pointer-events-none"
       style={{
-        left: `${(index / 20) * 100}%`,
-        animationDelay: `${Math.random() * 2}s`,
+        left: `${leftPosition}%`,
+        top: 0,
+        transform: `translateY(${offset - 50}%)`,
+        height: '150%',
       }}
     >
-      {chars.map((char, i) => (
-        <span
-          key={i}
-          className="opacity-50"
-          style={{
-            opacity: Math.random() * 0.5 + 0.1,
-          }}
-        >
-          {char}
-        </span>
-      ))}
+      {chars.map((char, i) => {
+        const brightness = Math.max(0, 1 - (i / chars.length) * 0.8);
+        return (
+          <span
+            key={i}
+            className="leading-6"
+            style={{
+              color: `rgba(59, 130, 246, ${brightness * 0.4})`,
+              textShadow: brightness > 0.7 ? '0 0 8px rgba(59, 130, 246, 0.6)' : 'none',
+            }}
+          >
+            {char || '\u00A0'}
+          </span>
+        );
+      })}
+    </div>
+  );
+}
+
+function RisingColumn({ index, total }: { index: number; total: number }) {
+  const [chars, setChars] = useState<string[]>([]);
+  const [offset, setOffset] = useState(0);
+  const animationRef = useRef<number>();
+  const startTimeRef = useRef(Date.now());
+  const speedRef = useRef(0.8 + Math.random() * 1.5);
+  const delayRef = useRef(Math.random() * 800);
+
+  useEffect(() => {
+    const charCount = 30;
+    const columnChars = Array.from({ length: charCount }, () => 
+      Math.random() > 0.5 ? String(Math.floor(Math.random() * 10)) : ""
+    );
+    setChars(columnChars);
+
+    const animate = () => {
+      const elapsed = Date.now() - startTimeRef.current - delayRef.current;
+      if (elapsed > 0) {
+        const newOffset = (elapsed * speedRef.current * 0.04) % 100;
+        setOffset(newOffset);
+      }
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    animationRef.current = requestAnimationFrame(animate);
+
+    const charInterval = setInterval(() => {
+      setChars(prev => {
+        const newChars = [...prev];
+        const randomIndex = Math.floor(Math.random() * newChars.length);
+        newChars[randomIndex] = Math.random() > 0.4 
+          ? String(Math.floor(Math.random() * 10))
+          : "";
+        return newChars;
+      });
+    }, 100 + Math.random() * 150);
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+      clearInterval(charInterval);
+    };
+  }, []);
+
+  const leftPosition = ((index + 0.5) / total) * 100 + 3;
+
+  return (
+    <div
+      className="absolute flex flex-col-reverse items-center font-mono text-sm pointer-events-none"
+      style={{
+        left: `${leftPosition}%`,
+        bottom: 0,
+        transform: `translateY(${50 - offset}%)`,
+        height: '150%',
+      }}
+    >
+      {chars.map((char, i) => {
+        const brightness = Math.max(0, 1 - (i / chars.length) * 0.8);
+        return (
+          <span
+            key={i}
+            className="leading-6"
+            style={{
+              color: `rgba(59, 130, 246, ${brightness * 0.3})`,
+              textShadow: brightness > 0.8 ? '0 0 6px rgba(59, 130, 246, 0.4)' : 'none',
+            }}
+          >
+            {char || '\u00A0'}
+          </span>
+        );
+      })}
     </div>
   );
 }
