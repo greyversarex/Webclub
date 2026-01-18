@@ -5,7 +5,7 @@ import { TechStackSection } from "@/components/tech-stack-section";
 import { AdvantagesSection } from "@/components/advantages-section";
 import { ContactSection } from "@/components/contact-section";
 import { Footer } from "@/components/footer";
-import videoBg from "@assets/73ccdd843ba8f407c8565da81e1272d9_1768767853039.mp4";
+import videoBg from "@assets/Пин_на_доске_Quick_saves_1768768732798.mp4";
 
 export default function Home() {
   return (
