@@ -126,7 +126,7 @@ function FallingColumn({ index, total }: { index: number; total: number }) {
   const [offset, setOffset] = useState(0);
   const animationRef = useRef<number>();
   const startTimeRef = useRef(Date.now());
-  const speedRef = useRef(1 + Math.random() * 2);
+  const speedRef = useRef(0.4 + Math.random() * 0.8);
   const delayRef = useRef(Math.random() * 1000);
 
   useEffect(() => {
@@ -202,7 +202,7 @@ function RisingColumn({ index, total }: { index: number; total: number }) {
   const [offset, setOffset] = useState(0);
   const animationRef = useRef<number>();
   const startTimeRef = useRef(Date.now());
-  const speedRef = useRef(0.8 + Math.random() * 1.5);
+  const speedRef = useRef(0.3 + Math.random() * 0.6);
   const delayRef = useRef(Math.random() * 800);
 
   useEffect(() => {
