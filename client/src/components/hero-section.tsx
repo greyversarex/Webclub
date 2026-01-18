@@ -114,22 +114,22 @@ export function HeroSection() {
           </div>
 
           <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full max-w-xl lg:max-w-2xl">
+            <div className="grid grid-cols-2 gap-4 w-full max-w-lg">
               {miniServices.map((service, index) => (
                 <Card
                   key={index}
-                  className="group overflow-hidden bg-white/80 backdrop-blur-sm border-slate-200 hover:border-violet-300 hover:shadow-lg transition-all duration-300"
+                  className="group overflow-hidden bg-white/90 backdrop-blur-sm border-slate-200 hover:border-violet-400 hover:shadow-xl transition-all duration-300"
                   data-testid={`hero-mini-card-${index}`}
                 >
-                  <div className="h-28 sm:h-32 overflow-hidden bg-gradient-to-br from-slate-100 to-slate-50">
+                  <div className="h-32 sm:h-36 overflow-hidden bg-gradient-to-br from-slate-100 to-slate-50">
                     <img 
                       src={service.image} 
                       alt={service.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
-                  <div className="p-2 sm:p-3">
-                    <h4 className="font-display font-semibold text-xs sm:text-sm text-slate-800 leading-tight text-center">
+                  <div className="p-3 sm:p-4">
+                    <h4 className="font-display font-semibold text-sm sm:text-base text-slate-800 leading-tight text-center">
                       {service.title}
                     </h4>
                   </div>
