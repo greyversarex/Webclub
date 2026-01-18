@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 import onlineStoreImg from "@assets/generated_images/online_store_illustration.png";
 import corporateWebsiteImg from "@assets/generated_images/corporate_website_illustration.png";
@@ -37,14 +38,24 @@ const services = [
 ];
 
 export function ServicesSection() {
+  const { ref, isVisible } = useScrollAnimation();
+
   return (
-    <section id="services" className="py-16 md:py-24 relative">
+    <section ref={ref as React.RefObject<HTMLElement>} id="services" className="py-16 md:py-24 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 mb-4">
+          <h2 
+            className={`font-display text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 mb-4 transition-all duration-700 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             Что мы делаем
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p 
+            className={`text-muted-foreground text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             Полный спектр IT-услуг для вашего бизнеса: от разработки сайтов до
             создания сложных корпоративных систем
           </p>
@@ -54,7 +65,10 @@ export function ServicesSection() {
           {services.map((service, index) => (
             <Card
               key={index}
-              className="group overflow-visible transition-all duration-300 bg-white/80 backdrop-blur-sm border-slate-200 hover:border-sky-300 hover:shadow-xl hover:shadow-slate-300/30"
+              className={`group overflow-visible transition-all duration-500 bg-white/80 backdrop-blur-sm border-slate-200 hover:border-violet-300 hover:shadow-xl hover:shadow-slate-300/30 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+              style={{ transitionDelay: isVisible ? `${200 + index * 100}ms` : '0ms' }}
               data-testid={`card-service-${index}`}
             >
               <div className="h-56 md:h-64 overflow-hidden bg-gradient-to-br from-slate-100 to-slate-50 rounded-t-lg">
@@ -79,7 +93,7 @@ export function ServicesSection() {
                       </svg>
                       <span>App Store</span>
                     </div>
-                    <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-sky-100 border border-sky-200 text-sky-700 text-xs">
+                    <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-violet-100 border border-violet-200 text-violet-700 text-xs">
                       <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
                         <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 010 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.302 2.302-8.635-8.635z"/>
                       </svg>

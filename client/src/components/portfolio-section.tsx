@@ -1,6 +1,7 @@
 import { ExternalLink } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 import ecommercePlatform from "@assets/generated_images/e-commerce_platform_mockup.png";
 import bankingApp from "@assets/generated_images/banking_mobile_app_interface.png";
@@ -26,7 +27,7 @@ const projects = [
     description: "Мобильное приложение для управления финансами с высоким уровнем безопасности",
     tags: ["React Native", "TypeScript", "AWS"],
     image: bankingApp,
-    accent: "cyan" as const,
+    accent: "emerald" as const,
   },
   {
     id: 3,
@@ -44,7 +45,7 @@ const projects = [
     description: "Онлайн-платформа для дистанционного обучения с видеоконференциями",
     tags: ["Next.js", "WebRTC", "MongoDB"],
     image: educationPlatform,
-    accent: "cyan" as const,
+    accent: "emerald" as const,
   },
   {
     id: 5,
@@ -62,42 +63,55 @@ const projects = [
     description: "Система управления складом и доставкой с GPS-трекингом",
     tags: ["React", "Go", "Redis"],
     image: logisticsSystem,
-    accent: "cyan" as const,
+    accent: "emerald" as const,
   },
 ];
 
 const accentStyles = {
   violet: {
-    card: "hover:border-sky-300 hover:shadow-xl hover:shadow-slate-300/30",
-    badge: "bg-sky-100 text-sky-700 border border-sky-200",
+    card: "hover:border-violet-300 hover:shadow-xl hover:shadow-slate-300/30",
+    badge: "bg-violet-100 text-violet-700 border border-violet-200",
   },
-  cyan: {
-    card: "hover:border-teal-300 hover:shadow-xl hover:shadow-slate-300/30",
-    badge: "bg-teal-100 text-teal-700 border border-teal-200",
+  emerald: {
+    card: "hover:border-emerald-300 hover:shadow-xl hover:shadow-slate-300/30",
+    badge: "bg-emerald-100 text-emerald-700 border border-emerald-200",
   },
 };
 
 export function PortfolioSection() {
+  const { ref, isVisible } = useScrollAnimation();
+
   return (
-    <section id="portfolio" className="py-16 md:py-24 relative overflow-hidden">
+    <section ref={ref as React.RefObject<HTMLElement>} id="portfolio" className="py-16 md:py-24 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-800">
+          <h2 
+            className={`font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-800 transition-all duration-700 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             Какие проекты мы делаем?
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p 
+            className={`text-muted-foreground text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             Примеры успешно реализованных проектов для различных отраслей бизнеса
           </p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {projects.map((project) => {
+          {projects.map((project, index) => {
             const styles = accentStyles[project.accent];
             
             return (
               <Card
                 key={project.id}
-                className={`group overflow-visible hover-elevate transition-all duration-300 bg-white/80 backdrop-blur-sm border-slate-200 ${styles.card}`}
+                className={`group overflow-visible hover-elevate transition-all duration-500 bg-white/80 backdrop-blur-sm border-slate-200 ${styles.card} ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
+                style={{ transitionDelay: isVisible ? `${200 + index * 80}ms` : '0ms' }}
                 data-testid={`card-project-${project.id}`}
               >
                 <div className="relative h-48 rounded-t-md bg-gradient-to-br from-slate-100 to-slate-50 overflow-hidden">
@@ -108,7 +122,7 @@ export function PortfolioSection() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
                   <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/60 transition-all duration-300 flex items-center justify-center">
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2 px-4 py-2 rounded-full bg-sky-500 text-white text-sm font-medium shadow-lg shadow-sky-500/30">
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2 px-4 py-2 rounded-full bg-violet-500 text-white text-sm font-medium shadow-lg shadow-violet-500/30">
                       <ExternalLink className="w-4 h-4" />
                       Смотреть проект
                     </div>
@@ -123,7 +137,7 @@ export function PortfolioSection() {
                       {project.category}
                     </Badge>
                   </div>
-                  <h3 className="font-display font-semibold text-lg text-slate-800 mb-2 group-hover:text-sky-600 transition-colors">
+                  <h3 className="font-display font-semibold text-lg text-slate-800 mb-2 group-hover:text-violet-600 transition-colors">
                     {project.title}
                   </h3>
                   <p className="text-slate-600 text-sm mb-4 line-clamp-2">

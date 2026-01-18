@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { SiTelegram, SiWhatsapp } from "react-icons/si";
 import { apiRequest } from "@/lib/queryClient";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 interface ContactFormData {
   name: string;
@@ -17,6 +18,7 @@ interface ContactFormData {
 
 export function ContactSection() {
   const { toast } = useToast();
+  const { ref, isVisible } = useScrollAnimation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
@@ -67,26 +69,35 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-16 md:py-24 relative overflow-hidden">
+    <section ref={ref as React.RefObject<HTMLElement>} id="contact" className="py-16 md:py-24 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
         <div className="text-center mb-12 md:mb-16">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-100 border border-sky-200 text-sky-700 text-sm font-medium mb-4">
-            <span className="w-2 h-2 rounded-full bg-sky-500 animate-pulse" />
-            Контакты
-          </span>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-800">
+          <h2 
+            className={`font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-800 transition-all duration-700 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             Свяжитесь с нами
           </h2>
-          <p className="text-slate-600 text-lg max-w-2xl mx-auto">
+          <p 
+            className={`text-slate-600 text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             Готовы обсудить ваш проект? Оставьте заявку или свяжитесь с нами
             любым удобным способом
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12">
-          <Card className="p-6 md:p-8 bg-white/80 backdrop-blur-sm border-slate-200 hover:border-sky-300 transition-colors shadow-lg shadow-slate-300/20">
+          <Card 
+            className={`p-6 md:p-8 bg-white/80 backdrop-blur-sm border-slate-200 hover:border-violet-300 transition-all duration-500 shadow-lg shadow-slate-300/20 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+            style={{ transitionDelay: isVisible ? '200ms' : '0ms' }}
+          >
             <h3 className="font-display font-semibold text-xl text-slate-800 mb-6 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-sky-500" />
+              <span className="w-2 h-2 rounded-full bg-violet-500" />
               Оставить заявку
             </h3>
             <form onSubmit={handleSubmit} className="space-y-5">
@@ -105,7 +116,7 @@ export function ContactSection() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="bg-white/70 border-slate-300 focus:border-sky-500 focus:ring-sky-500/20 text-slate-800 placeholder:text-slate-400"
+                  className="bg-white/70 border-slate-300 focus:border-violet-500 focus:ring-violet-500/20 text-slate-800 placeholder:text-slate-400"
                   data-testid="input-name"
                 />
               </div>
@@ -124,7 +135,7 @@ export function ContactSection() {
                   placeholder="example@email.com"
                   value={formData.email}
                   onChange={handleChange}
-                  className="bg-white/70 border-slate-300 focus:border-sky-500 focus:ring-sky-500/20 text-slate-800 placeholder:text-slate-400"
+                  className="bg-white/70 border-slate-300 focus:border-violet-500 focus:ring-violet-500/20 text-slate-800 placeholder:text-slate-400"
                   data-testid="input-email"
                 />
               </div>
@@ -144,7 +155,7 @@ export function ContactSection() {
                   value={formData.phone}
                   onChange={handleChange}
                   required
-                  className="bg-white/70 border-slate-300 focus:border-sky-500 focus:ring-sky-500/20 text-slate-800 placeholder:text-slate-400"
+                  className="bg-white/70 border-slate-300 focus:border-violet-500 focus:ring-violet-500/20 text-slate-800 placeholder:text-slate-400"
                   data-testid="input-phone"
                 />
               </div>
@@ -163,7 +174,7 @@ export function ContactSection() {
                   rows={4}
                   value={formData.message}
                   onChange={handleChange}
-                  className="resize-none bg-white/70 border-slate-300 focus:border-sky-500 focus:ring-sky-500/20 text-slate-800 placeholder:text-slate-400"
+                  className="resize-none bg-white/70 border-slate-300 focus:border-violet-500 focus:ring-violet-500/20 text-slate-800 placeholder:text-slate-400"
                   data-testid="input-message"
                 />
               </div>
@@ -171,7 +182,7 @@ export function ContactSection() {
               <Button
                 type="submit"
                 size="lg"
-                className="w-full bg-sky-600 hover:bg-sky-700 text-white"
+                className="w-full bg-violet-600 hover:bg-violet-700 text-white"
                 disabled={isSubmitting}
                 data-testid="button-submit-contact"
               >
@@ -191,19 +202,24 @@ export function ContactSection() {
           </Card>
 
           <div className="space-y-6">
-            <Card className="p-6 md:p-8 bg-white/80 backdrop-blur-sm border-slate-200 hover:border-teal-300 transition-colors shadow-lg shadow-slate-300/20">
+            <Card 
+              className={`p-6 md:p-8 bg-white/80 backdrop-blur-sm border-slate-200 hover:border-emerald-300 transition-all duration-500 shadow-lg shadow-slate-300/20 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+              style={{ transitionDelay: isVisible ? '300ms' : '0ms' }}
+            >
               <h3 className="font-display font-semibold text-xl text-slate-800 mb-6 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-teal-500" />
+                <span className="w-2 h-2 rounded-full bg-emerald-500" />
                 Контактная информация
               </h3>
 
               <div className="space-y-5">
                 <a
                   href="tel:+992876220100"
-                  className="flex items-center gap-4 p-4 rounded-lg bg-sky-50 border border-sky-200 hover-elevate active-elevate-2 transition-all hover:border-sky-400"
+                  className="flex items-center gap-4 p-4 rounded-lg bg-violet-50 border border-violet-200 hover-elevate active-elevate-2 transition-all hover:border-violet-400"
                   data-testid="link-phone-contact"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-sky-400 to-sky-500 flex items-center justify-center flex-shrink-0 shadow-md shadow-sky-500/20">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-400 to-violet-500 flex items-center justify-center flex-shrink-0 shadow-md shadow-violet-500/20">
                     <Phone className="w-6 h-6 text-white" />
                   </div>
                   <div>
@@ -217,9 +233,14 @@ export function ContactSection() {
               </div>
             </Card>
 
-            <Card className="p-6 md:p-8 bg-white/80 backdrop-blur-sm border-slate-200 hover:border-sky-300 transition-colors shadow-lg shadow-slate-300/20">
+            <Card 
+              className={`p-6 md:p-8 bg-white/80 backdrop-blur-sm border-slate-200 hover:border-violet-300 transition-all duration-500 shadow-lg shadow-slate-300/20 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+              style={{ transitionDelay: isVisible ? '400ms' : '0ms' }}
+            >
               <h3 className="font-display font-semibold text-xl text-slate-800 mb-6 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-sky-500" />
+                <span className="w-2 h-2 rounded-full bg-violet-500" />
                 Мессенджеры
               </h3>
 
@@ -234,9 +255,9 @@ export function ContactSection() {
                   <Button
                     variant="outline"
                     size="lg"
-                    className="gap-2 border-sky-300 text-sky-700 bg-sky-50"
+                    className="gap-2 border-violet-300 text-violet-700 bg-violet-50"
                   >
-                    <SiTelegram className="w-5 h-5 text-sky-600" />
+                    <SiTelegram className="w-5 h-5 text-violet-600" />
                     Telegram
                   </Button>
                 </a>
@@ -251,9 +272,9 @@ export function ContactSection() {
                   <Button
                     variant="outline"
                     size="lg"
-                    className="gap-2 border-teal-300 text-teal-700 bg-teal-50"
+                    className="gap-2 border-emerald-300 text-emerald-700 bg-emerald-50"
                   >
-                    <SiWhatsapp className="w-5 h-5 text-teal-600" />
+                    <SiWhatsapp className="w-5 h-5 text-emerald-600" />
                     WhatsApp
                   </Button>
                 </a>

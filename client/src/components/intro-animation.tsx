@@ -111,17 +111,17 @@ export function IntroAnimation({ onComplete }: IntroAnimationProps) {
                   text-4xl md:text-6xl lg:text-8xl font-bold font-mono
                   transition-all duration-150
                   ${char === targetText[index] 
-                    ? "text-[#3B82F6]" 
-                    : "text-[#3B82F6]/60"
+                    ? "text-[#8B5CF6]" 
+                    : "text-[#8B5CF6]/60"
                   }
                 `}
                 style={{
                   textShadow: isGlowing 
-                    ? `0 0 ${30 + glowIntensity * 40}px rgba(59,130,246,${0.8 + glowIntensity * 0.2}), 0 0 ${60 + glowIntensity * 60}px rgba(59,130,246,${0.6 + glowIntensity * 0.2}), 0 0 ${100 + glowIntensity * 80}px rgba(59,130,246,${0.4 + glowIntensity * 0.2})`
+                    ? `0 0 ${30 + glowIntensity * 40}px rgba(139,92,246,${0.8 + glowIntensity * 0.2}), 0 0 ${60 + glowIntensity * 60}px rgba(139,92,246,${0.6 + glowIntensity * 0.2}), 0 0 ${100 + glowIntensity * 80}px rgba(139,92,246,${0.4 + glowIntensity * 0.2})`
                     : hasGlowed 
-                      ? '0 0 20px rgba(59,130,246,0.8)'
+                      ? '0 0 20px rgba(139,92,246,0.8)'
                       : char === targetText[index] 
-                        ? '0 0 20px rgba(59,130,246,0.8)' 
+                        ? '0 0 20px rgba(139,92,246,0.8)' 
                         : 'none',
                   transform: isGlowing ? `scale(${1 + glowIntensity * 0.15})` : 'scale(1)',
                 }}
@@ -142,7 +142,7 @@ export function IntroAnimation({ onComplete }: IntroAnimationProps) {
           {[0, 1, 2].map((i) => (
             <div
               key={i}
-              className="w-2 h-2 rounded-full bg-[#3B82F6] animate-pulse"
+              className="w-2 h-2 rounded-full bg-[#8B5CF6] animate-pulse"
               style={{ animationDelay: `${i * 200}ms` }}
             />
           ))}
@@ -216,8 +216,8 @@ function FallingColumn({ index, total }: { index: number; total: number }) {
             key={i}
             className="leading-6"
             style={{
-              color: `rgba(59, 130, 246, ${brightness * 0.4})`,
-              textShadow: brightness > 0.7 ? '0 0 8px rgba(59, 130, 246, 0.6)' : 'none',
+              color: `rgba(139, 92, 246, ${brightness * 0.4})`,
+              textShadow: brightness > 0.7 ? '0 0 8px rgba(139, 92, 246, 0.6)' : 'none',
             }}
           >
             {char || '\u00A0'}
@@ -292,8 +292,8 @@ function RisingColumn({ index, total }: { index: number; total: number }) {
             key={i}
             className="leading-6"
             style={{
-              color: `rgba(59, 130, 246, ${brightness * 0.3})`,
-              textShadow: brightness > 0.8 ? '0 0 6px rgba(59, 130, 246, 0.4)' : 'none',
+              color: `rgba(139, 92, 246, ${brightness * 0.3})`,
+              textShadow: brightness > 0.8 ? '0 0 6px rgba(139, 92, 246, 0.4)' : 'none',
             }}
           >
             {char || '\u00A0'}
