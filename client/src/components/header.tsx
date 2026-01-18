@@ -34,8 +34,8 @@ export function Header() {
     <header
       className={`header-shimmer fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-gradient-to-r from-slate-600 via-slate-500 via-50% to-slate-600 backdrop-blur-xl border-b border-slate-400/50 shadow-lg shadow-black/20"
-          : "bg-gradient-to-r from-slate-600/95 via-slate-500/95 via-50% to-slate-600/95 backdrop-blur-md border-b border-transparent"
+          ? "bg-gradient-to-r from-slate-400 via-slate-200 via-50% to-slate-400 backdrop-blur-xl border-b border-slate-300/50 shadow-lg shadow-slate-400/20"
+          : "bg-gradient-to-r from-slate-400/95 via-slate-200/95 via-50% to-slate-400/95 backdrop-blur-md border-b border-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
@@ -54,7 +54,7 @@ export function Header() {
               alt="WEBCLUB Logo" 
               className="w-12 h-12 md:w-16 md:h-16 object-contain"
             />
-            <span className="font-display font-bold text-xl md:text-2xl bg-gradient-to-r from-violet-400 via-violet-300 to-violet-500 bg-clip-text text-transparent">
+            <span className="font-display font-bold text-xl md:text-2xl bg-gradient-to-r from-violet-600 via-violet-500 to-violet-600 bg-clip-text text-transparent">
               WEBCLUB
             </span>
           </a>
@@ -64,7 +64,7 @@ export function Header() {
               <button
                 key={item.href}
                 onClick={() => scrollToSection(item.href)}
-                className="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white transition-colors rounded-md hover:bg-slate-800"
+                className="px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors rounded-md hover:bg-slate-300/50"
                 data-testid={`link-nav-${item.label.toLowerCase()}`}
               >
                 {item.label}
@@ -77,7 +77,7 @@ export function Header() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="px-2 text-xs font-medium text-white hover:bg-slate-800"
+                className="px-2 text-xs font-medium text-slate-800 hover:bg-slate-300/50"
                 data-testid="button-lang-ru"
               >
                 RU
@@ -86,7 +86,7 @@ export function Header() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="px-2 text-xs font-medium text-slate-400 hover:text-white hover:bg-slate-800"
+                className="px-2 text-xs font-medium text-slate-500 hover:text-slate-800 hover:bg-slate-300/50"
                 data-testid="button-lang-en"
               >
                 EN
@@ -111,7 +111,7 @@ export function Header() {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden text-slate-300 hover:bg-slate-800"
+              className="md:hidden text-slate-700 hover:bg-slate-300/50"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Открыть меню"
               data-testid="button-mobile-menu"
@@ -127,13 +127,13 @@ export function Header() {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-gradient-to-r from-slate-600 via-slate-500 via-50% to-slate-600 backdrop-blur-xl border-b border-slate-400/50">
+        <div className="md:hidden bg-gradient-to-r from-slate-400 via-slate-200 via-50% to-slate-400 backdrop-blur-xl border-b border-slate-300/50">
           <nav className="flex flex-col p-4 gap-2">
             {navItems.map((item) => (
               <button
                 key={item.href}
                 onClick={() => scrollToSection(item.href)}
-                className="px-4 py-3 text-left text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-md transition-colors"
+                className="px-4 py-3 text-left text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-300/50 rounded-md transition-colors"
                 data-testid={`link-mobile-nav-${item.label.toLowerCase()}`}
               >
                 {item.label}
