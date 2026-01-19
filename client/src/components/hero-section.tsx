@@ -16,7 +16,7 @@ const features = [
 
 const stats = [
   { value: "100+", label: "Проектов" },
-  { value: "5+", label: "Лет опыта" },
+  { value: "8+", label: "Лет опыта" },
   { value: "24/7", label: "Поддержка" },
 ];
 
@@ -97,7 +97,7 @@ export function HeroSection() {
 
             <div className="flex flex-wrap gap-8 pt-8 border-t border-slate-400/30">
               {stats.map((stat, index) => (
-                <div key={index} data-testid={`stat-${index}`}>
+                <div key={index} className="text-center" data-testid={`stat-${index}`}>
                   <div className="font-display text-3xl font-bold text-cyan-800">
                     {stat.value}
                   </div>
