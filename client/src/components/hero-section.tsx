@@ -45,7 +45,7 @@ export function HeroSection() {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <div className="order-2 lg:order-1">
+          <div className="order-1 lg:order-1">
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-800 leading-tight mb-6">
               {t.hero.title1}{" "}
               <span className="it-shimmer-text bg-gradient-to-r from-slate-500 via-slate-300 to-slate-500 bg-clip-text text-transparent">{t.hero.titleHighlight}</span>
@@ -103,7 +103,7 @@ export function HeroSection() {
             </div>
           </div>
 
-          <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
+          <div className="order-2 lg:order-2 flex justify-center lg:justify-end">
             <div className="grid grid-cols-2 gap-4 w-full max-w-lg">
               {miniServices.map((service, index) => (
                 <Card
