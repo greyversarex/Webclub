@@ -1,19 +1,21 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { FallingNumbers } from "@/components/falling-numbers";
-
-const navItems = [
-  { label: "Услуги", href: "#services" },
-  { label: "Портфолио", href: "#portfolio" },
-  { label: "Преимущества", href: "#advantages" },
-  { label: "Контакты", href: "#contact" },
-];
+import { useLanguage } from "@/lib/language-context";
+import { Language } from "@/lib/translations";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
+
+  const navItems = [
+    { label: t.nav.services, href: "#services" },
+    { label: t.nav.portfolio, href: "#portfolio" },
+    { label: t.nav.advantages, href: "#advantages" },
+    { label: t.nav.contacts, href: "#contact" },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,6 +32,12 @@ export function Header() {
     }
     setIsMobileMenuOpen(false);
   };
+
+  const languages: { code: Language; label: string }[] = [
+    { code: "ru", label: "RU" },
+    { code: "en", label: "EN" },
+    { code: "tj", label: "TJ" },
+  ];
 
   return (
     <header
@@ -67,7 +75,7 @@ export function Header() {
                 key={item.href}
                 onClick={() => scrollToSection(item.href)}
                 className="px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors rounded-md hover:bg-slate-300/50"
-                data-testid={`link-nav-${item.label.toLowerCase()}`}
+                data-testid={`link-nav-${item.href.replace('#', '')}`}
               >
                 {item.label}
               </button>
@@ -76,33 +84,32 @@ export function Header() {
 
           <div className="flex items-center gap-2">
             <div className="hidden sm:flex items-center gap-1 mr-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="px-2 text-xs font-medium text-slate-800 hover:bg-slate-300/50"
-                data-testid="button-lang-ru"
-              >
-                RU
-              </Button>
-              <span className="text-slate-500">/</span>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="px-2 text-xs font-medium text-slate-500 hover:text-slate-800 hover:bg-slate-300/50"
-                data-testid="button-lang-en"
-              >
-                EN
-              </Button>
+              {languages.map((lang, index) => (
+                <div key={lang.code} className="flex items-center">
+                  {index > 0 && <span className="text-slate-500 mx-0.5">/</span>}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setLanguage(lang.code)}
+                    className={`px-2 text-xs font-medium hover:bg-slate-300/50 ${
+                      language === lang.code
+                        ? "text-slate-800"
+                        : "text-slate-500 hover:text-slate-800"
+                    }`}
+                    data-testid={`button-lang-${lang.code}`}
+                  >
+                    {lang.label}
+                  </Button>
+                </div>
+              ))}
             </div>
-            
-            <ThemeToggle />
 
             <Button
               variant="ghost"
               size="icon"
               className="md:hidden text-slate-700 hover:bg-slate-300/50"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Открыть меню"
+              aria-label="Menu"
               data-testid="button-mobile-menu"
             >
               {isMobileMenuOpen ? (
@@ -123,11 +130,29 @@ export function Header() {
                 key={item.href}
                 onClick={() => scrollToSection(item.href)}
                 className="px-4 py-3 text-left text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-300/50 rounded-md transition-colors"
-                data-testid={`link-mobile-nav-${item.label.toLowerCase()}`}
+                data-testid={`link-mobile-nav-${item.href.replace('#', '')}`}
               >
                 {item.label}
               </button>
             ))}
+            <div className="flex items-center gap-2 px-4 py-2">
+              {languages.map((lang) => (
+                <Button
+                  key={lang.code}
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setLanguage(lang.code)}
+                  className={`px-3 text-sm font-medium ${
+                    language === lang.code
+                      ? "bg-slate-300/50 text-slate-800"
+                      : "text-slate-500"
+                  }`}
+                  data-testid={`button-mobile-lang-${lang.code}`}
+                >
+                  {lang.label}
+                </Button>
+              ))}
+            </div>
           </nav>
         </div>
       )}

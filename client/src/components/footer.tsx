@@ -1,22 +1,25 @@
 import { Phone, Globe, Mail } from "lucide-react";
 import { SiTelegram, SiWhatsapp } from "react-icons/si";
 import { FallingNumbers } from "@/components/falling-numbers";
-
-const services = [
-  { label: "Интернет-магазины", href: "#services" },
-  { label: "Корпоративные сайты", href: "#services" },
-  { label: "Мобильные приложения", href: "#services" },
-  { label: "Банковские проекты", href: "#services" },
-];
-
-const links = [
-  { label: "Услуги", href: "#services" },
-  { label: "Портфолио", href: "#portfolio" },
-  { label: "Преимущества", href: "#advantages" },
-  { label: "Контакты", href: "#contact" },
-];
+import { useLanguage } from "@/lib/language-context";
 
 export function Footer() {
+  const { t } = useLanguage();
+
+  const services = [
+    { label: t.miniServices.onlineStores, href: "#services" },
+    { label: t.miniServices.corporateWebsites, href: "#services" },
+    { label: t.miniServices.mobileApps, href: "#services" },
+    { label: t.miniServices.bankingProjects, href: "#services" },
+  ];
+
+  const links = [
+    { label: t.nav.services, href: "#services" },
+    { label: t.nav.portfolio, href: "#portfolio" },
+    { label: t.nav.advantages, href: "#advantages" },
+    { label: t.nav.contacts, href: "#contact" },
+  ];
+
   const scrollToSection = (href: string) => {
     if (href === "#") {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -51,8 +54,7 @@ export function Footer() {
               </span>
             </button>
             <p className="text-sm text-slate-600 mb-4">
-              Компания по IT-разработкам. Создаём современные решения для вашего
-              бизнеса.
+              {t.footer.description}
             </p>
             <div className="flex gap-2">
               <a
@@ -79,14 +81,14 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold text-slate-800 mb-4">Навигация</h4>
+            <h4 className="font-semibold text-slate-800 mb-4">{t.footer.navigation}</h4>
             <ul className="space-y-2">
               {links.map((link) => (
                 <li key={link.href}>
                   <button
                     onClick={() => scrollToSection(link.href)}
                     className="text-sm text-slate-600 hover:text-violet-600 transition-colors"
-                    data-testid={`link-footer-${link.label.toLowerCase()}`}
+                    data-testid={`link-footer-${link.href.replace('#', '')}`}
                   >
                     {link.label}
                   </button>
@@ -96,7 +98,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold text-slate-800 mb-4">Услуги</h4>
+            <h4 className="font-semibold text-slate-800 mb-4">{t.footer.servicesTitle}</h4>
             <ul className="space-y-2">
               {services.map((service, index) => (
                 <li key={index}>
@@ -113,7 +115,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold text-slate-800 mb-4">Контакты</h4>
+            <h4 className="font-semibold text-slate-800 mb-4">{t.footer.contactsTitle}</h4>
             <ul className="space-y-3">
               <li>
                 <a
@@ -154,20 +156,20 @@ export function Footer() {
         <div className="mt-12 pt-8 border-t border-slate-400/50">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-sm text-slate-600">
-              © {currentYear} WEBCLUB. Все права защищены.
+              © {currentYear} WEBCLUB. {t.footer.copyright}
             </p>
             <div className="flex gap-6">
               <button
                 className="text-sm text-slate-600 hover:text-violet-600 transition-colors"
                 data-testid="link-privacy"
               >
-                Политика конфиденциальности
+                {t.footer.privacy}
               </button>
               <button
                 className="text-sm text-slate-600 hover:text-violet-600 transition-colors"
                 data-testid="link-terms"
               >
-                Условия использования
+                {t.footer.terms}
               </button>
             </div>
           </div>
