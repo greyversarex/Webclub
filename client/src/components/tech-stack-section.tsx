@@ -1,5 +1,6 @@
 import { SiReact, SiNodedotjs, SiTypescript, SiPython, SiPostgresql, SiMongodb, SiDocker, SiAmazon, SiVuedotjs, SiAngular, SiGo, SiKubernetes } from "react-icons/si";
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "@/lib/language-context";
 
 const technologies = [
   { name: "React", icon: SiReact, color: "#61DAFB" },
@@ -19,6 +20,7 @@ const technologies = [
 export function TechStackSection() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -48,7 +50,7 @@ export function TechStackSection() {
                 : 'opacity-0 translate-y-8'
             }`}
           >
-            Наш стек технологий
+            {t.techStack.title}
           </h2>
           <p 
             className={`text-muted-foreground text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
@@ -57,7 +59,7 @@ export function TechStackSection() {
                 : 'opacity-0 translate-y-8'
             }`}
           >
-            Используем современные и проверенные технологии для создания надёжных решений
+            {t.techStack.subtitle}
           </p>
         </div>
 

@@ -1,44 +1,18 @@
 import { Card } from "@/components/ui/card";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useLanguage } from "@/lib/language-context";
 
 import onlineStoreImg from "@assets/generated_images/online_store_illustration.png";
 import corporateWebsiteImg from "@assets/generated_images/corporate_website_illustration.png";
 import mobileAppsImg from "@assets/generated_images/mobile_apps_illustration.png";
 import bankingSecurityImg from "@assets/generated_images/banking_security_illustration.png";
 
-const services = [
-  {
-    image: onlineStoreImg,
-    title: "Интернет-магазины",
-    description:
-      "Создаём современные интернет-магазины с удобным каталогом, корзиной, оплатой и интеграцией с CRM-системами.",
-    showBadges: false,
-  },
-  {
-    image: corporateWebsiteImg,
-    title: "Корпоративные сайты",
-    description:
-      "Разрабатываем сайты для бизнеса, образовательных учреждений и компаний любого масштаба.",
-    showBadges: false,
-  },
-  {
-    image: mobileAppsImg,
-    title: "Мобильные приложения",
-    description:
-      "Нативные и кроссплатформенные приложения для Android, iOS и Windows с публикацией в магазинах.",
-    showBadges: true,
-  },
-  {
-    image: bankingSecurityImg,
-    title: "Банковские и госпроекты",
-    description:
-      "Разработка защищённых IT-систем для банков и государственных организаций.",
-    showBadges: false,
-  },
-];
+const serviceImages = [onlineStoreImg, corporateWebsiteImg, mobileAppsImg, bankingSecurityImg];
+const showBadges = [false, false, true, false];
 
 export function ServicesSection() {
   const { ref, isVisible } = useScrollAnimation();
+  const { t } = useLanguage();
 
   return (
     <section ref={ref as React.RefObject<HTMLElement>} id="services" className="py-16 md:py-24 relative">
@@ -49,20 +23,19 @@ export function ServicesSection() {
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            Что мы делаем
+            {t.services.title}
           </h2>
           <p 
             className={`text-muted-foreground text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            Полный спектр IT-услуг для вашего бизнеса: от разработки сайтов до
-            создания сложных корпоративных систем
+            {t.services.subtitle}
           </p>
         </div>
 
         <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10">
-          {services.map((service, index) => (
+          {t.services.items.map((service, index) => (
             <Card
               key={index}
               className={`group overflow-visible transition-all duration-500 bg-white/80 backdrop-blur-sm border-slate-200 hover:border-violet-300 hover:shadow-xl hover:shadow-slate-300/30 ${
@@ -73,7 +46,7 @@ export function ServicesSection() {
             >
               <div className="h-56 md:h-64 overflow-hidden bg-gradient-to-br from-slate-100 to-slate-50 rounded-t-lg">
                 <img 
-                  src={service.image} 
+                  src={serviceImages[index]} 
                   alt={service.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -85,7 +58,7 @@ export function ServicesSection() {
                 <p className="text-slate-600 text-base md:text-lg leading-relaxed mb-4">
                   {service.description}
                 </p>
-                {service.showBadges && (
+                {showBadges[index] && (
                   <div className="flex gap-2 mt-auto">
                     <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-slate-100 border border-slate-200 text-slate-600 text-xs">
                       <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">

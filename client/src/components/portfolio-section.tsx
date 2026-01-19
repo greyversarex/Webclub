@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useLanguage } from "@/lib/language-context";
 
 import ecommercePlatform from "@assets/generated_images/e-commerce_platform_mockup.png";
 import bankingApp from "@assets/generated_images/banking_mobile_app_interface.png";
@@ -9,62 +10,16 @@ import educationPlatform from "@assets/generated_images/education_platform_inter
 import govServices from "@assets/generated_images/government_services_portal.png";
 import logisticsSystem from "@assets/generated_images/logistics_system_dashboard.png";
 
-const projects = [
-  {
-    id: 1,
-    title: "E-Commerce платформа",
-    category: "Интернет-магазин",
-    description: "Современная платформа электронной коммерции с интеграцией платежных систем и CRM",
-    tags: ["React", "Node.js", "PostgreSQL"],
-    image: ecommercePlatform,
-    accent: "violet" as const,
-  },
-  {
-    id: 2,
-    title: "Банковское приложение",
-    category: "Финтех",
-    description: "Мобильное приложение для управления финансами с высоким уровнем безопасности",
-    tags: ["React Native", "TypeScript", "AWS"],
-    image: bankingApp,
-    accent: "emerald" as const,
-  },
-  {
-    id: 3,
-    title: "Корпоративный портал",
-    category: "Бизнес",
-    description: "Многофункциональный портал для крупной компании с системой управления документами",
-    tags: ["Vue.js", "Python", "Docker"],
-    image: corporatePortal,
-    accent: "violet" as const,
-  },
-  {
-    id: 4,
-    title: "Образовательная платформа",
-    category: "EdTech",
-    description: "Онлайн-платформа для дистанционного обучения с видеоконференциями",
-    tags: ["Next.js", "WebRTC", "MongoDB"],
-    image: educationPlatform,
-    accent: "emerald" as const,
-  },
-  {
-    id: 5,
-    title: "Государственный сервис",
-    category: "GovTech",
-    description: "Цифровой сервис для государственных услуг с электронной подписью",
-    tags: ["Angular", "Java", "Oracle"],
-    image: govServices,
-    accent: "violet" as const,
-  },
-  {
-    id: 6,
-    title: "Логистическая система",
-    category: "Логистика",
-    description: "Система управления складом и доставкой с GPS-трекингом",
-    tags: ["React", "Go", "Redis"],
-    image: logisticsSystem,
-    accent: "emerald" as const,
-  },
+const projectImages = [ecommercePlatform, bankingApp, corporatePortal, educationPlatform, govServices, logisticsSystem];
+const projectTags = [
+  ["React", "Node.js", "PostgreSQL"],
+  ["React Native", "TypeScript", "AWS"],
+  ["Vue.js", "Python", "Docker"],
+  ["Next.js", "WebRTC", "MongoDB"],
+  ["Angular", "Java", "Oracle"],
+  ["React", "Go", "Redis"],
 ];
+const projectAccents = ["violet", "emerald", "violet", "emerald", "violet", "emerald"] as const;
 
 const accentStyles = {
   violet: {
@@ -79,6 +34,7 @@ const accentStyles = {
 
 export function PortfolioSection() {
   const { ref, isVisible } = useScrollAnimation();
+  const { t } = useLanguage();
 
   return (
     <section ref={ref as React.RefObject<HTMLElement>} id="portfolio" className="py-16 md:py-24 relative overflow-hidden">
@@ -89,33 +45,34 @@ export function PortfolioSection() {
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            Какие проекты мы делаем?
+            {t.portfolio.title}
           </h2>
           <p 
             className={`text-muted-foreground text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            Примеры успешно реализованных проектов для различных отраслей бизнеса
+            {t.portfolio.subtitle}
           </p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {projects.map((project, index) => {
-            const styles = accentStyles[project.accent];
+          {t.portfolio.projects.map((project, index) => {
+            const accent = projectAccents[index];
+            const styles = accentStyles[accent];
             
             return (
               <Card
-                key={project.id}
+                key={index}
                 className={`group overflow-visible hover-elevate transition-all duration-500 bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 backdrop-blur-sm border-slate-300 ${styles.card} ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
                 style={{ transitionDelay: isVisible ? `${200 + index * 80}ms` : '0ms' }}
-                data-testid={`card-project-${project.id}`}
+                data-testid={`card-project-${index}`}
               >
                 <div className="relative h-48 rounded-t-md bg-gradient-to-br from-slate-200 to-slate-100 overflow-hidden">
                   <img 
-                    src={project.image} 
+                    src={projectImages[index]} 
                     alt={project.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
@@ -137,7 +94,7 @@ export function PortfolioSection() {
                     {project.description}
                   </p>
                   <div className="flex flex-wrap gap-1.5">
-                    {project.tags.map((tag) => (
+                    {projectTags[index].map((tag) => (
                       <span
                         key={tag}
                         className="px-2 py-1 text-xs rounded bg-slate-300/50 text-slate-700 border border-slate-300"

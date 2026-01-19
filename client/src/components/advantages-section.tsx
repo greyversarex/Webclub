@@ -1,32 +1,13 @@
 import { Zap, Sparkles, HeadphonesIcon } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useLanguage } from "@/lib/language-context";
 
-const advantages = [
-  {
-    icon: Zap,
-    title: "Быстрая работа",
-    description:
-      "Оперативная разработка проектов с соблюдением всех сроков. Используем современные технологии для ускорения процессов.",
-    color: "violet",
-  },
-  {
-    icon: Sparkles,
-    title: "Современный подход",
-    description:
-      "Применяем актуальные технологии и лучшие практики разработки для создания инновационных решений.",
-    color: "emerald",
-  },
-  {
-    icon: HeadphonesIcon,
-    title: "Полная поддержка",
-    description:
-      "Сопровождаем проект на всех этапах: от идеи до запуска и дальнейшей технической поддержки.",
-    color: "purple",
-  },
-];
+const icons = [Zap, Sparkles, HeadphonesIcon];
+const colors = ["violet", "emerald", "purple"];
 
 export function AdvantagesSection() {
   const { ref, isVisible } = useScrollAnimation();
+  const { t } = useLanguage();
 
   return (
     <section ref={ref as React.RefObject<HTMLElement>} id="advantages" className="py-16 md:py-24 relative overflow-hidden">
@@ -37,26 +18,26 @@ export function AdvantagesSection() {
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            Наши преимущества
+            {t.advantages.title}
           </h2>
           <p 
             className={`text-muted-foreground text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            Работаем качественно, быстро и с полной отдачей для достижения
-            лучших результатов
+            {t.advantages.subtitle}
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 md:gap-12 mb-16">
-          {advantages.map((advantage, index) => {
+          {t.advantages.items.map((advantage, index) => {
+            const Icon = icons[index];
             const colorClasses = {
               violet: "from-violet-100 to-violet-50 border-violet-200 text-violet-600",
               emerald: "from-emerald-100 to-emerald-50 border-emerald-200 text-emerald-600",
               purple: "from-purple-100 to-purple-50 border-purple-200 text-purple-600",
             };
-            const colors = colorClasses[advantage.color as keyof typeof colorClasses];
+            const colorKey = colors[index] as keyof typeof colorClasses;
             
             return (
               <div
@@ -67,8 +48,8 @@ export function AdvantagesSection() {
                 style={{ transitionDelay: isVisible ? `${200 + index * 100}ms` : '0ms' }}
                 data-testid={`advantage-${index}`}
               >
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${colors} border flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                  <advantage.icon className="w-8 h-8" />
+                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${colorClasses[colorKey]} border flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                  <Icon className="w-8 h-8" />
                 </div>
                 <h3 className="font-display font-semibold text-xl text-slate-800 mb-3 group-hover:text-violet-600 transition-colors">
                   {advantage.title}

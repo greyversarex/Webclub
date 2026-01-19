@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { SiTelegram, SiWhatsapp } from "react-icons/si";
 import { apiRequest } from "@/lib/queryClient";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useLanguage } from "@/lib/language-context";
 
 interface ContactFormData {
   name: string;
@@ -19,6 +20,7 @@ interface ContactFormData {
 export function ContactSection() {
   const { toast } = useToast();
   const { ref, isVisible } = useScrollAnimation();
+  const { t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
@@ -32,8 +34,8 @@ export function ContactSection() {
     
     if (!formData.name || !formData.phone) {
       toast({
-        title: "Ошибка",
-        description: "Пожалуйста, заполните имя и телефон",
+        title: t.contact.error,
+        description: t.contact.validationError,
         variant: "destructive",
       });
       return;
@@ -44,14 +46,14 @@ export function ContactSection() {
     try {
       await apiRequest("POST", "/api/contact", formData);
       toast({
-        title: "Заявка отправлена!",
-        description: "Мы свяжемся с вами в ближайшее время",
+        title: t.contact.success,
+        description: t.contact.successDescription,
       });
       setFormData({ name: "", email: "", phone: "", message: "" });
     } catch {
       toast({
-        title: "Ошибка",
-        description: "Не удалось отправить заявку. Попробуйте позже.",
+        title: t.contact.error,
+        description: t.contact.errorDescription,
         variant: "destructive",
       });
     } finally {
@@ -77,15 +79,14 @@ export function ContactSection() {
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            Свяжитесь с нами
+            {t.contact.title}
           </h2>
           <p 
             className={`text-slate-600 text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            Готовы обсудить ваш проект? Оставьте заявку или свяжитесь с нами
-            любым удобным способом
+            {t.contact.subtitle}
           </p>
         </div>
 
@@ -98,7 +99,7 @@ export function ContactSection() {
           >
             <h3 className="font-display font-semibold text-xl text-slate-800 mb-6 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-violet-500" />
-              Оставить заявку
+              {t.contact.formTitle}
             </h3>
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
@@ -106,13 +107,13 @@ export function ContactSection() {
                   htmlFor="name"
                   className="block text-sm font-medium text-slate-700 mb-2"
                 >
-                  Имя *
+                  {t.contact.name} *
                 </label>
                 <Input
                   id="name"
                   name="name"
                   type="text"
-                  placeholder="Ваше имя"
+                  placeholder={t.contact.namePlaceholder}
                   value={formData.name}
                   onChange={handleChange}
                   required
@@ -126,7 +127,7 @@ export function ContactSection() {
                   htmlFor="email"
                   className="block text-sm font-medium text-slate-700 mb-2"
                 >
-                  Email
+                  {t.contact.email}
                 </label>
                 <Input
                   id="email"
@@ -145,7 +146,7 @@ export function ContactSection() {
                   htmlFor="phone"
                   className="block text-sm font-medium text-slate-700 mb-2"
                 >
-                  Телефон *
+                  {t.contact.phone} *
                 </label>
                 <Input
                   id="phone"
@@ -165,12 +166,12 @@ export function ContactSection() {
                   htmlFor="message"
                   className="block text-sm font-medium text-slate-700 mb-2"
                 >
-                  Сообщение
+                  {t.contact.message}
                 </label>
                 <Textarea
                   id="message"
                   name="message"
-                  placeholder="Опишите ваш проект или задайте вопрос..."
+                  placeholder={t.contact.messagePlaceholder}
                   rows={4}
                   value={formData.message}
                   onChange={handleChange}
@@ -189,12 +190,12 @@ export function ContactSection() {
                 {isSubmitting ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Отправка...
+                    {t.contact.submitting}
                   </>
                 ) : (
                   <>
                     <Send className="w-4 h-4 mr-2" />
-                    Отправить заявку
+                    {t.contact.submit}
                   </>
                 )}
               </Button>
@@ -210,7 +211,7 @@ export function ContactSection() {
             >
               <h3 className="font-display font-semibold text-xl text-slate-800 mb-6 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                Контактная информация
+                {t.contact.contactInfo}
               </h3>
 
               <div className="space-y-5">
@@ -223,7 +224,7 @@ export function ContactSection() {
                     <Phone className="w-6 h-6 text-slate-700" />
                   </div>
                   <div>
-                    <div className="text-sm text-slate-600">Телефон</div>
+                    <div className="text-sm text-slate-600">{t.contact.phoneLabel}</div>
                     <div className="font-semibold text-slate-800 text-lg">
                       +992 87 622 0100
                     </div>
@@ -241,7 +242,7 @@ export function ContactSection() {
             >
               <h3 className="font-display font-semibold text-xl text-slate-800 mb-6 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-violet-500" />
-                Мессенджеры
+                {t.contact.messengers}
               </h3>
 
               <div className="flex flex-wrap gap-3">
