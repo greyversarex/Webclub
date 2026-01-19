@@ -21,7 +21,7 @@ export function AdvantagesSection() {
             {t.advantages.title}
           </h2>
           <p 
-            className={`text-muted-foreground text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
+            className={`text-slate-900 text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
@@ -54,7 +54,7 @@ export function AdvantagesSection() {
                 <h3 className="font-display font-semibold text-xl text-slate-800 mb-3 group-hover:text-violet-600 transition-colors">
                   {advantage.title}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-slate-900 leading-relaxed">
                   {advantage.description}
                 </p>
               </div>

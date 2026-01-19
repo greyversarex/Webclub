@@ -26,7 +26,7 @@ export function ServicesSection() {
             {t.services.title}
           </h2>
           <p 
-            className={`text-muted-foreground text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
+            className={`text-slate-900 text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
@@ -55,7 +55,7 @@ export function ServicesSection() {
                 <h3 className="font-display font-semibold text-2xl md:text-3xl text-slate-800 mb-4">
                   {service.title}
                 </h3>
-                <p className="text-slate-600 text-base md:text-lg leading-relaxed mb-4">
+                <p className="text-slate-900 text-base md:text-lg leading-relaxed mb-4">
                   {service.description}
                 </p>
                 {showBadges[index] && (

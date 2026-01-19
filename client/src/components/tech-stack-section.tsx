@@ -27,7 +27,7 @@ export function TechStackSection() {
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.2 }
+      { threshold: 0.05 }
     );
 
     if (sectionRef.current) {
@@ -51,7 +51,7 @@ export function TechStackSection() {
             {t.techStack.title}
           </h2>
           <p 
-            className={`text-muted-foreground text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
+            className={`text-slate-900 text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
               isVisible 
                 ? 'opacity-100 translate-y-0' 
                 : 'opacity-0 translate-y-8'
@@ -79,7 +79,7 @@ export function TechStackSection() {
                 className="w-12 h-12 md:w-16 md:h-16 mb-3 transition-transform duration-300 group-hover:scale-110"
                 style={{ color: tech.color }}
               />
-              <span className="text-xs md:text-sm font-medium text-muted-foreground text-center group-hover:text-foreground transition-colors">
+              <span className="text-xs md:text-sm font-medium text-slate-900 text-center transition-colors">
                 {tech.name}
               </span>
             </div>

@@ -52,7 +52,7 @@ export function HeroSection() {
               {" "}{t.hero.title2}
             </h1>
 
-            <p className="text-lg text-muted-foreground mb-8 max-w-xl">
+            <p className="text-lg text-slate-900 mb-8 max-w-xl">
               {t.hero.description}
             </p>
 
@@ -95,7 +95,7 @@ export function HeroSection() {
                   <div className="font-display text-3xl font-bold text-cyan-800">
                     {stat.value}
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-sm text-slate-900">
                     {stat.label}
                   </div>
                 </div>

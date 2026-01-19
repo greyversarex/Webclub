@@ -48,7 +48,7 @@ export function PortfolioSection() {
             {t.portfolio.title}
           </h2>
           <p 
-            className={`text-muted-foreground text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
+            className={`text-slate-900 text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
@@ -90,14 +90,14 @@ export function PortfolioSection() {
                   <h3 className="font-display font-semibold text-lg text-slate-800 mb-2 group-hover:text-violet-600 transition-colors">
                     {project.title}
                   </h3>
-                  <p className="text-slate-700 text-sm mb-4 line-clamp-2">
+                  <p className="text-slate-900 text-sm mb-4 line-clamp-2">
                     {project.description}
                   </p>
                   <div className="flex flex-wrap gap-1.5">
                     {projectTags[index].map((tag) => (
                       <span
                         key={tag}
-                        className="px-2 py-1 text-xs rounded bg-slate-300/50 text-slate-700 border border-slate-300"
+                        className="px-2 py-1 text-xs rounded bg-slate-300/50 text-slate-900 border border-slate-300"
                       >
                         {tag}
                       </span>

@@ -82,7 +82,7 @@ export function ContactSection() {
             {t.contact.title}
           </h2>
           <p 
-            className={`text-slate-600 text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
+            className={`text-slate-900 text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
@@ -105,7 +105,7 @@ export function ContactSection() {
               <div>
                 <label
                   htmlFor="name"
-                  className="block text-sm font-medium text-slate-700 mb-2"
+                  className="block text-sm font-medium text-slate-900 mb-2"
                 >
                   {t.contact.name} *
                 </label>
@@ -125,7 +125,7 @@ export function ContactSection() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-slate-700 mb-2"
+                  className="block text-sm font-medium text-slate-900 mb-2"
                 >
                   {t.contact.email}
                 </label>
@@ -144,7 +144,7 @@ export function ContactSection() {
               <div>
                 <label
                   htmlFor="phone"
-                  className="block text-sm font-medium text-slate-700 mb-2"
+                  className="block text-sm font-medium text-slate-900 mb-2"
                 >
                   {t.contact.phone} *
                 </label>
@@ -164,7 +164,7 @@ export function ContactSection() {
               <div>
                 <label
                   htmlFor="message"
-                  className="block text-sm font-medium text-slate-700 mb-2"
+                  className="block text-sm font-medium text-slate-900 mb-2"
                 >
                   {t.contact.message}
                 </label>
@@ -224,7 +224,7 @@ export function ContactSection() {
                     <Phone className="w-6 h-6 text-slate-700" />
                   </div>
                   <div>
-                    <div className="text-sm text-slate-600">{t.contact.phoneLabel}</div>
+                    <div className="text-sm text-slate-900">{t.contact.phoneLabel}</div>
                     <div className="font-semibold text-slate-800 text-lg">
                       +992 87 622 0100
                     </div>
