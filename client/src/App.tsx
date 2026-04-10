@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 import { LanguageProvider } from "@/lib/language-context";
 import { IntroAnimation } from "@/components/intro-animation";
+import { FloatingContact } from "@/components/floating-contact";
 import Home from "@/pages/home";
 import NotFound from "@/pages/not-found";
 
@@ -32,6 +33,7 @@ function App() {
             )}
             <Toaster />
             <Router />
+            <FloatingContact />
           </TooltipProvider>
         </LanguageProvider>
       </ThemeProvider>
