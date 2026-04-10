@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Phone, X, MessageCircle } from "lucide-react";
+import { Phone, X } from "lucide-react";
 import { SiWhatsapp, SiTelegram } from "react-icons/si";
 
 const contacts = [
@@ -67,11 +67,10 @@ export function FloatingContact() {
           bg-gradient-to-br from-violet-600 to-cyan-500
           shadow-[0_4px_20px_rgba(139,92,246,0.5)]
           hover:shadow-[0_6px_28px_rgba(139,92,246,0.65)]
-          hover:scale-105 active:scale-95
-          ${open ? "rotate-45" : "rotate-0"}`}
+          hover:scale-105 active:scale-95`}
         aria-label="Связаться с нами"
       >
-        {open ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
+        {open ? <X className="w-6 h-6" /> : <Phone className="w-6 h-6" />}
       </button>
     </div>
   );
