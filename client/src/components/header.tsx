@@ -68,12 +68,19 @@ export function Header() {
             </span>
           </a>
 
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-2">
             {navItems.map((item) => (
               <button
                 key={item.href}
                 onClick={() => scrollToSection(item.href)}
-                className="px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors rounded-md hover:bg-slate-300/50"
+                className="px-4 py-2 text-sm font-semibold text-slate-700 hover:text-slate-900 rounded-lg transition-all duration-150
+                  bg-gradient-to-b from-slate-100 to-slate-200
+                  shadow-[0_2px_0_0_#94a3b8,0_4px_6px_-1px_rgba(0,0,0,0.15),inset_0_1px_0_0_rgba(255,255,255,0.8)]
+                  hover:shadow-[0_1px_0_0_#94a3b8,0_2px_4px_-1px_rgba(0,0,0,0.12),inset_0_1px_0_0_rgba(255,255,255,0.8)]
+                  hover:translate-y-[1px]
+                  active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.15)]
+                  active:translate-y-[2px]
+                  border border-slate-300/70"
                 data-testid={`link-nav-${item.href.replace('#', '')}`}
               >
                 {item.label}
