@@ -89,7 +89,7 @@ export function HeroSection() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
           {/* ── Left: text ─────────────────────────────────────── */}
-          <div className="order-1">
+          <div className="order-1 self-center">
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-800 leading-tight mb-6">
               {t.hero.title1}{" "}
               <span className="it-shimmer-text bg-gradient-to-r from-slate-500 via-slate-300 to-slate-500 bg-clip-text text-transparent">
@@ -134,7 +134,7 @@ export function HeroSection() {
           </div>
 
           {/* ── Right: slideshow ───────────────────────────────── */}
-          <div className="order-2 w-full">
+          <div className="order-2 w-full self-start pt-2">
 
             <div className="mb-3 h-10 overflow-hidden">
               <h2
@@ -204,7 +204,7 @@ export function HeroSection() {
               />
             </div>
 
-            <div key={shown} className="slide-text-in mt-4" style={{ animationDelay: "0.08s" }}>
+            <div key={shown} className="slide-text-in mt-4" style={{ animationDelay: "0.08s", minHeight: "80px" }}>
               <div className="flex items-center gap-2 mb-2 flex-wrap">
                 <Badge variant="secondary" className={`text-xs border ${accentColors[shown]}`}>
                   {project.category}

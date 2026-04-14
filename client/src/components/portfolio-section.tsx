@@ -194,7 +194,7 @@ export function PortfolioSection() {
             </div>
           </div>
 
-          <div key={shown} className="slide-text-in mt-5" style={{ animationDelay: "0.08s" }}>
+          <div key={shown} className="slide-text-in mt-5" style={{ animationDelay: "0.08s", minHeight: "100px" }}>
             <p className="text-slate-700 text-base leading-relaxed mb-3 max-w-3xl">
               {project.description}
             </p>
