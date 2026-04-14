@@ -5,12 +5,12 @@ import { TechStackSection } from "@/components/tech-stack-section";
 import { AdvantagesSection } from "@/components/advantages-section";
 import { ContactSection } from "@/components/contact-section";
 import { Footer } from "@/components/footer";
+import { ChatWidget } from "@/components/chat-widget";
 import geometricBg from "@assets/Визитки_Personal_(1)_1765668694348.png";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-background relative">
-      {/* Геометрический фон */}
       <img 
         src={geometricBg} 
         alt="" 
@@ -28,6 +28,7 @@ export default function Home() {
         </main>
         <Footer />
       </div>
+      <ChatWidget />
     </div>
   );
 }

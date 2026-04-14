@@ -4,11 +4,13 @@ import { storage } from "./storage";
 import { insertContactRequestSchema } from "@shared/schema";
 import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
+import { registerChatRoutes } from "./replit_integrations/chat/routes";
 
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
+  registerChatRoutes(app);
   
   app.post("/api/contact", async (req, res) => {
     try {
