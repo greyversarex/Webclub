@@ -1,12 +1,30 @@
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { useLanguage } from "@/lib/language-context";
 
-import onlineStoreImg from "@assets/generated_images/online_store_illustration.png";
-import corporateWebsiteImg from "@assets/generated_images/corporate_website_illustration.png";
-import mobileAppsImg from "@assets/generated_images/mobile_apps_illustration.png";
-import bankingSecurityImg from "@assets/generated_images/banking_security_illustration.png";
+import ecommercePlatform from "@assets/generated_images/e-commerce_platform_mockup.png";
+import bankingApp from "@assets/generated_images/banking_mobile_app_interface.png";
+import corporatePortal from "@assets/generated_images/corporate_portal_dashboard.png";
+import educationPlatform from "@assets/generated_images/education_platform_interface.png";
+import govServices from "@assets/generated_images/government_services_portal.png";
+import logisticsSystem from "@assets/generated_images/logistics_system_dashboard.png";
+
+const projectImages = [ecommercePlatform, bankingApp, corporatePortal, educationPlatform, govServices, logisticsSystem];
+const projectTags = [
+  ["React", "Node.js", "PostgreSQL"],
+  ["React Native", "TypeScript", "AWS"],
+  ["Vue.js", "Python", "Docker"],
+  ["Next.js", "WebRTC", "MongoDB"],
+  ["Angular", "Java", "Oracle"],
+  ["React", "Go", "Redis"],
+];
+const projectAccents = ["violet", "emerald", "violet", "emerald", "violet", "emerald"] as const;
+const accentStyles = {
+  violet: { badge: "bg-violet-100 text-violet-700 border border-violet-200" },
+  emerald: { badge: "bg-emerald-100 text-emerald-700 border border-emerald-200" },
+};
 
 export function HeroSection() {
   const { t } = useLanguage();
@@ -15,15 +33,6 @@ export function HeroSection() {
     { value: "100+", label: t.hero.stats.projects },
     { value: "8+", label: t.hero.stats.experience },
     { value: "24/7", label: t.hero.stats.support },
-  ];
-
-  const miniServices = [
-    { image: onlineStoreImg, title: t.miniServices.onlineStores },
-    { image: corporateWebsiteImg, title: t.miniServices.corporateWebsites },
-    { image: mobileAppsImg, title: t.miniServices.mobileApps },
-    { image: bankingSecurityImg, title: t.miniServices.bankingProjects },
-    { image: corporateWebsiteImg, title: t.miniServices.crmSystems },
-    { image: onlineStoreImg, title: t.miniServices.businessAutomation },
   ];
 
   const scrollToServices = () => {
@@ -105,26 +114,44 @@ export function HeroSection() {
 
           <div className="order-2 lg:order-2 flex justify-center lg:justify-end">
             <div className="grid grid-cols-2 gap-4 w-full max-w-lg">
-              {miniServices.map((service, index) => (
-                <Card
-                  key={index}
-                  className="group overflow-hidden bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 backdrop-blur-sm border-slate-300 hover:border-violet-400 hover:shadow-xl transition-all duration-300"
-                  data-testid={`hero-mini-card-${index}`}
-                >
-                  <div className="h-32 sm:h-36 overflow-hidden bg-gradient-to-br from-slate-200 to-slate-100">
-                    <img 
-                      src={service.image} 
-                      alt={service.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <div className="p-3 sm:p-4">
-                    <h4 className="font-display font-semibold text-sm sm:text-base text-slate-800 leading-tight text-center">
-                      {service.title}
-                    </h4>
-                  </div>
-                </Card>
-              ))}
+              {t.portfolio.projects.map((project, index) => {
+                const accent = projectAccents[index];
+                const styles = accentStyles[accent];
+                return (
+                  <Card
+                    key={index}
+                    className="group overflow-hidden bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 backdrop-blur-sm border-slate-300 hover:border-violet-400 hover:shadow-xl transition-all duration-300"
+                    data-testid={`hero-mini-card-${index}`}
+                  >
+                    <div className="h-28 sm:h-32 overflow-hidden bg-gradient-to-br from-slate-200 to-slate-100 relative">
+                      <img
+                        src={projectImages[index]}
+                        alt={project.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-200/60 via-transparent to-transparent" />
+                    </div>
+                    <div className="p-2.5 sm:p-3">
+                      <Badge variant="secondary" className={`text-[10px] mb-1.5 ${styles.badge}`}>
+                        {project.category}
+                      </Badge>
+                      <h4 className="font-display font-semibold text-xs sm:text-sm text-slate-800 leading-tight mb-1.5">
+                        {project.title}
+                      </h4>
+                      <div className="flex flex-wrap gap-1">
+                        {projectTags[index].map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-1.5 py-0.5 text-[10px] rounded bg-slate-300/50 text-slate-700 border border-slate-300"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </Card>
+                );
+              })}
             </div>
           </div>
         </div>
