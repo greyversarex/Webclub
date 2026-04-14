@@ -126,10 +126,6 @@ export function PortfolioSection() {
               src={projectImages[current]}
               alt={project.title}
               className="absolute inset-0 w-full h-full object-cover"
-              style={{
-                transition: "opacity 0.15s ease",
-                opacity: isAnimating ? 0 : 1,
-              }}
               data-testid={`img-portfolio-slide-${current}`}
             />
 
