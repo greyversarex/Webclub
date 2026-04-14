@@ -12,14 +12,6 @@ import govServices from "@assets/generated_images/government_services_portal.png
 import logisticsSystem from "@assets/generated_images/logistics_system_dashboard.png";
 
 const projectImages = [ecommercePlatform, bankingApp, corporatePortal, educationPlatform, govServices, logisticsSystem];
-const projectTags = [
-  ["React", "Node.js", "PostgreSQL"],
-  ["React Native", "TypeScript", "AWS"],
-  ["Vue.js", "Python", "Docker"],
-  ["Next.js", "WebRTC", "MongoDB"],
-  ["Angular", "Java", "Oracle"],
-  ["React", "Go", "Redis"],
-];
 const projectAccents = ["violet", "emerald", "violet", "emerald", "violet", "emerald"] as const;
 const accentStyles = {
   violet: { badge: "bg-violet-100 text-violet-700 border border-violet-200" },
@@ -135,19 +127,9 @@ export function HeroSection() {
                       <Badge variant="secondary" className={`text-[10px] mb-1.5 ${styles.badge}`}>
                         {project.category}
                       </Badge>
-                      <h4 className="font-display font-semibold text-xs sm:text-sm text-slate-800 leading-tight mb-1.5">
+                      <h4 className="font-display font-semibold text-xs sm:text-sm text-slate-800 leading-tight">
                         {project.title}
                       </h4>
-                      <div className="flex flex-wrap gap-1">
-                        {projectTags[index].map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-1.5 py-0.5 text-[10px] rounded bg-slate-300/50 text-slate-700 border border-slate-300"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
                     </div>
                   </Card>
                 );
