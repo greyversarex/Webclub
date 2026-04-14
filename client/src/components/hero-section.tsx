@@ -146,14 +146,12 @@ export function HeroSection() {
               className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-slate-100"
               style={{ height: "420px" }}
             >
-              {/*
-               * BASE LAYER — <div> with CSS background-image (not <img>).
-               * CSS bg-image updates are synchronous; no img loading state machine
-               * → no 1-frame flash of old decoded frame when src changes.
-               */}
-              <div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: `url(${projectImages[shown]})`, zIndex: 1 }}
+              {/* BASE LAYER */}
+              <img
+                src={projectImages[shown]}
+                alt={project.title}
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{ zIndex: 1 }}
                 data-testid={`img-slide-${shown}`}
               />
 
@@ -178,19 +176,26 @@ export function HeroSection() {
                   {Array.from({ length: TOTAL }, (_, i) => {
                     const col = i % COLS;
                     const row = Math.floor(i / COLS);
-                    const bgX = `${(col / (COLS - 1)) * 100}%`;
-                    const bgY = `${(row / (ROWS - 1)) * 100}%`;
                     return (
                       <div
                         key={i}
                         className="mosaic-tile"
-                        style={{
-                          animationDelay: `${DELAYS[i]}ms`,
-                          backgroundImage: `url(${projectImages[next]})`,
-                          backgroundSize: `${COLS * 100}% ${ROWS * 100}%`,
-                          backgroundPosition: `${bgX} ${bgY}`,
-                        }}
-                      />
+                        style={{ animationDelay: `${DELAYS[i]}ms` }}
+                      >
+                        <img
+                          src={projectImages[next]}
+                          alt=""
+                          style={{
+                            position: "absolute",
+                            width: `${COLS * 100}%`,
+                            height: `${ROWS * 100}%`,
+                            left: `${-col * 100}%`,
+                            top: `${-row * 100}%`,
+                            objectFit: "cover",
+                            display: "block",
+                          }}
+                        />
+                      </div>
                     );
                   })}
                 </div>

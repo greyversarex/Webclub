@@ -8,7 +8,8 @@
   to   { transform: scale(1); }
 }
 .mosaic-tile {
-  /* animation-fill-mode: both → tile starts at scale(0) even before delay fires */
+  position: relative;
+  overflow: hidden;
   animation: tile-pop 0.22s ease-out both;
 }
 
