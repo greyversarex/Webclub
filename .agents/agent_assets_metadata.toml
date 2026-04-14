@@ -1,0 +1,8 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "rbPueCHH7eCkriJfnfBUP"
+uri = "file://attached_assets/generated_images/government_services_portal.png"
+type = "image"
+title = "generated_image"
