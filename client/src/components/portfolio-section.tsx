@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/lib/language-context";
@@ -50,7 +49,6 @@ export function PortfolioSection() {
   };
 
   const next = () => goTo((current + 1) % projects.length, "right");
-  const prev = () => goTo((current - 1 + projects.length) % projects.length, "left");
 
   const resetTimer = () => {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -114,7 +112,7 @@ export function PortfolioSection() {
           </div>
 
           {/* Main image area */}
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200/60 bg-slate-100" style={{ height: "460px" }}>
+          <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200/60 bg-slate-100" style={{ height: "620px" }}>
             <img
               src={projectImages[current]}
               alt={project.title}
@@ -153,21 +151,6 @@ export function PortfolioSection() {
               {current + 1} / {projects.length}
             </div>
 
-            {/* Arrow buttons */}
-            <button
-              onClick={() => { prev(); resetTimer(); }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/85 hover:bg-white flex items-center justify-center shadow-lg transition-all hover:scale-110"
-              data-testid="button-portfolio-prev"
-            >
-              <ChevronLeft className="w-6 h-6 text-slate-700" />
-            </button>
-            <button
-              onClick={() => { next(); resetTimer(); }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/85 hover:bg-white flex items-center justify-center shadow-lg transition-all hover:scale-110"
-              data-testid="button-portfolio-next"
-            >
-              <ChevronRight className="w-6 h-6 text-slate-700" />
-            </button>
           </div>
 
           {/* Description + tags below image */}
