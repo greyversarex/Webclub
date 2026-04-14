@@ -106,7 +106,7 @@ export function HeroSection() {
                     className="group overflow-hidden bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 backdrop-blur-sm border-slate-300 hover:border-violet-400 hover:shadow-xl transition-all duration-300"
                     data-testid={`hero-mini-card-${index}`}
                   >
-                    <div className="h-28 sm:h-32 overflow-hidden bg-gradient-to-br from-slate-200 to-slate-100 relative">
+                    <div className="h-40 sm:h-44 overflow-hidden bg-gradient-to-br from-slate-200 to-slate-100 relative">
                       <img
                         src={projectImages[index]}
                         alt={project.title}
