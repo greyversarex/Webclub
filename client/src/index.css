@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Slide text fade-in animation */
+@keyframes slide-text-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.slide-text-in {
+  animation: slide-text-in 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
 /* Mosaic tile pop-in animation — isolated from React rendering */
 @keyframes tile-pop {
   from { transform: scale(0); }

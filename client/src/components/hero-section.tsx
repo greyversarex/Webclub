@@ -137,7 +137,11 @@ export function HeroSection() {
           <div className="order-2 w-full">
 
             <div className="mb-3 h-10 overflow-hidden">
-              <h2 className="font-display font-bold text-2xl text-slate-800" data-testid="text-slide-title">
+              <h2
+                key={shown}
+                className="slide-text-in font-display font-bold text-2xl text-slate-800"
+                data-testid="text-slide-title"
+              >
                 {project.title}
               </h2>
             </div>
@@ -200,7 +204,7 @@ export function HeroSection() {
               />
             </div>
 
-            <div className="mt-4">
+            <div key={shown} className="slide-text-in mt-4" style={{ animationDelay: "0.08s" }}>
               <div className="flex items-center gap-2 mb-2 flex-wrap">
                 <Badge variant="secondary" className={`text-xs border ${accentColors[shown]}`}>
                   {project.category}

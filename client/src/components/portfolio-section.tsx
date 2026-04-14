@@ -112,7 +112,8 @@ export function PortfolioSection() {
         >
           <div className="mb-4 h-10 overflow-hidden">
             <h3
-              className="font-display font-bold text-2xl md:text-3xl text-slate-800"
+              key={shown}
+              className="slide-text-in font-display font-bold text-2xl md:text-3xl text-slate-800"
               data-testid="text-portfolio-slide-title"
             >
               {project.title}
@@ -193,7 +194,7 @@ export function PortfolioSection() {
             </div>
           </div>
 
-          <div className="mt-5">
+          <div key={shown} className="slide-text-in mt-5" style={{ animationDelay: "0.08s" }}>
             <p className="text-slate-700 text-base leading-relaxed mb-3 max-w-3xl">
               {project.description}
             </p>
