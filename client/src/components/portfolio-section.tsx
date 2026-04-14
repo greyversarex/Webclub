@@ -31,8 +31,11 @@ const accentColors = [
 const COLS = 10;
 const ROWS = 7;
 const TOTAL = COLS * ROWS;
-const DELAYS = Array.from({ length: TOTAL }, () => Math.floor(Math.random() * 460));
+// Fixed random delays, pre-generated once
+const DELAYS = Array.from({ length: TOTAL }, () => Math.floor(Math.random() * 450));
 const TOTAL_PROJECTS = 6;
+// Max tile animation time = 450 + 200 = 650ms, so we wait 700ms
+const ANIM_DURATION = 700;
 
 export function PortfolioSection() {
   const { ref, isVisible } = useScrollAnimation();
@@ -41,7 +44,7 @@ export function PortfolioSection() {
 
   const [current, setCurrent] = useState(0);
   const [target, setTarget] = useState(0);
-  const [phase, setPhase] = useState<"idle" | "assembling">("idle");
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const currentRef = useRef(0);
   const isAnimatingRef = useRef(false);
@@ -50,17 +53,15 @@ export function PortfolioSection() {
     if (isAnimatingRef.current || index === currentRef.current) return;
     isAnimatingRef.current = true;
     setTarget(index);
-    setPhase("assembling");
+    setIsAnimating(true);
+
     setTimeout(() => {
+      // All in one synchronous block → React 18 batches into ONE render + ONE paint
       currentRef.current = index;
       setCurrent(index);
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          setPhase("idle");
-          isAnimatingRef.current = false;
-        });
-      });
-    }, 680);
+      setIsAnimating(false);
+      isAnimatingRef.current = false;
+    }, ANIM_DURATION);
   };
 
   useEffect(() => {
@@ -71,7 +72,6 @@ export function PortfolioSection() {
   }, []);
 
   const project = projects[current];
-  const isAnimating = phase === "assembling";
 
   return (
     <section
@@ -103,7 +103,7 @@ export function PortfolioSection() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          {/* Slide title */}
+          {/* Project title */}
           <div className="mb-4 h-10 overflow-hidden">
             <h3
               className="font-display font-bold text-2xl md:text-3xl text-slate-800"
@@ -113,24 +113,38 @@ export function PortfolioSection() {
             </h3>
           </div>
 
-          {/* Image area with tile mosaic */}
+          {/* Image area */}
           <div
             className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200/60 bg-slate-100"
             style={{ height: "620px" }}
           >
-            {/* Base image — hidden during mosaic so src change never flashes */}
+            {/* Layer 1 – incoming image, always rendered behind tiles */}
+            <img
+              src={projectImages[target]}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{ zIndex: 1 }}
+            />
+
+            {/* Layer 2 – outgoing image, fades away while tiles appear */}
             <img
               src={projectImages[current]}
               alt={project.title}
               className="absolute inset-0 w-full h-full object-cover"
-              style={{ visibility: isAnimating ? "hidden" : "visible" }}
+              style={{
+                zIndex: 2,
+                opacity: isAnimating ? 0 : 1,
+                transition: isAnimating ? "opacity 0.6s ease" : "none",
+              }}
               data-testid={`img-portfolio-slide-${current}`}
             />
 
-            {/* Mosaic tiles */}
+            {/* Layer 3 – mosaic tiles (hidden instantly when not animating via visibility) */}
             <div
               className="absolute inset-0"
               style={{
+                zIndex: 3,
+                visibility: isAnimating ? "visible" : "hidden",
                 display: "grid",
                 gridTemplateColumns: `repeat(${COLS}, 1fr)`,
                 gridTemplateRows: `repeat(${ROWS}, 1fr)`,
@@ -159,11 +173,12 @@ export function PortfolioSection() {
               })}
             </div>
 
-            {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none z-10" />
-
-            {/* Category badge */}
-            <div className="absolute bottom-4 left-4 z-20">
+            {/* Gradient + overlays */}
+            <div
+              className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none"
+              style={{ zIndex: 4 }}
+            />
+            <div className="absolute bottom-4 left-4" style={{ zIndex: 5 }}>
               <Badge
                 variant="secondary"
                 className={`text-xs border backdrop-blur-sm ${accentColors[current]}`}
@@ -171,9 +186,10 @@ export function PortfolioSection() {
                 {project.category}
               </Badge>
             </div>
-
-            {/* Slide counter */}
-            <div className="absolute bottom-4 right-4 z-20 bg-black/40 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm">
+            <div
+              className="absolute bottom-4 right-4 bg-black/40 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm"
+              style={{ zIndex: 5 }}
+            >
               {current + 1} / {projects.length}
             </div>
           </div>

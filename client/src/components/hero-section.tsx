@@ -32,8 +32,9 @@ const accentColors = [
 const COLS = 8;
 const ROWS = 6;
 const TOTAL = COLS * ROWS;
-const DELAYS = Array.from({ length: TOTAL }, () => Math.floor(Math.random() * 400));
+const DELAYS = Array.from({ length: TOTAL }, () => Math.floor(Math.random() * 380));
 const TOTAL_PROJECTS = 6;
+const ANIM_DURATION = 620; // 380 + 200 = 580ms max, 620ms safety margin
 
 export function HeroSection() {
   const { t } = useLanguage();
@@ -41,7 +42,7 @@ export function HeroSection() {
 
   const [current, setCurrent] = useState(0);
   const [target, setTarget] = useState(0);
-  const [phase, setPhase] = useState<"idle" | "assembling">("idle");
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const currentRef = useRef(0);
   const isAnimatingRef = useRef(false);
@@ -50,17 +51,15 @@ export function HeroSection() {
     if (isAnimatingRef.current || index === currentRef.current) return;
     isAnimatingRef.current = true;
     setTarget(index);
-    setPhase("assembling");
+    setIsAnimating(true);
+
     setTimeout(() => {
+      // All in ONE synchronous block → React 18 batches into ONE render + ONE paint
       currentRef.current = index;
       setCurrent(index);
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          setPhase("idle");
-          isAnimatingRef.current = false;
-        });
-      });
-    }, 620);
+      setIsAnimating(false);
+      isAnimatingRef.current = false;
+    }, ANIM_DURATION);
   };
 
   useEffect(() => {
@@ -85,14 +84,13 @@ export function HeroSection() {
   };
 
   const project = projects[current];
-  const isAnimating = phase === "assembling";
 
   return (
     <section className="relative min-h-screen flex items-center pt-20 pb-16 overflow-hidden">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-          {/* Left: text content */}
+          {/* Left: text */}
           <div className="order-1 lg:order-1">
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-800 leading-tight mb-6">
               {t.hero.title1}{" "}
@@ -101,9 +99,7 @@ export function HeroSection() {
               </span>
               {" "}{t.hero.title2}
             </h1>
-
             <p className="text-lg text-slate-900 mb-8 max-w-xl">{t.hero.description}</p>
-
             <ul className="space-y-3 mb-8">
               {t.hero.features.map((feature, index) => (
                 <li key={index} className="flex items-start gap-3 text-foreground" data-testid={`text-feature-${index}`}>
@@ -112,7 +108,6 @@ export function HeroSection() {
                 </li>
               ))}
             </ul>
-
             <div className="flex flex-wrap gap-4 mb-12">
               <Button
                 size="lg"
@@ -127,7 +122,6 @@ export function HeroSection() {
                 {t.hero.ourServices}
               </Button>
             </div>
-
             <div className="flex flex-wrap gap-8 pt-8 border-t border-slate-400/30">
               {stats.map((stat, index) => (
                 <div key={index} className="text-center" data-testid={`stat-${index}`}>
@@ -141,7 +135,7 @@ export function HeroSection() {
           {/* Right: slideshow */}
           <div className="order-2 lg:order-2 w-full">
 
-            {/* Project title above */}
+            {/* Project title */}
             <div className="mb-3 h-10 overflow-hidden">
               <h2
                 className="font-display font-bold text-2xl text-slate-800"
@@ -151,24 +145,38 @@ export function HeroSection() {
               </h2>
             </div>
 
-            {/* Image with mosaic tiles */}
+            {/* Image container */}
             <div
               className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-slate-100"
               style={{ height: "420px" }}
             >
-              {/* Base image — hidden during mosaic so src change never flashes */}
+              {/* Layer 1 – incoming image (behind tiles) */}
+              <img
+                src={projectImages[target]}
+                alt=""
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{ zIndex: 1 }}
+              />
+
+              {/* Layer 2 – outgoing image (fades while tiles appear) */}
               <img
                 src={projectImages[current]}
                 alt={project.title}
                 className="absolute inset-0 w-full h-full object-cover"
-                style={{ visibility: isAnimating ? "hidden" : "visible" }}
+                style={{
+                  zIndex: 2,
+                  opacity: isAnimating ? 0 : 1,
+                  transition: isAnimating ? "opacity 0.5s ease" : "none",
+                }}
                 data-testid={`img-slide-${current}`}
               />
 
-              {/* Mosaic tiles */}
+              {/* Layer 3 – mosaic tiles (visibility:hidden when idle → no CSS glitch) */}
               <div
                 className="absolute inset-0"
                 style={{
+                  zIndex: 3,
+                  visibility: isAnimating ? "visible" : "hidden",
                   display: "grid",
                   gridTemplateColumns: `repeat(${COLS}, 1fr)`,
                   gridTemplateRows: `repeat(${ROWS}, 1fr)`,
@@ -197,10 +205,13 @@ export function HeroSection() {
                 })}
               </div>
 
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent pointer-events-none z-10" />
+              <div
+                className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent pointer-events-none"
+                style={{ zIndex: 4 }}
+              />
             </div>
 
-            {/* Description + tags below */}
+            {/* Description + tags */}
             <div className="mt-4">
               <div className="flex items-center gap-2 mb-2 flex-wrap">
                 <Badge variant="secondary" className={`text-xs border ${accentColors[current]}`}>
