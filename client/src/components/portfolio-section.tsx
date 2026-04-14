@@ -123,12 +123,14 @@ export function PortfolioSection() {
             className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200/60 bg-slate-100"
             style={{ height: "620px" }}
           >
-            {/* BASE LAYER */}
-            <img
-              src={projectImages[shown]}
-              alt={project.title}
-              className="absolute inset-0 w-full h-full object-cover"
-              style={{ zIndex: 1 }}
+            {/* BASE LAYER — background-size 100% 100% matches tile mosaic exactly */}
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage: `url(${projectImages[shown]})`,
+                backgroundSize: "100% 100%",
+                zIndex: 1,
+              }}
               data-testid={`img-portfolio-slide-${shown}`}
             />
 
@@ -159,23 +161,13 @@ export function PortfolioSection() {
                     <div
                       key={i}
                       className="mosaic-tile"
-                      style={{ animationDelay: `${DELAYS[i]}ms` }}
-                    >
-                      {/* img scaled to full container size, clipped to tile by overflow:hidden */}
-                      <img
-                        src={projectImages[next]}
-                        alt=""
-                        style={{
-                          position: "absolute",
-                          width: `${COLS * 100}%`,
-                          height: `${ROWS * 100}%`,
-                          left: `${-col * 100}%`,
-                          top: `${-row * 100}%`,
-                          objectFit: "cover",
-                          display: "block",
-                        }}
-                      />
-                    </div>
+                      style={{
+                        animationDelay: `${DELAYS[i]}ms`,
+                        backgroundImage: `url(${projectImages[next]})`,
+                        backgroundSize: `${COLS * 100}% ${ROWS * 100}%`,
+                        backgroundPosition: `${(col / (COLS - 1)) * 100}% ${(row / (ROWS - 1)) * 100}%`,
+                      }}
+                    />
                   );
                 })}
               </div>
