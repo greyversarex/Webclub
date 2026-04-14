@@ -54,9 +54,13 @@ export function PortfolioSection() {
     setTimeout(() => {
       currentRef.current = index;
       setCurrent(index);
-      setPhase("idle");
-      isAnimatingRef.current = false;
-    }, 620);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setPhase("idle");
+          isAnimatingRef.current = false;
+        });
+      });
+    }, 680);
   };
 
   useEffect(() => {
@@ -103,11 +107,6 @@ export function PortfolioSection() {
           <div className="mb-4 h-10 overflow-hidden">
             <h3
               className="font-display font-bold text-2xl md:text-3xl text-slate-800"
-              style={{
-                transition: "opacity 0.3s ease, transform 0.3s ease",
-                opacity: isAnimating ? 0 : 1,
-                transform: isAnimating ? "translateY(-8px)" : "translateY(0)",
-              }}
               data-testid="text-portfolio-slide-title"
             >
               {project.title}
@@ -163,10 +162,7 @@ export function PortfolioSection() {
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none z-10" />
 
             {/* Category badge */}
-            <div
-              className="absolute bottom-4 left-4 z-20"
-              style={{ transition: "opacity 0.3s ease", opacity: isAnimating ? 0 : 1 }}
-            >
+            <div className="absolute bottom-4 left-4 z-20">
               <Badge
                 variant="secondary"
                 className={`text-xs border backdrop-blur-sm ${accentColors[current]}`}
@@ -182,14 +178,7 @@ export function PortfolioSection() {
           </div>
 
           {/* Description + tags */}
-          <div
-            className="mt-5"
-            style={{
-              transition: "opacity 0.3s ease, transform 0.3s ease",
-              opacity: isAnimating ? 0 : 1,
-              transform: isAnimating ? "translateY(8px)" : "translateY(0)",
-            }}
-          >
+          <div className="mt-5">
             <p className="text-slate-700 text-base leading-relaxed mb-3 max-w-3xl">
               {project.description}
             </p>

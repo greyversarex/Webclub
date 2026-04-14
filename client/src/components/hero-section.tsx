@@ -54,9 +54,13 @@ export function HeroSection() {
     setTimeout(() => {
       currentRef.current = index;
       setCurrent(index);
-      setPhase("idle");
-      isAnimatingRef.current = false;
-    }, 570);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setPhase("idle");
+          isAnimatingRef.current = false;
+        });
+      });
+    }, 620);
   };
 
   useEffect(() => {
@@ -141,11 +145,6 @@ export function HeroSection() {
             <div className="mb-3 h-10 overflow-hidden">
               <h2
                 className="font-display font-bold text-2xl text-slate-800"
-                style={{
-                  transition: "opacity 0.25s ease, transform 0.25s ease",
-                  opacity: isAnimating ? 0 : 1,
-                  transform: isAnimating ? "translateY(-8px)" : "translateY(0)",
-                }}
                 data-testid="text-slide-title"
               >
                 {project.title}
@@ -201,14 +200,7 @@ export function HeroSection() {
             </div>
 
             {/* Description + tags below */}
-            <div
-              className="mt-4"
-              style={{
-                transition: "opacity 0.25s ease, transform 0.25s ease",
-                opacity: isAnimating ? 0 : 1,
-                transform: isAnimating ? "translateY(6px)" : "translateY(0)",
-              }}
-            >
+            <div className="mt-4">
               <div className="flex items-center gap-2 mb-2 flex-wrap">
                 <Badge variant="secondary" className={`text-xs border ${accentColors[current]}`}>
                   {project.category}
