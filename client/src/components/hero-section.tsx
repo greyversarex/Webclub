@@ -29,30 +29,35 @@ const accentColors = [
   "bg-emerald-100 text-emerald-700 border-emerald-200",
 ];
 
+const COLS = 8;
+const ROWS = 6;
+const TOTAL = COLS * ROWS;
+const DELAYS = Array.from({ length: TOTAL }, () => Math.floor(Math.random() * 400));
+
 export function HeroSection() {
   const { t } = useLanguage();
-  const [current, setCurrent] = useState(0);
-  const [animating, setAnimating] = useState(false);
-  const [direction, setDirection] = useState<"left" | "right">("right");
-
   const projects = t.portfolio.projects;
 
-  const goTo = (index: number, dir: "left" | "right") => {
-    if (animating) return;
-    setDirection(dir);
-    setAnimating(true);
+  const [current, setCurrent] = useState(0);
+  const [target, setTarget] = useState(0);
+  const [phase, setPhase] = useState<"idle" | "assembling">("idle");
+
+  const goTo = (index: number) => {
+    if (phase !== "idle" || index === current) return;
+    setTarget(index);
+    setPhase("assembling");
     setTimeout(() => {
       setCurrent(index);
-      setAnimating(false);
-    }, 300);
+      setPhase("idle");
+    }, 550);
   };
 
-  const next = () => goTo((current + 1) % projects.length, "right");
+  const next = () => goTo((current + 1) % projects.length);
 
   useEffect(() => {
     const timer = setInterval(next, 4000);
     return () => clearInterval(timer);
-  }, [current]);
+  }, [current, phase]);
 
   const stats = [
     { value: "100+", label: t.hero.stats.projects },
@@ -69,6 +74,7 @@ export function HeroSection() {
   };
 
   const project = projects[current];
+  const isAnimating = phase === "assembling";
 
   return (
     <section className="relative min-h-screen flex items-center pt-20 pb-16 overflow-hidden">
@@ -127,12 +133,11 @@ export function HeroSection() {
             {/* Project title above */}
             <div className="mb-3 h-10 overflow-hidden">
               <h2
-                className="font-display font-bold text-2xl text-slate-800 transition-all duration-300"
+                className="font-display font-bold text-2xl text-slate-800"
                 style={{
-                  opacity: animating ? 0 : 1,
-                  transform: animating
-                    ? `translateX(${direction === "right" ? "-20px" : "20px"})`
-                    : "translateX(0)",
+                  transition: "opacity 0.25s ease, transform 0.25s ease",
+                  opacity: isAnimating ? 0 : 1,
+                  transform: isAnimating ? "translateY(-8px)" : "translateY(0)",
                 }}
                 data-testid="text-slide-title"
               >
@@ -140,29 +145,65 @@ export function HeroSection() {
               </h2>
             </div>
 
-            {/* Main image */}
-            <div className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-slate-100" style={{ height: "420px" }}>
+            {/* Image with mosaic tiles */}
+            <div
+              className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-slate-100"
+              style={{ height: "420px" }}
+            >
+              {/* Base image */}
               <img
                 src={projectImages[current]}
                 alt={project.title}
-                className="w-full h-full object-cover transition-all duration-300"
+                className="absolute inset-0 w-full h-full object-cover"
                 style={{
-                  opacity: animating ? 0 : 1,
-                  transform: animating
-                    ? `scale(1.03) translateX(${direction === "right" ? "-12px" : "12px"})`
-                    : "scale(1) translateX(0)",
+                  transition: "opacity 0.15s ease",
+                  opacity: isAnimating ? 0 : 1,
                 }}
                 data-testid={`img-slide-${current}`}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent" />
+
+              {/* Mosaic tiles */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: `repeat(${COLS}, 1fr)`,
+                  gridTemplateRows: `repeat(${ROWS}, 1fr)`,
+                }}
+              >
+                {Array.from({ length: TOTAL }, (_, i) => {
+                  const col = i % COLS;
+                  const row = Math.floor(i / COLS);
+                  const bgPosX = COLS === 1 ? "0%" : `${(col / (COLS - 1)) * 100}%`;
+                  const bgPosY = ROWS === 1 ? "0%" : `${(row / (ROWS - 1)) * 100}%`;
+                  return (
+                    <div
+                      key={i}
+                      style={{
+                        backgroundImage: `url(${projectImages[target]})`,
+                        backgroundSize: `${COLS * 100}% ${ROWS * 100}%`,
+                        backgroundPosition: `${bgPosX} ${bgPosY}`,
+                        transform: isAnimating ? "scale(1)" : "scale(0)",
+                        transition: isAnimating
+                          ? `transform 0.18s cubic-bezier(0.34,1.3,0.64,1) ${DELAYS[i]}ms`
+                          : "none",
+                        transformOrigin: "center",
+                      }}
+                    />
+                  );
+                })}
+              </div>
+
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent pointer-events-none z-10" />
             </div>
 
             {/* Description + tags below */}
             <div
-              className="mt-4 transition-all duration-300"
+              className="mt-4"
               style={{
-                opacity: animating ? 0 : 1,
-                transform: animating ? "translateY(6px)" : "translateY(0)",
+                transition: "opacity 0.25s ease, transform 0.25s ease",
+                opacity: isAnimating ? 0 : 1,
+                transform: isAnimating ? "translateY(6px)" : "translateY(0)",
               }}
             >
               <div className="flex items-center gap-2 mb-2 flex-wrap">
@@ -183,7 +224,7 @@ export function HeroSection() {
               {projects.map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => goTo(i, i > current ? "right" : "left")}
+                  onClick={() => goTo(i)}
                   className={`rounded-full transition-all duration-300 ${
                     i === current
                       ? "w-6 h-2 bg-violet-600"

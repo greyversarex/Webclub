@@ -28,27 +28,35 @@ const accentColors = [
   "bg-emerald-100 text-emerald-700 border-emerald-200",
 ];
 
+const COLS = 10;
+const ROWS = 7;
+const TOTAL = COLS * ROWS;
+const DELAYS = Array.from({ length: TOTAL }, () => Math.floor(Math.random() * 460));
+
 export function PortfolioSection() {
   const { ref, isVisible } = useScrollAnimation();
   const { t } = useLanguage();
   const projects = t.portfolio.projects;
 
   const [current, setCurrent] = useState(0);
-  const [animating, setAnimating] = useState(false);
-  const [direction, setDirection] = useState<"left" | "right">("right");
+  const [target, setTarget] = useState(0);
+  const [phase, setPhase] = useState<"idle" | "assembling">("idle");
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const goTo = (index: number, dir: "left" | "right") => {
-    if (animating) return;
-    setDirection(dir);
-    setAnimating(true);
+  const goTo = (index: number) => {
+    if (phase !== "idle" || index === current) return;
+    setTarget(index);
+    setPhase("assembling");
     setTimeout(() => {
       setCurrent(index);
-      setAnimating(false);
-    }, 350);
+      setPhase("idle");
+    }, 600);
   };
 
-  const next = () => goTo((current + 1) % projects.length, "right");
+  const next = () => {
+    const idx = (current + 1) % projects.length;
+    goTo(idx);
+  };
 
   const resetTimer = () => {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -58,11 +66,10 @@ export function PortfolioSection() {
   useEffect(() => {
     timerRef.current = setInterval(next, 5000);
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
-  }, [current]);
+  }, [current, phase]);
 
   const project = projects[current];
-  const slideOut = direction === "right" ? "-40px" : "40px";
-  const slideIn = direction === "right" ? "40px" : "-40px";
+  const isAnimating = phase === "assembling";
 
   return (
     <section
@@ -72,7 +79,6 @@ export function PortfolioSection() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
 
-        {/* Section heading */}
         <div className="text-center mb-10 md:mb-14">
           <h2
             className={`font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-800 transition-all duration-700 ${
@@ -90,7 +96,6 @@ export function PortfolioSection() {
           </p>
         </div>
 
-        {/* Slideshow */}
         <div
           className={`transition-all duration-700 delay-200 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
@@ -101,9 +106,9 @@ export function PortfolioSection() {
             <h3
               className="font-display font-bold text-2xl md:text-3xl text-slate-800"
               style={{
-                transition: "opacity 0.35s ease, transform 0.35s ease",
-                opacity: animating ? 0 : 1,
-                transform: animating ? `translateX(${slideOut})` : "translateX(0)",
+                transition: "opacity 0.3s ease, transform 0.3s ease",
+                opacity: isAnimating ? 0 : 1,
+                transform: isAnimating ? "translateY(-8px)" : "translateY(0)",
               }}
               data-testid="text-portfolio-slide-title"
             >
@@ -111,32 +116,62 @@ export function PortfolioSection() {
             </h3>
           </div>
 
-          {/* Main image area */}
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200/60 bg-slate-100" style={{ height: "620px" }}>
+          {/* Image area with tile mosaic */}
+          <div
+            className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200/60 bg-slate-100"
+            style={{ height: "620px" }}
+          >
+            {/* Base image (current) */}
             <img
               src={projectImages[current]}
               alt={project.title}
-              className="w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-cover"
               style={{
-                transition: "opacity 0.35s ease, transform 0.35s ease",
-                opacity: animating ? 0 : 1,
-                transform: animating
-                  ? `scale(1.04) translateX(${slideOut})`
-                  : "scale(1) translateX(0)",
+                transition: "opacity 0.15s ease",
+                opacity: isAnimating ? 0 : 1,
               }}
               data-testid={`img-portfolio-slide-${current}`}
             />
 
-            {/* Gradient overlay bottom */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
-
-            {/* Category badge overlay */}
+            {/* Mosaic tiles grid — shows target image assembling */}
             <div
-              className="absolute bottom-4 left-4"
+              className="absolute inset-0"
               style={{
-                transition: "opacity 0.35s ease",
-                opacity: animating ? 0 : 1,
+                display: "grid",
+                gridTemplateColumns: `repeat(${COLS}, 1fr)`,
+                gridTemplateRows: `repeat(${ROWS}, 1fr)`,
               }}
+            >
+              {Array.from({ length: TOTAL }, (_, i) => {
+                const col = i % COLS;
+                const row = Math.floor(i / COLS);
+                const bgPosX = COLS === 1 ? "0%" : `${(col / (COLS - 1)) * 100}%`;
+                const bgPosY = ROWS === 1 ? "0%" : `${(row / (ROWS - 1)) * 100}%`;
+                return (
+                  <div
+                    key={i}
+                    style={{
+                      backgroundImage: `url(${projectImages[target]})`,
+                      backgroundSize: `${COLS * 100}% ${ROWS * 100}%`,
+                      backgroundPosition: `${bgPosX} ${bgPosY}`,
+                      transform: isAnimating ? "scale(1)" : "scale(0)",
+                      transition: isAnimating
+                        ? `transform 0.2s cubic-bezier(0.34,1.3,0.64,1) ${DELAYS[i]}ms`
+                        : "none",
+                      transformOrigin: "center",
+                    }}
+                  />
+                );
+              })}
+            </div>
+
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none z-10" />
+
+            {/* Category badge */}
+            <div
+              className="absolute bottom-4 left-4 z-20"
+              style={{ transition: "opacity 0.3s ease", opacity: isAnimating ? 0 : 1 }}
             >
               <Badge
                 variant="secondary"
@@ -147,19 +182,18 @@ export function PortfolioSection() {
             </div>
 
             {/* Slide counter */}
-            <div className="absolute bottom-4 right-4 bg-black/40 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm">
+            <div className="absolute bottom-4 right-4 z-20 bg-black/40 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm">
               {current + 1} / {projects.length}
             </div>
-
           </div>
 
-          {/* Description + tags below image */}
+          {/* Description + tags */}
           <div
             className="mt-5"
             style={{
-              transition: "opacity 0.35s ease, transform 0.35s ease",
-              opacity: animating ? 0 : 1,
-              transform: animating ? `translateX(${slideIn})` : "translateX(0)",
+              transition: "opacity 0.3s ease, transform 0.3s ease",
+              opacity: isAnimating ? 0 : 1,
+              transform: isAnimating ? "translateY(8px)" : "translateY(0)",
             }}
           >
             <p className="text-slate-700 text-base leading-relaxed mb-3 max-w-3xl">
@@ -182,7 +216,7 @@ export function PortfolioSection() {
             {projects.map((_, i) => (
               <button
                 key={i}
-                onClick={() => { goTo(i, i > current ? "right" : "left"); resetTimer(); }}
+                onClick={() => { goTo(i); resetTimer(); }}
                 className={`rounded-full transition-all duration-300 ${
                   i === current
                     ? "w-8 h-2.5 bg-violet-600"
