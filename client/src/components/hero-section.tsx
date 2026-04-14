@@ -1,6 +1,5 @@
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { useLanguage } from "@/lib/language-context";
 
@@ -12,11 +11,6 @@ import govServices from "@assets/generated_images/government_services_portal.png
 import logisticsSystem from "@assets/generated_images/logistics_system_dashboard.png";
 
 const projectImages = [ecommercePlatform, bankingApp, corporatePortal, educationPlatform, govServices, logisticsSystem];
-const projectAccents = ["violet", "emerald", "violet", "emerald", "violet", "emerald"] as const;
-const accentStyles = {
-  violet: { badge: "bg-violet-100 text-violet-700 border border-violet-200" },
-  emerald: { badge: "bg-emerald-100 text-emerald-700 border border-emerald-200" },
-};
 
 export function HeroSection() {
   const { t } = useLanguage();
@@ -106,10 +100,7 @@ export function HeroSection() {
 
           <div className="order-2 lg:order-2 flex justify-center lg:justify-end">
             <div className="grid grid-cols-2 gap-4 w-full max-w-lg">
-              {t.portfolio.projects.map((project, index) => {
-                const accent = projectAccents[index];
-                const styles = accentStyles[accent];
-                return (
+              {t.portfolio.projects.map((project, index) => (
                   <Card
                     key={index}
                     className="group overflow-hidden bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 backdrop-blur-sm border-slate-300 hover:border-violet-400 hover:shadow-xl transition-all duration-300"
@@ -124,16 +115,12 @@ export function HeroSection() {
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-200/60 via-transparent to-transparent" />
                     </div>
                     <div className="p-2.5 sm:p-3">
-                      <Badge variant="secondary" className={`text-[10px] mb-1.5 ${styles.badge}`}>
-                        {project.category}
-                      </Badge>
                       <h4 className="font-display font-semibold text-xs sm:text-sm text-slate-800 leading-tight">
                         {project.title}
                       </h4>
                     </div>
                   </Card>
-                );
-              })}
+              ))}
             </div>
           </div>
         </div>
