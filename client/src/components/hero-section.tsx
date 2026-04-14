@@ -33,40 +33,39 @@ const COLS = 8;
 const ROWS = 6;
 const TOTAL = COLS * ROWS;
 const DELAYS = Array.from({ length: TOTAL }, () => Math.floor(Math.random() * 380));
+// max tile time = 380 + 200 = 580ms → wait 650ms to be safe
+const ANIM_MS = 650;
 const TOTAL_PROJECTS = 6;
-const ANIM_DURATION = 620; // 380 + 200 = 580ms max, 620ms safety margin
 
 export function HeroSection() {
   const { t } = useLanguage();
   const projects = t.portfolio.projects;
 
-  const [current, setCurrent] = useState(0);
-  const [target, setTarget] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [shown, setShown] = useState(0);
+  const [next, setNext] = useState(0);
+  const [animating, setAnimating] = useState(false);
 
-  const currentRef = useRef(0);
-  const isAnimatingRef = useRef(false);
+  const shownRef = useRef(0);
+  const animatingRef = useRef(false);
 
-  const goTo = (index: number) => {
-    if (isAnimatingRef.current || index === currentRef.current) return;
-    isAnimatingRef.current = true;
-    setTarget(index);
-    setIsAnimating(true);
+  const goTo = (idx: number) => {
+    if (animatingRef.current || idx === shownRef.current) return;
+    animatingRef.current = true;
+
+    setNext(idx);
+    setAnimating(true);
 
     setTimeout(() => {
-      // All in ONE synchronous block → React 18 batches into ONE render + ONE paint
-      currentRef.current = index;
-      setCurrent(index);
-      setIsAnimating(false);
-      isAnimatingRef.current = false;
-    }, ANIM_DURATION);
+      shownRef.current = idx;
+      setShown(idx);
+      setAnimating(false);
+      animatingRef.current = false;
+    }, ANIM_MS);
   };
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      goTo((currentRef.current + 1) % TOTAL_PROJECTS);
-    }, 4000);
-    return () => clearInterval(timer);
+    const id = setInterval(() => goTo((shownRef.current + 1) % TOTAL_PROJECTS), 4000);
+    return () => clearInterval(id);
   }, []);
 
   const stats = [
@@ -75,15 +74,10 @@ export function HeroSection() {
     { value: "24/7", label: t.hero.stats.support },
   ];
 
-  const scrollToContact = () => {
-    document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
-  };
+  const scrollToContact = () => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
+  const scrollToServices = () => document.querySelector("#services")?.scrollIntoView({ behavior: "smooth" });
 
-  const scrollToServices = () => {
-    document.querySelector("#services")?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const project = projects[current];
+  const project = projects[shown];
 
   return (
     <section className="relative min-h-screen flex items-center pt-20 pb-16 overflow-hidden">
@@ -135,7 +129,6 @@ export function HeroSection() {
           {/* Right: slideshow */}
           <div className="order-2 lg:order-2 w-full">
 
-            {/* Project title */}
             <div className="mb-3 h-10 overflow-hidden">
               <h2
                 className="font-display font-bold text-2xl text-slate-800"
@@ -145,38 +138,25 @@ export function HeroSection() {
               </h2>
             </div>
 
-            {/* Image container */}
             <div
               className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-slate-100"
               style={{ height: "420px" }}
             >
-              {/* Layer 1 – incoming image (behind tiles) */}
+              {/* Single base image — always opacity:1, src swaps under tiles */}
               <img
-                src={projectImages[target]}
-                alt=""
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{ zIndex: 1 }}
-              />
-
-              {/* Layer 2 – outgoing image (fades while tiles appear) */}
-              <img
-                src={projectImages[current]}
+                src={projectImages[shown]}
                 alt={project.title}
                 className="absolute inset-0 w-full h-full object-cover"
-                style={{
-                  zIndex: 2,
-                  opacity: isAnimating ? 0 : 1,
-                  transition: isAnimating ? "opacity 0.5s ease" : "none",
-                }}
-                data-testid={`img-slide-${current}`}
+                style={{ zIndex: 1 }}
+                data-testid={`img-slide-${shown}`}
               />
 
-              {/* Layer 3 – mosaic tiles (visibility:hidden when idle → no CSS glitch) */}
+              {/* Tile container — visibility:hidden collapses tiles instantly, no CSS glitch */}
               <div
                 className="absolute inset-0"
                 style={{
-                  zIndex: 3,
-                  visibility: isAnimating ? "visible" : "hidden",
+                  zIndex: 2,
+                  visibility: animating ? "visible" : "hidden",
                   display: "grid",
                   gridTemplateColumns: `repeat(${COLS}, 1fr)`,
                   gridTemplateRows: `repeat(${ROWS}, 1fr)`,
@@ -185,17 +165,17 @@ export function HeroSection() {
                 {Array.from({ length: TOTAL }, (_, i) => {
                   const col = i % COLS;
                   const row = Math.floor(i / COLS);
-                  const bgPosX = `${(col / (COLS - 1)) * 100}%`;
-                  const bgPosY = `${(row / (ROWS - 1)) * 100}%`;
+                  const bgX = `${(col / (COLS - 1)) * 100}%`;
+                  const bgY = `${(row / (ROWS - 1)) * 100}%`;
                   return (
                     <div
                       key={i}
                       style={{
-                        backgroundImage: `url(${projectImages[target]})`,
+                        backgroundImage: `url(${projectImages[next]})`,
                         backgroundSize: `${COLS * 100}% ${ROWS * 100}%`,
-                        backgroundPosition: `${bgPosX} ${bgPosY}`,
-                        transform: isAnimating ? "scale(1)" : "scale(0)",
-                        transition: isAnimating
+                        backgroundPosition: `${bgX} ${bgY}`,
+                        transform: animating ? "scale(1)" : "scale(0)",
+                        transition: animating
                           ? `transform 0.18s cubic-bezier(0.34,1.3,0.64,1) ${DELAYS[i]}ms`
                           : "none",
                         transformOrigin: "center",
@@ -207,17 +187,16 @@ export function HeroSection() {
 
               <div
                 className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent pointer-events-none"
-                style={{ zIndex: 4 }}
+                style={{ zIndex: 3 }}
               />
             </div>
 
-            {/* Description + tags */}
             <div className="mt-4">
               <div className="flex items-center gap-2 mb-2 flex-wrap">
-                <Badge variant="secondary" className={`text-xs border ${accentColors[current]}`}>
+                <Badge variant="secondary" className={`text-xs border ${accentColors[shown]}`}>
                   {project.category}
                 </Badge>
-                {projectTags[current].map((tag) => (
+                {projectTags[shown].map((tag) => (
                   <span key={tag} className="px-2 py-0.5 text-xs rounded bg-slate-200/80 text-slate-600 border border-slate-300">
                     {tag}
                   </span>
@@ -226,14 +205,13 @@ export function HeroSection() {
               <p className="text-slate-700 text-sm leading-relaxed">{project.description}</p>
             </div>
 
-            {/* Dot navigation */}
             <div className="flex items-center justify-center gap-2 mt-4">
               {projects.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => goTo(i)}
                   className={`rounded-full transition-all duration-300 ${
-                    i === current
+                    i === shown
                       ? "w-6 h-2 bg-violet-600"
                       : "w-2 h-2 bg-slate-300 hover:bg-slate-400"
                   }`}

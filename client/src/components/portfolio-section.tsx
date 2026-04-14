@@ -31,47 +31,50 @@ const accentColors = [
 const COLS = 10;
 const ROWS = 7;
 const TOTAL = COLS * ROWS;
-// Fixed random delays, pre-generated once
 const DELAYS = Array.from({ length: TOTAL }, () => Math.floor(Math.random() * 450));
+// max tile time = 450 + 200 = 650ms → wait 720ms to be safe
+const ANIM_MS = 720;
 const TOTAL_PROJECTS = 6;
-// Max tile animation time = 450 + 200 = 650ms, so we wait 700ms
-const ANIM_DURATION = 700;
 
 export function PortfolioSection() {
   const { ref, isVisible } = useScrollAnimation();
   const { t } = useLanguage();
   const projects = t.portfolio.projects;
 
-  const [current, setCurrent] = useState(0);
-  const [target, setTarget] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
+  // `shown` = what the user sees right now (base image, description, etc.)
+  // `next`  = what the tiles are building toward (only used during animation)
+  const [shown, setShown] = useState(0);
+  const [next, setNext] = useState(0);
+  const [animating, setAnimating] = useState(false);
 
-  const currentRef = useRef(0);
-  const isAnimatingRef = useRef(false);
+  const shownRef = useRef(0);
+  const animatingRef = useRef(false);
 
-  const goTo = (index: number) => {
-    if (isAnimatingRef.current || index === currentRef.current) return;
-    isAnimatingRef.current = true;
-    setTarget(index);
-    setIsAnimating(true);
+  const goTo = (idx: number) => {
+    if (animatingRef.current || idx === shownRef.current) return;
+    animatingRef.current = true;
+
+    // ONE batched render: tiles appear, show `idx` pieces
+    setNext(idx);
+    setAnimating(true);
 
     setTimeout(() => {
-      // All in one synchronous block → React 18 batches into ONE render + ONE paint
-      currentRef.current = index;
-      setCurrent(index);
-      setIsAnimating(false);
-      isAnimatingRef.current = false;
-    }, ANIM_DURATION);
+      // ONE batched render (React 18 automatic batching in setTimeout):
+      // base image src flips to new while tiles are still covering it (visibility:visible)
+      // then tiles container becomes visibility:hidden in the same paint
+      shownRef.current = idx;
+      setShown(idx);
+      setAnimating(false);
+      animatingRef.current = false;
+    }, ANIM_MS);
   };
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      goTo((currentRef.current + 1) % TOTAL_PROJECTS);
-    }, 5000);
-    return () => clearInterval(timer);
+    const id = setInterval(() => goTo((shownRef.current + 1) % TOTAL_PROJECTS), 5000);
+    return () => clearInterval(id);
   }, []);
 
-  const project = projects[current];
+  const project = projects[shown];
 
   return (
     <section
@@ -103,7 +106,6 @@ export function PortfolioSection() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          {/* Project title */}
           <div className="mb-4 h-10 overflow-hidden">
             <h3
               className="font-display font-bold text-2xl md:text-3xl text-slate-800"
@@ -113,38 +115,26 @@ export function PortfolioSection() {
             </h3>
           </div>
 
-          {/* Image area */}
           <div
             className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200/60 bg-slate-100"
             style={{ height: "620px" }}
           >
-            {/* Layer 1 – incoming image, always rendered behind tiles */}
+            {/* Single base image — src changes while tiles cover it, never visible mid-swap */}
             <img
-              src={projectImages[target]}
-              alt=""
-              className="absolute inset-0 w-full h-full object-cover"
-              style={{ zIndex: 1 }}
-            />
-
-            {/* Layer 2 – outgoing image, fades away while tiles appear */}
-            <img
-              src={projectImages[current]}
+              src={projectImages[shown]}
               alt={project.title}
               className="absolute inset-0 w-full h-full object-cover"
-              style={{
-                zIndex: 2,
-                opacity: isAnimating ? 0 : 1,
-                transition: isAnimating ? "opacity 0.6s ease" : "none",
-              }}
-              data-testid={`img-portfolio-slide-${current}`}
+              style={{ zIndex: 1 }}
+              data-testid={`img-portfolio-slide-${shown}`}
             />
 
-            {/* Layer 3 – mosaic tiles (hidden instantly when not animating via visibility) */}
+            {/* Tile container — visibility:hidden hides instantly with no CSS-transition side-effects */}
             <div
               className="absolute inset-0"
               style={{
-                zIndex: 3,
-                visibility: isAnimating ? "visible" : "hidden",
+                zIndex: 2,
+                // hidden when idle: tiles are invisible and can reset their transform freely
+                visibility: animating ? "visible" : "hidden",
                 display: "grid",
                 gridTemplateColumns: `repeat(${COLS}, 1fr)`,
                 gridTemplateRows: `repeat(${ROWS}, 1fr)`,
@@ -153,17 +143,18 @@ export function PortfolioSection() {
               {Array.from({ length: TOTAL }, (_, i) => {
                 const col = i % COLS;
                 const row = Math.floor(i / COLS);
-                const bgPosX = `${(col / (COLS - 1)) * 100}%`;
-                const bgPosY = `${(row / (ROWS - 1)) * 100}%`;
+                const bgX = `${(col / (COLS - 1)) * 100}%`;
+                const bgY = `${(row / (ROWS - 1)) * 100}%`;
                 return (
                   <div
                     key={i}
                     style={{
-                      backgroundImage: `url(${projectImages[target]})`,
+                      backgroundImage: `url(${projectImages[next]})`,
                       backgroundSize: `${COLS * 100}% ${ROWS * 100}%`,
-                      backgroundPosition: `${bgPosX} ${bgPosY}`,
-                      transform: isAnimating ? "scale(1)" : "scale(0)",
-                      transition: isAnimating
+                      backgroundPosition: `${bgX} ${bgY}`,
+                      // animating → scale to full; idle → reset to 0 (invisible anyway)
+                      transform: animating ? "scale(1)" : "scale(0)",
+                      transition: animating
                         ? `transform 0.2s cubic-bezier(0.34,1.3,0.64,1) ${DELAYS[i]}ms`
                         : "none",
                       transformOrigin: "center",
@@ -173,34 +164,32 @@ export function PortfolioSection() {
               })}
             </div>
 
-            {/* Gradient + overlays */}
             <div
               className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none"
-              style={{ zIndex: 4 }}
+              style={{ zIndex: 3 }}
             />
-            <div className="absolute bottom-4 left-4" style={{ zIndex: 5 }}>
+            <div className="absolute bottom-4 left-4" style={{ zIndex: 4 }}>
               <Badge
                 variant="secondary"
-                className={`text-xs border backdrop-blur-sm ${accentColors[current]}`}
+                className={`text-xs border backdrop-blur-sm ${accentColors[shown]}`}
               >
                 {project.category}
               </Badge>
             </div>
             <div
               className="absolute bottom-4 right-4 bg-black/40 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm"
-              style={{ zIndex: 5 }}
+              style={{ zIndex: 4 }}
             >
-              {current + 1} / {projects.length}
+              {shown + 1} / {projects.length}
             </div>
           </div>
 
-          {/* Description + tags */}
           <div className="mt-5">
             <p className="text-slate-700 text-base leading-relaxed mb-3 max-w-3xl">
               {project.description}
             </p>
             <div className="flex flex-wrap gap-2">
-              {projectTags[current].map((tag) => (
+              {projectTags[shown].map((tag) => (
                 <span
                   key={tag}
                   className="px-3 py-1 text-sm rounded-full bg-slate-200/80 text-slate-700 border border-slate-300"
@@ -211,14 +200,13 @@ export function PortfolioSection() {
             </div>
           </div>
 
-          {/* Dot navigation */}
           <div className="flex items-center justify-center gap-2 mt-6">
             {projects.map((_, i) => (
               <button
                 key={i}
                 onClick={() => goTo(i)}
                 className={`rounded-full transition-all duration-300 ${
-                  i === current
+                  i === shown
                     ? "w-8 h-2.5 bg-violet-600"
                     : "w-2.5 h-2.5 bg-slate-300 hover:bg-slate-400"
                 }`}
