@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ArrowRight, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/lib/language-context";
@@ -48,7 +48,6 @@ export function HeroSection() {
   };
 
   const next = () => goTo((current + 1) % projects.length, "right");
-  const prev = () => goTo((current - 1 + projects.length) % projects.length, "left");
 
   useEffect(() => {
     const timer = setInterval(next, 4000);
@@ -142,7 +141,7 @@ export function HeroSection() {
             </div>
 
             {/* Main image */}
-            <div className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-slate-100" style={{ height: "340px" }}>
+            <div className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-slate-100" style={{ height: "420px" }}>
               <img
                 src={projectImages[current]}
                 alt={project.title}
@@ -156,22 +155,6 @@ export function HeroSection() {
                 data-testid={`img-slide-${current}`}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent" />
-
-              {/* Arrow buttons */}
-              <button
-                onClick={prev}
-                className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 hover:bg-white flex items-center justify-center shadow transition-all"
-                data-testid="button-slide-prev"
-              >
-                <ChevronLeft className="w-5 h-5 text-slate-700" />
-              </button>
-              <button
-                onClick={next}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 hover:bg-white flex items-center justify-center shadow transition-all"
-                data-testid="button-slide-next"
-              >
-                <ChevronRight className="w-5 h-5 text-slate-700" />
-              </button>
             </div>
 
             {/* Description + tags below */}
