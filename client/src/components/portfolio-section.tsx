@@ -32,6 +32,7 @@ const COLS = 10;
 const ROWS = 7;
 const TOTAL = COLS * ROWS;
 const DELAYS = Array.from({ length: TOTAL }, () => Math.floor(Math.random() * 460));
+const TOTAL_PROJECTS = 6;
 
 export function PortfolioSection() {
   const { ref, isVisible } = useScrollAnimation();
@@ -41,32 +42,29 @@ export function PortfolioSection() {
   const [current, setCurrent] = useState(0);
   const [target, setTarget] = useState(0);
   const [phase, setPhase] = useState<"idle" | "assembling">("idle");
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const currentRef = useRef(0);
+  const isAnimatingRef = useRef(false);
 
   const goTo = (index: number) => {
-    if (phase !== "idle" || index === current) return;
+    if (isAnimatingRef.current || index === currentRef.current) return;
+    isAnimatingRef.current = true;
     setTarget(index);
     setPhase("assembling");
     setTimeout(() => {
+      currentRef.current = index;
       setCurrent(index);
       setPhase("idle");
-    }, 600);
-  };
-
-  const next = () => {
-    const idx = (current + 1) % projects.length;
-    goTo(idx);
-  };
-
-  const resetTimer = () => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(next, 5000);
+      isAnimatingRef.current = false;
+    }, 620);
   };
 
   useEffect(() => {
-    timerRef.current = setInterval(next, 5000);
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
-  }, [current, phase]);
+    const timer = setInterval(() => {
+      goTo((currentRef.current + 1) % TOTAL_PROJECTS);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   const project = projects[current];
   const isAnimating = phase === "assembling";
@@ -121,7 +119,7 @@ export function PortfolioSection() {
             className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200/60 bg-slate-100"
             style={{ height: "620px" }}
           >
-            {/* Base image (current) */}
+            {/* Base image */}
             <img
               src={projectImages[current]}
               alt={project.title}
@@ -129,7 +127,7 @@ export function PortfolioSection() {
               data-testid={`img-portfolio-slide-${current}`}
             />
 
-            {/* Mosaic tiles grid — shows target image assembling */}
+            {/* Mosaic tiles */}
             <div
               className="absolute inset-0"
               style={{
@@ -141,8 +139,8 @@ export function PortfolioSection() {
               {Array.from({ length: TOTAL }, (_, i) => {
                 const col = i % COLS;
                 const row = Math.floor(i / COLS);
-                const bgPosX = COLS === 1 ? "0%" : `${(col / (COLS - 1)) * 100}%`;
-                const bgPosY = ROWS === 1 ? "0%" : `${(row / (ROWS - 1)) * 100}%`;
+                const bgPosX = `${(col / (COLS - 1)) * 100}%`;
+                const bgPosY = `${(row / (ROWS - 1)) * 100}%`;
                 return (
                   <div
                     key={i}
@@ -212,7 +210,7 @@ export function PortfolioSection() {
             {projects.map((_, i) => (
               <button
                 key={i}
-                onClick={() => { goTo(i); resetTimer(); }}
+                onClick={() => goTo(i)}
                 className={`rounded-full transition-all duration-300 ${
                   i === current
                     ? "w-8 h-2.5 bg-violet-600"

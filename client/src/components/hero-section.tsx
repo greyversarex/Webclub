@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -33,6 +33,7 @@ const COLS = 8;
 const ROWS = 6;
 const TOTAL = COLS * ROWS;
 const DELAYS = Array.from({ length: TOTAL }, () => Math.floor(Math.random() * 400));
+const TOTAL_PROJECTS = 6;
 
 export function HeroSection() {
   const { t } = useLanguage();
@@ -42,22 +43,28 @@ export function HeroSection() {
   const [target, setTarget] = useState(0);
   const [phase, setPhase] = useState<"idle" | "assembling">("idle");
 
+  const currentRef = useRef(0);
+  const isAnimatingRef = useRef(false);
+
   const goTo = (index: number) => {
-    if (phase !== "idle" || index === current) return;
+    if (isAnimatingRef.current || index === currentRef.current) return;
+    isAnimatingRef.current = true;
     setTarget(index);
     setPhase("assembling");
     setTimeout(() => {
+      currentRef.current = index;
       setCurrent(index);
       setPhase("idle");
-    }, 550);
+      isAnimatingRef.current = false;
+    }, 570);
   };
 
-  const next = () => goTo((current + 1) % projects.length);
-
   useEffect(() => {
-    const timer = setInterval(next, 4000);
+    const timer = setInterval(() => {
+      goTo((currentRef.current + 1) % TOTAL_PROJECTS);
+    }, 4000);
     return () => clearInterval(timer);
-  }, [current, phase]);
+  }, []);
 
   const stats = [
     { value: "100+", label: t.hero.stats.projects },
@@ -170,8 +177,8 @@ export function HeroSection() {
                 {Array.from({ length: TOTAL }, (_, i) => {
                   const col = i % COLS;
                   const row = Math.floor(i / COLS);
-                  const bgPosX = COLS === 1 ? "0%" : `${(col / (COLS - 1)) * 100}%`;
-                  const bgPosY = ROWS === 1 ? "0%" : `${(row / (ROWS - 1)) * 100}%`;
+                  const bgPosX = `${(col / (COLS - 1)) * 100}%`;
+                  const bgPosY = `${(row / (ROWS - 1)) * 100}%`;
                   return (
                     <div
                       key={i}
