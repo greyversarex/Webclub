@@ -17,15 +17,16 @@
   animation: slide-text-in 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
-/* Mosaic tile pop-in animation — isolated from React rendering */
+/* Mosaic tile pop-in animation — 3D fold-in with overshoot */
 @keyframes tile-pop {
-  from { transform: scale(0); }
-  to   { transform: scale(1); }
+  0%   { transform: perspective(480px) scale(0.05) rotateX(55deg); }
+  62%  { transform: perspective(480px) scale(1.07) rotateX(-7deg); }
+  100% { transform: perspective(480px) scale(1)    rotateX(0deg);  }
 }
 .mosaic-tile {
   position: relative;
   overflow: hidden;
-  animation: tile-pop 0.22s ease-out both;
+  animation: tile-pop 0.44s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @keyframes glint {

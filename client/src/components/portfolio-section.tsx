@@ -34,10 +34,18 @@ const accentColors = [
 const COLS = 10;
 const ROWS = 7;
 const TOTAL = COLS * ROWS;
-// Fixed random delays, pre-generated once
-const DELAYS = Array.from({ length: TOTAL }, () => Math.floor(Math.random() * 450));
-// max tile time = 450 delay + 200 duration = 650ms → wait 750ms
-const ANIM_MS = 750;
+// Ripple-from-center delays: tiles near center appear first, corners last
+const _cx = (COLS - 1) / 2, _cy = (ROWS - 1) / 2;
+const _maxDist = Math.sqrt(_cx * _cx + _cy * _cy);
+const DELAYS = Array.from({ length: TOTAL }, (_, i) => {
+  const col = i % COLS, row = Math.floor(i / COLS);
+  const dist = Math.sqrt((col - _cx) ** 2 + (row - _cy) ** 2);
+  const base = (dist / _maxDist) * 660;
+  const jitter = Math.floor(Math.random() * 90) - 45;
+  return Math.max(0, Math.floor(base + jitter));
+});
+// max delay ≈ 660 + 45 = 705ms, tile anim = 440ms → ANIM_MS = 1200ms
+const ANIM_MS = 1200;
 const TOTAL_PROJECTS = 6;
 
 export function PortfolioSection() {
