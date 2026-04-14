@@ -10,7 +10,10 @@ import educationPlatform from "@assets/generated_images/education_platform_inter
 import govServices from "@assets/generated_images/government_services_portal.png";
 import logisticsSystem from "@assets/generated_images/logistics_system_dashboard.png";
 
-const projectImages = [ecommercePlatform, bankingApp, corporatePortal, educationPlatform, govServices, logisticsSystem];
+const projectImages = [
+  ecommercePlatform, bankingApp, corporatePortal,
+  educationPlatform, govServices, logisticsSystem,
+];
 const projectTags = [
   ["React", "Node.js", "PostgreSQL"],
   ["React Native", "TypeScript", "AWS"],
@@ -31,9 +34,10 @@ const accentColors = [
 const COLS = 10;
 const ROWS = 7;
 const TOTAL = COLS * ROWS;
+// Fixed random delays, pre-generated once
 const DELAYS = Array.from({ length: TOTAL }, () => Math.floor(Math.random() * 450));
-// max tile time = 450 + 200 = 650ms → wait 720ms to be safe
-const ANIM_MS = 720;
+// max tile time = 450 delay + 200 duration = 650ms → wait 750ms
+const ANIM_MS = 750;
 const TOTAL_PROJECTS = 6;
 
 export function PortfolioSection() {
@@ -41,27 +45,27 @@ export function PortfolioSection() {
   const { t } = useLanguage();
   const projects = t.portfolio.projects;
 
-  // `shown` = what the user sees right now (base image, description, etc.)
-  // `next`  = what the tiles are building toward (only used during animation)
+  // `shown`  = project currently displayed (background div + text)
+  // `next`   = project the tiles are assembling (only used while animating)
+  // `animId` = increments each transition so tiles re-mount and restart animation
   const [shown, setShown] = useState(0);
-  const [next, setNext] = useState(0);
+  const [next, setNext]   = useState(0);
+  const [animId, setAnimId] = useState(0);
   const [animating, setAnimating] = useState(false);
 
-  const shownRef = useRef(0);
+  const shownRef     = useRef(0);
   const animatingRef = useRef(false);
 
   const goTo = (idx: number) => {
     if (animatingRef.current || idx === shownRef.current) return;
     animatingRef.current = true;
-
-    // ONE batched render: tiles appear, show `idx` pieces
+    // React 18 batches these into ONE render
     setNext(idx);
+    setAnimId(id => id + 1); // force tile re-mount so animation always restarts fresh
     setAnimating(true);
 
     setTimeout(() => {
-      // ONE batched render (React 18 automatic batching in setTimeout):
-      // base image src flips to new while tiles are still covering it (visibility:visible)
-      // then tiles container becomes visibility:hidden in the same paint
+      // React 18 batches ALL updates in one setTimeout callback → ONE render → ONE paint
       shownRef.current = idx;
       setShown(idx);
       setAnimating(false);
@@ -119,50 +123,61 @@ export function PortfolioSection() {
             className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200/60 bg-slate-100"
             style={{ height: "620px" }}
           >
-            {/* Single base image — src changes while tiles cover it, never visible mid-swap */}
-            <img
-              src={projectImages[shown]}
-              alt={project.title}
-              className="absolute inset-0 w-full h-full object-cover"
-              style={{ zIndex: 1 }}
+            {/*
+             * BASE LAYER — a <div> with background-image, not <img>.
+             * CSS background-image updates are synchronous in the layout engine;
+             * they do NOT go through the <img> loading state machine which
+             * causes a 1-frame flash of the old decoded frame on src change.
+             */}
+            <div
+              className="absolute inset-0 bg-cover bg-center"
+              style={{
+                backgroundImage: `url(${projectImages[shown]})`,
+                zIndex: 1,
+              }}
               data-testid={`img-portfolio-slide-${shown}`}
             />
 
-            {/* Tile container — visibility:hidden hides instantly with no CSS-transition side-effects */}
-            <div
-              className="absolute inset-0"
-              style={{
-                zIndex: 2,
-                // hidden when idle: tiles are invisible and can reset their transform freely
-                visibility: animating ? "visible" : "hidden",
-                display: "grid",
-                gridTemplateColumns: `repeat(${COLS}, 1fr)`,
-                gridTemplateRows: `repeat(${ROWS}, 1fr)`,
-              }}
-            >
-              {Array.from({ length: TOTAL }, (_, i) => {
-                const col = i % COLS;
-                const row = Math.floor(i / COLS);
-                const bgX = `${(col / (COLS - 1)) * 100}%`;
-                const bgY = `${(row / (ROWS - 1)) * 100}%`;
-                return (
-                  <div
-                    key={i}
-                    style={{
-                      backgroundImage: `url(${projectImages[next]})`,
-                      backgroundSize: `${COLS * 100}% ${ROWS * 100}%`,
-                      backgroundPosition: `${bgX} ${bgY}`,
-                      // animating → scale to full; idle → reset to 0 (invisible anyway)
-                      transform: animating ? "scale(1)" : "scale(0)",
-                      transition: animating
-                        ? `transform 0.2s cubic-bezier(0.34,1.3,0.64,1) ${DELAYS[i]}ms`
-                        : "none",
-                      transformOrigin: "center",
-                    }}
-                  />
-                );
-              })}
-            </div>
+            {/*
+             * TILE CONTAINER — visibility:hidden when idle.
+             * Using visibility (not display/opacity) ensures:
+             *   • tiles are hidden instantly with no CSS-transition side-effects
+             *   • their layout is preserved so grid doesn't collapse
+             *   • background-images remain decoded (browser still computes them)
+             * Key `animId` forces a full DOM re-mount each transition so the
+             * CSS @keyframes animation always fires from the beginning.
+             */}
+            {animating && (
+              <div
+                key={animId}
+                className="absolute inset-0"
+                style={{
+                  zIndex: 2,
+                  display: "grid",
+                  gridTemplateColumns: `repeat(${COLS}, 1fr)`,
+                  gridTemplateRows: `repeat(${ROWS}, 1fr)`,
+                }}
+              >
+                {Array.from({ length: TOTAL }, (_, i) => {
+                  const col = i % COLS;
+                  const row = Math.floor(i / COLS);
+                  const bgX = `${(col / (COLS - 1)) * 100}%`;
+                  const bgY = `${(row / (ROWS - 1)) * 100}%`;
+                  return (
+                    <div
+                      key={i}
+                      className="mosaic-tile"
+                      style={{
+                        animationDelay: `${DELAYS[i]}ms`,
+                        backgroundImage: `url(${projectImages[next]})`,
+                        backgroundSize: `${COLS * 100}% ${ROWS * 100}%`,
+                        backgroundPosition: `${bgX} ${bgY}`,
+                      }}
+                    />
+                  );
+                })}
+              </div>
+            )}
 
             <div
               className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none"

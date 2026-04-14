@@ -11,7 +11,10 @@ import educationPlatform from "@assets/generated_images/education_platform_inter
 import govServices from "@assets/generated_images/government_services_portal.png";
 import logisticsSystem from "@assets/generated_images/logistics_system_dashboard.png";
 
-const projectImages = [ecommercePlatform, bankingApp, corporatePortal, educationPlatform, govServices, logisticsSystem];
+const projectImages = [
+  ecommercePlatform, bankingApp, corporatePortal,
+  educationPlatform, govServices, logisticsSystem,
+];
 const projectTags = [
   ["React", "Node.js", "PostgreSQL"],
   ["React Native", "TypeScript", "AWS"],
@@ -33,26 +36,27 @@ const COLS = 8;
 const ROWS = 6;
 const TOTAL = COLS * ROWS;
 const DELAYS = Array.from({ length: TOTAL }, () => Math.floor(Math.random() * 380));
-// max tile time = 380 + 200 = 580ms → wait 650ms to be safe
-const ANIM_MS = 650;
+// max tile time = 380 + 200 = 580ms → wait 680ms
+const ANIM_MS = 680;
 const TOTAL_PROJECTS = 6;
 
 export function HeroSection() {
   const { t } = useLanguage();
   const projects = t.portfolio.projects;
 
-  const [shown, setShown] = useState(0);
-  const [next, setNext] = useState(0);
+  const [shown, setShown]     = useState(0);
+  const [next, setNext]       = useState(0);
+  const [animId, setAnimId]   = useState(0);
   const [animating, setAnimating] = useState(false);
 
-  const shownRef = useRef(0);
+  const shownRef     = useRef(0);
   const animatingRef = useRef(false);
 
   const goTo = (idx: number) => {
     if (animatingRef.current || idx === shownRef.current) return;
     animatingRef.current = true;
-
     setNext(idx);
+    setAnimId(id => id + 1);
     setAnimating(true);
 
     setTimeout(() => {
@@ -70,11 +74,11 @@ export function HeroSection() {
 
   const stats = [
     { value: "100+", label: t.hero.stats.projects },
-    { value: "8+", label: t.hero.stats.experience },
+    { value: "8+",   label: t.hero.stats.experience },
     { value: "24/7", label: t.hero.stats.support },
   ];
 
-  const scrollToContact = () => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
+  const scrollToContact  = () => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
   const scrollToServices = () => document.querySelector("#services")?.scrollIntoView({ behavior: "smooth" });
 
   const project = projects[shown];
@@ -84,8 +88,8 @@ export function HeroSection() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-          {/* Left: text */}
-          <div className="order-1 lg:order-1">
+          {/* ── Left: text ─────────────────────────────────────── */}
+          <div className="order-1">
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-800 leading-tight mb-6">
               {t.hero.title1}{" "}
               <span className="it-shimmer-text bg-gradient-to-r from-slate-500 via-slate-300 to-slate-500 bg-clip-text text-transparent">
@@ -94,6 +98,7 @@ export function HeroSection() {
               {" "}{t.hero.title2}
             </h1>
             <p className="text-lg text-slate-900 mb-8 max-w-xl">{t.hero.description}</p>
+
             <ul className="space-y-3 mb-8">
               {t.hero.features.map((feature, index) => (
                 <li key={index} className="flex items-start gap-3 text-foreground" data-testid={`text-feature-${index}`}>
@@ -102,6 +107,7 @@ export function HeroSection() {
                 </li>
               ))}
             </ul>
+
             <div className="flex flex-wrap gap-4 mb-12">
               <Button
                 size="lg"
@@ -116,6 +122,7 @@ export function HeroSection() {
                 {t.hero.ourServices}
               </Button>
             </div>
+
             <div className="flex flex-wrap gap-8 pt-8 border-t border-slate-400/30">
               {stats.map((stat, index) => (
                 <div key={index} className="text-center" data-testid={`stat-${index}`}>
@@ -126,14 +133,11 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Right: slideshow */}
-          <div className="order-2 lg:order-2 w-full">
+          {/* ── Right: slideshow ───────────────────────────────── */}
+          <div className="order-2 w-full">
 
             <div className="mb-3 h-10 overflow-hidden">
-              <h2
-                className="font-display font-bold text-2xl text-slate-800"
-                data-testid="text-slide-title"
-              >
+              <h2 className="font-display font-bold text-2xl text-slate-800" data-testid="text-slide-title">
                 {project.title}
               </h2>
             </div>
@@ -142,48 +146,55 @@ export function HeroSection() {
               className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-slate-100"
               style={{ height: "420px" }}
             >
-              {/* Single base image — always opacity:1, src swaps under tiles */}
-              <img
-                src={projectImages[shown]}
-                alt={project.title}
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{ zIndex: 1 }}
+              {/*
+               * BASE LAYER — <div> with CSS background-image (not <img>).
+               * CSS bg-image updates are synchronous; no img loading state machine
+               * → no 1-frame flash of old decoded frame when src changes.
+               */}
+              <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: `url(${projectImages[shown]})`, zIndex: 1 }}
                 data-testid={`img-slide-${shown}`}
               />
 
-              {/* Tile container — visibility:hidden collapses tiles instantly, no CSS glitch */}
-              <div
-                className="absolute inset-0"
-                style={{
-                  zIndex: 2,
-                  visibility: animating ? "visible" : "hidden",
-                  display: "grid",
-                  gridTemplateColumns: `repeat(${COLS}, 1fr)`,
-                  gridTemplateRows: `repeat(${ROWS}, 1fr)`,
-                }}
-              >
-                {Array.from({ length: TOTAL }, (_, i) => {
-                  const col = i % COLS;
-                  const row = Math.floor(i / COLS);
-                  const bgX = `${(col / (COLS - 1)) * 100}%`;
-                  const bgY = `${(row / (ROWS - 1)) * 100}%`;
-                  return (
-                    <div
-                      key={i}
-                      style={{
-                        backgroundImage: `url(${projectImages[next]})`,
-                        backgroundSize: `${COLS * 100}% ${ROWS * 100}%`,
-                        backgroundPosition: `${bgX} ${bgY}`,
-                        transform: animating ? "scale(1)" : "scale(0)",
-                        transition: animating
-                          ? `transform 0.18s cubic-bezier(0.34,1.3,0.64,1) ${DELAYS[i]}ms`
-                          : "none",
-                        transformOrigin: "center",
-                      }}
-                    />
-                  );
-                })}
-              </div>
+              {/*
+               * TILE OVERLAY — only mounted while animating.
+               * Conditional rendering (`animating &&`) guarantees tiles are fully
+               * removed from the DOM when idle — no CSS state to "bleed through".
+               * `key={animId}` forces a fresh mount each transition so @keyframes
+               * always starts from the beginning, never from a stale state.
+               */}
+              {animating && (
+                <div
+                  key={animId}
+                  className="absolute inset-0"
+                  style={{
+                    zIndex: 2,
+                    display: "grid",
+                    gridTemplateColumns: `repeat(${COLS}, 1fr)`,
+                    gridTemplateRows: `repeat(${ROWS}, 1fr)`,
+                  }}
+                >
+                  {Array.from({ length: TOTAL }, (_, i) => {
+                    const col = i % COLS;
+                    const row = Math.floor(i / COLS);
+                    const bgX = `${(col / (COLS - 1)) * 100}%`;
+                    const bgY = `${(row / (ROWS - 1)) * 100}%`;
+                    return (
+                      <div
+                        key={i}
+                        className="mosaic-tile"
+                        style={{
+                          animationDelay: `${DELAYS[i]}ms`,
+                          backgroundImage: `url(${projectImages[next]})`,
+                          backgroundSize: `${COLS * 100}% ${ROWS * 100}%`,
+                          backgroundPosition: `${bgX} ${bgY}`,
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+              )}
 
               <div
                 className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent pointer-events-none"
