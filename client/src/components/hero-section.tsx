@@ -156,11 +156,12 @@ export function HeroSection() {
               className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-slate-100"
               style={{ height: "420px" }}
             >
-              {/* Base image */}
+              {/* Base image — hidden during mosaic so src change never flashes */}
               <img
                 src={projectImages[current]}
                 alt={project.title}
                 className="absolute inset-0 w-full h-full object-cover"
+                style={{ visibility: isAnimating ? "hidden" : "visible" }}
                 data-testid={`img-slide-${current}`}
               />
 
