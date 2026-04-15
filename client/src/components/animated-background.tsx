@@ -2,9 +2,9 @@ import { useEffect, useRef } from "react";
 
 const PARTICLE_COUNT = 65;
 const MAX_DIST = 155;
-// Single cool steel-blue color — no pink, no violet
-const NODE_COLOR = "56,115,179";   // #3873b3 — steel blue
-const LINE_COLOR = "56,115,179";
+// Neon electric cyan-blue on white background
+const NODE_COLOR = "0,180,255";   // neon cyan-blue
+const LINE_COLOR = "0,160,240";
 
 interface Particle {
   x: number; y: number;
@@ -52,43 +52,52 @@ export function AnimatedBackground() {
         if (p.y > h) { p.y = h; p.vy *= -1; }
       }
 
-      // Connection lines
+      // Connection lines — brighter for neon-on-white
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const d = Math.hypot(dx, dy);
           if (d < MAX_DIST) {
-            const a = (1 - d / MAX_DIST) * 0.18;
+            const a = (1 - d / MAX_DIST) * 0.32;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
             ctx.strokeStyle = `rgba(${LINE_COLOR},${a})`;
-            ctx.lineWidth = 0.8;
+            ctx.lineWidth = 1;
             ctx.stroke();
           }
         }
       }
 
-      // Nodes with soft glow
+      // Nodes with intense neon glow
       for (const p of particles) {
-        const breathe = 0.85 + 0.15 * Math.sin(t * 1.6 + p.pulse);
-        const alpha   = 0.38 + 0.22 * Math.sin(t * 1.6 + p.pulse);
+        const breathe = 0.82 + 0.18 * Math.sin(t * 1.6 + p.pulse);
+        const alpha   = 0.55 + 0.3 * Math.sin(t * 1.6 + p.pulse);
 
-        // Outer glow
-        const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * breathe * 5);
-        glow.addColorStop(0,   `rgba(${NODE_COLOR},${alpha * 0.7})`);
-        glow.addColorStop(0.5, `rgba(${NODE_COLOR},${alpha * 0.15})`);
-        glow.addColorStop(1,   `rgba(${NODE_COLOR},0)`);
+        // Wide soft halo
+        const halo = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * breathe * 8);
+        halo.addColorStop(0,   `rgba(${NODE_COLOR},${alpha * 0.45})`);
+        halo.addColorStop(0.4, `rgba(${NODE_COLOR},${alpha * 0.12})`);
+        halo.addColorStop(1,   `rgba(${NODE_COLOR},0)`);
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r * breathe * 5, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, p.r * breathe * 8, 0, Math.PI * 2);
+        ctx.fillStyle = halo;
+        ctx.fill();
+
+        // Tight inner glow
+        const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * breathe * 3);
+        glow.addColorStop(0, `rgba(${NODE_COLOR},${alpha})`);
+        glow.addColorStop(1, `rgba(${NODE_COLOR},0)`);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * breathe * 3, 0, Math.PI * 2);
         ctx.fillStyle = glow;
         ctx.fill();
 
-        // Core dot
+        // Bright core dot
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r * breathe, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${NODE_COLOR},${alpha + 0.25})`;
+        ctx.fillStyle = `rgba(${NODE_COLOR},1)`;
         ctx.fill();
       }
 
@@ -113,7 +122,7 @@ export function AnimatedBackground() {
       <canvas
         ref={canvasRef}
         className="fixed inset-0 pointer-events-none"
-        style={{ zIndex: 1, opacity: 0.6 }}
+        style={{ zIndex: 1, opacity: 0.75 }}
       />
 
       {/* Background outline typography */}
