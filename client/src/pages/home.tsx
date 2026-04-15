@@ -6,18 +6,13 @@ import { AdvantagesSection } from "@/components/advantages-section";
 import { ContactSection } from "@/components/contact-section";
 import { Footer } from "@/components/footer";
 import { ChatWidget } from "@/components/chat-widget";
-import geometricBg from "@assets/Визитки_Personal_(1)_1765668694348.png";
+import { AnimatedBackground } from "@/components/animated-background";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-background relative">
-      <img 
-        src={geometricBg} 
-        alt="" 
-        className="fixed inset-0 w-full h-full object-cover pointer-events-none"
-      />
-      
-      <div className="relative">
+      <AnimatedBackground />
+      <div className="relative" style={{ zIndex: 2 }}>
         <Header />
         <main>
           <HeroSection />
