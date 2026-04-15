@@ -6,14 +6,18 @@ import { AdvantagesSection } from "@/components/advantages-section";
 import { ContactSection } from "@/components/contact-section";
 import { Footer } from "@/components/footer";
 import { ChatWidget } from "@/components/chat-widget";
-import { AnimatedBackground } from "@/components/animated-background";
-import { CustomCursor } from "@/components/custom-cursor";
+import geometricBg from "@assets/Визитки_Personal_(1)_1765668694348.png";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background relative" style={{ cursor: "none" }}>
-      <AnimatedBackground />
-      <div className="relative" style={{ zIndex: 2 }}>
+    <div className="min-h-screen bg-background relative">
+      <img 
+        src={geometricBg} 
+        alt="" 
+        className="fixed inset-0 w-full h-full object-cover pointer-events-none"
+      />
+      
+      <div className="relative">
         <Header />
         <main>
           <HeroSection />
@@ -25,7 +29,6 @@ export default function Home() {
         <Footer />
       </div>
       <ChatWidget />
-      <CustomCursor />
     </div>
   );
 }

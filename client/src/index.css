@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom cursor — hide system cursor globally */
-*, *::before, *::after { cursor: none !important; }
-
 /* Slide text fade-in animation */
 @keyframes slide-text-in {
   from {
@@ -134,13 +131,13 @@
   --opaque-button-border-intensity: -6;
   --elevate-1: rgba(0,0,0, .03);
   --elevate-2: rgba(0,0,0, .06);
-  --background: 0 0% 100%;
+  --background: 220 12% 90%;
   --foreground: 220 20% 20%;
-  --border: 220 10% 86%;
-  --card: 0 0% 98%;
+  --border: 220 10% 78%;
+  --card: 218 10% 94%;
   --card-foreground: 220 20% 20%;
-  --card-border: 220 10% 88%;
-  --sidebar: 0 0% 97%;
+  --card-border: 220 10% 82%;
+  --sidebar: 220 12% 88%;
   --sidebar-foreground: 220 20% 20%;
   --sidebar-border: 220 10% 78%;
   --sidebar-primary: 263 70% 58%;
