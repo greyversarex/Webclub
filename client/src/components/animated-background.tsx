@@ -108,10 +108,77 @@ export function AnimatedBackground() {
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 pointer-events-none"
-      style={{ zIndex: 1, opacity: 0.6 }}
-    />
+    <>
+      {/* Particle network canvas */}
+      <canvas
+        ref={canvasRef}
+        className="fixed inset-0 pointer-events-none"
+        style={{ zIndex: 1, opacity: 0.6 }}
+      />
+
+      {/* Background outline typography */}
+      <div
+        className="fixed inset-0 pointer-events-none overflow-hidden select-none"
+        style={{ zIndex: 0 }}
+        aria-hidden="true"
+      >
+        <span
+          style={{
+            position: "absolute",
+            top: "8%",
+            right: "-4%",
+            fontSize: "clamp(120px, 18vw, 280px)",
+            fontWeight: 900,
+            letterSpacing: "-0.04em",
+            lineHeight: 1,
+            color: "transparent",
+            WebkitTextStroke: "1.5px rgba(30,58,138,0.07)",
+            fontFamily: "inherit",
+            userSelect: "none",
+            whiteSpace: "nowrap",
+            transform: "rotate(-8deg)",
+          }}
+        >
+          DIGITAL
+        </span>
+        <span
+          style={{
+            position: "absolute",
+            bottom: "22%",
+            left: "-3%",
+            fontSize: "clamp(100px, 16vw, 260px)",
+            fontWeight: 900,
+            letterSpacing: "-0.04em",
+            lineHeight: 1,
+            color: "transparent",
+            WebkitTextStroke: "1.5px rgba(30,58,138,0.055)",
+            fontFamily: "inherit",
+            userSelect: "none",
+            whiteSpace: "nowrap",
+            transform: "rotate(6deg)",
+          }}
+        >
+          SOLUTIONS
+        </span>
+      </div>
+
+      {/* Grain / noise overlay */}
+      <svg
+        className="fixed inset-0 pointer-events-none"
+        style={{ zIndex: 2, opacity: 0.045, width: "100%", height: "100%" }}
+        aria-hidden="true"
+      >
+        <filter id="grain-noise">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.72"
+            numOctaves="4"
+            stitchTiles="stitch"
+          />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#grain-noise)" />
+      </svg>
+    </>
   );
 }

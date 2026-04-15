@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom cursor — hide system cursor globally */
+*, *::before, *::after { cursor: none !important; }
+
 /* Slide text fade-in animation */
 @keyframes slide-text-in {
   from {
