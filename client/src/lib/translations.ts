@@ -61,7 +61,7 @@ export const translations = {
       title: "Какие проекты мы делаем?",
       subtitle: "Примеры успешно реализованных проектов для различных отраслей бизнеса",
       projects: [
-        { title: "E-Commerce платформа", category: "Интернет-магазин", description: "Современная платформа электронной коммерции с интеграцией платежных систем и CRM" },
+        { title: "Туристический сайт", category: "Туризм", description: "Туристический сайт для путешествий по всему миру из Таджикистана" },
         { title: "Банковское приложение", category: "Финтех", description: "Мобильное приложение для управления финансами с высоким уровнем безопасности" },
         { title: "Корпоративный портал", category: "Бизнес", description: "Многофункциональный портал для крупной компании с системой управления документами" },
         { title: "Образовательная платформа", category: "EdTech", description: "Онлайн-платформа для дистанционного обучения с видеоконференциями" },
@@ -173,7 +173,7 @@ export const translations = {
       title: "What projects do we do?",
       subtitle: "Examples of successfully completed projects for various business sectors",
       projects: [
-        { title: "E-Commerce Platform", category: "Online Store", description: "Modern e-commerce platform with payment systems and CRM integration" },
+        { title: "Tourism Website", category: "Tourism", description: "Tourism website for travel around the world from Tajikistan" },
         { title: "Banking Application", category: "FinTech", description: "Mobile application for financial management with high security level" },
         { title: "Corporate Portal", category: "Business", description: "Multifunctional portal for a large company with document management system" },
         { title: "Educational Platform", category: "EdTech", description: "Online platform for distance learning with video conferencing" },
@@ -285,7 +285,7 @@ export const translations = {
       title: "Мо чӣ лоиҳаҳо мекунем?",
       subtitle: "Намунаҳои лоиҳаҳои муваффақона барои соҳаҳои гуногуни бизнес",
       projects: [
-        { title: "Платформаи E-Commerce", category: "Мағозаи интернетӣ", description: "Платформаи муосири тиҷорати электронӣ бо интегратсияи системаҳои пардохт ва CRM" },
+        { title: "Сайти туристӣ", category: "Туризм", description: "Сайти туристӣ барои саёҳат ба тамоми ҷаҳон аз Тоҷикистон" },
         { title: "Барномаи бонкӣ", category: "Финтех", description: "Барномаи мобилӣ барои идоракунии молия бо сатҳи баланди амният" },
         { title: "Портали корпоративӣ", category: "Бизнес", description: "Портали бисёрфунктсионалӣ барои ширкати калон бо системаи идоракунии ҳуҷҷатҳо" },
         { title: "Платформаи таълимӣ", category: "EdTech", description: "Платформаи онлайн барои таълими дурдаст бо видеоконференсияҳо" },

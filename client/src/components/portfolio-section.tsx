@@ -11,27 +11,15 @@ import educationPlatform from "@assets/generated_images/education_platform_inter
 import govServices from "@assets/generated_images/government_services_portal.png";
 import logisticsSystem from "@assets/generated_images/logistics_system_dashboard.png";
 
+import tourismVideo from "@assets/0419_1776609071465.mp4";
+
 const projectPosters = [
   ecommercePlatform, bankingApp, corporatePortal,
   educationPlatform, govServices, logisticsSystem,
 ];
 
-// Video files for each project. Set to `null` while a video isn't ready —
-// the poster image will be shown instead. To add a real video:
-//   1. Drop the .mp4 file into attached_assets/
-//   2. import myVideo from "@assets/my_video.mp4";
-//   3. Replace the corresponding `null` below with `myVideo`.
 const projectVideos: (string | null)[] = [
-  null, null, null, null, null, null,
-];
-
-const projectTags = [
-  ["React", "Node.js", "PostgreSQL"],
-  ["React Native", "TypeScript", "AWS"],
-  ["Vue.js", "Python", "Docker"],
-  ["Next.js", "WebRTC", "MongoDB"],
-  ["Angular", "Java", "Oracle"],
-  ["React", "Go", "Redis"],
+  tourismVideo, null, null, null, null, null,
 ];
 const accentColors = [
   "bg-violet-100 text-violet-700 border-violet-200",
@@ -209,20 +197,10 @@ export function PortfolioSection() {
             )}
           </div>
 
-          <div key={shown} className="slide-text-in mt-5" style={{ animationDelay: "0.08s", minHeight: "100px" }}>
-            <p className="text-slate-700 text-base leading-relaxed mb-3 max-w-3xl">
+          <div key={shown} className="slide-text-in mt-5" style={{ animationDelay: "0.08s", minHeight: "60px" }}>
+            <p className="text-slate-700 text-base leading-relaxed max-w-3xl">
               {project.description}
             </p>
-            <div className="flex flex-wrap gap-2">
-              {projectTags[shown].map((tag) => (
-                <span
-                  key={tag}
-                  className="px-3 py-1 text-sm rounded-full bg-slate-200/80 text-slate-700 border border-slate-300"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
           </div>
 
           <div className="flex items-center justify-center gap-2 mt-6">
