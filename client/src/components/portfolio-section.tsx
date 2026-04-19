@@ -119,11 +119,10 @@ export function PortfolioSection() {
                   <video
                     ref={videoRef}
                     src={currentVideo}
-                    poster={projectPosters[shown]}
                     controls
                     playsInline
                     preload="metadata"
-                    className="w-full h-full object-cover bg-black"
+                    className="w-full h-full object-contain bg-black"
                     data-testid={`video-portfolio-${shown}`}
                   />
                 ) : (
