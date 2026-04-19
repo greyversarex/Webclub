@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { Play } from "lucide-react";
+import { useState, useRef } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/lib/language-context";
@@ -31,8 +31,7 @@ const accentColors = [
 ];
 
 const TOTAL_PROJECTS = 6;
-const AUTO_INTERVAL = 6000;
-const FADE_MS = 380;
+const FADE_MS = 280;
 
 export function PortfolioSection() {
   const { ref, isVisible } = useScrollAnimation();
@@ -41,44 +40,27 @@ export function PortfolioSection() {
 
   const [shown, setShown] = useState(0);
   const [fading, setFading] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
 
-  const shownRef = useRef(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const goTo = (idx: number) => {
-    if (idx === shownRef.current) return;
-    // Pause current video before switching
+    if (idx === shown || fading) return;
     if (videoRef.current) {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
     }
-    setIsPlaying(false);
     setFading(true);
     setTimeout(() => {
-      shownRef.current = idx;
       setShown(idx);
       setFading(false);
     }, FADE_MS);
   };
 
-  // Auto-advance, but only when no video is currently playing
-  useEffect(() => {
-    const id = setInterval(() => {
-      if (isPlaying) return;
-      goTo((shownRef.current + 1) % TOTAL_PROJECTS);
-    }, AUTO_INTERVAL);
-    return () => clearInterval(id);
-  }, [isPlaying]);
+  const goPrev = () => goTo((shown - 1 + TOTAL_PROJECTS) % TOTAL_PROJECTS);
+  const goNext = () => goTo((shown + 1) % TOTAL_PROJECTS);
 
   const project = projects[shown];
   const currentVideo = projectVideos[shown];
-
-  const handlePlay = () => {
-    if (videoRef.current) {
-      videoRef.current.play();
-    }
-  };
 
   return (
     <section
@@ -120,81 +102,70 @@ export function PortfolioSection() {
             </h3>
           </div>
 
-          <div
-            className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200/60 bg-slate-900"
-            style={{ height: "620px" }}
-          >
-            {/* Video / poster — fades on transition */}
+          <div className="relative">
             <div
-              className="absolute inset-0 transition-opacity"
-              style={{
-                opacity: fading ? 0 : 1,
-                transitionDuration: `${FADE_MS}ms`,
-                zIndex: 1,
-              }}
-              key={shown}
+              className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200/60 bg-slate-900"
+              style={{ height: "620px" }}
             >
-              {currentVideo ? (
-                <video
-                  ref={videoRef}
-                  src={currentVideo}
-                  poster={projectPosters[shown]}
-                  controls
-                  playsInline
-                  preload="metadata"
-                  onPlay={() => setIsPlaying(true)}
-                  onPause={() => setIsPlaying(false)}
-                  onEnded={() => setIsPlaying(false)}
-                  className="w-full h-full object-cover"
-                  data-testid={`video-portfolio-${shown}`}
-                />
-              ) : (
-                <>
+              <div
+                className="absolute inset-0 transition-opacity"
+                style={{
+                  opacity: fading ? 0 : 1,
+                  transitionDuration: `${FADE_MS}ms`,
+                }}
+                key={shown}
+              >
+                {currentVideo ? (
+                  <video
+                    ref={videoRef}
+                    src={currentVideo}
+                    poster={projectPosters[shown]}
+                    controls
+                    playsInline
+                    preload="metadata"
+                    className="w-full h-full object-cover bg-black"
+                    data-testid={`video-portfolio-${shown}`}
+                  />
+                ) : (
                   <img
                     src={projectPosters[shown]}
                     alt={project.title}
                     className="w-full h-full object-cover"
                     data-testid={`img-portfolio-slide-${shown}`}
                   />
-                  {/* Play button overlay (placeholder — disabled when no video) */}
-                  <button
-                    onClick={handlePlay}
-                    disabled
-                    className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-colors group cursor-not-allowed"
-                    aria-label="Play video"
-                    data-testid={`button-play-${shown}`}
-                  >
-                    <span className="w-20 h-20 rounded-full bg-white/85 flex items-center justify-center shadow-2xl backdrop-blur-sm transition-transform group-hover:scale-105">
-                      <Play className="w-9 h-9 text-slate-800 ml-1.5" fill="currentColor" />
-                    </span>
-                  </button>
-                </>
-              )}
+                )}
+              </div>
+
+              <div className="absolute top-4 left-4 pointer-events-none z-10">
+                <Badge
+                  variant="secondary"
+                  className={`text-xs border backdrop-blur-sm ${accentColors[shown]}`}
+                >
+                  {project.category}
+                </Badge>
+              </div>
+              <div className="absolute top-4 right-4 bg-black/40 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm pointer-events-none z-10">
+                {shown + 1} / {projects.length}
+              </div>
             </div>
 
-            {/* Bottom-left badge & counter — hidden during video playback */}
-            {!isPlaying && (
-              <>
-                <div
-                  className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none"
-                  style={{ zIndex: 3 }}
-                />
-                <div className="absolute bottom-4 left-4 pointer-events-none" style={{ zIndex: 4 }}>
-                  <Badge
-                    variant="secondary"
-                    className={`text-xs border backdrop-blur-sm ${accentColors[shown]}`}
-                  >
-                    {project.category}
-                  </Badge>
-                </div>
-                <div
-                  className="absolute bottom-4 right-4 bg-black/40 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm pointer-events-none"
-                  style={{ zIndex: 4 }}
-                >
-                  {shown + 1} / {projects.length}
-                </div>
-              </>
-            )}
+            {/* Side navigation arrows */}
+            <button
+              onClick={goPrev}
+              aria-label="Previous project"
+              className="absolute left-2 md:-left-5 top-1/2 -translate-y-1/2 w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/90 hover:bg-white shadow-xl border border-slate-200 flex items-center justify-center text-slate-800 hover:text-violet-600 transition-all hover:scale-110 z-20"
+              data-testid="button-portfolio-prev"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <button
+              onClick={goNext}
+              aria-label="Next project"
+              className="absolute right-2 md:-right-5 top-1/2 -translate-y-1/2 w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/90 hover:bg-white shadow-xl border border-slate-200 flex items-center justify-center text-slate-800 hover:text-violet-600 transition-all hover:scale-110 z-20"
+              data-testid="button-portfolio-next"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
           </div>
 
           <div key={shown} className="slide-text-in mt-5" style={{ animationDelay: "0.08s", minHeight: "60px" }}>
