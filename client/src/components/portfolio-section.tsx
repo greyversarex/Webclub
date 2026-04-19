@@ -11,7 +11,7 @@ import educationPlatform from "@assets/generated_images/education_platform_inter
 import govServices from "@assets/generated_images/government_services_portal.png";
 import logisticsSystem from "@assets/generated_images/logistics_system_dashboard.png";
 
-import tourismVideo from "@assets/0419_1776609071465.mp4";
+import tourismVideo from "@assets/portfolio_tourism.mp4";
 
 const projectPosters = [
   ecommercePlatform, bankingApp, corporatePortal,
@@ -121,7 +121,7 @@ export function PortfolioSection() {
                     src={currentVideo}
                     controls
                     playsInline
-                    preload="metadata"
+                    preload="auto"
                     className="w-full h-full object-contain bg-black"
                     data-testid={`video-portfolio-${shown}`}
                   />
