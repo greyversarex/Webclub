@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Play } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/lib/language-context";
@@ -10,10 +11,20 @@ import educationPlatform from "@assets/generated_images/education_platform_inter
 import govServices from "@assets/generated_images/government_services_portal.png";
 import logisticsSystem from "@assets/generated_images/logistics_system_dashboard.png";
 
-const projectImages = [
+const projectPosters = [
   ecommercePlatform, bankingApp, corporatePortal,
   educationPlatform, govServices, logisticsSystem,
 ];
+
+// Video files for each project. Set to `null` while a video isn't ready —
+// the poster image will be shown instead. To add a real video:
+//   1. Drop the .mp4 file into attached_assets/
+//   2. import myVideo from "@assets/my_video.mp4";
+//   3. Replace the corresponding `null` below with `myVideo`.
+const projectVideos: (string | null)[] = [
+  null, null, null, null, null, null,
+];
+
 const projectTags = [
   ["React", "Node.js", "PostgreSQL"],
   ["React Native", "TypeScript", "AWS"],
@@ -31,62 +42,55 @@ const accentColors = [
   "bg-emerald-100 text-emerald-700 border-emerald-200",
 ];
 
-const COLS = 10;
-const ROWS = 7;
-const TOTAL = COLS * ROWS;
-// Ripple-from-center delays: tiles near center appear first, corners last
-const _cx = (COLS - 1) / 2, _cy = (ROWS - 1) / 2;
-const _maxDist = Math.sqrt(_cx * _cx + _cy * _cy);
-const DELAYS = Array.from({ length: TOTAL }, (_, i) => {
-  const col = i % COLS, row = Math.floor(i / COLS);
-  const dist = Math.sqrt((col - _cx) ** 2 + (row - _cy) ** 2);
-  const base = (dist / _maxDist) * 660;
-  const jitter = Math.floor(Math.random() * 90) - 45;
-  return Math.max(0, Math.floor(base + jitter));
-});
-// max delay ≈ 660 + 45 = 705ms, tile anim = 440ms → ANIM_MS = 1200ms
-const ANIM_MS = 1200;
 const TOTAL_PROJECTS = 6;
+const AUTO_INTERVAL = 6000;
+const FADE_MS = 380;
 
 export function PortfolioSection() {
   const { ref, isVisible } = useScrollAnimation();
   const { t } = useLanguage();
   const projects = t.portfolio.projects;
 
-  // `shown`  = project currently displayed (background div + text)
-  // `next`   = project the tiles are assembling (only used while animating)
-  // `animId` = increments each transition so tiles re-mount and restart animation
   const [shown, setShown] = useState(0);
-  const [next, setNext]   = useState(0);
-  const [animId, setAnimId] = useState(0);
-  const [animating, setAnimating] = useState(false);
+  const [fading, setFading] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  const shownRef     = useRef(0);
-  const animatingRef = useRef(false);
+  const shownRef = useRef(0);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const goTo = (idx: number) => {
-    if (animatingRef.current || idx === shownRef.current) return;
-    animatingRef.current = true;
-    // React 18 batches these into ONE render
-    setNext(idx);
-    setAnimId(id => id + 1); // force tile re-mount so animation always restarts fresh
-    setAnimating(true);
-
+    if (idx === shownRef.current) return;
+    // Pause current video before switching
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+    setIsPlaying(false);
+    setFading(true);
     setTimeout(() => {
-      // React 18 batches ALL updates in one setTimeout callback → ONE render → ONE paint
       shownRef.current = idx;
       setShown(idx);
-      setAnimating(false);
-      animatingRef.current = false;
-    }, ANIM_MS);
+      setFading(false);
+    }, FADE_MS);
   };
 
+  // Auto-advance, but only when no video is currently playing
   useEffect(() => {
-    const id = setInterval(() => goTo((shownRef.current + 1) % TOTAL_PROJECTS), 5000);
+    const id = setInterval(() => {
+      if (isPlaying) return;
+      goTo((shownRef.current + 1) % TOTAL_PROJECTS);
+    }, AUTO_INTERVAL);
     return () => clearInterval(id);
-  }, []);
+  }, [isPlaying]);
 
   const project = projects[shown];
+  const currentVideo = projectVideos[shown];
+
+  const handlePlay = () => {
+    if (videoRef.current) {
+      videoRef.current.play();
+    }
+  };
 
   return (
     <section
@@ -129,77 +133,80 @@ export function PortfolioSection() {
           </div>
 
           <div
-            className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200/60 bg-slate-100"
+            className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200/60 bg-slate-900"
             style={{ height: "620px" }}
           >
-            {/* BASE LAYER — background-size 100% 100% matches tile mosaic exactly */}
+            {/* Video / poster — fades on transition */}
             <div
-              className="absolute inset-0"
+              className="absolute inset-0 transition-opacity"
               style={{
-                backgroundImage: `url(${projectImages[shown]})`,
-                backgroundSize: "100% 100%",
+                opacity: fading ? 0 : 1,
+                transitionDuration: `${FADE_MS}ms`,
                 zIndex: 1,
               }}
-              data-testid={`img-portfolio-slide-${shown}`}
-            />
-
-            {/*
-             * TILE CONTAINER — visibility:hidden when idle.
-             * Using visibility (not display/opacity) ensures:
-             *   • tiles are hidden instantly with no CSS-transition side-effects
-             *   • their layout is preserved so grid doesn't collapse
-             *   • background-images remain decoded (browser still computes them)
-             * Key `animId` forces a full DOM re-mount each transition so the
-             * CSS @keyframes animation always fires from the beginning.
-             */}
-            {animating && (
-              <div
-                key={animId}
-                className="absolute inset-0"
-                style={{
-                  zIndex: 2,
-                  display: "grid",
-                  gridTemplateColumns: `repeat(${COLS}, 1fr)`,
-                  gridTemplateRows: `repeat(${ROWS}, 1fr)`,
-                }}
-              >
-                {Array.from({ length: TOTAL }, (_, i) => {
-                  const col = i % COLS;
-                  const row = Math.floor(i / COLS);
-                  return (
-                    <div
-                      key={i}
-                      className="mosaic-tile"
-                      style={{
-                        animationDelay: `${DELAYS[i]}ms`,
-                        backgroundImage: `url(${projectImages[next]})`,
-                        backgroundSize: `${COLS * 100}% ${ROWS * 100}%`,
-                        backgroundPosition: `${(col / (COLS - 1)) * 100}% ${(row / (ROWS - 1)) * 100}%`,
-                      }}
-                    />
-                  );
-                })}
-              </div>
-            )}
-
-            <div
-              className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none"
-              style={{ zIndex: 3 }}
-            />
-            <div className="absolute bottom-4 left-4" style={{ zIndex: 4 }}>
-              <Badge
-                variant="secondary"
-                className={`text-xs border backdrop-blur-sm ${accentColors[shown]}`}
-              >
-                {project.category}
-              </Badge>
-            </div>
-            <div
-              className="absolute bottom-4 right-4 bg-black/40 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm"
-              style={{ zIndex: 4 }}
+              key={shown}
             >
-              {shown + 1} / {projects.length}
+              {currentVideo ? (
+                <video
+                  ref={videoRef}
+                  src={currentVideo}
+                  poster={projectPosters[shown]}
+                  controls
+                  playsInline
+                  preload="metadata"
+                  onPlay={() => setIsPlaying(true)}
+                  onPause={() => setIsPlaying(false)}
+                  onEnded={() => setIsPlaying(false)}
+                  className="w-full h-full object-cover"
+                  data-testid={`video-portfolio-${shown}`}
+                />
+              ) : (
+                <>
+                  <img
+                    src={projectPosters[shown]}
+                    alt={project.title}
+                    className="w-full h-full object-cover"
+                    data-testid={`img-portfolio-slide-${shown}`}
+                  />
+                  {/* Play button overlay (placeholder — disabled when no video) */}
+                  <button
+                    onClick={handlePlay}
+                    disabled
+                    className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-colors group cursor-not-allowed"
+                    aria-label="Play video"
+                    data-testid={`button-play-${shown}`}
+                  >
+                    <span className="w-20 h-20 rounded-full bg-white/85 flex items-center justify-center shadow-2xl backdrop-blur-sm transition-transform group-hover:scale-105">
+                      <Play className="w-9 h-9 text-slate-800 ml-1.5" fill="currentColor" />
+                    </span>
+                  </button>
+                </>
+              )}
             </div>
+
+            {/* Bottom-left badge & counter — hidden during video playback */}
+            {!isPlaying && (
+              <>
+                <div
+                  className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none"
+                  style={{ zIndex: 3 }}
+                />
+                <div className="absolute bottom-4 left-4 pointer-events-none" style={{ zIndex: 4 }}>
+                  <Badge
+                    variant="secondary"
+                    className={`text-xs border backdrop-blur-sm ${accentColors[shown]}`}
+                  >
+                    {project.category}
+                  </Badge>
+                </div>
+                <div
+                  className="absolute bottom-4 right-4 bg-black/40 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm pointer-events-none"
+                  style={{ zIndex: 4 }}
+                >
+                  {shown + 1} / {projects.length}
+                </div>
+              </>
+            )}
           </div>
 
           <div key={shown} className="slide-text-in mt-5" style={{ animationDelay: "0.08s", minHeight: "100px" }}>
