@@ -62,7 +62,7 @@ export const translations = {
       subtitle: "Примеры успешно реализованных проектов для различных отраслей бизнеса",
       projects: [
         { title: "Туристический сайт", category: "Туризм", description: "Туристический сайт для путешествий по всему миру из Таджикистана" },
-        { title: "Банковское приложение", category: "Финтех", description: "Мобильное приложение для управления финансами с высоким уровнем безопасности" },
+        { title: "CRM — система учёта", category: "CRM", description: "Для муниципальных учреждений и бизнеса. Возьмите под контроль учёт доходов, затрат, клиентов и всего, что сопровождается в вашей деятельности." },
         { title: "Корпоративный портал", category: "Бизнес", description: "Многофункциональный портал для крупной компании с системой управления документами" },
         { title: "Образовательная платформа", category: "EdTech", description: "Онлайн-платформа для дистанционного обучения с видеоконференциями" },
         { title: "Государственный сервис", category: "GovTech", description: "Цифровой сервис для государственных услуг с электронной подписью" },
@@ -174,7 +174,7 @@ export const translations = {
       subtitle: "Examples of successfully completed projects for various business sectors",
       projects: [
         { title: "Tourism Website", category: "Tourism", description: "Tourism website for travel around the world from Tajikistan" },
-        { title: "Banking Application", category: "FinTech", description: "Mobile application for financial management with high security level" },
+        { title: "CRM — accounting system", category: "CRM", description: "For municipal institutions and businesses. Take control of revenue, expenses, clients and everything that accompanies your activity." },
         { title: "Corporate Portal", category: "Business", description: "Multifunctional portal for a large company with document management system" },
         { title: "Educational Platform", category: "EdTech", description: "Online platform for distance learning with video conferencing" },
         { title: "Government Service", category: "GovTech", description: "Digital service for government services with electronic signature" },
@@ -286,7 +286,7 @@ export const translations = {
       subtitle: "Намунаҳои лоиҳаҳои муваффақона барои соҳаҳои гуногуни бизнес",
       projects: [
         { title: "Сайти туристӣ", category: "Туризм", description: "Сайти туристӣ барои саёҳат ба тамоми ҷаҳон аз Тоҷикистон" },
-        { title: "Барномаи бонкӣ", category: "Финтех", description: "Барномаи мобилӣ барои идоракунии молия бо сатҳи баланди амният" },
+        { title: "CRM — системаи баҳисобгирӣ", category: "CRM", description: "Барои муассисаҳои мунисипалӣ ва бизнес. Назорати даромадҳо, хароҷот, мизоҷон ва ҳама он чӣ дар фаъолияти шумо ҳамроҳӣ мекунад, ба даст гиред." },
         { title: "Портали корпоративӣ", category: "Бизнес", description: "Портали бисёрфунктсионалӣ барои ширкати калон бо системаи идоракунии ҳуҷҷатҳо" },
         { title: "Платформаи таълимӣ", category: "EdTech", description: "Платформаи онлайн барои таълими дурдаст бо видеоконференсияҳо" },
         { title: "Хизмати давлатӣ", category: "GovTech", description: "Хизмати рақамӣ барои хизматҳои давлатӣ бо имзои электронӣ" },
