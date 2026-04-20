@@ -63,7 +63,7 @@ export const translations = {
       projects: [
         { title: "Туристический сайт", category: "Туризм", description: "Туристический сайт для путешествий по всему миру из Таджикистана" },
         { title: "CRM — система учёта", category: "CRM", description: "Для муниципальных учреждений и бизнеса. Возьмите под контроль учёт доходов, затрат, клиентов и всего, что сопровождается в вашей деятельности." },
-        { title: "Корпоративный портал", category: "Бизнес", description: "Многофункциональный портал для крупной компании с системой управления документами" },
+        { title: "Аналитика рынка", category: "Крипто", description: "Сканер криптовалютного рынка для нахождения графических паттернов и свечных моделей." },
         { title: "Образовательная платформа", category: "EdTech", description: "Онлайн-платформа для дистанционного обучения с видеоконференциями" },
         { title: "Государственный сервис", category: "GovTech", description: "Цифровой сервис для государственных услуг с электронной подписью" },
         { title: "Логистическая система", category: "Логистика", description: "Система управления складом и доставкой с GPS-трекингом" },
@@ -175,7 +175,7 @@ export const translations = {
       projects: [
         { title: "Tourism Website", category: "Tourism", description: "Tourism website for travel around the world from Tajikistan" },
         { title: "CRM — accounting system", category: "CRM", description: "For municipal institutions and businesses. Take control of revenue, expenses, clients and everything that accompanies your activity." },
-        { title: "Corporate Portal", category: "Business", description: "Multifunctional portal for a large company with document management system" },
+        { title: "Market Analytics", category: "Crypto", description: "Cryptocurrency market scanner for finding chart patterns and candlestick models." },
         { title: "Educational Platform", category: "EdTech", description: "Online platform for distance learning with video conferencing" },
         { title: "Government Service", category: "GovTech", description: "Digital service for government services with electronic signature" },
         { title: "Logistics System", category: "Logistics", description: "Warehouse and delivery management system with GPS tracking" },
@@ -287,7 +287,7 @@ export const translations = {
       projects: [
         { title: "Сайти туристӣ", category: "Туризм", description: "Сайти туристӣ барои саёҳат ба тамоми ҷаҳон аз Тоҷикистон" },
         { title: "CRM — системаи баҳисобгирӣ", category: "CRM", description: "Барои муассисаҳои мунисипалӣ ва бизнес. Назорати даромадҳо, хароҷот, мизоҷон ва ҳама он чӣ дар фаъолияти шумо ҳамроҳӣ мекунад, ба даст гиред." },
-        { title: "Портали корпоративӣ", category: "Бизнес", description: "Портали бисёрфунктсионалӣ барои ширкати калон бо системаи идоракунии ҳуҷҷатҳо" },
+        { title: "Таҳлили бозор", category: "Крипто", description: "Сканери бозори криптовалютаҳо барои дарёфти намунаҳои графикӣ ва моделҳои шамъдонӣ." },
         { title: "Платформаи таълимӣ", category: "EdTech", description: "Платформаи онлайн барои таълими дурдаст бо видеоконференсияҳо" },
         { title: "Хизмати давлатӣ", category: "GovTech", description: "Хизмати рақамӣ барои хизматҳои давлатӣ бо имзои электронӣ" },
         { title: "Системаи логистикӣ", category: "Логистика", description: "Системаи идоракунии анбор ва интиқол бо пайгирии GPS" },
