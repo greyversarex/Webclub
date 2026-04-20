@@ -14,6 +14,7 @@ import logisticsSystem from "@assets/generated_images/logistics_system_dashboard
 import tourismVideo from "@assets/portfolio_tourism.mp4";
 import crmVideo from "@assets/portfolio_crm.mp4";
 import analyticsVideo from "@assets/portfolio_analytics.mp4";
+import landingVideo from "@assets/portfolio_landing.mp4";
 
 const projectPosters = [
   ecommercePlatform, bankingApp, corporatePortal,
@@ -21,7 +22,7 @@ const projectPosters = [
 ];
 
 const projectVideos: (string | null)[] = [
-  tourismVideo, crmVideo, analyticsVideo, null, null, null,
+  tourismVideo, crmVideo, analyticsVideo, landingVideo, null, null,
 ];
 const accentColors = [
   "bg-violet-100 text-violet-700 border-violet-200",
