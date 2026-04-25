@@ -1,10 +1,12 @@
 import type { Express, Request, Response } from "express";
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY,
-  baseURL: process.env.AI_INTEGRATIONS_OPENAI_BASE_URL,
-});
+function getOpenAIClient() {
+  return new OpenAI({
+    apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY,
+    baseURL: process.env.AI_INTEGRATIONS_OPENAI_BASE_URL,
+  });
+}
 
 const SYSTEM_PROMPT = `Ты — умный ИТ-консультант компании WebClub. Помогаешь клиентам разобраться в IT-решениях, отвечаешь на вопросы об услугах компании и даёшь профессиональные советы.
 
@@ -37,6 +39,7 @@ export function registerChatRoutes(app: Express): void {
       res.setHeader("Cache-Control", "no-cache");
       res.setHeader("Connection", "keep-alive");
 
+      const openai = getOpenAIClient();
       const stream = await openai.chat.completions.create({
         model: "gpt-5.1",
         messages: [
