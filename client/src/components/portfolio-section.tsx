@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/lib/language-context";
+import { AdaptiveVideo, type AdaptiveVideoHandle } from "@/components/adaptive-video";
 
 import ecommercePlatform from "@assets/generated_images/e-commerce_platform_mockup.png";
 import bankingApp from "@assets/generated_images/banking_mobile_app_interface.png";
@@ -44,13 +45,13 @@ export function PortfolioSection() {
   const [shown, setShown] = useState(0);
   const [fading, setFading] = useState(false);
 
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const videoRef = useRef<AdaptiveVideoHandle | null>(null);
 
   const goTo = (idx: number) => {
     if (idx === shown || fading) return;
     if (videoRef.current) {
       videoRef.current.pause();
-      videoRef.current.currentTime = 0;
+      videoRef.current.setCurrentTime(0);
     }
     setFading(true);
     setTimeout(() => {
@@ -119,13 +120,10 @@ export function PortfolioSection() {
                 key={shown}
               >
                 {currentVideo ? (
-                  <video
+                  <AdaptiveVideo
                     ref={videoRef}
                     src={currentVideo}
-                    controls
-                    playsInline
-                    preload="auto"
-                    className="w-full h-full object-contain bg-black"
+                    className="w-full h-full object-contain"
                     data-testid={`video-portfolio-${shown}`}
                   />
                 ) : (
