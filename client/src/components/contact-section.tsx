@@ -252,7 +252,7 @@ export function ContactSection() {
               <div className="rounded-xl overflow-hidden border border-slate-300 shadow-md shadow-slate-300/20">
                 <iframe
                   title={t.contact.officeTitle}
-                  src="https://www.openstreetmap.org/export/embed.html?bbox=68.7770%2C38.5548%2C68.7970%2C38.5648&layer=mapnik&marker=38.5598%2C68.7870"
+                  src="https://www.openstreetmap.org/export/embed.html?bbox=68.7787%2C38.5638%2C68.7887%2C38.5698&layer=mapnik&marker=38.5668%2C68.7837"
                   className="w-full h-64 md:h-72 block dark:brightness-90 dark:contrast-110"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
