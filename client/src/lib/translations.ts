@@ -26,6 +26,14 @@ export const translations = {
         experience: "Лет опыта",
         support: "Поддержка",
       },
+      slides: [
+        { title: "Интернет-магазин", category: "E-commerce", description: "Современная торговая площадка с каталогом, корзиной и приёмом онлайн-оплат." },
+        { title: "Банковское приложение", category: "FinTech", description: "Безопасное мобильное приложение с переводами, аналитикой и картами." },
+        { title: "Корпоративный портал", category: "Бизнес", description: "Удобный портал для сотрудников с задачами, документами и аналитикой." },
+        { title: "Образовательная платформа", category: "EdTech", description: "Онлайн-платформа для обучения с курсами, тестами и видеолекциями." },
+        { title: "Государственный портал", category: "GovTech", description: "Цифровой сервис госуслуг с электронной подписью и документооборотом." },
+        { title: "Логистическая система", category: "Логистика", description: "Управление складом и доставкой с отслеживанием по GPS в реальном времени." },
+      ],
     },
     miniServices: {
       onlineStores: "Интернет-магазины",
@@ -61,7 +69,7 @@ export const translations = {
       title: "Какие проекты мы делаем?",
       subtitle: "Примеры успешно реализованных проектов для различных отраслей бизнеса",
       projects: [
-        { title: "Интернет-магазин", category: "Туризм", description: "Туристический сайт для путешествий по всему миру из Таджикистана" },
+        { title: "Туристический сайт", category: "Туризм", description: "Туристический сайт для путешествий по всему миру из Таджикистана" },
         { title: "CRM — система учёта", category: "CRM", description: "Для муниципальных учреждений и бизнеса. Возьмите под контроль учёт доходов, затрат, клиентов и всего, что сопровождается в вашей деятельности." },
         { title: "Аналитика рынка", category: "Крипто", description: "Сканер криптовалютного рынка для нахождения графических паттернов и свечных моделей." },
         { title: "Лендинг", category: "Веб", description: "Аккуратный лендинг, передающий всю нужную информацию без излишеств." },
@@ -141,6 +149,14 @@ export const translations = {
         experience: "Years of experience",
         support: "Support",
       },
+      slides: [
+        { title: "Online Store", category: "E-commerce", description: "Modern marketplace with catalog, cart and online payment processing." },
+        { title: "Banking App", category: "FinTech", description: "Secure mobile app with transfers, analytics and card management." },
+        { title: "Corporate Portal", category: "Business", description: "Convenient employee portal with tasks, documents and analytics." },
+        { title: "Education Platform", category: "EdTech", description: "Online learning platform with courses, tests and video lectures." },
+        { title: "Government Portal", category: "GovTech", description: "Digital public services with electronic signature and document flow." },
+        { title: "Logistics System", category: "Logistics", description: "Warehouse and delivery management with real-time GPS tracking." },
+      ],
     },
     miniServices: {
       onlineStores: "Online stores",
@@ -176,7 +192,7 @@ export const translations = {
       title: "What projects do we do?",
       subtitle: "Examples of successfully completed projects for various business sectors",
       projects: [
-        { title: "Online Store", category: "Tourism", description: "Tourism website for travel around the world from Tajikistan" },
+        { title: "Tourism Website", category: "Tourism", description: "Tourism website for travel around the world from Tajikistan" },
         { title: "CRM — accounting system", category: "CRM", description: "For municipal institutions and businesses. Take control of revenue, expenses, clients and everything that accompanies your activity." },
         { title: "Market Analytics", category: "Crypto", description: "Cryptocurrency market scanner for finding chart patterns and candlestick models." },
         { title: "Landing Page", category: "Web", description: "A neat landing page conveying all the necessary information without excess." },
@@ -256,6 +272,14 @@ export const translations = {
         experience: "Соли таҷриба",
         support: "Дастгирӣ",
       },
+      slides: [
+        { title: "Мағозаи интернетӣ", category: "E-commerce", description: "Платформаи муосири савдо бо феҳрист, сабад ва қабули пардохтҳои онлайн." },
+        { title: "Барномаи бонкӣ", category: "FinTech", description: "Барномаи бехатари мобилӣ бо интиқолҳо, таҳлил ва идоракунии кортҳо." },
+        { title: "Портали корпоративӣ", category: "Бизнес", description: "Портали қулай барои кормандон бо вазифаҳо, ҳуҷҷатҳо ва таҳлил." },
+        { title: "Платформаи таълимӣ", category: "EdTech", description: "Платформаи онлайни таълим бо курсҳо, тестҳо ва видеолексияҳо." },
+        { title: "Портали давлатӣ", category: "GovTech", description: "Хизматҳои рақамии давлатӣ бо имзои электронӣ ва гардиши ҳуҷҷатҳо." },
+        { title: "Системаи логистикӣ", category: "Логистика", description: "Идоракунии анбор ва интиқол бо пайгирии GPS дар вақти воқеӣ." },
+      ],
     },
     miniServices: {
       onlineStores: "Мағозаҳои интернетӣ",
@@ -291,7 +315,7 @@ export const translations = {
       title: "Мо чӣ лоиҳаҳо мекунем?",
       subtitle: "Намунаҳои лоиҳаҳои муваффақона барои соҳаҳои гуногуни бизнес",
       projects: [
-        { title: "Мағозаи интернетӣ", category: "Туризм", description: "Сайти туристӣ барои саёҳат ба тамоми ҷаҳон аз Тоҷикистон" },
+        { title: "Сайти туристӣ", category: "Туризм", description: "Сайти туристӣ барои саёҳат ба тамоми ҷаҳон аз Тоҷикистон" },
         { title: "CRM — системаи баҳисобгирӣ", category: "CRM", description: "Барои муассисаҳои мунисипалӣ ва бизнес. Назорати даромадҳо, хароҷот, мизоҷон ва ҳама он чӣ дар фаъолияти шумо ҳамроҳӣ мекунад, ба даст гиред." },
         { title: "Таҳлили бозор", category: "Крипто", description: "Сканери бозори криптовалютаҳо барои дарёфти намунаҳои графикӣ ва моделҳои шамъдонӣ." },
         { title: "Лендинг", category: "Веб", description: "Лендинги озода, ки тамоми маълумоти лозимаро бе изофагӣ интиқол медиҳад." },

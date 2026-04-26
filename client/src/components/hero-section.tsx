@@ -51,7 +51,7 @@ const TOTAL_PROJECTS = 6;
 
 export function HeroSection() {
   const { t } = useLanguage();
-  const projects = t.portfolio.projects;
+  const projects = t.hero.slides;
 
   const [shown, setShown]     = useState(0);
   const [next, setNext]       = useState(0);
