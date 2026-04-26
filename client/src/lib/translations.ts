@@ -61,7 +61,7 @@ export const translations = {
       title: "Какие проекты мы делаем?",
       subtitle: "Примеры успешно реализованных проектов для различных отраслей бизнеса",
       projects: [
-        { title: "Туристический сайт", category: "Туризм", description: "Туристический сайт для путешествий по всему миру из Таджикистана" },
+        { title: "Интернет-магазин", category: "Туризм", description: "Туристический сайт для путешествий по всему миру из Таджикистана" },
         { title: "CRM — система учёта", category: "CRM", description: "Для муниципальных учреждений и бизнеса. Возьмите под контроль учёт доходов, затрат, клиентов и всего, что сопровождается в вашей деятельности." },
         { title: "Аналитика рынка", category: "Крипто", description: "Сканер криптовалютного рынка для нахождения графических паттернов и свечных моделей." },
         { title: "Лендинг", category: "Веб", description: "Аккуратный лендинг, передающий всю нужную информацию без излишеств." },
@@ -176,7 +176,7 @@ export const translations = {
       title: "What projects do we do?",
       subtitle: "Examples of successfully completed projects for various business sectors",
       projects: [
-        { title: "Tourism Website", category: "Tourism", description: "Tourism website for travel around the world from Tajikistan" },
+        { title: "Online Store", category: "Tourism", description: "Tourism website for travel around the world from Tajikistan" },
         { title: "CRM — accounting system", category: "CRM", description: "For municipal institutions and businesses. Take control of revenue, expenses, clients and everything that accompanies your activity." },
         { title: "Market Analytics", category: "Crypto", description: "Cryptocurrency market scanner for finding chart patterns and candlestick models." },
         { title: "Landing Page", category: "Web", description: "A neat landing page conveying all the necessary information without excess." },
@@ -291,7 +291,7 @@ export const translations = {
       title: "Мо чӣ лоиҳаҳо мекунем?",
       subtitle: "Намунаҳои лоиҳаҳои муваффақона барои соҳаҳои гуногуни бизнес",
       projects: [
-        { title: "Сайти туристӣ", category: "Туризм", description: "Сайти туристӣ барои саёҳат ба тамоми ҷаҳон аз Тоҷикистон" },
+        { title: "Мағозаи интернетӣ", category: "Туризм", description: "Сайти туристӣ барои саёҳат ба тамоми ҷаҳон аз Тоҷикистон" },
         { title: "CRM — системаи баҳисобгирӣ", category: "CRM", description: "Барои муассисаҳои мунисипалӣ ва бизнес. Назорати даромадҳо, хароҷот, мизоҷон ва ҳама он чӣ дар фаъолияти шумо ҳамроҳӣ мекунад, ба даст гиред." },
         { title: "Таҳлили бозор", category: "Крипто", description: "Сканери бозори криптовалютаҳо барои дарёфти намунаҳои графикӣ ва моделҳои шамъдонӣ." },
         { title: "Лендинг", category: "Веб", description: "Лендинги озода, ки тамоми маълумоти лозимаро бе изофагӣ интиқол медиҳад." },
