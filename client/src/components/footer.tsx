@@ -1,5 +1,4 @@
 import { Phone, Globe, Mail } from "lucide-react";
-import { SiTelegram, SiWhatsapp } from "react-icons/si";
 import { FallingNumbers } from "@/components/falling-numbers";
 import { useLanguage } from "@/lib/language-context";
 
@@ -53,31 +52,9 @@ export function Footer() {
                 WEBCLUB
               </span>
             </button>
-            <p className="text-sm text-slate-600 mb-4">
+            <p className="text-sm text-slate-600">
               {t.footer.description}
             </p>
-            <div className="flex gap-2">
-              <a
-                href="https://t.me/+992876220100"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-md bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center hover:shadow-lg hover:shadow-sky-400/30 transition-all"
-                aria-label="Telegram"
-                data-testid="link-footer-telegram"
-              >
-                <SiTelegram className="w-4 h-4 text-white" />
-              </a>
-              <a
-                href="https://wa.me/992876220100"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-md bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center hover:shadow-lg hover:shadow-emerald-400/30 transition-all"
-                aria-label="WhatsApp"
-                data-testid="link-footer-whatsapp"
-              >
-                <SiWhatsapp className="w-4 h-4 text-white" />
-              </a>
-            </div>
           </div>
 
           <div>

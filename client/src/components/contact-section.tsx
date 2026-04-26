@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Phone, Send, Loader2, MapPin } from "lucide-react";
+import { SiTelegram, SiWhatsapp } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -229,6 +230,31 @@ export function ContactSection() {
                     </div>
                   </div>
                 </a>
+
+                <div className="flex gap-3">
+                  <a
+                    href="https://t.me/+992876220100"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 flex items-center justify-center gap-2 p-3 rounded-lg bg-gradient-to-br from-sky-500 to-blue-600 text-white font-medium shadow-md shadow-sky-400/30 hover:shadow-lg hover:shadow-sky-400/40 transition-all"
+                    aria-label="Telegram"
+                    data-testid="link-telegram-contact"
+                  >
+                    <SiTelegram className="w-5 h-5" />
+                    Telegram
+                  </a>
+                  <a
+                    href="https://wa.me/992876220100"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 flex items-center justify-center gap-2 p-3 rounded-lg bg-gradient-to-br from-emerald-500 to-green-600 text-white font-medium shadow-md shadow-emerald-400/30 hover:shadow-lg hover:shadow-emerald-400/40 transition-all"
+                    aria-label="WhatsApp"
+                    data-testid="link-whatsapp-contact"
+                  >
+                    <SiWhatsapp className="w-5 h-5" />
+                    WhatsApp
+                  </a>
+                </div>
 
               </div>
             </Card>
