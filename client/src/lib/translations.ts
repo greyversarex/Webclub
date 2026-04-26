@@ -67,6 +67,7 @@ export const translations = {
         { title: "Лендинг", category: "Веб", description: "Аккуратный лендинг, передающий всю нужную информацию без излишеств." },
         { title: "Государственный сервис", category: "GovTech", description: "Цифровой сервис для государственных услуг с электронной подписью" },
         { title: "Логистическая система", category: "Логистика", description: "Система управления складом и доставкой с GPS-трекингом" },
+        { title: "Корпоративный сайт", category: "Веб", description: "Демонстрация деятельности и реализуемых товаров компании. Ознакомление, приём заказов и привлечение клиентов." },
       ],
     },
     techStack: {
@@ -179,6 +180,7 @@ export const translations = {
         { title: "Landing Page", category: "Web", description: "A neat landing page conveying all the necessary information without excess." },
         { title: "Government Service", category: "GovTech", description: "Digital service for government services with electronic signature" },
         { title: "Logistics System", category: "Logistics", description: "Warehouse and delivery management system with GPS tracking" },
+        { title: "Corporate Website", category: "Web", description: "Showcasing company activities and products. Customer acquisition, order intake and brand awareness." },
       ],
     },
     techStack: {
@@ -291,6 +293,7 @@ export const translations = {
         { title: "Лендинг", category: "Веб", description: "Лендинги озода, ки тамоми маълумоти лозимаро бе изофагӣ интиқол медиҳад." },
         { title: "Хизмати давлатӣ", category: "GovTech", description: "Хизмати рақамӣ барои хизматҳои давлатӣ бо имзои электронӣ" },
         { title: "Системаи логистикӣ", category: "Логистика", description: "Системаи идоракунии анбор ва интиқол бо пайгирии GPS" },
+        { title: "Сайти корпоративӣ", category: "Веб", description: "Намоиши фаъолият ва молҳои ширкат. Шиносоӣ, қабули фармоишҳо ва ҷалби мизоҷон." },
       ],
     },
     techStack: {
