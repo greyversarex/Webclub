@@ -64,14 +64,13 @@ export const AdaptiveVideo = forwardRef<AdaptiveVideoHandle, AdaptiveVideoProps>
           controls
           playsInline
           preload={preload}
-          className={className}
+          className="w-full h-full object-contain mt-[-14px] mb-[-14px]"
           data-testid={testId}
           onPlay={handlePlay}
           onCanPlay={handleCanPlay}
           onWaiting={handleWaiting}
           onPlaying={handlePlaying}
         />
-
         {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div className="bg-black/50 rounded-full p-3 backdrop-blur-sm">
@@ -79,7 +78,6 @@ export const AdaptiveVideo = forwardRef<AdaptiveVideoHandle, AdaptiveVideoProps>
             </div>
           </div>
         )}
-
         <div
           className={`absolute bottom-14 right-3 flex items-center gap-1.5 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm transition-all duration-500 ${qualityColor} ${
             showQualityBadge ? "opacity-100 translate-y-0" : "opacity-0 translate-y-1"
