@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { Phone, Send, Loader2 } from "lucide-react";
+import { Phone, Send, Loader2, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { SiTelegram, SiWhatsapp } from "react-icons/si";
 import { apiRequest } from "@/lib/queryClient";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/lib/language-context";
@@ -239,47 +238,26 @@ export function ContactSection() {
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
               style={{ transitionDelay: isVisible ? '400ms' : '0ms' }}
+              data-testid="card-office"
             >
-              <h3 className="font-display font-semibold text-xl text-slate-800 mb-6 flex items-center gap-2">
+              <h3 className="font-display font-semibold text-xl text-slate-800 mb-2 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-violet-500" />
-                {t.contact.messengers}
+                {t.contact.officeTitle}
               </h3>
+              <div className="flex items-center gap-2 text-slate-700 text-sm mb-4">
+                <MapPin className="w-4 h-4 text-violet-600" />
+                <span data-testid="text-office-address">{t.contact.officeAddress}</span>
+              </div>
 
-              <div className="flex flex-wrap gap-3">
-                <a
-                  href="https://t.me/+992876220100"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Telegram"
-                  data-testid="link-telegram"
-                >
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="gap-2 border-violet-300 text-violet-700 bg-violet-50"
-                  >
-                    <SiTelegram className="w-5 h-5 text-violet-600" />
-                    Telegram
-                  </Button>
-                </a>
-
-                <a
-                  href="https://wa.me/992876220100"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="WhatsApp"
-                  data-testid="link-whatsapp"
-                >
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="gap-2 border-emerald-300 text-emerald-700 bg-emerald-50"
-                  >
-                    <SiWhatsapp className="w-5 h-5 text-emerald-600" />
-                    WhatsApp
-                  </Button>
-                </a>
-
+              <div className="rounded-xl overflow-hidden border border-slate-300 shadow-md shadow-slate-300/20">
+                <iframe
+                  title={t.contact.officeTitle}
+                  src="https://www.openstreetmap.org/export/embed.html?bbox=68.7770%2C38.5548%2C68.7970%2C38.5648&layer=mapnik&marker=38.5598%2C68.7870"
+                  className="w-full h-64 md:h-72 block dark:brightness-90 dark:contrast-110"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  data-testid="iframe-office-map"
+                />
               </div>
             </Card>
 

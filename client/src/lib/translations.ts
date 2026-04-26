@@ -103,6 +103,8 @@ export const translations = {
       contactInfo: "Контактная информация",
       phoneLabel: "Телефон",
       messengers: "Мессенджеры",
+      officeTitle: "Наш офис",
+      officeAddress: "г. Душанбе, Таджикистан",
     },
     footer: {
       description: "Компания по IT-разработкам. Создаём современные решения для вашего бизнеса.",
@@ -216,6 +218,8 @@ export const translations = {
       contactInfo: "Contact information",
       phoneLabel: "Phone",
       messengers: "Messengers",
+      officeTitle: "Our office",
+      officeAddress: "Dushanbe, Tajikistan",
     },
     footer: {
       description: "IT development company. We create modern solutions for your business.",
@@ -329,6 +333,8 @@ export const translations = {
       contactInfo: "Маълумоти тамос",
       phoneLabel: "Телефон",
       messengers: "Мессенҷерҳо",
+      officeTitle: "Офиси мо",
+      officeAddress: "ш. Душанбе, Тоҷикистон",
     },
     footer: {
       description: "Ширкати таҳияи IT. Мо барои бизнеси шумо ҳалҳои муосир месозем.",
