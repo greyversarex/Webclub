@@ -14,12 +14,16 @@ import logisticsSystem from "@assets/generated_images/logistics_system_dashboard
 
 import tourism480 from "@assets/encoded/tourism_480p.mp4";
 import tourism720 from "@assets/encoded/tourism_720p.mp4";
+import tourism1080 from "@assets/encoded/tourism_1080p.mp4";
 import crm480 from "@assets/encoded/crm_480p.mp4";
 import crm720 from "@assets/encoded/crm_720p.mp4";
+import crm1080 from "@assets/encoded/crm_1080p.mp4";
 import analytics480 from "@assets/encoded/analytics_480p.mp4";
 import analytics720 from "@assets/encoded/analytics_720p.mp4";
+import analytics1080 from "@assets/encoded/analytics_1080p.mp4";
 import landing480 from "@assets/encoded/landing_480p.mp4";
 import landing720 from "@assets/encoded/landing_720p.mp4";
+import landing1080 from "@assets/encoded/landing_1080p.mp4";
 import govDoc480 from "@assets/encoded/gov_docflow_480p.mp4";
 import govDoc720 from "@assets/encoded/gov_docflow_720p.mp4";
 import govDoc1080 from "@assets/encoded/gov_docflow_1080p.mp4";
@@ -40,10 +44,10 @@ const projectPosters = [
 ];
 
 const projectVideoSources: (VideoSources | null)[] = [
-  { "480p": tourism480, "720p": tourism720 },
-  { "480p": crm480, "720p": crm720 },
-  { "480p": analytics480, "720p": analytics720 },
-  { "480p": landing480, "720p": landing720 },
+  { "480p": tourism480, "720p": tourism720, "1080p": tourism1080 },
+  { "480p": crm480, "720p": crm720, "1080p": crm1080 },
+  { "480p": analytics480, "720p": analytics720, "1080p": analytics1080 },
+  { "480p": landing480, "720p": landing720, "1080p": landing1080 },
   { "480p": govDoc480, "720p": govDoc720, "1080p": govDoc1080 },
   { "480p": logistics480, "720p": logistics720, "1080p": logistics1080 },
   { "480p": corporate480, "720p": corporate720, "1080p": corporate1080 },
