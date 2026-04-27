@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/lib/language-context";
-import { AdaptiveVideo, type AdaptiveVideoHandle } from "@/components/adaptive-video";
+import { AdaptiveVideo, type AdaptiveVideoHandle, type VideoSources } from "@/components/adaptive-video";
 
 import ecommercePlatform from "@assets/generated_images/e-commerce_platform_mockup.png";
 import bankingApp from "@assets/generated_images/banking_mobile_app_interface.png";
@@ -12,14 +12,26 @@ import educationPlatform from "@assets/generated_images/education_platform_inter
 import govServices from "@assets/generated_images/government_services_portal.png";
 import logisticsSystem from "@assets/generated_images/logistics_system_dashboard.png";
 
-import tourismVideo from "@assets/portfolio_tourism.mp4";
-import crmVideo from "@assets/portfolio_crm.mp4";
-import analyticsVideo from "@assets/portfolio_analytics.mp4";
-import landingVideo from "@assets/portfolio_landing.mp4";
-import corporateVideo from "@assets/0424_(1)_1777204093548.mp4";
-import logisticsVideo from "@assets/0424_1777207200040.mp4";
-import govDocFlowVideo from "@assets/0427_1777302758541.mp4";
-import financeAppVideo from "@assets/0427_(1)_1777304638203.mp4";
+import tourism480 from "@assets/encoded/tourism_480p.mp4";
+import tourism720 from "@assets/encoded/tourism_720p.mp4";
+import crm480 from "@assets/encoded/crm_480p.mp4";
+import crm720 from "@assets/encoded/crm_720p.mp4";
+import analytics480 from "@assets/encoded/analytics_480p.mp4";
+import analytics720 from "@assets/encoded/analytics_720p.mp4";
+import landing480 from "@assets/encoded/landing_480p.mp4";
+import landing720 from "@assets/encoded/landing_720p.mp4";
+import govDoc480 from "@assets/encoded/gov_docflow_480p.mp4";
+import govDoc720 from "@assets/encoded/gov_docflow_720p.mp4";
+import govDoc1080 from "@assets/encoded/gov_docflow_1080p.mp4";
+import logistics480 from "@assets/encoded/logistics_480p.mp4";
+import logistics720 from "@assets/encoded/logistics_720p.mp4";
+import logistics1080 from "@assets/encoded/logistics_1080p.mp4";
+import corporate480 from "@assets/encoded/corporate_480p.mp4";
+import corporate720 from "@assets/encoded/corporate_720p.mp4";
+import corporate1080 from "@assets/encoded/corporate_1080p.mp4";
+import finance480 from "@assets/encoded/finance_480p.mp4";
+import finance720 from "@assets/encoded/finance_720p.mp4";
+import finance1080 from "@assets/encoded/finance_1080p.mp4";
 
 const projectPosters = [
   ecommercePlatform, bankingApp, corporatePortal,
@@ -27,8 +39,15 @@ const projectPosters = [
   corporatePortal, bankingApp,
 ];
 
-const projectVideos: (string | null)[] = [
-  tourismVideo, crmVideo, analyticsVideo, landingVideo, govDocFlowVideo, logisticsVideo, corporateVideo, financeAppVideo,
+const projectVideoSources: (VideoSources | null)[] = [
+  { "480p": tourism480, "720p": tourism720 },
+  { "480p": crm480, "720p": crm720 },
+  { "480p": analytics480, "720p": analytics720 },
+  { "480p": landing480, "720p": landing720 },
+  { "480p": govDoc480, "720p": govDoc720, "1080p": govDoc1080 },
+  { "480p": logistics480, "720p": logistics720, "1080p": logistics1080 },
+  { "480p": corporate480, "720p": corporate720, "1080p": corporate1080 },
+  { "480p": finance480, "720p": finance720, "1080p": finance1080 },
 ];
 const accentColors = [
   "bg-violet-100 text-violet-700 border-violet-200",
@@ -71,7 +90,7 @@ export function PortfolioSection() {
   const goNext = () => goTo((shown + 1) % TOTAL_PROJECTS);
 
   const project = projects[shown];
-  const currentVideo = projectVideos[shown];
+  const currentSources = projectVideoSources[shown];
 
   return (
     <section
@@ -126,10 +145,10 @@ export function PortfolioSection() {
                 }}
                 key={shown}
               >
-                {currentVideo ? (
+                {currentSources ? (
                   <AdaptiveVideo
                     ref={videoRef}
-                    src={currentVideo}
+                    sources={currentSources}
                     className="w-full h-full object-contain"
                     data-testid={`video-portfolio-${shown}`}
                   />
