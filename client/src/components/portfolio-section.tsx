@@ -19,15 +19,16 @@ import landingVideo from "@assets/portfolio_landing.mp4";
 import corporateVideo from "@assets/0424_(1)_1777204093548.mp4";
 import logisticsVideo from "@assets/0424_1777207200040.mp4";
 import govDocFlowVideo from "@assets/0427_1777302758541.mp4";
+import financeAppVideo from "@assets/0427_(1)_1777304638203.mp4";
 
 const projectPosters = [
   ecommercePlatform, bankingApp, corporatePortal,
   educationPlatform, govServices, logisticsSystem,
-  corporatePortal,
+  corporatePortal, bankingApp,
 ];
 
 const projectVideos: (string | null)[] = [
-  tourismVideo, crmVideo, analyticsVideo, landingVideo, govDocFlowVideo, logisticsVideo, corporateVideo,
+  tourismVideo, crmVideo, analyticsVideo, landingVideo, govDocFlowVideo, logisticsVideo, corporateVideo, financeAppVideo,
 ];
 const accentColors = [
   "bg-violet-100 text-violet-700 border-violet-200",
@@ -37,9 +38,10 @@ const accentColors = [
   "bg-violet-100 text-violet-700 border-violet-200",
   "bg-emerald-100 text-emerald-700 border-emerald-200",
   "bg-violet-100 text-violet-700 border-violet-200",
+  "bg-emerald-100 text-emerald-700 border-emerald-200",
 ];
 
-const TOTAL_PROJECTS = 7;
+const TOTAL_PROJECTS = 8;
 const FADE_MS = 280;
 
 export function PortfolioSection() {

@@ -76,6 +76,7 @@ export const translations = {
         { title: "Государственный сервис", category: "GovTech", description: "Платформа внутреннего документооборота и связи" },
         { title: "Логистическая система", category: "Логистика", description: "Система управления складом и доставкой с GPS-трекингом" },
         { title: "Корпоративный сайт", category: "Веб", description: "Демонстрация деятельности и реализуемых товаров компании. Ознакомление, приём заказов и привлечение клиентов." },
+        { title: "Финансовый учёт", category: "Финансы", description: "Оффлайн приложение для отслеживания доходов, расходов и задач." },
       ],
     },
     techStack: {
@@ -199,6 +200,7 @@ export const translations = {
         { title: "Government Service", category: "GovTech", description: "Internal document management and communication platform" },
         { title: "Logistics System", category: "Logistics", description: "Warehouse and delivery management system with GPS tracking" },
         { title: "Corporate Website", category: "Web", description: "Showcasing company activities and products. Customer acquisition, order intake and brand awareness." },
+        { title: "Financial Tracker", category: "Finance", description: "Offline app for tracking income, expenses and tasks." },
       ],
     },
     techStack: {
@@ -322,6 +324,7 @@ export const translations = {
         { title: "Хизмати давлатӣ", category: "GovTech", description: "Платформаи дохилии гардиши ҳуҷҷатҳо ва алоқа" },
         { title: "Системаи логистикӣ", category: "Логистика", description: "Системаи идоракунии анбор ва интиқол бо пайгирии GPS" },
         { title: "Сайти корпоративӣ", category: "Веб", description: "Намоиши фаъолият ва молҳои ширкат. Шиносоӣ, қабули фармоишҳо ва ҷалби мизоҷон." },
+        { title: "Баҳисобгирии молиявӣ", category: "Молия", description: "Барномаи офлайн барои пайгирии даромадҳо, хароҷот ва вазифаҳо." },
       ],
     },
     techStack: {
