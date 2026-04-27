@@ -22,7 +22,7 @@ const contacts = [
   {
     id: "whatsapp",
     label: "WhatsApp",
-    href: "https://we.me/876200100",
+    href: "https://wa.me/992876220100",
     icon: SiWhatsapp,
     bg: "bg-green-500 hover:bg-green-400",
     shadow: "shadow-green-500/40",

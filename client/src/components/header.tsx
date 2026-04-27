@@ -36,6 +36,7 @@ export function Header() {
   const languages: { code: Language; label: string }[] = [
     { code: "ru", label: "RU" },
     { code: "en", label: "EN" },
+    { code: "tj", label: "TJ" },
   ];
 
   return (

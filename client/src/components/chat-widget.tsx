@@ -103,7 +103,7 @@ export function ChatWidget() {
     <>
       {isOpen && (
         <div
-          className="fixed bottom-24 right-6 z-50 w-[360px] max-w-[calc(100vw-2rem)] rounded-2xl shadow-2xl border border-slate-200 bg-white flex flex-col overflow-hidden"
+          className="fixed bottom-24 left-6 z-50 w-[360px] max-w-[calc(100vw-2rem)] rounded-2xl shadow-2xl border border-slate-200 bg-white flex flex-col overflow-hidden"
           style={{ height: "480px" }}
           data-testid="chat-widget-panel"
         >
@@ -198,7 +198,7 @@ export function ChatWidget() {
 
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className={`fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 ${
+        className={`fixed bottom-6 left-6 z-50 w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 ${
           isOpen
             ? "bg-slate-700 hover:bg-slate-800 rotate-0"
             : "bg-violet-600 hover:bg-violet-700"
