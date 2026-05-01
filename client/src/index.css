@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Subtle bounce for chat button when teaser is showing */
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.animate-bounce-subtle {
+  animation: bounce-subtle 1.6s ease-in-out infinite;
+}
+
 /* Slide text fade-in animation */
 @keyframes slide-text-in {
   from {

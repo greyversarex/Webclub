@@ -124,6 +124,23 @@ export const translations = {
       privacy: "Политика конфиденциальности",
       terms: "Условия использования",
     },
+    chatTeaser: {
+      greeting: "Привет! 👋",
+      message: "Расскажу, какое IT-решение подойдёт вашему бизнесу. Что хотите разработать?",
+      cta: "Спросить",
+    },
+    process: {
+      title: "Как мы работаем",
+      subtitle: "Прозрачный процесс от первой встречи до запуска и поддержки. Вы знаете, что происходит на каждом этапе.",
+      steps: [
+        { title: "Бриф и анализ", description: "Изучаем задачу, ваш бизнес и аудиторию. Согласовываем цели, сроки и бюджет." },
+        { title: "Дизайн и прототип", description: "Создаём UX/UI-дизайн, кликабельный прототип и согласовываем визуальный стиль." },
+        { title: "Разработка", description: "Пишем чистый код по спринтам. Каждую неделю показываем рабочую версию." },
+        { title: "Тестирование", description: "QA-команда проверяет каждую функцию: безопасность, скорость, удобство, кросс-браузерность." },
+        { title: "Запуск", description: "Деплой на серверы, настройка домена, аналитики и систем мониторинга. Передача доступов." },
+        { title: "Поддержка 24/7", description: "Гарантия, обновления, мониторинг и развитие проекта. Мы остаёмся на связи." },
+      ],
+    },
   },
   en: {
     nav: {
@@ -248,6 +265,23 @@ export const translations = {
       privacy: "Privacy Policy",
       terms: "Terms of Use",
     },
+    chatTeaser: {
+      greeting: "Hi there! 👋",
+      message: "Let me help you find the right IT solution for your business. What do you want to build?",
+      cta: "Ask",
+    },
+    process: {
+      title: "How we work",
+      subtitle: "A transparent process from first meeting to launch and support. You know what's happening at every stage.",
+      steps: [
+        { title: "Brief & analysis", description: "We study your task, business and audience. We align on goals, timeline and budget." },
+        { title: "Design & prototype", description: "We craft UX/UI design, an interactive prototype and agree on the visual style." },
+        { title: "Development", description: "We write clean code in sprints. Every week we ship a working version for you to see." },
+        { title: "Testing", description: "Our QA team verifies every feature: security, speed, usability, cross-browser." },
+        { title: "Launch", description: "Server deployment, domain setup, analytics and monitoring systems. Full handover of access." },
+        { title: "24/7 support", description: "Warranty, updates, monitoring and ongoing improvements. We stay in touch." },
+      ],
+    },
   },
   tj: {
     nav: {
@@ -371,6 +405,23 @@ export const translations = {
       copyright: "Ҳамаи ҳуқуқҳо ҳифз шудаанд.",
       privacy: "Сиёсати махфият",
       terms: "Шартҳои истифода",
+    },
+    chatTeaser: {
+      greeting: "Салом! 👋",
+      message: "Барои бизнеси шумо кадом ҳалли IT мувофиқ аст? Чӣ месозед?",
+      cta: "Пурсидан",
+    },
+    process: {
+      title: "Мо чӣ гуна кор мекунем",
+      subtitle: "Раванди шаффоф аз аввалин мулоқот то оғоз ва дастгирӣ. Шумо медонед, ки дар ҳар марҳила чӣ рӯй медиҳад.",
+      steps: [
+        { title: "Бриф ва таҳлил", description: "Мо вазифа, бизнес ва аудиторияи шуморо меомӯзем. Ҳадафҳо, мӯҳлатҳо ва буҷетро мувофиқа мекунем." },
+        { title: "Дизайн ва прототип", description: "UX/UI-дизайн, прототипи интерактивӣ месозем ва услуби визуалиро мувофиқа мекунем." },
+        { title: "Таҳия", description: "Кодҳои тоза дар спринтҳо менависем. Ҳар ҳафта версияи кориро ба шумо нишон медиҳем." },
+        { title: "Тестӣ", description: "Тими QA ҳар як вазифаро месанҷад: бехатарӣ, суръат, қулайӣ, кроссбраузерӣ." },
+        { title: "Оғоз", description: "Деплой ба серверҳо, танзими домен, таҳлил ва системаҳои мониторинг. Интиқоли пурраи дастрасӣ." },
+        { title: "Дастгирии 24/7", description: "Кафолат, навсозиҳо, мониторинг ва рушди лоиҳа. Мо дар тамос мемонем." },
+      ],
     },
   },
 };

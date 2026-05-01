@@ -2,18 +2,24 @@ import { useState, useRef, useEffect } from "react";
 import { MessageCircle, X, Send, Bot, User, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useLanguage } from "@/lib/language-context";
 
 interface Message {
   role: "user" | "assistant";
   content: string;
 }
 
+const TEASER_DELAY_MS = 8000;
+const TEASER_DISMISS_KEY = "webclub-chat-teaser-dismissed";
+
 export function ChatWidget() {
+  const { t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
+  const [showTeaser, setShowTeaser] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Привет! Я ИТ-консультант WebClub. Готов ответить на любые вопросы о наших услугах или помочь с выбором решения для вашего бизнеса 🚀",
+      content: t.chatTeaser.message,
     },
   ]);
   const [input, setInput] = useState("");
@@ -22,8 +28,41 @@ export function ChatWidget() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
+    setMessages((prev) => {
+      if (prev.length === 1 && prev[0].role === "assistant") {
+        return [{ role: "assistant", content: t.chatTeaser.message }];
+      }
+      return prev;
+    });
+  }, [t.chatTeaser.message]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const dismissed = sessionStorage.getItem(TEASER_DISMISS_KEY) === "1";
+    if (dismissed || isOpen) return;
+
+    const timer = setTimeout(() => {
+      if (!isOpen) setShowTeaser(true);
+    }, TEASER_DELAY_MS);
+
+    return () => clearTimeout(timer);
+  }, [isOpen]);
+
+  useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  const dismissTeaser = () => {
+    setShowTeaser(false);
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem(TEASER_DISMISS_KEY, "1");
+    }
+  };
+
+  const openChat = () => {
+    dismissTeaser();
+    setIsOpen(true);
+  };
 
   const sendMessage = async () => {
     const text = input.trim();
@@ -196,13 +235,56 @@ export function ChatWidget() {
         </div>
       )}
 
+      {showTeaser && !isOpen && (
+        <div
+          className="fixed bottom-24 left-6 z-40 max-w-[300px] animate-in fade-in slide-in-from-bottom-3 duration-500"
+          data-testid="chat-teaser"
+        >
+          <div className="relative bg-white rounded-2xl shadow-2xl border border-violet-100 p-4 pr-8">
+            <button
+              onClick={dismissTeaser}
+              className="absolute top-2 right-2 text-slate-400 hover:text-slate-600 transition-colors"
+              aria-label="Close"
+              data-testid="button-teaser-close"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+            <div className="flex items-start gap-2 mb-2">
+              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-violet-500 to-violet-700 flex items-center justify-center flex-shrink-0 shadow-md shadow-violet-500/30">
+                <Bot className="w-3.5 h-3.5 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-semibold text-slate-800">WebClub AI</p>
+                <p className="text-[10px] text-emerald-600 flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  online
+                </p>
+              </div>
+            </div>
+            <p className="text-sm font-semibold text-slate-800 mb-1">{t.chatTeaser.greeting}</p>
+            <p className="text-xs text-slate-600 leading-relaxed mb-3">{t.chatTeaser.message}</p>
+            <button
+              onClick={openChat}
+              className="w-full text-xs font-medium bg-violet-600 hover:bg-violet-700 text-white rounded-lg py-2 transition-colors"
+              data-testid="button-teaser-open"
+            >
+              {t.chatTeaser.cta}
+            </button>
+            <div className="absolute -bottom-2 left-6 w-4 h-4 bg-white border-r border-b border-violet-100 rotate-45" />
+          </div>
+        </div>
+      )}
+
       <button
-        onClick={() => setIsOpen((prev) => !prev)}
+        onClick={() => {
+          dismissTeaser();
+          setIsOpen((prev) => !prev);
+        }}
         className={`fixed bottom-6 left-6 z-50 w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 ${
           isOpen
             ? "bg-slate-700 hover:bg-slate-800 rotate-0"
             : "bg-violet-600 hover:bg-violet-700"
-        }`}
+        } ${showTeaser && !isOpen ? "animate-bounce-subtle" : ""}`}
         data-testid="button-chat-toggle"
       >
         {isOpen ? (
@@ -211,6 +293,9 @@ export function ChatWidget() {
           <>
             <MessageCircle className="w-6 h-6 text-white" />
             <span className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white" />
+            {showTeaser && (
+              <span className="absolute inset-0 rounded-full bg-violet-500 animate-ping opacity-40" />
+            )}
           </>
         )}
       </button>

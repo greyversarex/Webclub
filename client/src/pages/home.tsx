@@ -3,6 +3,7 @@ import { HeroSection } from "@/components/hero-section";
 import { PortfolioSection } from "@/components/portfolio-section";
 import { TechStackSection } from "@/components/tech-stack-section";
 import { AdvantagesSection } from "@/components/advantages-section";
+import { ProcessSection } from "@/components/process-section";
 import { ContactSection } from "@/components/contact-section";
 import { Footer } from "@/components/footer";
 import { ChatWidget } from "@/components/chat-widget";
@@ -24,6 +25,7 @@ export default function Home() {
           <PortfolioSection />
           <TechStackSection />
           <AdvantagesSection />
+          <ProcessSection />
           <ContactSection />
         </main>
         <Footer />
