@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Rocket, ShieldCheck, Award, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/lib/language-context";
@@ -103,12 +103,29 @@ export function HeroSection() {
             <p className="text-lg text-slate-900 mb-8 max-w-xl">{t.hero.description}</p>
 
             <ul className="space-y-3 mb-8">
-              {t.hero.features.map((feature, index) => (
-                <li key={index} className="flex items-start gap-3 text-foreground" data-testid={`text-feature-${index}`}>
-                  <CheckCircle2 className="w-5 h-5 text-violet-500 flex-shrink-0 mt-0.5" />
-                  <span>{feature}</span>
-                </li>
-              ))}
+              {t.hero.features.map((feature, index) => {
+                const Icon = [Rocket, ShieldCheck, Award, Wallet][index] ?? Rocket;
+                const tone = [
+                  { bg: "bg-cyan-100/70",   ring: "ring-cyan-300/60",   color: "text-cyan-700"   },
+                  { bg: "bg-emerald-100/70", ring: "ring-emerald-300/60", color: "text-emerald-700" },
+                  { bg: "bg-amber-100/70",  ring: "ring-amber-300/60",  color: "text-amber-700"  },
+                  { bg: "bg-violet-100/70", ring: "ring-violet-300/60", color: "text-violet-700" },
+                ][index] ?? { bg: "bg-cyan-100/70", ring: "ring-cyan-300/60", color: "text-cyan-700" };
+                return (
+                  <li
+                    key={index}
+                    className="flex items-start gap-3 text-foreground"
+                    data-testid={`text-feature-${index}`}
+                  >
+                    <span
+                      className={`inline-flex w-7 h-7 items-center justify-center rounded-lg ${tone.bg} ring-1 ${tone.ring} flex-shrink-0`}
+                    >
+                      <Icon className={`w-4 h-4 ${tone.color}`} />
+                    </span>
+                    <span className="pt-0.5">{feature}</span>
+                  </li>
+                );
+              })}
             </ul>
 
             <div className="flex flex-wrap gap-4 mb-12">
