@@ -77,7 +77,7 @@ export function HeroSection() {
   };
 
   useEffect(() => {
-    const id = setInterval(() => goTo((shownRef.current + 1) % TOTAL_PROJECTS), 4000);
+    const id = setInterval(() => goTo((shownRef.current + 1) % TOTAL_PROJECTS), 3000);
     return () => clearInterval(id);
   }, []);
 
