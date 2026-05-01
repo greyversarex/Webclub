@@ -40,10 +40,16 @@
 
 @keyframes glint {
   0% {
-    transform: translateX(-100%);
+    transform: translateX(-150%);
+  }
+  15% {
+    transform: translateX(-150%);
+  }
+  60% {
+    transform: translateX(220%);
   }
   100% {
-    transform: translateX(200%);
+    transform: translateX(220%);
   }
 }
 
@@ -105,30 +111,63 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 50%;
+  width: 70%;
   height: 100%;
   background: linear-gradient(
-    90deg,
+    105deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.15) 20%,
-    rgba(255, 255, 255, 0.5) 50%,
-    rgba(255, 255, 255, 0.15) 80%,
+    rgba(255, 255, 255, 0.25) 25%,
+    rgba(255, 255, 255, 0.75) 50%,
+    rgba(255, 255, 255, 0.25) 75%,
     transparent 100%
   );
-  transform: translateX(-100%);
-  animation: glint 5s ease-in-out infinite;
-  animation-delay: 1s;
+  transform: translateX(-150%);
+  animation: glint 4s ease-in-out infinite;
+  animation-delay: 0.5s;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.header-shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 35%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.12) 30%,
+    rgba(255, 255, 255, 0.45) 50%,
+    rgba(255, 255, 255, 0.12) 70%,
+    transparent 100%
+  );
+  transform: translateX(-150%);
+  animation: glint 4s ease-in-out infinite;
+  animation-delay: 2.2s;
   pointer-events: none;
   z-index: 1;
 }
 
 .dark .header-shimmer::before {
   background: linear-gradient(
-    90deg,
+    105deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.05) 20%,
-    rgba(255, 255, 255, 0.2) 50%,
-    rgba(255, 255, 255, 0.05) 80%,
+    rgba(255, 255, 255, 0.08) 25%,
+    rgba(255, 255, 255, 0.28) 50%,
+    rgba(255, 255, 255, 0.08) 75%,
+    transparent 100%
+  );
+}
+
+.dark .header-shimmer::after {
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.04) 30%,
+    rgba(255, 255, 255, 0.14) 50%,
+    rgba(255, 255, 255, 0.04) 70%,
     transparent 100%
   );
 }
