@@ -45,6 +45,13 @@ export const translations = {
         { title: "Банковские и государственные IT-проекты", description: "Защищённые системы для финтеха и госсектора с полным соответствием требованиям" },
       ],
     },
+    appsShowcase: {
+      badge: "Мобильная и десктоп разработка",
+      title: "Приложения, в которых живут ваши клиенты",
+      subtitle: "Создаём мобильные и настольные приложения — от концепта до публикации в App Store, Google Play и Microsoft Store",
+      phoneLabel: "iOS · Android",
+      laptopLabel: "Windows · macOS",
+    },
     miniServices: {
       onlineStores: "Интернет-магазины",
       corporateWebsites: "Корпоративные сайты",
@@ -196,6 +203,13 @@ export const translations = {
         { title: "Banking and government IT projects", description: "Secure systems for fintech and public sector with full compliance" },
       ],
     },
+    appsShowcase: {
+      badge: "Mobile & desktop development",
+      title: "Apps where your customers live",
+      subtitle: "We build mobile and desktop applications — from concept to publication on App Store, Google Play and Microsoft Store",
+      phoneLabel: "iOS · Android",
+      laptopLabel: "Windows · macOS",
+    },
     miniServices: {
       onlineStores: "Online stores",
       corporateWebsites: "Corporate websites",
@@ -346,6 +360,13 @@ export const translations = {
         { title: "Барномаҳои Android / iOS / Windows", description: "Барномаҳои нативӣ ва кросс-платформа бо нашр дар мағозаҳо" },
         { title: "Лоиҳаҳои IT-и бонкӣ ва давлатӣ", description: "Системаҳои бехатар барои финтех ва бахши давлатӣ" },
       ],
+    },
+    appsShowcase: {
+      badge: "Таҳияи мобилӣ ва десктоп",
+      title: "Барномаҳое, ки мизоҷонатон дар онҳо зиндагӣ мекунанд",
+      subtitle: "Барномаҳои мобилӣ ва десктоп — аз консепт то нашр дар App Store, Google Play ва Microsoft Store",
+      phoneLabel: "iOS · Android",
+      laptopLabel: "Windows · macOS",
     },
     miniServices: {
       onlineStores: "Мағозаҳои интернетӣ",
