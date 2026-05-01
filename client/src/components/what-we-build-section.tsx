@@ -3,7 +3,9 @@ import {
   ShoppingCart, Search, Heart, Star, ArrowUpRight, ArrowLeft, Plus, Minus, Trash2, Check,
   Home, BarChart3, CreditCard, Bell, ArrowDownLeft, ShoppingBag, Coffee,
   Briefcase, Mail, Phone, MapPin, Users, Award, Send, ChevronRight, TrendingUp, Filter,
+  Store, Building2, Landmark,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/lib/language-context";
 
@@ -607,10 +609,10 @@ function BankInteractive() {
    SECTION
    ============================================================ */
 
-const mockupByOriginalIndex: Record<number, () => JSX.Element> = {
-  0: EcomInteractive,
-  1: BusinessInteractive,
-  3: BankInteractive,
+const mockupByOriginalIndex: Record<number, { Mockup: () => JSX.Element; Icon: LucideIcon; gradient: string }> = {
+  0: { Mockup: EcomInteractive, Icon: Store, gradient: "from-rose-500 to-amber-500" },
+  1: { Mockup: BusinessInteractive, Icon: Building2, gradient: "from-cyan-500 to-blue-500" },
+  3: { Mockup: BankInteractive, Icon: Landmark, gradient: "from-violet-500 to-indigo-600" },
 };
 
 export function WhatWeBuildSection() {
@@ -639,25 +641,25 @@ export function WhatWeBuildSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-7 lg:gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-7 lg:gap-6 items-stretch">
           {visible.map(({ item, i }, displayIdx) => {
-            const Mockup = mockupByOriginalIndex[i];
-            if (!Mockup) return null;
+            const entry = mockupByOriginalIndex[i];
+            if (!entry) return null;
+            const { Mockup, Icon, gradient } = entry;
             return (
               <div key={i}
-                className={`group transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+                className={`group flex flex-col transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
                 style={{ transitionDelay: isVisible ? `${200 + displayIdx * 100}ms` : "0ms" }}
                 data-testid={`card-direction-${i}`}>
-                <div className="flex items-center gap-3 mb-4 px-1">
-                  <span className="font-mono text-[10px] tracking-[0.25em] text-cyan-600 font-bold">
-                    {String(displayIdx + 1).padStart(2, "0")}
-                  </span>
-                  <span className="w-6 h-px bg-gradient-to-r from-cyan-500 to-violet-500" />
-                  <h3 className="font-display text-base md:text-lg font-bold text-slate-800 tracking-tight" data-testid={`text-direction-title-${i}`}>
+                <div className="flex items-center gap-3 mb-4 px-1 min-h-[3.5rem]">
+                  <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center flex-shrink-0 shadow-md shadow-slate-900/10`}>
+                    <Icon className="w-5 h-5 text-white" strokeWidth={2.2} />
+                  </div>
+                  <h3 className="font-display text-base md:text-lg font-bold text-slate-800 tracking-tight leading-tight" data-testid={`text-direction-title-${i}`}>
                     {item.title}
                   </h3>
                 </div>
-                <div className="relative rounded-2xl bg-white border border-slate-200/70 shadow-[0_8px_30px_-12px_rgba(15,23,42,0.18)] overflow-hidden transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_30px_70px_-15px_rgba(6,182,212,0.4)] hover:border-cyan-400/50">
+                <div className="relative rounded-2xl bg-white border border-slate-200/70 shadow-[0_8px_30px_-12px_rgba(15,23,42,0.18)] overflow-hidden transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_30px_70px_-15px_rgba(6,182,212,0.4)] hover:border-cyan-400/50 flex-1 flex flex-col">
                   <Mockup />
                 </div>
               </div>

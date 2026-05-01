@@ -3,7 +3,7 @@ import {
   Wifi, BatteryFull, Home, Send, MessageCircle, User, ArrowUpRight, ArrowDownLeft,
   Search, Bell, Settings, BarChart3, Users, Package, ChevronRight, Filter,
   TrendingUp, MoreHorizontal, Plus, CreditCard, Phone as PhoneIcon,
-  Star, ChevronLeft, Check,
+  Star, ChevronLeft, Check, Smartphone, Monitor,
 } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/lib/language-context";
@@ -320,7 +320,7 @@ function InteractiveLaptop() {
           <div className="w-1.5 h-1.5 rounded-full bg-slate-700" />
         </div>
 
-        <div className="bg-white rounded-md overflow-hidden flex h-[480px]">
+        <div className="bg-white rounded-md overflow-hidden flex h-[572px]">
           {/* Sidebar */}
           <div className="w-[160px] bg-slate-50 border-r border-slate-200/70 flex flex-col">
             <div className="px-4 py-3 flex items-center gap-2 border-b border-slate-200/70">
@@ -677,22 +677,22 @@ export function AppsShowcaseSection() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className={`lg:col-span-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`} style={{ transitionDelay: "200ms" }}>
-            <div className="text-center mb-5">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 text-white text-[10px] font-mono tracking-widest font-bold">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+          <div className={`lg:col-span-4 flex flex-col items-center transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`} style={{ transitionDelay: "200ms" }}>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 text-white shadow-md mb-6">
+              <Smartphone className="w-3.5 h-3.5 text-cyan-400" strokeWidth={2.4} />
+              <span className="font-mono text-[11px] tracking-[0.2em] uppercase font-bold">
                 {t.appsShowcase.phoneLabel}
-              </div>
+              </span>
             </div>
             <InteractivePhone />
           </div>
 
-          <div className={`lg:col-span-8 transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`} style={{ transitionDelay: "350ms" }}>
-            <div className="text-center mb-5">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 text-white text-[10px] font-mono tracking-widest font-bold">
-                <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
+          <div className={`lg:col-span-8 flex flex-col items-center transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`} style={{ transitionDelay: "350ms" }}>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 text-white shadow-md mb-6">
+              <Monitor className="w-3.5 h-3.5 text-violet-400" strokeWidth={2.4} />
+              <span className="font-mono text-[11px] tracking-[0.2em] uppercase font-bold">
                 {t.appsShowcase.laptopLabel}
-              </div>
+              </span>
             </div>
             <InteractiveLaptop />
           </div>
