@@ -25,12 +25,12 @@ const projectTags = [
   ["React", "Go", "Redis"],
 ];
 const accentColors = [
-  "bg-violet-500/20 text-violet-200 border-violet-400/40",
-  "bg-emerald-500/20 text-emerald-200 border-emerald-400/40",
-  "bg-violet-500/20 text-violet-200 border-violet-400/40",
-  "bg-emerald-500/20 text-emerald-200 border-emerald-400/40",
-  "bg-violet-500/20 text-violet-200 border-violet-400/40",
-  "bg-emerald-500/20 text-emerald-200 border-emerald-400/40",
+  "bg-white/10 text-white border-white/25",
+  "bg-white/15 text-slate-200 border-white/30",
+  "bg-white/10 text-white border-white/25",
+  "bg-white/15 text-slate-200 border-white/30",
+  "bg-white/10 text-white border-white/25",
+  "bg-white/15 text-slate-200 border-white/30",
 ];
 
 const COLS = 8;
@@ -101,7 +101,7 @@ export function HeroSection() {
           <div className="order-1 self-center">
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
               {t.hero.title1}{" "}
-              <span className="it-shimmer-text bg-gradient-to-r from-violet-400 via-purple-200 to-teal-300 bg-clip-text text-transparent">
+              <span className="it-shimmer-text bg-gradient-to-r from-slate-300 via-white to-slate-400 bg-clip-text text-transparent">
                 {t.hero.titleHighlight}
               </span>
               {" "}{t.hero.title2}
@@ -111,7 +111,7 @@ export function HeroSection() {
             <ul className="space-y-3 mb-8">
               {t.hero.features.map((feature, index) => (
                 <li key={index} className="flex items-start gap-3 text-slate-100" data-testid={`text-feature-${index}`}>
-                  <CheckCircle2 className="w-5 h-5 text-violet-400 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-5 h-5 text-slate-300 flex-shrink-0 mt-0.5" />
                   <span>{feature}</span>
                 </li>
               ))}
@@ -121,7 +121,7 @@ export function HeroSection() {
               <Button
                 size="lg"
                 onClick={scrollToContact}
-                className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white border-0 shadow-lg shadow-violet-900/40"
+                className="bg-white text-slate-900 hover:bg-slate-100 border-0 shadow-lg shadow-black/30 font-semibold"
                 data-testid="button-discuss-project"
               >
                 {t.hero.discussProject}
@@ -141,8 +141,8 @@ export function HeroSection() {
             <div className="flex flex-wrap gap-8 pt-8 border-t border-white/15">
               {stats.map((stat, index) => (
                 <div key={index} className="text-center" data-testid={`stat-${index}`}>
-                  <div className="font-display text-3xl font-bold text-cyan-300">{stat.value}</div>
-                  <div className="text-sm text-slate-300">{stat.label}</div>
+                  <div className="font-display text-3xl font-bold text-white">{stat.value}</div>
+                  <div className="text-sm text-slate-400">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -232,7 +232,7 @@ export function HeroSection() {
                   onClick={() => goTo(i)}
                   className={`rounded-full transition-all duration-300 ${
                     i === shown
-                      ? "w-6 h-2 bg-violet-400"
+                      ? "w-6 h-2 bg-white"
                       : "w-2 h-2 bg-white/30 hover:bg-white/60"
                   }`}
                   data-testid={`button-slide-dot-${i}`}
