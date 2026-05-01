@@ -81,12 +81,6 @@ export function HeroSection() {
     return () => clearInterval(id);
   }, []);
 
-  const stats = [
-    { value: "100+", label: t.hero.stats.projects },
-    { value: "8+",   label: t.hero.stats.experience },
-    { value: "24/7", label: t.hero.stats.support },
-  ];
-
   const scrollToContact  = () => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
   const scrollToServices = () => document.querySelector("#services")?.scrollIntoView({ behavior: "smooth" });
 
@@ -132,14 +126,6 @@ export function HeroSection() {
               </Button>
             </div>
 
-            <div className="flex flex-wrap gap-8 pt-8 border-t border-slate-400/30">
-              {stats.map((stat, index) => (
-                <div key={index} className="text-center" data-testid={`stat-${index}`}>
-                  <div className="font-display text-3xl font-bold text-cyan-800">{stat.value}</div>
-                  <div className="text-sm text-slate-900">{stat.label}</div>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* ── Right: slideshow ───────────────────────────────── */}
