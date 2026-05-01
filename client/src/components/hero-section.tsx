@@ -102,31 +102,27 @@ export function HeroSection() {
             </h1>
             <p className="text-lg text-slate-900 mb-8 max-w-xl">{t.hero.description}</p>
 
-            <ul className="space-y-3 mb-8">
+            <div className="mb-10 border-y border-slate-300/70 divide-y divide-slate-300/70">
               {t.hero.features.map((feature, index) => {
                 const Icon = [Rocket, ShieldCheck, Award, Wallet][index] ?? Rocket;
-                const tone = [
-                  { bg: "bg-cyan-100/70",   ring: "ring-cyan-300/60",   color: "text-cyan-700"   },
-                  { bg: "bg-emerald-100/70", ring: "ring-emerald-300/60", color: "text-emerald-700" },
-                  { bg: "bg-amber-100/70",  ring: "ring-amber-300/60",  color: "text-amber-700"  },
-                  { bg: "bg-violet-100/70", ring: "ring-violet-300/60", color: "text-violet-700" },
-                ][index] ?? { bg: "bg-cyan-100/70", ring: "ring-cyan-300/60", color: "text-cyan-700" };
                 return (
-                  <li
+                  <div
                     key={index}
-                    className="flex items-start gap-3 text-foreground"
+                    className="group flex items-center gap-5 py-4"
                     data-testid={`text-feature-${index}`}
                   >
-                    <span
-                      className={`inline-flex w-7 h-7 items-center justify-center rounded-lg ${tone.bg} ring-1 ${tone.ring} flex-shrink-0`}
-                    >
-                      <Icon className={`w-4 h-4 ${tone.color}`} />
+                    <span className="font-mono text-[11px] tracking-[0.22em] text-slate-500 w-7">
+                      {String(index + 1).padStart(2, "0")}
                     </span>
-                    <span className="pt-0.5">{feature}</span>
-                  </li>
+                    <Icon
+                      className="w-4 h-4 text-slate-600 flex-shrink-0 transition-colors duration-300 group-hover:text-cyan-700"
+                      strokeWidth={1.75}
+                    />
+                    <span className="text-base text-slate-800">{feature}</span>
+                  </div>
                 );
               })}
-            </ul>
+            </div>
 
             <div className="flex flex-wrap gap-4 mb-12">
               <Button
