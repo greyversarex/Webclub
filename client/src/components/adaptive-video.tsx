@@ -51,6 +51,7 @@ export const AdaptiveVideo = forwardRef<AdaptiveVideoHandle, AdaptiveVideoProps>
     const { language } = useLanguage();
     const videoRef = useRef<HTMLVideoElement>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [isPaused, setIsPaused] = useState(true);
     const [choice, setChoice] = useState<QualityChoice>(() => readStoredChoice());
     const [menuOpen, setMenuOpen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -82,10 +83,18 @@ export const AdaptiveVideo = forwardRef<AdaptiveVideoHandle, AdaptiveVideoProps>
       const v = videoRef.current;
       if (!v) return;
       if (v.readyState < 2) setIsLoading(true);
+      setIsPaused(false);
     }, []);
+    const handlePause = useCallback(() => setIsPaused(true), []);
     const handleCanPlay = useCallback(() => setIsLoading(false), []);
     const handleWaiting = useCallback(() => setIsLoading(true), []);
-    const handlePlaying = useCallback(() => setIsLoading(false), []);
+    const handlePlaying = useCallback(() => { setIsLoading(false); setIsPaused(false); }, []);
+
+    const handleOverlayClick = useCallback(() => {
+      const v = videoRef.current;
+      if (!v) return;
+      if (v.paused) { v.play().catch(() => {}); } else { v.pause(); }
+    }, []);
 
     // When the source actually changes, attach a one-shot listener that restores
     // pending state if any. Token guards against stale listeners from rapid switches.
@@ -167,10 +176,44 @@ export const AdaptiveVideo = forwardRef<AdaptiveVideoHandle, AdaptiveVideoProps>
           className="w-full h-full object-contain mt-[-14px] mb-[-14px]"
           data-testid={testId}
           onPlay={handlePlay}
+          onPause={handlePause}
           onCanPlay={handleCanPlay}
           onWaiting={handleWaiting}
           onPlaying={handlePlaying}
         />
+
+        {/* Play button overlay — shown when video is paused */}
+        {isPaused && !isLoading && (
+          <button
+            type="button"
+            onClick={handleOverlayClick}
+            className="absolute inset-0 flex items-center justify-center group pointer-events-auto"
+            aria-label="Play video"
+            data-testid="button-play-overlay"
+          >
+            <div
+              className="
+                w-20 h-20 rounded-full
+                bg-white/20 backdrop-blur-sm border-2 border-white/60
+                flex items-center justify-center
+                shadow-[0_0_32px_rgba(0,0,0,0.4)]
+                transition-all duration-200
+                group-hover:bg-white/35 group-hover:scale-110 group-hover:border-white/90
+                group-active:scale-95
+              "
+            >
+              {/* Triangle play icon — offset slightly right to look visually centred */}
+              <svg
+                viewBox="0 0 24 24"
+                fill="white"
+                className="w-8 h-8 ml-1"
+              >
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </div>
+          </button>
+        )}
+
         {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div className="bg-black/50 rounded-full p-3 backdrop-blur-sm">
