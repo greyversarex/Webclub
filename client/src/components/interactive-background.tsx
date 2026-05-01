@@ -1,260 +1,113 @@
-import { useEffect, useRef, useState } from "react";
-import * as THREE from "three";
+import { useEffect, useRef } from "react";
 
-function isWebGLAvailable(): boolean {
-  if (typeof window === "undefined") return false;
-  try {
-    const canvas = document.createElement("canvas");
-    const gl =
-      canvas.getContext("webgl2") ||
-      canvas.getContext("webgl") ||
-      canvas.getContext("experimental-webgl");
-    return !!gl;
-  } catch {
-    return false;
-  }
+interface Square {
+  x: number;
+  y: number;
+  size: number;
+  angle: number;
+  speed: number;
+  rotSpeed: number;
+  opacity: number;
+  hue: number;
 }
 
 export function InteractiveBackground() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [supported, setSupported] = useState(true);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    if (!isWebGLAvailable()) {
-      setSupported(false);
-      return;
-    }
-    const container = containerRef.current;
-    if (!container) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-    const width = container.clientWidth;
-    const height = container.clientHeight;
+    let width = 0;
+    let height = 0;
+    let animId = 0;
 
-    let renderer: THREE.WebGLRenderer;
-    try {
-      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    } catch {
-      setSupported(false);
-      return;
-    }
+    const COUNT = 18;
+    let squares: Square[] = [];
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(60, width / height, 1, 2000);
-    camera.position.z = 700;
+    const initSquares = () => {
+      squares = Array.from({ length: COUNT }, () => makeSquare(true));
+    };
 
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(width, height);
-    renderer.setClearColor(0x000000, 0);
-    container.appendChild(renderer.domElement);
-
-    const PARTICLE_COUNT = 90;
-    const positions = new Float32Array(PARTICLE_COUNT * 3);
-    const velocities = new Float32Array(PARTICLE_COUNT * 3);
-    const basePositions = new Float32Array(PARTICLE_COUNT * 3);
-
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-      const x = (Math.random() - 0.5) * 1200;
-      const y = (Math.random() - 0.5) * 700;
-      const z = (Math.random() - 0.5) * 400;
-      positions[i * 3] = x;
-      positions[i * 3 + 1] = y;
-      positions[i * 3 + 2] = z;
-      basePositions[i * 3] = x;
-      basePositions[i * 3 + 1] = y;
-      basePositions[i * 3 + 2] = z;
-      velocities[i * 3] = (Math.random() - 0.5) * 0.3;
-      velocities[i * 3 + 1] = (Math.random() - 0.5) * 0.3;
-      velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.2;
-    }
-
-    const particleGeometry = new THREE.BufferGeometry();
-    particleGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-
-    const particleMaterial = new THREE.PointsMaterial({
-      color: 0x8b5cf6,
-      size: 4,
-      transparent: true,
-      opacity: 0.9,
-      sizeAttenuation: true,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
+    const makeSquare = (randomY = false): Square => ({
+      x: Math.random() * width,
+      y: randomY ? Math.random() * height : height + 100,
+      size: 140 + Math.random() * 280,
+      angle: (Math.random() * 40 - 20) * (Math.PI / 180),
+      speed: 0.15 + Math.random() * 0.25,
+      rotSpeed: (Math.random() - 0.5) * 0.0008,
+      opacity: 0.05 + Math.random() * 0.10,
+      hue: Math.random(),
     });
 
-    const particles = new THREE.Points(particleGeometry, particleMaterial);
-    scene.add(particles);
-
-    const lineGeometry = new THREE.BufferGeometry();
-    const maxLines = PARTICLE_COUNT * PARTICLE_COUNT;
-    const linePositions = new Float32Array(maxLines * 6);
-    const lineColors = new Float32Array(maxLines * 6);
-    lineGeometry.setAttribute("position", new THREE.BufferAttribute(linePositions, 3));
-    lineGeometry.setAttribute("color", new THREE.BufferAttribute(lineColors, 3));
-
-    const lineMaterial = new THREE.LineBasicMaterial({
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.5,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    });
-
-    const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
-    scene.add(lines);
-
-    const mouse = { x: 0, y: 0, active: false };
-    const targetMouse = { x: 0, y: 0 };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = container.getBoundingClientRect();
-      targetMouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      targetMouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-      mouse.active = true;
+    const resize = () => {
+      width = canvas.offsetWidth;
+      height = canvas.offsetHeight;
+      canvas.width = width;
+      canvas.height = height;
+      initSquares();
     };
 
-    const handleMouseLeave = () => {
-      mouse.active = false;
-    };
+    const draw = () => {
+      ctx.clearRect(0, 0, width, height);
 
-    container.addEventListener("mousemove", handleMouseMove);
-    container.addEventListener("mouseleave", handleMouseLeave);
+      const grad = ctx.createLinearGradient(0, 0, width, height);
+      grad.addColorStop(0, "#12062a");
+      grad.addColorStop(0.5, "#0d1a2e");
+      grad.addColorStop(1, "#051e22");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, width, height);
 
-    let isVisible = true;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        isVisible = entries[0].isIntersecting;
-      },
-      { threshold: 0 }
-    );
-    observer.observe(container);
+      for (const sq of squares) {
+        ctx.save();
+        ctx.translate(sq.x, sq.y);
+        ctx.rotate(sq.angle);
 
-    let animationId = 0;
-    const CONNECT_DIST = 160;
-    const CONNECT_DIST_SQ = CONNECT_DIST * CONNECT_DIST;
-    const MOUSE_INFLUENCE = 250;
-    const MOUSE_INFLUENCE_SQ = MOUSE_INFLUENCE * MOUSE_INFLUENCE;
+        const t = sq.x / width;
+        const r = Math.round(80 + (1 - t) * 80);
+        const g = Math.round(20 + t * 80);
+        const b = Math.round(120 + t * 80);
+        ctx.fillStyle = `rgba(${r},${g},${b},${sq.opacity})`;
+        ctx.fillRect(-sq.size / 2, -sq.size / 2, sq.size, sq.size);
 
-    const animate = () => {
-      animationId = requestAnimationFrame(animate);
-      if (!isVisible) return;
+        ctx.strokeStyle = `rgba(${r + 40},${g + 30},${b + 40},${sq.opacity * 0.6})`;
+        ctx.lineWidth = 1;
+        ctx.strokeRect(-sq.size / 2, -sq.size / 2, sq.size, sq.size);
 
-      mouse.x += (targetMouse.x - mouse.x) * 0.06;
-      mouse.y += (targetMouse.y - mouse.y) * 0.06;
+        ctx.restore();
 
-      const mouseWorldX = mouse.x * 600;
-      const mouseWorldY = mouse.y * 350;
+        sq.y -= sq.speed;
+        sq.x += sq.speed * 0.3;
+        sq.angle += sq.rotSpeed;
 
-      const positionsAttr = particleGeometry.attributes.position as THREE.BufferAttribute;
-
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
-        const idx = i * 3;
-        positions[idx] += velocities[idx];
-        positions[idx + 1] += velocities[idx + 1];
-        positions[idx + 2] += velocities[idx + 2];
-
-        const dx = positions[idx] - basePositions[idx];
-        const dy = positions[idx + 1] - basePositions[idx + 1];
-        const dz = positions[idx + 2] - basePositions[idx + 2];
-        velocities[idx] -= dx * 0.0008;
-        velocities[idx + 1] -= dy * 0.0008;
-        velocities[idx + 2] -= dz * 0.0008;
-        velocities[idx] *= 0.99;
-        velocities[idx + 1] *= 0.99;
-        velocities[idx + 2] *= 0.99;
-
-        if (mouse.active) {
-          const mdx = positions[idx] - mouseWorldX;
-          const mdy = positions[idx + 1] - mouseWorldY;
-          const distSq = mdx * mdx + mdy * mdy;
-          if (distSq < MOUSE_INFLUENCE_SQ && distSq > 1) {
-            const force = (1 - distSq / MOUSE_INFLUENCE_SQ) * 0.6;
-            const dist = Math.sqrt(distSq);
-            velocities[idx] += (mdx / dist) * force;
-            velocities[idx + 1] += (mdy / dist) * force;
-          }
+        if (sq.y < -sq.size) {
+          Object.assign(sq, makeSquare(false));
         }
       }
-
-      positionsAttr.needsUpdate = true;
-
-      let lineIdx = 0;
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
-        const ix = positions[i * 3];
-        const iy = positions[i * 3 + 1];
-        const iz = positions[i * 3 + 2];
-
-        for (let j = i + 1; j < PARTICLE_COUNT; j++) {
-          const dx = ix - positions[j * 3];
-          const dy = iy - positions[j * 3 + 1];
-          const dz = iz - positions[j * 3 + 2];
-          const distSq = dx * dx + dy * dy + dz * dz;
-
-          if (distSq < CONNECT_DIST_SQ) {
-            const alpha = 1 - distSq / CONNECT_DIST_SQ;
-            linePositions[lineIdx * 6] = ix;
-            linePositions[lineIdx * 6 + 1] = iy;
-            linePositions[lineIdx * 6 + 2] = iz;
-            linePositions[lineIdx * 6 + 3] = positions[j * 3];
-            linePositions[lineIdx * 6 + 4] = positions[j * 3 + 1];
-            linePositions[lineIdx * 6 + 5] = positions[j * 3 + 2];
-
-            const r = 0.545 * alpha;
-            const g = 0.361 * alpha;
-            const b = 0.965 * alpha;
-            lineColors[lineIdx * 6] = r;
-            lineColors[lineIdx * 6 + 1] = g;
-            lineColors[lineIdx * 6 + 2] = b;
-            lineColors[lineIdx * 6 + 3] = r;
-            lineColors[lineIdx * 6 + 4] = g;
-            lineColors[lineIdx * 6 + 5] = b;
-            lineIdx++;
-          }
-        }
-      }
-
-      lineGeometry.setDrawRange(0, lineIdx * 2);
-      (lineGeometry.attributes.position as THREE.BufferAttribute).needsUpdate = true;
-      (lineGeometry.attributes.color as THREE.BufferAttribute).needsUpdate = true;
-
-      particles.rotation.y += 0.0006;
-      lines.rotation.y += 0.0006;
-
-      renderer.render(scene, camera);
     };
 
-    animate();
-
-    const handleResize = () => {
-      const w = container.clientWidth;
-      const h = container.clientHeight;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
+    const loop = () => {
+      draw();
+      animId = requestAnimationFrame(loop);
     };
-    window.addEventListener("resize", handleResize);
+
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas);
+    resize();
+    loop();
 
     return () => {
-      cancelAnimationFrame(animationId);
-      observer.disconnect();
-      window.removeEventListener("resize", handleResize);
-      container.removeEventListener("mousemove", handleMouseMove);
-      container.removeEventListener("mouseleave", handleMouseLeave);
-      particleGeometry.dispose();
-      particleMaterial.dispose();
-      lineGeometry.dispose();
-      lineMaterial.dispose();
-      renderer.dispose();
-      if (renderer.domElement.parentNode) {
-        renderer.domElement.parentNode.removeChild(renderer.domElement);
-      }
+      cancelAnimationFrame(animId);
+      ro.disconnect();
     };
   }, []);
 
-  if (!supported) return null;
-
   return (
-    <div
-      ref={containerRef}
-      className="absolute inset-0 pointer-events-auto"
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full"
       style={{ zIndex: 0 }}
       data-testid="interactive-background"
     />
