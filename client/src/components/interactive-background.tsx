@@ -54,9 +54,9 @@ export function InteractiveBackground() {
       ctx.clearRect(0, 0, width, height);
 
       const grad = ctx.createLinearGradient(0, 0, width, height);
-      grad.addColorStop(0, "#12062a");
-      grad.addColorStop(0.5, "#0d1a2e");
-      grad.addColorStop(1, "#051e22");
+      grad.addColorStop(0, "#141416");
+      grad.addColorStop(0.5, "#1c1c20");
+      grad.addColorStop(1, "#111113");
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
 
@@ -66,9 +66,10 @@ export function InteractiveBackground() {
         ctx.rotate(sq.angle);
 
         const t = sq.x / width;
-        const r = Math.round(80 + (1 - t) * 80);
-        const g = Math.round(20 + t * 80);
-        const b = Math.round(120 + t * 80);
+        const base = Math.round(90 + t * 60);
+        const r = base;
+        const g = base;
+        const b = Math.round(base + 8);
         ctx.fillStyle = `rgba(${r},${g},${b},${sq.opacity})`;
         ctx.fillRect(-sq.size / 2, -sq.size / 2, sq.size, sq.size);
 
