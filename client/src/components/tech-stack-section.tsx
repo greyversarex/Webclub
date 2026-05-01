@@ -17,8 +17,11 @@ const technologies = [
   { name: "Kubernetes", icon: SiKubernetes, color: "#326CE5" },
 ];
 
+const PULSE_INTERVAL = 600;
+
 export function TechStackSection() {
   const [isVisible, setIsVisible] = useState(false);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const { t } = useLanguage();
 
@@ -37,24 +40,35 @@ export function TechStackSection() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (!isVisible) {
+      setActiveIndex(null);
+      return;
+    }
+
+    let current = 0;
+    const id = setInterval(() => {
+      setActiveIndex(current);
+      current = (current + 1) % technologies.length;
+    }, PULSE_INTERVAL);
+
+    return () => clearInterval(id);
+  }, [isVisible]);
+
   return (
     <section ref={sectionRef} className="py-16 md:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
         <div className="text-center mb-12 md:mb-16">
-          <h2 
+          <h2
             className={`font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 transition-all duration-700 ${
-              isVisible 
-                ? 'opacity-100 translate-y-0' 
-                : 'opacity-0 translate-y-8'
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
             {t.techStack.title}
           </h2>
-          <p 
+          <p
             className={`text-slate-900 text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
-              isVisible 
-                ? 'opacity-100 translate-y-0' 
-                : 'opacity-0 translate-y-8'
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
             {t.techStack.subtitle}
@@ -62,28 +76,44 @@ export function TechStackSection() {
         </div>
 
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 md:gap-6">
-          {technologies.map((tech, index) => (
-            <div
-              key={tech.name}
-              className={`flex flex-col items-center p-4 md:p-6 transition-all duration-500 group ${
-                isVisible 
-                  ? 'opacity-100 translate-y-0 scale-100' 
-                  : 'opacity-0 translate-y-8 scale-90'
-              }`}
-              style={{ 
-                transitionDelay: isVisible ? `${index * 50}ms` : '0ms'
-              }}
-              data-testid={`tech-${tech.name.toLowerCase().replace(/\./g, '')}`}
-            >
-              <tech.icon
-                className="w-12 h-12 md:w-16 md:h-16 mb-3 transition-transform duration-300 group-hover:scale-110"
-                style={{ color: tech.color }}
-              />
-              <span className="text-xs md:text-sm font-medium text-slate-900 text-center transition-colors">
-                {tech.name}
-              </span>
-            </div>
-          ))}
+          {technologies.map((tech, index) => {
+            const isActive = activeIndex === index;
+            return (
+              <div
+                key={tech.name}
+                className={`flex flex-col items-center p-4 md:p-6 transition-all duration-500 group ${
+                  isVisible
+                    ? "opacity-100 translate-y-0 scale-100"
+                    : "opacity-0 translate-y-8 scale-90"
+                }`}
+                style={{
+                  transitionDelay: isVisible ? `${index * 50}ms` : "0ms",
+                }}
+                data-testid={`tech-${tech.name.toLowerCase().replace(/\./g, "")}`}
+              >
+                <tech.icon
+                  className="w-12 h-12 md:w-16 md:h-16 mb-3 transition-all duration-300 group-hover:scale-110"
+                  style={{
+                    color: tech.color,
+                    transform: isActive ? "scale(1.35)" : "scale(1)",
+                    filter: isActive
+                      ? `drop-shadow(0 0 8px ${tech.color}99)`
+                      : "none",
+                    transition: "transform 0.3s cubic-bezier(0.34,1.56,0.64,1), filter 0.3s ease",
+                  }}
+                />
+                <span
+                  className="text-xs md:text-sm font-medium text-center transition-all duration-300"
+                  style={{
+                    color: isActive ? tech.color : undefined,
+                    fontWeight: isActive ? 700 : undefined,
+                  }}
+                >
+                  {tech.name}
+                </span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
