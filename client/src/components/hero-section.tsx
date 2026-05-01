@@ -102,40 +102,30 @@ export function HeroSection() {
             </h1>
             <p className="text-lg text-slate-900 mb-8 max-w-xl">{t.hero.description}</p>
 
-            <div className="relative mb-10 rounded-md bg-slate-950/85 backdrop-blur-sm border border-cyan-500/25 shadow-[0_0_40px_rgba(6,182,212,0.12)] p-5 md:p-6 overflow-hidden">
-              {/* Tech corner brackets */}
-              <span className="absolute top-1.5 left-1.5 w-2.5 h-2.5 border-t border-l border-cyan-400/70" />
-              <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 border-t border-r border-cyan-400/70" />
-              <span className="absolute bottom-1.5 left-1.5 w-2.5 h-2.5 border-b border-l border-cyan-400/70" />
-              <span className="absolute bottom-1.5 right-1.5 w-2.5 h-2.5 border-b border-r border-cyan-400/70" />
-
-              {/* Header */}
-              <div className="font-mono text-[10px] tracking-[0.3em] text-cyan-400/90 uppercase mb-4 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.9)] animate-pulse" />
-                Ключевые преимущества
-              </div>
-
-              <div className="divide-y divide-cyan-500/15">
-                {t.hero.features.map((feature, index) => {
-                  const Icon = [Rocket, ShieldCheck, Award, Wallet][index] ?? Rocket;
-                  return (
-                    <div
-                      key={index}
-                      className="group flex items-center gap-4 py-3"
-                      data-testid={`text-feature-${index}`}
+            <div className="mb-10 space-y-1">
+              {t.hero.features.map((feature, index) => {
+                const Icon = [Rocket, ShieldCheck, Award, Wallet][index] ?? Rocket;
+                return (
+                  <div
+                    key={index}
+                    className="group relative flex items-center gap-5 py-3 transition-all duration-300 hover:translate-x-1"
+                    data-testid={`text-feature-${index}`}
+                  >
+                    <span
+                      className="font-display font-black text-[28px] leading-none w-12 text-slate-300 transition-all duration-300 group-hover:text-transparent group-hover:bg-gradient-to-br group-hover:from-cyan-500 group-hover:to-violet-500 group-hover:bg-clip-text"
                     >
-                      <span className="font-mono text-[11px] tracking-[0.22em] text-cyan-400/85 w-7">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <Icon
-                        className="w-4 h-4 text-cyan-400 flex-shrink-0 transition-all duration-300 group-hover:text-cyan-300 group-hover:[filter:drop-shadow(0_0_6px_rgba(6,182,212,0.8))]"
-                        strokeWidth={1.75}
-                      />
-                      <span className="text-sm md:text-base text-slate-100">{feature}</span>
-                    </div>
-                  );
-                })}
-              </div>
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <Icon
+                      className="w-5 h-5 text-slate-700 flex-shrink-0 transition-all duration-300 group-hover:text-cyan-600 group-hover:[filter:drop-shadow(0_0_6px_rgba(6,182,212,0.5))]"
+                      strokeWidth={1.75}
+                    />
+                    <span className="text-base md:text-lg font-medium text-slate-900">
+                      {feature}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
 
             <div className="flex flex-wrap gap-4 mb-12">

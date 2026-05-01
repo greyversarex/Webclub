@@ -7,38 +7,28 @@ const icons = [ShoppingCart, Globe, Smartphone, Landmark];
 export function WhatWeBuildSection() {
   const { t } = useLanguage();
   const { ref, isVisible } = useScrollAnimation();
-  const total = t.whatWeBuild.items.length;
 
   return (
-    <section ref={ref} className="relative py-20 md:py-28" data-testid="section-what-we-build">
-      {/* Dark cyberpunk band — breaks the light page background */}
-      <div className="absolute inset-x-0 top-6 bottom-6 bg-slate-950/90 backdrop-blur-md border-y border-cyan-500/25 shadow-[inset_0_0_120px_rgba(6,182,212,0.08)]" />
-
-      {/* Subtle tech grid overlay */}
-      <div
-        className="absolute inset-x-0 top-6 bottom-6 opacity-[0.07] pointer-events-none"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, #06b6d4 1px, transparent 1px), linear-gradient(to bottom, #06b6d4 1px, transparent 1px)",
-          backgroundSize: "48px 48px",
-        }}
-      />
-
+    <section
+      ref={ref}
+      className="relative py-20 md:py-28"
+      data-testid="section-what-we-build"
+    >
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-
         {/* Header */}
-        <div className="mb-12 md:mb-16 max-w-3xl">
+        <div className="mb-14 md:mb-20 max-w-3xl">
           <div
-            className={`font-mono text-[11px] tracking-[0.32em] text-cyan-400 uppercase mb-5 flex items-center gap-3 transition-all duration-700 ${
+            className={`inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-cyan-500/10 to-violet-500/10 border border-cyan-500/25 backdrop-blur-sm mb-6 transition-all duration-700 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
           >
-            <span className="w-8 h-px bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.8)]" />
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.9)] animate-pulse" />
-            Направления разработки
+            <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.9)] animate-pulse" />
+            <span className="font-mono text-[11px] tracking-[0.25em] uppercase bg-gradient-to-r from-cyan-700 to-violet-700 bg-clip-text text-transparent font-semibold">
+              Направления разработки
+            </span>
           </div>
           <h2
-            className={`font-display text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight transition-all duration-700 delay-75 ${
+            className={`font-display text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-5 leading-[1.05] tracking-tight transition-all duration-700 delay-75 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
             data-testid="heading-what-we-build"
@@ -46,7 +36,7 @@ export function WhatWeBuildSection() {
             {t.whatWeBuild.title}
           </h2>
           <p
-            className={`text-slate-400 text-base md:text-lg max-w-2xl transition-all duration-700 delay-150 ${
+            className={`text-slate-600 text-lg md:text-xl max-w-2xl leading-relaxed transition-all duration-700 delay-150 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
           >
@@ -55,62 +45,84 @@ export function WhatWeBuildSection() {
         </div>
 
         {/* Cards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
           {t.whatWeBuild.items.map((item, index) => {
             const Icon = icons[index] ?? ShoppingCart;
             return (
               <div
                 key={index}
-                className={`
-                  group relative overflow-hidden rounded-md
-                  bg-slate-900/70 backdrop-blur-md
-                  border border-cyan-500/25
-                  p-7 md:p-9
-                  transition-all duration-500
-                  hover:border-cyan-400/70 hover:bg-slate-900/85
-                  hover:shadow-[0_0_45px_rgba(6,182,212,0.25)]
-                  ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}
-                `}
+                className={`group relative overflow-hidden rounded-2xl bg-white/75 backdrop-blur-2xl border border-slate-200/70 p-8 lg:p-10 shadow-[0_8px_30px_-12px_rgba(15,23,42,0.12)] transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_25px_60px_-15px_rgba(6,182,212,0.35)] hover:border-transparent ${
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                }`}
                 style={{ transitionDelay: isVisible ? `${200 + index * 100}ms` : "0ms" }}
                 data-testid={`card-direction-${index}`}
               >
-                {/* Tech corner brackets */}
-                <span className="absolute top-2 left-2 w-3 h-3 border-t border-l border-cyan-400/70 transition-all duration-500 group-hover:w-4 group-hover:h-4 group-hover:border-cyan-300" />
-                <span className="absolute top-2 right-2 w-3 h-3 border-t border-r border-cyan-400/70 transition-all duration-500 group-hover:w-4 group-hover:h-4 group-hover:border-cyan-300" />
-                <span className="absolute bottom-2 left-2 w-3 h-3 border-b border-l border-cyan-400/70 transition-all duration-500 group-hover:w-4 group-hover:h-4 group-hover:border-cyan-300" />
-                <span className="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-cyan-400/70 transition-all duration-500 group-hover:w-4 group-hover:h-4 group-hover:border-cyan-300" />
+                {/* Animated rotating gradient border (on hover) */}
+                <div
+                  className="animated-gradient-border absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                  style={{
+                    padding: "1.5px",
+                    WebkitMask:
+                      "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+                    WebkitMaskComposite: "xor",
+                    maskComposite: "exclude",
+                  }}
+                />
 
-                {/* Top meta row: index marker + glowing icon */}
-                <div className="relative flex items-start justify-between mb-7">
-                  <span className="font-mono text-[11px] tracking-[0.28em] text-cyan-400/90">
-                    [ {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")} ]
-                  </span>
-                  <div className="relative">
-                    <div className="absolute inset-0 blur-xl bg-cyan-400/35 group-hover:bg-cyan-300/60 transition-all duration-500" />
-                    <Icon
-                      className="relative w-6 h-6 text-cyan-300 group-hover:text-cyan-200 transition-colors duration-300"
-                      strokeWidth={1.5}
-                    />
-                  </div>
+                {/* Soft glow halo on hover */}
+                <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-gradient-to-br from-cyan-400/0 to-violet-500/0 group-hover:from-cyan-400/25 group-hover:to-violet-500/15 blur-3xl transition-all duration-700 pointer-events-none" />
+
+                {/* Huge outlined index — outline default, gradient-fill on hover */}
+                <div
+                  className="absolute -top-6 -right-2 font-display font-black leading-none select-none pointer-events-none transition-opacity duration-500 group-hover:opacity-0"
+                  style={{
+                    fontSize: "clamp(110px, 14vw, 170px)",
+                    color: "transparent",
+                    WebkitTextStroke: "1.5px rgba(15,23,42,0.10)",
+                  }}
+                  aria-hidden="true"
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </div>
+                <div
+                  className="absolute -top-6 -right-2 font-display font-black leading-none select-none pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    fontSize: "clamp(110px, 14vw, 170px)",
+                    backgroundImage:
+                      "linear-gradient(135deg, #06b6d4 0%, #a78bfa 100%)",
+                    WebkitBackgroundClip: "text",
+                    backgroundClip: "text",
+                    color: "transparent",
+                  }}
+                  aria-hidden="true"
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </div>
+
+                {/* Icon pill — gradient with deep glow */}
+                <div className="relative inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-500 to-violet-500 shadow-lg shadow-cyan-500/30 mb-8 transition-all duration-500 group-hover:shadow-xl group-hover:shadow-cyan-500/50 group-hover:scale-105">
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/30 to-transparent" />
+                  <Icon
+                    className="relative w-7 h-7 text-white"
+                    strokeWidth={2}
+                  />
                 </div>
 
                 {/* Title */}
                 <h3
-                  className="font-display text-xl md:text-2xl font-bold text-white mb-3 leading-tight"
+                  className="relative font-display text-2xl md:text-3xl font-bold text-slate-900 mb-3 leading-tight tracking-tight"
                   data-testid={`text-direction-title-${index}`}
                 >
                   {item.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-slate-400 text-sm md:text-base leading-relaxed">
+                <p className="relative text-slate-600 text-base md:text-[17px] leading-relaxed max-w-md">
                   {item.description}
                 </p>
 
-                {/* Bottom neon scan line */}
-                <div
-                  className="absolute left-0 right-0 bottom-0 h-px origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-out bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_10px_rgba(6,182,212,0.7)]"
-                />
+                {/* Bottom hover scan line */}
+                <div className="absolute left-0 right-0 bottom-0 h-[2px] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-out bg-gradient-to-r from-transparent via-cyan-500 to-violet-500" />
               </div>
             );
           })}

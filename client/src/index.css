@@ -365,6 +365,28 @@
  * Even without handling focused or not, this is six possible combinations that
  * need to be distinguished from eachother visually.
  */
+@property --grad-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes gradient-rotate {
+  to { --grad-angle: 360deg; }
+}
+
+.animated-gradient-border {
+  background: conic-gradient(
+    from var(--grad-angle),
+    #06b6d4 0%,
+    #818cf8 25%,
+    #a78bfa 50%,
+    #818cf8 75%,
+    #06b6d4 100%
+  );
+  animation: gradient-rotate 5s linear infinite;
+}
+
 @layer utilities {
 
   /* Hide ugly search cancel button in Chrome until we can style it properly */
