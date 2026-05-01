@@ -205,7 +205,7 @@ export const AdaptiveVideo = forwardRef<AdaptiveVideoHandle, AdaptiveVideoProps>
               {/* Triangle play icon — offset slightly right to look visually centred */}
               <svg
                 viewBox="0 0 24 24"
-                fill="white"
+                fill="black"
                 className="w-8 h-8 ml-1"
               >
                 <path d="M8 5v14l11-7z" />
