@@ -8,8 +8,17 @@ interface Square {
   speed: number;
   rotSpeed: number;
   opacity: number;
-  hue: number;
+  colorIndex: number;
 }
+
+const NEON_COLORS = [
+  { r: 124, g: 58,  b: 237 },
+  { r: 6,   g: 182, b: 212 },
+  { r: 236, g: 72,  b: 153 },
+  { r: 16,  g: 185, b: 129 },
+  { r: 59,  g: 130, b: 246 },
+  { r: 251, g: 146, b: 60  },
+];
 
 export function InteractiveBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -23,24 +32,23 @@ export function InteractiveBackground() {
     let width = 0;
     let height = 0;
     let animId = 0;
-
-    const COUNT = 18;
     let squares: Square[] = [];
+    const COUNT = 16;
+
+    const makeSquare = (randomY = false): Square => ({
+      x: Math.random() * width,
+      y: randomY ? Math.random() * height : height + 200,
+      size: 120 + Math.random() * 260,
+      angle: (Math.random() * 50 - 25) * (Math.PI / 180),
+      speed: 0.18 + Math.random() * 0.28,
+      rotSpeed: (Math.random() - 0.5) * 0.001,
+      opacity: 0.12 + Math.random() * 0.18,
+      colorIndex: Math.floor(Math.random() * NEON_COLORS.length),
+    });
 
     const initSquares = () => {
       squares = Array.from({ length: COUNT }, () => makeSquare(true));
     };
-
-    const makeSquare = (randomY = false): Square => ({
-      x: Math.random() * width,
-      y: randomY ? Math.random() * height : height + 100,
-      size: 140 + Math.random() * 280,
-      angle: (Math.random() * 40 - 20) * (Math.PI / 180),
-      speed: 0.15 + Math.random() * 0.25,
-      rotSpeed: (Math.random() - 0.5) * 0.0008,
-      opacity: 0.05 + Math.random() * 0.10,
-      hue: Math.random(),
-    });
 
     const resize = () => {
       width = canvas.offsetWidth;
@@ -54,33 +62,34 @@ export function InteractiveBackground() {
       ctx.clearRect(0, 0, width, height);
 
       const grad = ctx.createLinearGradient(0, 0, width, height);
-      grad.addColorStop(0, "#141416");
-      grad.addColorStop(0.5, "#1c1c20");
-      grad.addColorStop(1, "#111113");
+      grad.addColorStop(0, "#f8f9ff");
+      grad.addColorStop(0.5, "#f3f4f8");
+      grad.addColorStop(1, "#eef0f8");
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
 
       for (const sq of squares) {
+        const col = NEON_COLORS[sq.colorIndex];
+        const { r, g, b } = col;
+
         ctx.save();
         ctx.translate(sq.x, sq.y);
         ctx.rotate(sq.angle);
 
-        const t = sq.x / width;
-        const base = Math.round(90 + t * 60);
-        const r = base;
-        const g = base;
-        const b = Math.round(base + 8);
-        ctx.fillStyle = `rgba(${r},${g},${b},${sq.opacity})`;
+        ctx.shadowColor = `rgba(${r},${g},${b},0.7)`;
+        ctx.shadowBlur = 24;
+        ctx.fillStyle = `rgba(${r},${g},${b},${sq.opacity * 0.25})`;
         ctx.fillRect(-sq.size / 2, -sq.size / 2, sq.size, sq.size);
 
-        ctx.strokeStyle = `rgba(${r + 40},${g + 30},${b + 40},${sq.opacity * 0.6})`;
-        ctx.lineWidth = 1;
+        ctx.shadowBlur = 16;
+        ctx.strokeStyle = `rgba(${r},${g},${b},${sq.opacity * 1.4})`;
+        ctx.lineWidth = 1.5;
         ctx.strokeRect(-sq.size / 2, -sq.size / 2, sq.size, sq.size);
 
         ctx.restore();
 
         sq.y -= sq.speed;
-        sq.x += sq.speed * 0.3;
+        sq.x += sq.speed * 0.25;
         sq.angle += sq.rotSpeed;
 
         if (sq.y < -sq.size) {
