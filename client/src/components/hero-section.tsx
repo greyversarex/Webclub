@@ -3,7 +3,6 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/lib/language-context";
-import { InteractiveBackground } from "@/components/interactive-background";
 
 import ecommercePlatform from "@assets/generated_images/e-commerce_platform_mockup.png";
 import bankingApp from "@assets/generated_images/banking_mobile_app_interface.png";
@@ -95,7 +94,6 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex items-center pt-20 pb-16 overflow-hidden">
-      <InteractiveBackground />
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
