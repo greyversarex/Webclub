@@ -25,12 +25,12 @@ const projectTags = [
   ["React", "Go", "Redis"],
 ];
 const accentColors = [
-  "bg-violet-500/20 text-violet-300 border-violet-500/30",
-  "bg-blue-500/20 text-blue-300 border-blue-500/30",
-  "bg-violet-500/20 text-violet-300 border-violet-500/30",
-  "bg-blue-500/20 text-blue-300 border-blue-500/30",
-  "bg-violet-500/20 text-violet-300 border-violet-500/30",
-  "bg-blue-500/20 text-blue-300 border-blue-500/30",
+  "bg-violet-500/20 text-violet-200 border-violet-400/40",
+  "bg-emerald-500/20 text-emerald-200 border-emerald-400/40",
+  "bg-violet-500/20 text-violet-200 border-violet-400/40",
+  "bg-emerald-500/20 text-emerald-200 border-emerald-400/40",
+  "bg-violet-500/20 text-violet-200 border-violet-400/40",
+  "bg-emerald-500/20 text-emerald-200 border-emerald-400/40",
 ];
 
 const COLS = 8;
@@ -101,16 +101,16 @@ export function HeroSection() {
           <div className="order-1 self-center">
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
               {t.hero.title1}{" "}
-              <span className="it-shimmer-text bg-gradient-to-r from-violet-400 via-blue-300 to-violet-400 bg-clip-text text-transparent">
+              <span className="it-shimmer-text bg-gradient-to-r from-violet-400 via-purple-200 to-teal-300 bg-clip-text text-transparent">
                 {t.hero.titleHighlight}
               </span>
               {" "}{t.hero.title2}
             </h1>
-            <p className="text-lg text-slate-300 mb-8 max-w-xl">{t.hero.description}</p>
+            <p className="text-lg text-slate-200 mb-8 max-w-xl">{t.hero.description}</p>
 
             <ul className="space-y-3 mb-8">
               {t.hero.features.map((feature, index) => (
-                <li key={index} className="flex items-start gap-3 text-slate-200" data-testid={`text-feature-${index}`}>
+                <li key={index} className="flex items-start gap-3 text-slate-100" data-testid={`text-feature-${index}`}>
                   <CheckCircle2 className="w-5 h-5 text-violet-400 flex-shrink-0 mt-0.5" />
                   <span>{feature}</span>
                 </li>
@@ -121,7 +121,7 @@ export function HeroSection() {
               <Button
                 size="lg"
                 onClick={scrollToContact}
-                className="bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 text-white border-0 shadow-lg shadow-violet-900/60"
+                className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white border-0 shadow-lg shadow-violet-900/40"
                 data-testid="button-discuss-project"
               >
                 {t.hero.discussProject}
@@ -131,18 +131,18 @@ export function HeroSection() {
                 variant="outline"
                 size="lg"
                 onClick={scrollToServices}
-                className="border-white/20 text-white hover:bg-white/10 hover:border-white/40"
+                className="border-white/30 text-white hover:bg-white/10 hover:border-white/50"
                 data-testid="button-our-services"
               >
                 {t.hero.ourServices}
               </Button>
             </div>
 
-            <div className="flex flex-wrap gap-8 pt-8 border-t border-white/10">
+            <div className="flex flex-wrap gap-8 pt-8 border-t border-white/15">
               {stats.map((stat, index) => (
                 <div key={index} className="text-center" data-testid={`stat-${index}`}>
-                  <div className="font-display text-3xl font-bold text-white">{stat.value}</div>
-                  <div className="text-sm text-slate-400">{stat.label}</div>
+                  <div className="font-display text-3xl font-bold text-cyan-300">{stat.value}</div>
+                  <div className="text-sm text-slate-300">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -162,7 +162,7 @@ export function HeroSection() {
             </div>
 
             <div
-              className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200"
+              className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/20"
               style={{ height: "420px" }}
             >
               <div
@@ -217,12 +217,12 @@ export function HeroSection() {
                   {project.category}
                 </Badge>
                 {projectTags[shown].map((tag) => (
-                  <span key={tag} className="px-2 py-0.5 text-xs rounded bg-white/10 text-white/70 border border-white/15">
+                  <span key={tag} className="px-2 py-0.5 text-xs rounded bg-white/10 text-white/80 border border-white/20">
                     {tag}
                   </span>
                 ))}
               </div>
-              <p className="text-slate-600 text-sm leading-relaxed">{project.description}</p>
+              <p className="text-slate-200 text-sm leading-relaxed">{project.description}</p>
             </div>
 
             <div className="flex items-center justify-center gap-2 mt-4">
@@ -232,8 +232,8 @@ export function HeroSection() {
                   onClick={() => goTo(i)}
                   className={`rounded-full transition-all duration-300 ${
                     i === shown
-                      ? "w-6 h-2 bg-violet-500"
-                      : "w-2 h-2 bg-slate-300 hover:bg-slate-400"
+                      ? "w-6 h-2 bg-violet-400"
+                      : "w-2 h-2 bg-white/30 hover:bg-white/60"
                   }`}
                   data-testid={`button-slide-dot-${i}`}
                 />
