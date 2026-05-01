@@ -1,129 +1,260 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import * as THREE from "three";
 
-interface Square {
-  x: number;
-  y: number;
-  size: number;
-  angle: number;
-  speed: number;
-  rotSpeed: number;
-  opacity: number;
+function isWebGLAvailable(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    const canvas = document.createElement("canvas");
+    const gl =
+      canvas.getContext("webgl2") ||
+      canvas.getContext("webgl") ||
+      canvas.getContext("experimental-webgl");
+    return !!gl;
+  } catch {
+    return false;
+  }
 }
 
 export function InteractiveBackground() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [supported, setSupported] = useState(true);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    if (!isWebGLAvailable()) {
+      setSupported(false);
+      return;
+    }
+    const container = containerRef.current;
+    if (!container) return;
 
-    let width = 0;
-    let height = 0;
-    let animId = 0;
-    let squares: Square[] = [];
+    const width = container.clientWidth;
+    const height = container.clientHeight;
 
-    const COUNT = 22;
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    } catch {
+      setSupported(false);
+      return;
+    }
 
-    const makeSquare = (randomY = false): Square => ({
-      x: Math.random() * width,
-      y: randomY ? Math.random() * height : height + 200,
-      size: 160 + Math.random() * 300,
-      angle: (Math.random() * 50 - 25) * (Math.PI / 180),
-      speed: 0.18 + Math.random() * 0.28,
-      rotSpeed: (Math.random() - 0.5) * 0.0006,
-      opacity: 0.07 + Math.random() * 0.13,
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, width / height, 1, 2000);
+    camera.position.z = 700;
+
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(width, height);
+    renderer.setClearColor(0x000000, 0);
+    container.appendChild(renderer.domElement);
+
+    const PARTICLE_COUNT = 90;
+    const positions = new Float32Array(PARTICLE_COUNT * 3);
+    const velocities = new Float32Array(PARTICLE_COUNT * 3);
+    const basePositions = new Float32Array(PARTICLE_COUNT * 3);
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      const x = (Math.random() - 0.5) * 1200;
+      const y = (Math.random() - 0.5) * 700;
+      const z = (Math.random() - 0.5) * 400;
+      positions[i * 3] = x;
+      positions[i * 3 + 1] = y;
+      positions[i * 3 + 2] = z;
+      basePositions[i * 3] = x;
+      basePositions[i * 3 + 1] = y;
+      basePositions[i * 3 + 2] = z;
+      velocities[i * 3] = (Math.random() - 0.5) * 0.3;
+      velocities[i * 3 + 1] = (Math.random() - 0.5) * 0.3;
+      velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.2;
+    }
+
+    const particleGeometry = new THREE.BufferGeometry();
+    particleGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+
+    const particleMaterial = new THREE.PointsMaterial({
+      color: 0x8b5cf6,
+      size: 4,
+      transparent: true,
+      opacity: 0.9,
+      sizeAttenuation: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
     });
 
-    const initSquares = () => {
-      squares = Array.from({ length: COUNT }, () => makeSquare(true));
+    const particles = new THREE.Points(particleGeometry, particleMaterial);
+    scene.add(particles);
+
+    const lineGeometry = new THREE.BufferGeometry();
+    const maxLines = PARTICLE_COUNT * PARTICLE_COUNT;
+    const linePositions = new Float32Array(maxLines * 6);
+    const lineColors = new Float32Array(maxLines * 6);
+    lineGeometry.setAttribute("position", new THREE.BufferAttribute(linePositions, 3));
+    lineGeometry.setAttribute("color", new THREE.BufferAttribute(lineColors, 3));
+
+    const lineMaterial = new THREE.LineBasicMaterial({
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.5,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+
+    const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+    scene.add(lines);
+
+    const mouse = { x: 0, y: 0, active: false };
+    const targetMouse = { x: 0, y: 0 };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = container.getBoundingClientRect();
+      targetMouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      targetMouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+      mouse.active = true;
     };
 
-    const resize = () => {
-      width = canvas.offsetWidth;
-      height = canvas.offsetHeight;
-      canvas.width = width;
-      canvas.height = height;
-      initSquares();
+    const handleMouseLeave = () => {
+      mouse.active = false;
     };
 
-    const draw = () => {
-      ctx.clearRect(0, 0, width, height);
+    container.addEventListener("mousemove", handleMouseMove);
+    container.addEventListener("mouseleave", handleMouseLeave);
 
-      // Strong diagonal gradient: deep violet → indigo → dark teal
-      const bg = ctx.createLinearGradient(0, 0, width, height);
-      bg.addColorStop(0,    "#1a0533");
-      bg.addColorStop(0.35, "#1e1040");
-      bg.addColorStop(0.65, "#0d1f3c");
-      bg.addColorStop(1,    "#041e22");
-      ctx.fillStyle = bg;
-      ctx.fillRect(0, 0, width, height);
+    let isVisible = true;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        isVisible = entries[0].isIntersecting;
+      },
+      { threshold: 0 }
+    );
+    observer.observe(container);
 
-      // Radial "glow" blobs for depth
-      const addGlow = (cx: number, cy: number, r: number, color: string) => {
-        const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-        g.addColorStop(0, color);
-        g.addColorStop(1, "rgba(0,0,0,0)");
-        ctx.fillStyle = g;
-        ctx.fillRect(0, 0, width, height);
-      };
-      addGlow(width * 0.15, height * 0.4, width * 0.45, "rgba(120,30,180,0.22)");
-      addGlow(width * 0.85, height * 0.55, width * 0.42, "rgba(0,140,160,0.20)");
-      addGlow(width * 0.5,  height * 0.2,  width * 0.35, "rgba(80,20,140,0.12)");
+    let animationId = 0;
+    const CONNECT_DIST = 160;
+    const CONNECT_DIST_SQ = CONNECT_DIST * CONNECT_DIST;
+    const MOUSE_INFLUENCE = 250;
+    const MOUSE_INFLUENCE_SQ = MOUSE_INFLUENCE * MOUSE_INFLUENCE;
 
-      // Floating squares — colour lerped across horizontal position
-      for (const sq of squares) {
-        const t = Math.max(0, Math.min(1, sq.x / width));
+    const animate = () => {
+      animationId = requestAnimationFrame(animate);
+      if (!isVisible) return;
 
-        // Left side: vivid purple-magenta  →  Right side: dark teal-cyan
-        const r = Math.round(140 - t * 100);   // 140 → 40
-        const g = Math.round(10  + t * 110);   // 10  → 120
-        const b = Math.round(200 - t * 50);    // 200 → 150
+      mouse.x += (targetMouse.x - mouse.x) * 0.06;
+      mouse.y += (targetMouse.y - mouse.y) * 0.06;
 
-        ctx.save();
-        ctx.translate(sq.x, sq.y);
-        ctx.rotate(sq.angle);
+      const mouseWorldX = mouse.x * 600;
+      const mouseWorldY = mouse.y * 350;
 
-        ctx.fillStyle = `rgba(${r},${g},${b},${sq.opacity})`;
-        ctx.fillRect(-sq.size / 2, -sq.size / 2, sq.size, sq.size);
+      const positionsAttr = particleGeometry.attributes.position as THREE.BufferAttribute;
 
-        ctx.strokeStyle = `rgba(${Math.min(255, r + 60)},${Math.min(255, g + 50)},${Math.min(255, b + 30)},${sq.opacity * 0.7})`;
-        ctx.lineWidth = 1;
-        ctx.strokeRect(-sq.size / 2, -sq.size / 2, sq.size, sq.size);
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const idx = i * 3;
+        positions[idx] += velocities[idx];
+        positions[idx + 1] += velocities[idx + 1];
+        positions[idx + 2] += velocities[idx + 2];
 
-        ctx.restore();
+        const dx = positions[idx] - basePositions[idx];
+        const dy = positions[idx + 1] - basePositions[idx + 1];
+        const dz = positions[idx + 2] - basePositions[idx + 2];
+        velocities[idx] -= dx * 0.0008;
+        velocities[idx + 1] -= dy * 0.0008;
+        velocities[idx + 2] -= dz * 0.0008;
+        velocities[idx] *= 0.99;
+        velocities[idx + 1] *= 0.99;
+        velocities[idx + 2] *= 0.99;
 
-        sq.y -= sq.speed;
-        sq.x += sq.speed * 0.25;
-        sq.angle += sq.rotSpeed;
-
-        if (sq.y < -sq.size - 50) {
-          Object.assign(sq, makeSquare(false));
+        if (mouse.active) {
+          const mdx = positions[idx] - mouseWorldX;
+          const mdy = positions[idx + 1] - mouseWorldY;
+          const distSq = mdx * mdx + mdy * mdy;
+          if (distSq < MOUSE_INFLUENCE_SQ && distSq > 1) {
+            const force = (1 - distSq / MOUSE_INFLUENCE_SQ) * 0.6;
+            const dist = Math.sqrt(distSq);
+            velocities[idx] += (mdx / dist) * force;
+            velocities[idx + 1] += (mdy / dist) * force;
+          }
         }
       }
+
+      positionsAttr.needsUpdate = true;
+
+      let lineIdx = 0;
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const ix = positions[i * 3];
+        const iy = positions[i * 3 + 1];
+        const iz = positions[i * 3 + 2];
+
+        for (let j = i + 1; j < PARTICLE_COUNT; j++) {
+          const dx = ix - positions[j * 3];
+          const dy = iy - positions[j * 3 + 1];
+          const dz = iz - positions[j * 3 + 2];
+          const distSq = dx * dx + dy * dy + dz * dz;
+
+          if (distSq < CONNECT_DIST_SQ) {
+            const alpha = 1 - distSq / CONNECT_DIST_SQ;
+            linePositions[lineIdx * 6] = ix;
+            linePositions[lineIdx * 6 + 1] = iy;
+            linePositions[lineIdx * 6 + 2] = iz;
+            linePositions[lineIdx * 6 + 3] = positions[j * 3];
+            linePositions[lineIdx * 6 + 4] = positions[j * 3 + 1];
+            linePositions[lineIdx * 6 + 5] = positions[j * 3 + 2];
+
+            const r = 0.545 * alpha;
+            const g = 0.361 * alpha;
+            const b = 0.965 * alpha;
+            lineColors[lineIdx * 6] = r;
+            lineColors[lineIdx * 6 + 1] = g;
+            lineColors[lineIdx * 6 + 2] = b;
+            lineColors[lineIdx * 6 + 3] = r;
+            lineColors[lineIdx * 6 + 4] = g;
+            lineColors[lineIdx * 6 + 5] = b;
+            lineIdx++;
+          }
+        }
+      }
+
+      lineGeometry.setDrawRange(0, lineIdx * 2);
+      (lineGeometry.attributes.position as THREE.BufferAttribute).needsUpdate = true;
+      (lineGeometry.attributes.color as THREE.BufferAttribute).needsUpdate = true;
+
+      particles.rotation.y += 0.0006;
+      lines.rotation.y += 0.0006;
+
+      renderer.render(scene, camera);
     };
 
-    const loop = () => {
-      draw();
-      animId = requestAnimationFrame(loop);
-    };
+    animate();
 
-    const ro = new ResizeObserver(resize);
-    ro.observe(canvas);
-    resize();
-    loop();
+    const handleResize = () => {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    };
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      cancelAnimationFrame(animId);
-      ro.disconnect();
+      cancelAnimationFrame(animationId);
+      observer.disconnect();
+      window.removeEventListener("resize", handleResize);
+      container.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("mouseleave", handleMouseLeave);
+      particleGeometry.dispose();
+      particleMaterial.dispose();
+      lineGeometry.dispose();
+      lineMaterial.dispose();
+      renderer.dispose();
+      if (renderer.domElement.parentNode) {
+        renderer.domElement.parentNode.removeChild(renderer.domElement);
+      }
     };
   }, []);
 
+  if (!supported) return null;
+
   return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 w-full h-full"
+    <div
+      ref={containerRef}
+      className="absolute inset-0 pointer-events-auto"
       style={{ zIndex: 0 }}
       data-testid="interactive-background"
     />
