@@ -2,6 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Neon hero background ─────────────────────────────────────────────── */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(800px 400px at 10% 20%, rgba(120, 80, 255, 0.25), transparent 60%),
+    radial-gradient(600px 300px at 80% 30%, rgba(0, 150, 255, 0.2), transparent 60%),
+    radial-gradient(700px 500px at 50% 80%, rgba(140, 0, 255, 0.15), transparent 70%),
+    linear-gradient(180deg, #0a0a0f 0%, #090912 100%);
+}
+
+.hero-bg::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(140, 0, 255, 0.15), transparent 60%),
+    radial-gradient(circle at 70% 60%, rgba(0, 120, 255, 0.15), transparent 60%);
+  filter: blur(120px);
+}
+
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03), transparent 70%);
+}
+
 /* Subtle bounce for chat button when teaser is showing */
 @keyframes bounce-subtle {
   0%, 100% { transform: translateY(0); }
