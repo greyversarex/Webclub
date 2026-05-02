@@ -14,11 +14,31 @@ import geometricBg from "@assets/Визитки_Personal_(1)_1765668694348.png";
 export default function Home() {
   return (
     <div className="min-h-screen bg-background relative">
+      {/* Base geometric texture */}
       <img
         src={geometricBg}
         alt=""
-        className="fixed inset-0 w-full h-full object-cover pointer-events-none opacity-40"
+        className="fixed inset-0 w-full h-full object-cover pointer-events-none opacity-30"
       />
+
+      {/* Aurora atmospheric depth glows */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
+        <div className="aurora-orb aurora-orb-1" />
+        <div className="aurora-orb aurora-orb-2" />
+        <div className="aurora-orb aurora-orb-3" />
+        <div className="aurora-orb aurora-orb-4" />
+      </div>
+
+      {/* Radial vignette for edge depth */}
+      <div
+        className="fixed inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 85% 80% at 50% 42%, transparent 30%, rgba(10,15,35,0.22) 100%)",
+          zIndex: 1,
+        }}
+      />
+
       <CircuitBackground />
 
       <div className="relative">
