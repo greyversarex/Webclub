@@ -627,12 +627,6 @@ export function WhatWeBuildSection() {
     <section ref={ref} className="py-16 md:py-24 relative" data-testid="section-what-we-build">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
         <div className="text-center mb-12 md:mb-16">
-          <div className={`inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-cyan-500/10 to-violet-500/10 border border-cyan-500/25 backdrop-blur-sm mb-6 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.9)] animate-pulse" />
-            <span className="font-mono text-[11px] tracking-[0.25em] uppercase bg-gradient-to-r from-cyan-700 to-violet-700 bg-clip-text text-transparent font-semibold">
-              Направления разработки
-            </span>
-          </div>
           <h2 className={`font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-800 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} data-testid="heading-what-we-build">
             {t.whatWeBuild.title}
           </h2>

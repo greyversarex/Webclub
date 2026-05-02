@@ -25,8 +25,8 @@ export default function Home() {
         <Header />
         <main>
           <HeroSection />
-          <WhatWeBuildSection />
           <AppsShowcaseSection />
+          <WhatWeBuildSection />
           <PortfolioSection />
           <TechStackSection />
           <ProcessSection />
