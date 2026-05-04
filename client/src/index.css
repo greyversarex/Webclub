@@ -119,9 +119,18 @@
 
 @media (prefers-reduced-motion: reduce) {
   .mockup-view-in,
-  .mockup-stagger > * {
+  .mockup-stagger > *,
+  .marquee-track {
     animation: none;
   }
+}
+
+@keyframes marquee-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee-scroll 14s linear infinite;
 }
 
 /* Mosaic tile pop-in animation — 3D fold-in with overshoot */

@@ -300,10 +300,18 @@ function BusinessInteractive() {
                 </button>
               </div>
             </div>
-            <div className="px-5 py-3 border-t border-slate-200/70 bg-slate-50/60">
-              <div className="text-[8px] uppercase tracking-[0.2em] text-slate-400 font-semibold mb-2">Нам доверяют</div>
-              <div className="flex items-center justify-between text-[12px] font-black text-slate-400">
-                <span>HUAWEI</span><span>KASPI</span><span>X5</span><span>YOTA</span>
+            <div className="py-3 border-t border-slate-200/70 bg-slate-50/60">
+              <div className="text-[8px] uppercase tracking-[0.2em] text-slate-400 font-semibold mb-2 px-5">Нам доверяют</div>
+              <div className="overflow-hidden">
+                <div className="marquee-track flex items-center gap-6 w-max">
+                  {[0, 1].map((set) => (
+                    <div key={set} className="flex items-center gap-6 shrink-0">
+                      {["HUAWEI", "KASPI", "X5", "YOTA", "SBER", "МТС"].map((b) => (
+                        <span key={b} className="text-[11px] font-black text-slate-400 tracking-wide">{b}</span>
+                      ))}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
             <div className="grid grid-cols-3 px-5 py-3 border-t border-slate-200/70">
