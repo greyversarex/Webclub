@@ -18,7 +18,7 @@ export default function Home() {
       <img
         src={geometricBg}
         alt=""
-        className="fixed inset-0 w-full h-full object-cover pointer-events-none opacity-30"
+        className="fixed inset-0 w-full h-full object-cover pointer-events-none opacity-45"
       />
 
       {/* Aurora atmospheric depth glows */}
@@ -34,7 +34,7 @@ export default function Home() {
         className="fixed inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 85% 80% at 50% 42%, transparent 30%, rgba(10,15,35,0.22) 100%)",
+            "radial-gradient(ellipse 85% 80% at 50% 42%, transparent 40%, rgba(10,15,35,0.10) 100%)",
           zIndex: 1,
         }}
       />
