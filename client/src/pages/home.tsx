@@ -9,6 +9,7 @@ import { ContactSection } from "@/components/contact-section";
 import { Footer } from "@/components/footer";
 import { ChatWidget } from "@/components/chat-widget";
 import { CircuitBackground } from "@/components/circuit-background";
+import { ElectricPulses } from "@/components/electric-pulses";
 import geometricBg from "@assets/Визитки_Personal_(1)_1765668694348.png";
 
 export default function Home() {
@@ -40,6 +41,7 @@ export default function Home() {
       />
 
       <CircuitBackground />
+      <ElectricPulses />
 
       <div className="relative">
         <Header />

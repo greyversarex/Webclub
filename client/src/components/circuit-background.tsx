@@ -94,13 +94,7 @@ export function CircuitBackground() {
     { i: farTraces.length + 4, color: "#22d3ee", dur: 6,  delay: 0.4, r: 3.5, layer: "mid" },
     { i: farTraces.length + 5, color: "#a78bfa", dur: 8,  delay: 1.2, r: 3.5, layer: "mid" },
     { i: farTraces.length + 6, color: "#06b6d4", dur: 7,  delay: 0,   r: 3.5, layer: "mid" },
-    // Near pulses — large, visible, blazing
-    { i: farTraces.length + midTraces.length + 0, color: "#06b6d4", dur: 8,  delay: 0,   r: 10, layer: "near" },
-    { i: farTraces.length + midTraces.length + 1, color: "#a78bfa", dur: 10, delay: 2,   r: 10, layer: "near" },
-    { i: farTraces.length + midTraces.length + 2, color: "#22d3ee", dur: 9,  delay: 4,   r: 10, layer: "near" },
-    { i: farTraces.length + midTraces.length + 0, color: "#a78bfa", dur: 8,  delay: 5,   r: 10, layer: "near" },
-    { i: farTraces.length + midTraces.length + 1, color: "#22d3ee", dur: 10, delay: 7,   r: 10, layer: "near" },
-    { i: farTraces.length + midTraces.length + 2, color: "#06b6d4", dur: 9,  delay: 1.5, r: 10, layer: "near" },
+    // (Near pulses handled by ElectricPulses canvas component)
   ];
 
   return (
@@ -262,73 +256,7 @@ export function CircuitBackground() {
         ))}
       </g>
 
-      {/* ── ENERGY PULSES — NEAR (head + electric tail) ──────────────────── */}
-      <g filter="url(#glow-near)">
-        {pulses.filter(p => p.layer === "near").map((p, i) => {
-          // Tail segments: each starts `lag` seconds LATER than head → appears lag-seconds behind
-          const tail = [
-            { lag: 1.4,  r: p.r * 0.82, maxOp: 0.72,
-              opValues: "0;0.72;0.45;0.78;0.38;0.72;0.55;0.72;0",
-              opTimes:  "0;0.05;0.20;0.35;0.50;0.65;0.80;0.95;1" },
-            { lag: 2.9,  r: p.r * 0.62, maxOp: 0.50,
-              opValues: "0;0.50;0.28;0.55;0.30;0.50;0",
-              opTimes:  "0;0.05;0.25;0.50;0.75;0.95;1" },
-            { lag: 4.6,  r: p.r * 0.44, maxOp: 0.30,
-              opValues: "0;0.30;0.18;0.30;0",
-              opTimes:  "0;0.05;0.50;0.95;1" },
-            { lag: 6.4,  r: p.r * 0.28, maxOp: 0.15,
-              opValues: "0;0.15;0.08;0.15;0",
-              opTimes:  "0;0.05;0.50;0.95;1" },
-          ];
-
-          return (
-            <g key={i}>
-              {/* Electric tail — segments behind the head */}
-              {tail.map((t, ti) => {
-                const tailBegin = p.delay + t.lag;
-                return (
-                  <circle key={ti} r={t.r} fill={p.color}>
-                    <animateMotion
-                      dur={`${p.dur}s`} begin={`${tailBegin}s`}
-                      repeatCount="indefinite" path={allTraces[p.i]} rotate="auto"
-                    />
-                    <animate attributeName="opacity"
-                      values={t.opValues} keyTimes={t.opTimes}
-                      dur={`${p.dur}s`} begin={`${tailBegin}s`} repeatCount="indefinite"
-                    />
-                  </circle>
-                );
-              })}
-
-              {/* Outer corona */}
-              <circle r={p.r * 2.8} fill={p.color}>
-                <animateMotion
-                  dur={`${p.dur}s`} begin={`${p.delay}s`}
-                  repeatCount="indefinite" path={allTraces[p.i]} rotate="auto"
-                />
-                <animate attributeName="opacity"
-                  values="0;0.20;0.12;0.20;0.14;0.20;0"
-                  keyTimes="0;0.05;0.30;0.55;0.75;0.95;1"
-                  dur={`${p.dur}s`} begin={`${p.delay}s`} repeatCount="indefinite"
-                />
-              </circle>
-
-              {/* Core — bright head with electric flicker */}
-              <circle r={p.r} fill={p.color}>
-                <animateMotion
-                  dur={`${p.dur}s`} begin={`${p.delay}s`}
-                  repeatCount="indefinite" path={allTraces[p.i]} rotate="auto"
-                />
-                <animate attributeName="opacity"
-                  values="0;1;0.7;1;0.8;1;0.75;1;0"
-                  keyTimes="0;0.05;0.20;0.38;0.54;0.68;0.80;0.95;1"
-                  dur={`${p.dur}s`} begin={`${p.delay}s`} repeatCount="indefinite"
-                />
-              </circle>
-            </g>
-          );
-        })}
-      </g>
+      {/* Near-layer pulses rendered by ElectricPulses canvas component */}
     </svg>
   );
 }
