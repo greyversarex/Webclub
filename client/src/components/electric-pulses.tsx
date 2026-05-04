@@ -17,13 +17,6 @@ const PULSES = [
 
 const TAIL_LEN = 90;
 
-function getSvgToCanvas(cw: number, ch: number, vbW = 1920, vbH = 1080) {
-  const scale = Math.max(cw / vbW, ch / vbH);
-  const ox = (cw - vbW * scale) / 2;
-  const oy = (ch - vbH * scale) / 2;
-  return (x: number, y: number) => ({ x: x * scale + ox, y: y * scale + oy });
-}
-
 function hexToRgb(hex: string) {
   const r = parseInt(hex.slice(1, 3), 16);
   const g = parseInt(hex.slice(3, 5), 16);
@@ -38,22 +31,22 @@ export function ElectricPulses() {
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext("2d")!;
 
-    // Hidden SVG for path measurement only
-    const svgEl = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svgEl.setAttribute("viewBox", "0 0 1920 1080");
-    Object.assign(svgEl.style, {
+    // Hidden SVG used ONLY for getTotalLength / getPointAtLength
+    const measureSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    measureSvg.setAttribute("viewBox", "0 0 1920 1080");
+    Object.assign(measureSvg.style, {
       position: "absolute",
       left: "-9999px",
       width: "1920px",
       height: "1080px",
       visibility: "hidden",
     });
-    document.body.appendChild(svgEl);
+    document.body.appendChild(measureSvg);
 
     const pathEls = NEAR_TRACES.map((d) => {
       const p = document.createElementNS("http://www.w3.org/2000/svg", "path");
       p.setAttribute("d", d);
-      svgEl.appendChild(p);
+      measureSvg.appendChild(p);
       return p;
     });
     const pathLens = pathEls.map((p) => p.getTotalLength());
@@ -65,9 +58,7 @@ export function ElectricPulses() {
     resize();
     window.addEventListener("resize", resize);
 
-    // Initialise progress along path (in SVG units)
     const progresses = PULSES.map((p) => p.phase * pathLens[p.pathIdx]);
-    // Position history in SCREEN coords
     const histories: { x: number; y: number }[][] = PULSES.map(() => []);
 
     let lastTime = performance.now();
@@ -78,19 +69,29 @@ export function ElectricPulses() {
       const dt = Math.min(now - lastTime, 50);
       lastTime = now;
 
+      // Ask the real circuit SVG for its current transform matrix.
+      // getScreenCTM() converts SVG user coords → CSS pixels exactly as rendered.
+      const circuitSvg = document.querySelector(
+        '[data-testid="bg-circuit"]'
+      ) as SVGSVGElement | null;
+      const ctm = circuitSvg?.getScreenCTM();
+      if (!ctm) return;
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const toCanvas = getSvgToCanvas(canvas.width, canvas.height);
 
       PULSES.forEach((pulse, pi) => {
         const pathEl = pathEls[pulse.pathIdx];
         const len = pathLens[pulse.pathIdx];
 
-        // Advance position
-        progresses[pi] = (progresses[pi] + pulse.speed * dt / 1000) % len;
-        const svgPt = pathEl.getPointAtLength(progresses[pi]);
-        const { x, y } = toCanvas(svgPt.x, svgPt.y);
+        progresses[pi] = (progresses[pi] + (pulse.speed * dt) / 1000) % len;
+        const rawPt = pathEl.getPointAtLength(progresses[pi]);
 
-        // Record exact screen position — NO jitter here so tail stays on the line
+        // Convert SVG user coords → screen CSS pixels via the SVG's own CTM
+        const svgPt = measureSvg.createSVGPoint();
+        svgPt.x = rawPt.x;
+        svgPt.y = rawPt.y;
+        const { x, y } = svgPt.matrixTransform(ctm);
+
         histories[pi].push({ x, y });
         if (histories[pi].length > TAIL_LEN) histories[pi].shift();
 
@@ -101,44 +102,45 @@ export function ElectricPulses() {
 
         ctx.save();
         ctx.globalCompositeOperation = "lighter";
-
-        // ── Wide outer glow (halo) ────────────────────────────────────────
         ctx.lineCap = "round";
+
+        // ── Wide outer glow halo ──────────────────────────────────────────
         for (let i = 1; i < hist.length; i++) {
           const t = i / hist.length;
-          const a = t * t * 0.15;
           ctx.beginPath();
           ctx.moveTo(hist[i - 1].x, hist[i - 1].y);
           ctx.lineTo(hist[i].x, hist[i].y);
-          ctx.strokeStyle = `rgba(${rgb},${a})`;
+          ctx.strokeStyle = `rgba(${rgb},${t * t * 0.14})`;
           ctx.lineWidth = t * 16;
           ctx.stroke();
         }
 
-        // ── Core bright line — follows path exactly ───────────────────────
+        // ── Core bright line ──────────────────────────────────────────────
         for (let i = 1; i < hist.length; i++) {
           const t = i / hist.length;
-          const a = Math.pow(t, 1.4) * 0.95;
           ctx.beginPath();
           ctx.moveTo(hist[i - 1].x, hist[i - 1].y);
           ctx.lineTo(hist[i].x, hist[i].y);
-          ctx.strokeStyle = `rgba(${rgb},${a})`;
+          ctx.strokeStyle = `rgba(${rgb},${Math.pow(t, 1.4) * 0.95})`;
           ctx.lineWidth = t * 3;
           ctx.stroke();
         }
 
         // ── Head corona ───────────────────────────────────────────────────
         const head = hist[hist.length - 1];
-        const corona = ctx.createRadialGradient(head.x, head.y, 0, head.x, head.y, 30);
-        corona.addColorStop(0,   `rgba(${rgb},0.85)`);
+        const corona = ctx.createRadialGradient(
+          head.x, head.y, 0,
+          head.x, head.y, 28
+        );
+        corona.addColorStop(0,    `rgba(${rgb},0.85)`);
         corona.addColorStop(0.35, `rgba(${rgb},0.35)`);
-        corona.addColorStop(1,   `rgba(${rgb},0)`);
+        corona.addColorStop(1,    `rgba(${rgb},0)`);
         ctx.beginPath();
-        ctx.arc(head.x, head.y, 30, 0, Math.PI * 2);
+        ctx.arc(head.x, head.y, 28, 0, Math.PI * 2);
         ctx.fillStyle = corona;
         ctx.fill();
 
-        // ── Head core dot (white-hot) ─────────────────────────────────────
+        // ── White-hot core dot ────────────────────────────────────────────
         ctx.shadowColor = pulse.color;
         ctx.shadowBlur = 16;
         ctx.beginPath();
@@ -156,7 +158,7 @@ export function ElectricPulses() {
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", resize);
-      if (svgEl.parentNode) document.body.removeChild(svgEl);
+      if (measureSvg.parentNode) document.body.removeChild(measureSvg);
     };
   }, []);
 
