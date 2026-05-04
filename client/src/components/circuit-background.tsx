@@ -258,34 +258,72 @@ export function CircuitBackground() {
         ))}
       </g>
 
-      {/* ── ENERGY PULSES — NEAR (with corona) ──────────────────────────── */}
+      {/* ── ENERGY PULSES — NEAR (head + electric tail) ──────────────────── */}
       <g filter="url(#glow-near)">
-        {pulses.filter(p => p.layer === "near").map((p, i) => (
-          <g key={i}>
-            {/* outer corona */}
-            <circle r={p.r * 2.8} fill={p.color} opacity="0.18">
-              <animateMotion
-                dur={`${p.dur}s`} begin={`${p.delay}s`}
-                repeatCount="indefinite" path={allTraces[p.i]} rotate="auto"
-              />
-              <animate attributeName="opacity"
-                values="0;0.18;0.18;0" keyTimes="0;0.05;0.95;1"
-                dur={`${p.dur}s`} begin={`${p.delay}s`} repeatCount="indefinite"
-              />
-            </circle>
-            {/* core */}
-            <circle r={p.r} fill={p.color}>
-              <animateMotion
-                dur={`${p.dur}s`} begin={`${p.delay}s`}
-                repeatCount="indefinite" path={allTraces[p.i]} rotate="auto"
-              />
-              <animate attributeName="opacity"
-                values="0;1;1;0" keyTimes="0;0.05;0.95;1"
-                dur={`${p.dur}s`} begin={`${p.delay}s`} repeatCount="indefinite"
-              />
-            </circle>
-          </g>
-        ))}
+        {pulses.filter(p => p.layer === "near").map((p, i) => {
+          // Tail segments: each starts `lag` seconds LATER than head → appears lag-seconds behind
+          const tail = [
+            { lag: 1.4,  r: p.r * 0.82, maxOp: 0.72,
+              opValues: "0;0.72;0.45;0.78;0.38;0.72;0.55;0.72;0",
+              opTimes:  "0;0.05;0.20;0.35;0.50;0.65;0.80;0.95;1" },
+            { lag: 2.9,  r: p.r * 0.62, maxOp: 0.50,
+              opValues: "0;0.50;0.28;0.55;0.30;0.50;0",
+              opTimes:  "0;0.05;0.25;0.50;0.75;0.95;1" },
+            { lag: 4.6,  r: p.r * 0.44, maxOp: 0.30,
+              opValues: "0;0.30;0.18;0.30;0",
+              opTimes:  "0;0.05;0.50;0.95;1" },
+            { lag: 6.4,  r: p.r * 0.28, maxOp: 0.15,
+              opValues: "0;0.15;0.08;0.15;0",
+              opTimes:  "0;0.05;0.50;0.95;1" },
+          ];
+
+          return (
+            <g key={i}>
+              {/* Electric tail — segments behind the head */}
+              {tail.map((t, ti) => {
+                const tailBegin = p.delay + t.lag;
+                return (
+                  <circle key={ti} r={t.r} fill={p.color}>
+                    <animateMotion
+                      dur={`${p.dur}s`} begin={`${tailBegin}s`}
+                      repeatCount="indefinite" path={allTraces[p.i]} rotate="auto"
+                    />
+                    <animate attributeName="opacity"
+                      values={t.opValues} keyTimes={t.opTimes}
+                      dur={`${p.dur}s`} begin={`${tailBegin}s`} repeatCount="indefinite"
+                    />
+                  </circle>
+                );
+              })}
+
+              {/* Outer corona */}
+              <circle r={p.r * 2.8} fill={p.color}>
+                <animateMotion
+                  dur={`${p.dur}s`} begin={`${p.delay}s`}
+                  repeatCount="indefinite" path={allTraces[p.i]} rotate="auto"
+                />
+                <animate attributeName="opacity"
+                  values="0;0.20;0.12;0.20;0.14;0.20;0"
+                  keyTimes="0;0.05;0.30;0.55;0.75;0.95;1"
+                  dur={`${p.dur}s`} begin={`${p.delay}s`} repeatCount="indefinite"
+                />
+              </circle>
+
+              {/* Core — bright head with electric flicker */}
+              <circle r={p.r} fill={p.color}>
+                <animateMotion
+                  dur={`${p.dur}s`} begin={`${p.delay}s`}
+                  repeatCount="indefinite" path={allTraces[p.i]} rotate="auto"
+                />
+                <animate attributeName="opacity"
+                  values="0;1;0.7;1;0.8;1;0.75;1;0"
+                  keyTimes="0;0.05;0.20;0.38;0.54;0.68;0.80;0.95;1"
+                  dur={`${p.dur}s`} begin={`${p.delay}s`} repeatCount="indefinite"
+                />
+              </circle>
+            </g>
+          );
+        })}
       </g>
     </svg>
   );
