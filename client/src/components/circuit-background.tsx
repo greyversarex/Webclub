@@ -22,10 +22,6 @@ export function CircuitBackground() {
     "M 755 0 L 755 195 L 775 215 L 775 505 L 755 525 L 755 1080",
     "M 1165 0 L 1165 345 L 1185 365 L 1185 655 L 1165 675 L 1165 1080",
     "M 1605 0 L 1605 245 L 1585 265 L 1585 555 L 1605 575 L 1605 1080",
-    "M 0 0 L 220 220 L 440 220 L 640 420",
-    "M 1920 0 L 1700 200 L 1480 200 L 1280 400",
-    "M 0 1080 L 260 820 L 500 820",
-    "M 1920 1080 L 1660 820 L 1420 820",
   ];
   const farNodes: [number, number][] = [
     [95, 75], [375, 95], [670, 75], [1030, 95], [1440, 75],
@@ -85,7 +81,6 @@ export function CircuitBackground() {
     { i: 1, color: "#22d3ee", dur: 6.4, delay: 1.1, r: 2,   layer: "far" },
     { i: 4, color: "#a78bfa", dur: 4.8, delay: 0.6, r: 2,   layer: "far" },
     { i: 6, color: "#06b6d4", dur: 7.1, delay: 2.3, r: 2,   layer: "far" },
-    { i: 9, color: "#22d3ee", dur: 5.6, delay: 1.8, r: 2,   layer: "far" },
     // Mid pulses — standard
     { i: farTraces.length + 0, color: "#06b6d4", dur: 7,  delay: 0,   r: 3.5, layer: "mid" },
     { i: farTraces.length + 1, color: "#22d3ee", dur: 9,  delay: 1.5, r: 3.5, layer: "mid" },
