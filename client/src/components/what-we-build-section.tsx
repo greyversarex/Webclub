@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   ShoppingCart, Search, Heart, Star, ArrowUpRight, ArrowLeft, Plus, Minus, Trash2, Check,
   Home, BarChart3, CreditCard, Bell, ArrowDownLeft, ShoppingBag, Coffee,
@@ -44,6 +44,7 @@ function EcomInteractive() {
   const total = cartItems.reduce((s, x) => s + x.p.price * x.qty, 0);
   const product = PRODUCTS.find((p) => p.id === selectedId)!;
 
+  const justAddedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const addToCart = (id: string) => {
     setCart((c) => {
       const i = c.findIndex((x) => x.id === id);
@@ -51,11 +52,33 @@ function EcomInteractive() {
       return [...c, { id, qty: 1 }];
     });
     setJustAdded(true);
-    setTimeout(() => setJustAdded(false), 1200);
+    if (justAddedTimer.current) clearTimeout(justAddedTimer.current);
+    justAddedTimer.current = setTimeout(() => setJustAdded(false), 1200);
   };
+  useEffect(() => () => { if (justAddedTimer.current) clearTimeout(justAddedTimer.current); }, []);
+
+  const [hovered, setHovered] = useState(false);
+  const [autoStep, setAutoStep] = useState(0);
+
+  useEffect(() => {
+    if (hovered) return;
+    const delays = [4000, 3000, 1500, 3500];
+    const cycle = autoStep % 4;
+    const pidx = Math.floor(autoStep / 4) % PRODUCTS.length;
+    const timer = setTimeout(() => {
+      switch (cycle) {
+        case 0: setSelectedId(PRODUCTS[pidx].id); setView("product"); break;
+        case 1: addToCart(PRODUCTS[pidx].id); break;
+        case 2: setView("cart"); break;
+        case 3: setCart([]); setView("catalog"); break;
+      }
+      setAutoStep(s => s + 1);
+    }, delays[cycle]);
+    return () => clearTimeout(timer);
+  }, [hovered, autoStep]);
 
   return (
-    <div className="h-[640px] flex flex-col bg-white">
+    <div className="h-[640px] flex flex-col bg-white" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       {/* Header */}
       <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200/70 bg-white z-10">
         <button onClick={() => setView("catalog")} className="flex items-center gap-2" data-testid="ecom-logo">
@@ -253,8 +276,42 @@ function BusinessInteractive() {
     { k: "contact", l: "Контакты" },
   ] as const;
 
+  const [hovered, setHovered] = useState(false);
+  const [autoStep, setAutoStep] = useState(0);
+  const [typedName, setTypedName] = useState("");
+  const [typedEmail, setTypedEmail] = useState("");
+
+  useEffect(() => {
+    if (hovered) return;
+    const delays = [4000, 3500, 3500, 5500];
+    const timer = setTimeout(() => {
+      switch (autoStep % 4) {
+        case 0: setPage("services"); break;
+        case 1: setPage("cases"); break;
+        case 2: setPage("contact"); setTypedName(""); setTypedEmail(""); break;
+        case 3: setPage("home"); break;
+      }
+      setAutoStep(s => s + 1);
+    }, delays[autoStep % 4]);
+    return () => clearTimeout(timer);
+  }, [hovered, autoStep]);
+
+  useEffect(() => {
+    if (hovered || page !== "contact") return;
+    const name = "Иван Петров";
+    const email = "ivan@company.ru";
+    if (typedName.length < name.length) {
+      const t = setTimeout(() => setTypedName(name.slice(0, typedName.length + 1)), 120);
+      return () => clearTimeout(t);
+    }
+    if (typedEmail.length < email.length) {
+      const t = setTimeout(() => setTypedEmail(email.slice(0, typedEmail.length + 1)), 90);
+      return () => clearTimeout(t);
+    }
+  }, [typedName, typedEmail, page, hovered]);
+
   return (
-    <div className="h-[640px] flex flex-col bg-white">
+    <div className="h-[640px] flex flex-col bg-white" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <div className="border-b border-slate-200/70 bg-white z-10">
         <div className="flex items-center justify-between px-5 pt-3 pb-1.5">
           <div className="flex items-center gap-2">
@@ -411,11 +468,11 @@ function BusinessInteractive() {
             <div className="space-y-2.5">
               <div>
                 <label className="text-[10px] font-semibold text-slate-600 mb-1 block">Имя</label>
-                <input type="text" placeholder="Иван Петров" className="w-full text-[11px] px-3 py-2 rounded-md border border-slate-200 focus:border-cyan-500 focus:outline-none" />
+                <input type="text" placeholder="Иван Петров" value={typedName} onChange={(e) => setTypedName(e.target.value)} className="w-full text-[11px] px-3 py-2 rounded-md border border-slate-200 focus:border-cyan-500 focus:outline-none" />
               </div>
               <div>
                 <label className="text-[10px] font-semibold text-slate-600 mb-1 block">Email</label>
-                <input type="email" placeholder="ivan@company.ru" className="w-full text-[11px] px-3 py-2 rounded-md border border-slate-200 focus:border-cyan-500 focus:outline-none" />
+                <input type="email" placeholder="ivan@company.ru" value={typedEmail} onChange={(e) => setTypedEmail(e.target.value)} className="w-full text-[11px] px-3 py-2 rounded-md border border-slate-200 focus:border-cyan-500 focus:outline-none" />
               </div>
               <div>
                 <label className="text-[10px] font-semibold text-slate-600 mb-1 block">О задаче</label>
@@ -443,9 +500,21 @@ function BusinessInteractive() {
 
 function BankInteractive() {
   const [tab, setTab] = useState<"home" | "cards" | "ops" | "stats">("home");
+  const [hovered, setHovered] = useState(false);
+  const [autoStep, setAutoStep] = useState(0);
+
+  useEffect(() => {
+    if (hovered) return;
+    const tabs: ("home" | "cards" | "ops" | "stats")[] = ["cards", "ops", "stats", "home"];
+    const timer = setTimeout(() => {
+      setTab(tabs[autoStep % 4]);
+      setAutoStep(s => s + 1);
+    }, 3500);
+    return () => clearTimeout(timer);
+  }, [hovered, autoStep]);
 
   return (
-    <div className="h-[640px] flex flex-col bg-slate-950 text-white">
+    <div className="h-[640px] flex flex-col bg-slate-950 text-white" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/5 bg-gradient-to-r from-slate-950 to-slate-900">
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 rounded-md bg-gradient-to-br from-cyan-400 to-violet-500" />
