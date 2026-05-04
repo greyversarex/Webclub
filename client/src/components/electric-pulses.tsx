@@ -31,30 +31,6 @@ function hexToRgb(hex: string) {
   return `${r},${g},${b}`;
 }
 
-function drawSpark(
-  ctx: CanvasRenderingContext2D,
-  x: number, y: number,
-  angle: number, len: number,
-  color: string, depth: number
-) {
-  if (depth <= 0 || len < 2) return;
-  const ex = x + Math.cos(angle) * len;
-  const ey = y + Math.sin(angle) * len;
-  const mx = (x + ex) / 2 + (Math.random() - 0.5) * len * 0.6;
-  const my = (y + ey) / 2 + (Math.random() - 0.5) * len * 0.6;
-
-  ctx.beginPath();
-  ctx.moveTo(x, y);
-  ctx.quadraticCurveTo(mx, my, ex, ey);
-  ctx.strokeStyle = `rgba(${hexToRgb(color)},${0.6 * depth})`;
-  ctx.lineWidth = depth * 0.8;
-  ctx.stroke();
-
-  if (Math.random() < 0.45) {
-    drawSpark(ctx, mx, my, angle + (Math.random() - 0.5) * 1.4, len * 0.55, color, depth - 1);
-  }
-}
-
 export function ElectricPulses() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -62,11 +38,15 @@ export function ElectricPulses() {
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext("2d")!;
 
+    // Hidden SVG for path measurement only
     const svgEl = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svgEl.setAttribute("viewBox", "0 0 1920 1080");
     Object.assign(svgEl.style, {
-      position: "absolute", left: "-9999px",
-      width: "1920px", height: "1080px", visibility: "hidden",
+      position: "absolute",
+      left: "-9999px",
+      width: "1920px",
+      height: "1080px",
+      visibility: "hidden",
     });
     document.body.appendChild(svgEl);
 
@@ -85,9 +65,10 @@ export function ElectricPulses() {
     resize();
     window.addEventListener("resize", resize);
 
+    // Initialise progress along path (in SVG units)
     const progresses = PULSES.map((p) => p.phase * pathLens[p.pathIdx]);
+    // Position history in SCREEN coords
     const histories: { x: number; y: number }[][] = PULSES.map(() => []);
-    const jitterSeeds = PULSES.map(() => Math.random() * 100);
 
     let lastTime = performance.now();
     let animId: number;
@@ -104,92 +85,67 @@ export function ElectricPulses() {
         const pathEl = pathEls[pulse.pathIdx];
         const len = pathLens[pulse.pathIdx];
 
+        // Advance position
         progresses[pi] = (progresses[pi] + pulse.speed * dt / 1000) % len;
         const svgPt = pathEl.getPointAtLength(progresses[pi]);
         const { x, y } = toCanvas(svgPt.x, svgPt.y);
 
+        // Record exact screen position — NO jitter here so tail stays on the line
         histories[pi].push({ x, y });
         if (histories[pi].length > TAIL_LEN) histories[pi].shift();
 
         const hist = histories[pi];
-        if (hist.length < 4) return;
+        if (hist.length < 3) return;
 
-        if (Math.random() < 0.04) jitterSeeds[pi] = Math.random() * 100;
-        const seed = jitterSeeds[pi];
+        const rgb = hexToRgb(pulse.color);
 
         ctx.save();
         ctx.globalCompositeOperation = "lighter";
 
-        // ── Outer halo glow (wide, very faint) ──────────────────────────
-        for (let i = 2; i < hist.length; i++) {
+        // ── Wide outer glow (halo) ────────────────────────────────────────
+        ctx.lineCap = "round";
+        for (let i = 1; i < hist.length; i++) {
           const t = i / hist.length;
-          const a = t * t * 0.18;
+          const a = t * t * 0.15;
           ctx.beginPath();
           ctx.moveTo(hist[i - 1].x, hist[i - 1].y);
           ctx.lineTo(hist[i].x, hist[i].y);
-          ctx.strokeStyle = `rgba(${hexToRgb(pulse.color)},${a})`;
-          ctx.lineWidth = t * 14;
-          ctx.lineCap = "round";
+          ctx.strokeStyle = `rgba(${rgb},${a})`;
+          ctx.lineWidth = t * 16;
           ctx.stroke();
         }
 
-        // ── Electric jagged core ─────────────────────────────────────────
-        for (let i = 2; i < hist.length; i++) {
+        // ── Core bright line — follows path exactly ───────────────────────
+        for (let i = 1; i < hist.length; i++) {
           const t = i / hist.length;
-          const a = Math.pow(t, 1.5) * 0.9;
-
-          const dx = hist[i].x - hist[i - 2].x;
-          const dy = hist[i].y - hist[i - 2].y;
-          const segLen = Math.sqrt(dx * dx + dy * dy) || 1;
-          const nx = -dy / segLen;
-          const ny = dx / segLen;
-
-          // Sinusoidal jitter that gives an electric/lightning look
-          const jitterAmt = (1 - t) * 7 * Math.sin(i * 5.7 + seed);
-          const mx = (hist[i - 1].x + hist[i].x) / 2 + nx * jitterAmt;
-          const my = (hist[i - 1].y + hist[i].y) / 2 + ny * jitterAmt;
-
+          const a = Math.pow(t, 1.4) * 0.95;
           ctx.beginPath();
           ctx.moveTo(hist[i - 1].x, hist[i - 1].y);
-          ctx.quadraticCurveTo(mx, my, hist[i].x, hist[i].y);
-          ctx.strokeStyle = `rgba(${hexToRgb(pulse.color)},${a})`;
+          ctx.lineTo(hist[i].x, hist[i].y);
+          ctx.strokeStyle = `rgba(${rgb},${a})`;
           ctx.lineWidth = t * 3;
-          ctx.lineCap = "round";
           ctx.stroke();
         }
 
-        // ── Head corona ──────────────────────────────────────────────────
+        // ── Head corona ───────────────────────────────────────────────────
         const head = hist[hist.length - 1];
-        const corona = ctx.createRadialGradient(head.x, head.y, 0, head.x, head.y, 28);
-        corona.addColorStop(0,   `rgba(${hexToRgb(pulse.color)},0.9)`);
-        corona.addColorStop(0.3, `rgba(${hexToRgb(pulse.color)},0.4)`);
-        corona.addColorStop(1,   `rgba(${hexToRgb(pulse.color)},0)`);
+        const corona = ctx.createRadialGradient(head.x, head.y, 0, head.x, head.y, 30);
+        corona.addColorStop(0,   `rgba(${rgb},0.85)`);
+        corona.addColorStop(0.35, `rgba(${rgb},0.35)`);
+        corona.addColorStop(1,   `rgba(${rgb},0)`);
         ctx.beginPath();
-        ctx.arc(head.x, head.y, 28, 0, Math.PI * 2);
+        ctx.arc(head.x, head.y, 30, 0, Math.PI * 2);
         ctx.fillStyle = corona;
         ctx.fill();
 
-        // ── Head core (bright white-hot dot) ────────────────────────────
+        // ── Head core dot (white-hot) ─────────────────────────────────────
         ctx.shadowColor = pulse.color;
-        ctx.shadowBlur = 18;
+        ctx.shadowBlur = 16;
         ctx.beginPath();
         ctx.arc(head.x, head.y, 3.5, 0, Math.PI * 2);
         ctx.fillStyle = "#ffffff";
         ctx.fill();
         ctx.shadowBlur = 0;
-
-        // ── Random electric sparks shooting from head ────────────────────
-        if (Math.random() < 0.25) {
-          ctx.shadowColor = pulse.color;
-          ctx.shadowBlur = 8;
-          const sparkCount = 2 + Math.floor(Math.random() * 3);
-          for (let s = 0; s < sparkCount; s++) {
-            const angle = Math.random() * Math.PI * 2;
-            const sparkLen = 10 + Math.random() * 20;
-            drawSpark(ctx, head.x, head.y, angle, sparkLen, pulse.color, 2);
-          }
-          ctx.shadowBlur = 0;
-        }
 
         ctx.restore();
       });
