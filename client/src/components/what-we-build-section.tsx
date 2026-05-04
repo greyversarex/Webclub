@@ -81,11 +81,18 @@ function EcomInteractive() {
       <div className="flex-1 overflow-y-auto custom-scroll">
         {view === "catalog" && (
           <div className="p-4 mockup-view-in">
-            <div className="relative rounded-xl bg-gradient-to-br from-violet-500 to-cyan-500 p-4 text-white mb-4 overflow-hidden">
-              <div className="absolute -top-4 -right-4 w-20 h-20 rounded-full bg-white/10 blur-xl" />
-              <div className="text-[10px] font-bold uppercase tracking-widest opacity-90">Сезонная скидка</div>
-              <div className="text-xl font-black leading-tight mt-1">До −40%<br />на коллекцию</div>
-              <div className="text-[10px] mt-2 opacity-80">До 31 декабря</div>
+            <div className="relative rounded-xl p-4 text-white mb-4 overflow-hidden h-[130px]">
+              <img
+                src="https://images.unsplash.com/photo-1556906781-9a412961c28c?auto=format&fit=crop&w=800&q=80"
+                alt="Sneakers collection"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-violet-600/85 via-violet-500/70 to-cyan-500/40" />
+              <div className="relative z-10">
+                <div className="text-[10px] font-bold uppercase tracking-widest opacity-90">Сезонная скидка</div>
+                <div className="text-xl font-black leading-tight mt-1">До −40%<br />на коллекцию</div>
+                <div className="text-[10px] mt-2 opacity-80">До 31 декабря</div>
+              </div>
             </div>
 
             <div className="flex items-center gap-1.5 mb-3">
