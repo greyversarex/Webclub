@@ -110,15 +110,8 @@ export function PortfolioSection() {
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            {t.portfolio.title}
-          </h2>
-          <p
-            className={`text-slate-900 text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
-          >
             {t.portfolio.subtitle}
-          </p>
+          </h2>
         </div>
 
         <div
