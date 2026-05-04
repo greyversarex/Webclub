@@ -43,7 +43,7 @@ export default function Home() {
       <CircuitBackground />
       <ElectricPulses />
 
-      <div className="relative">
+      <div className="relative z-10">
         <Header />
         <main>
           <HeroSection />
