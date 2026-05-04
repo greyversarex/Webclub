@@ -79,7 +79,7 @@ export default function Home() {
           <div className="relative">
             <ProcessSection />
             <SectionRobot
-              message="6 чётких этапов от брифа до запуска. Средний срок MVP — 4-6 недель. На каждом шаге вы видите прогресс."
+              message="С нами вы в безопасности и постоянно в курсе дел. Работаем прозрачно, быстро и на полную мощность!"
               side="right"
             />
           </div>
