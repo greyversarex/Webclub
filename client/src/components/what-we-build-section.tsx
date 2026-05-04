@@ -248,14 +248,16 @@ function BusinessInteractive() {
 
   return (
     <div className="h-[640px] flex flex-col bg-white">
-      <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200/70 bg-white z-10">
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-md bg-gradient-to-br from-slate-900 to-slate-700 flex items-center justify-center">
-            <span className="text-white text-[9px] font-black">A</span>
+      <div className="border-b border-slate-200/70 bg-white z-10">
+        <div className="flex items-center justify-between px-5 pt-3 pb-1.5">
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 rounded-md bg-gradient-to-br from-slate-900 to-slate-700 flex items-center justify-center">
+              <span className="text-white text-[9px] font-black">A</span>
+            </div>
+            <span className="font-display font-black text-sm text-slate-900 tracking-tight">ALTITUDE</span>
           </div>
-          <span className="font-display font-black text-sm text-slate-900 tracking-tight">ALTITUDE</span>
         </div>
-        <div className="flex gap-1">
+        <div className="flex gap-1 px-5 pb-2.5">
           {nav.map((n) => (
             <button key={n.k} onClick={() => setPage(n.k)} data-testid={`nav-${n.k}`}
               className={`text-[10px] font-semibold px-2.5 py-1 rounded-md transition-colors ${
