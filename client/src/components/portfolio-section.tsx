@@ -112,6 +112,13 @@ export function PortfolioSection() {
           >
             {t.portfolio.subtitle}
           </h2>
+          <p
+            className={`text-slate-500 text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+          >
+            {t.portfolio.title}
+          </p>
         </div>
 
         <div
