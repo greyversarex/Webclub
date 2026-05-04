@@ -62,7 +62,7 @@ function EcomInteractive() {
 
   useEffect(() => {
     if (hovered) return;
-    const delays = [4000, 3000, 1500, 3500];
+    const delays = [3400, 2500, 1200, 3000];
     const cycle = autoStep % 4;
     const pidx = Math.floor(autoStep / 4) % PRODUCTS.length;
     const timer = setTimeout(() => {
@@ -283,7 +283,7 @@ function BusinessInteractive() {
 
   useEffect(() => {
     if (hovered) return;
-    const delays = [4000, 3500, 3500, 5500];
+    const delays = [3400, 3000, 3000, 4500];
     const timer = setTimeout(() => {
       switch (autoStep % 4) {
         case 0: setPage("services"); break;
@@ -301,11 +301,11 @@ function BusinessInteractive() {
     const name = "Иван Петров";
     const email = "ivan@company.ru";
     if (typedName.length < name.length) {
-      const t = setTimeout(() => setTypedName(name.slice(0, typedName.length + 1)), 120);
+      const t = setTimeout(() => setTypedName(name.slice(0, typedName.length + 1)), 100);
       return () => clearTimeout(t);
     }
     if (typedEmail.length < email.length) {
-      const t = setTimeout(() => setTypedEmail(email.slice(0, typedEmail.length + 1)), 90);
+      const t = setTimeout(() => setTypedEmail(email.slice(0, typedEmail.length + 1)), 75);
       return () => clearTimeout(t);
     }
   }, [typedName, typedEmail, page, hovered]);
@@ -509,7 +509,7 @@ function BankInteractive() {
     const timer = setTimeout(() => {
       setTab(tabs[autoStep % 4]);
       setAutoStep(s => s + 1);
-    }, 3500);
+    }, 3000);
     return () => clearTimeout(timer);
   }, [hovered, autoStep]);
 
