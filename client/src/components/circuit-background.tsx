@@ -94,15 +94,19 @@ export function CircuitBackground() {
     { i: farTraces.length + 4, color: "#22d3ee", dur: 6,  delay: 0.4, r: 3.5, layer: "mid" },
     { i: farTraces.length + 5, color: "#a78bfa", dur: 8,  delay: 1.2, r: 3.5, layer: "mid" },
     { i: farTraces.length + 6, color: "#06b6d4", dur: 7,  delay: 0,   r: 3.5, layer: "mid" },
-    // Near pulses — large, slow, blazing
-    { i: farTraces.length + midTraces.length + 0, color: "#06b6d4", dur: 13, delay: 0,   r: 5.5, layer: "near" },
-    { i: farTraces.length + midTraces.length + 1, color: "#a78bfa", dur: 15, delay: 3.5, r: 5.5, layer: "near" },
-    { i: farTraces.length + midTraces.length + 2, color: "#22d3ee", dur: 12, delay: 7,   r: 5.5, layer: "near" },
+    // Near pulses — large, visible, blazing
+    { i: farTraces.length + midTraces.length + 0, color: "#06b6d4", dur: 8,  delay: 0,   r: 10, layer: "near" },
+    { i: farTraces.length + midTraces.length + 1, color: "#a78bfa", dur: 10, delay: 2,   r: 10, layer: "near" },
+    { i: farTraces.length + midTraces.length + 2, color: "#22d3ee", dur: 9,  delay: 4,   r: 10, layer: "near" },
+    { i: farTraces.length + midTraces.length + 0, color: "#a78bfa", dur: 8,  delay: 5,   r: 10, layer: "near" },
+    { i: farTraces.length + midTraces.length + 1, color: "#22d3ee", dur: 10, delay: 7,   r: 10, layer: "near" },
+    { i: farTraces.length + midTraces.length + 2, color: "#06b6d4", dur: 9,  delay: 1.5, r: 10, layer: "near" },
   ];
 
   return (
     <svg
       className="fixed inset-0 w-full h-full pointer-events-none"
+      style={{ zIndex: 4 }}
       viewBox="0 0 1920 1080"
       preserveAspectRatio="xMidYMid slice"
       xmlns="http://www.w3.org/2000/svg"
@@ -166,7 +170,7 @@ export function CircuitBackground() {
       </g>
 
       {/* ── PERSPECTIVE GRID FLOOR ──────────────────────────────────────── */}
-      <g stroke="#0891b2" fill="none" opacity="0.10">
+      <g stroke="#0891b2" fill="none" opacity="0.22">
         <g strokeWidth="0.5">
           {perspV.map((d, i) => <path key={i} d={d} />)}
         </g>
@@ -181,31 +185,31 @@ export function CircuitBackground() {
       </g>
 
       {/* ── FAR LAYER ───────────────────────────────────────────────────── */}
-      <g stroke="#0891b2" strokeWidth="0.5" fill="none" opacity="0.14"
+      <g stroke="#0891b2" strokeWidth="0.8" fill="none" opacity="0.30"
          strokeLinecap="round" strokeLinejoin="round">
         {farTraces.map((d, i) => <path key={i} d={d} />)}
       </g>
-      <g fill="#0891b2" opacity="0.22">
-        {farNodes.map(([x, y], i) => <circle key={i} cx={x} cy={y} r="1.5" />)}
+      <g fill="#0891b2" opacity="0.40">
+        {farNodes.map(([x, y], i) => <circle key={i} cx={x} cy={y} r="2" />)}
       </g>
 
       {/* ── MID LAYER ───────────────────────────────────────────────────── */}
-      <g stroke="#0891b2" strokeWidth="1" fill="none" opacity="0.28"
+      <g stroke="#0891b2" strokeWidth="1.5" fill="none" opacity="0.50"
          strokeLinecap="round" strokeLinejoin="round">
         {midTraces.map((d, i) => <path key={i} d={d} />)}
       </g>
       {/* Mid node halos */}
-      <g opacity="0.18">
+      <g opacity="0.30">
         {midNodes.map(([x, y], i) => (
           <circle key={i} cx={x} cy={y} r="14" fill="url(#node-halo)" />
         ))}
       </g>
-      <g fill="#0891b2" opacity="0.48">
-        {midNodes.map(([x, y], i) => <circle key={i} cx={x} cy={y} r="2.5" />)}
+      <g fill="#0891b2" opacity="0.70">
+        {midNodes.map(([x, y], i) => <circle key={i} cx={x} cy={y} r="3.5" />)}
       </g>
 
       {/* ── NEAR LAYER ──────────────────────────────────────────────────── */}
-      <g stroke="#06b6d4" strokeWidth="1.6" fill="none" opacity="0.45"
+      <g stroke="#06b6d4" strokeWidth="2.5" fill="none" opacity="0.75"
          strokeLinecap="round" filter="url(#glow-mid)">
         {nearTraces.map((d, i) => <path key={i} d={d} />)}
       </g>
