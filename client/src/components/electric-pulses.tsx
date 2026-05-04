@@ -83,7 +83,11 @@ export function ElectricPulses() {
         const pathEl = pathEls[pulse.pathIdx];
         const len = pathLens[pulse.pathIdx];
 
-        progresses[pi] = (progresses[pi] + (pulse.speed * dt) / 1000) % len;
+        const rawProgress = progresses[pi] + (pulse.speed * dt) / 1000;
+        const wrapped = rawProgress >= len;
+        progresses[pi] = rawProgress % len;
+        // Clear tail on wrap-around so the history doesn't jump across the screen
+        if (wrapped) { histories[pi] = []; return; }
         const rawPt = pathEl.getPointAtLength(progresses[pi]);
 
         // Convert SVG user coords → screen CSS pixels via the SVG's own CTM
