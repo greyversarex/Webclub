@@ -117,16 +117,43 @@
 .mockup-stagger > *:nth-child(7) { animation-delay: 280ms; }
 .mockup-stagger > *:nth-child(8) { animation-delay: 320ms; }
 
-@keyframes robot-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+@keyframes robot-bob {
+  0%, 100% { transform: translateY(0) rotate(-1.5deg); }
+  50%      { transform: translateY(-7px) rotate(1.5deg); }
+}
+.robot-bob {
+  animation: robot-bob 2.6s ease-in-out infinite;
+  transform-origin: 50% 80%;
+}
+
+@keyframes robot-wave {
+  0%, 100% { transform: rotate(0deg); }
+  20%      { transform: rotate(-35deg); }
+  40%      { transform: rotate(10deg); }
+  60%      { transform: rotate(-30deg); }
+  80%      { transform: rotate(5deg); }
+}
+.robot-wave {
+  animation: robot-wave 1.8s ease-in-out infinite;
+  transform-origin: 50px 52px;
+  transform-box: fill-box;
+}
+
+@keyframes robot-cursor {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.robot-cursor {
+  animation: robot-cursor 0.7s steps(2) infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .mockup-view-in,
   .mockup-stagger > *,
   .marquee-track,
-  [data-testid^="section-robot"] div {
+  .robot-bob,
+  .robot-wave,
+  .robot-cursor {
     animation: none !important;
   }
 }
