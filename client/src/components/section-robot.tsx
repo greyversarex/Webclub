@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 interface SectionRobotProps {
@@ -9,6 +9,10 @@ interface SectionRobotProps {
 export function SectionRobot({ message, side = "left" }: SectionRobotProps) {
   const { ref, isVisible } = useScrollAnimation();
   const isLeft = side === "left";
+  const uid = useId().replace(/:/g, "");
+  const bodyId = `rb-body-${uid}`;
+  const accentId = `rb-accent-${uid}`;
+  const eyeId = `rb-eye-${uid}`;
   const [typed, setTyped] = useState("");
   const [hasStarted, setHasStarted] = useState(false);
 
@@ -43,15 +47,15 @@ export function SectionRobot({ message, side = "left" }: SectionRobotProps) {
         <div className="robot-bob">
           <svg width="64" height="78" viewBox="0 0 64 78" fill="none">
             <defs>
-              <linearGradient id={`robot-body-${side}`} x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id={`${bodyId}`} x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#e0f2fe" />
                 <stop offset="100%" stopColor="#a5f3fc" />
               </linearGradient>
-              <linearGradient id={`robot-accent-${side}`} x1="0" y1="0" x2="1" y2="1">
+              <linearGradient id={`${accentId}`} x1="0" y1="0" x2="1" y2="1">
                 <stop offset="0%" stopColor="#06b6d4" />
                 <stop offset="100%" stopColor="#a78bfa" />
               </linearGradient>
-              <radialGradient id={`robot-eye-${side}`} cx="0.5" cy="0.5" r="0.5">
+              <radialGradient id={`${eyeId}`} cx="0.5" cy="0.5" r="0.5">
                 <stop offset="0%" stopColor="#22d3ee" />
                 <stop offset="60%" stopColor="#0891b2" />
                 <stop offset="100%" stopColor="#155e75" />
@@ -69,15 +73,15 @@ export function SectionRobot({ message, side = "left" }: SectionRobotProps) {
             </circle>
 
             {/* Head */}
-            <rect x="10" y="14" width="44" height="30" rx="12" fill={`url(#robot-body-${side})`} stroke="#06b6d4" strokeWidth="1.5" />
+            <rect x="10" y="14" width="44" height="30" rx="12" fill={`url(#${bodyId})`} stroke="#06b6d4" strokeWidth="1.5" />
             <rect x="10" y="14" width="44" height="14" rx="12" fill="#67e8f9" opacity="0.35" />
 
             {/* Eyes */}
-            <circle cx="22" cy="28" r="5" fill={`url(#robot-eye-${side})`} />
+            <circle cx="22" cy="28" r="5" fill={`url(#${eyeId})`} />
             <circle cx="22" cy="27" r="1.6" fill="#fff">
               <animate attributeName="opacity" values="1;0.3;1" dur="3s" repeatCount="indefinite" />
             </circle>
-            <circle cx="42" cy="28" r="5" fill={`url(#robot-eye-${side})`} />
+            <circle cx="42" cy="28" r="5" fill={`url(#${eyeId})`} />
             <circle cx="42" cy="27" r="1.6" fill="#fff">
               <animate attributeName="opacity" values="1;0.3;1" dur="3s" repeatCount="indefinite" />
             </circle>
@@ -101,7 +105,7 @@ export function SectionRobot({ message, side = "left" }: SectionRobotProps) {
             <rect x="28" y="44" width="8" height="3" fill="#0891b2" />
 
             {/* Body */}
-            <rect x="14" y="47" width="36" height="22" rx="8" fill={`url(#robot-body-${side})`} stroke={`url(#robot-accent-${side})`} strokeWidth="1.5" />
+            <rect x="14" y="47" width="36" height="22" rx="8" fill={`url(#${bodyId})`} stroke={`url(#${accentId})`} strokeWidth="1.5" />
             <rect x="14" y="47" width="36" height="10" rx="8" fill="#67e8f9" opacity="0.35" />
 
             {/* Body chest light */}
@@ -113,14 +117,14 @@ export function SectionRobot({ message, side = "left" }: SectionRobotProps) {
             {/* Left arm - resting */}
             <g>
               <line x1="14" y1="52" x2="6" y2="60" stroke="#06b6d4" strokeWidth="2.5" strokeLinecap="round" />
-              <circle cx="6" cy="60" r="2.5" fill={`url(#robot-accent-${side})`} stroke="#06b6d4" strokeWidth="1" />
+              <circle cx="6" cy="60" r="2.5" fill={`url(#${accentId})`} stroke="#06b6d4" strokeWidth="1" />
             </g>
 
             {/* Right arm - WAVING with rotation animation */}
             <g style={{ transformOrigin: "50px 52px", transformBox: "fill-box" }}>
               <g className="robot-wave">
                 <line x1="50" y1="52" x2="60" y2="44" stroke="#06b6d4" strokeWidth="2.5" strokeLinecap="round" />
-                <circle cx="60" cy="44" r="2.5" fill={`url(#robot-accent-${side})`} stroke="#06b6d4" strokeWidth="1" />
+                <circle cx="60" cy="44" r="2.5" fill={`url(#${accentId})`} stroke="#06b6d4" strokeWidth="1" />
               </g>
             </g>
 
