@@ -117,11 +117,17 @@
 .mockup-stagger > *:nth-child(7) { animation-delay: 280ms; }
 .mockup-stagger > *:nth-child(8) { animation-delay: 320ms; }
 
+@keyframes robot-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .mockup-view-in,
   .mockup-stagger > *,
-  .marquee-track {
-    animation: none;
+  .marquee-track,
+  [data-testid^="section-robot"] div {
+    animation: none !important;
   }
 }
 

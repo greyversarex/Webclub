@@ -10,6 +10,7 @@ import { Footer } from "@/components/footer";
 import { ChatWidget } from "@/components/chat-widget";
 import { CircuitBackground } from "@/components/circuit-background";
 import { ElectricPulses } from "@/components/electric-pulses";
+import { SectionRobot } from "@/components/section-robot";
 import geometricBg from "@assets/Визитки_Personal_(1)_1765668694348.png";
 
 export default function Home() {
@@ -47,12 +48,48 @@ export default function Home() {
         <Header />
         <main>
           <HeroSection />
-          <AppsShowcaseSection />
-          <WhatWeBuildSection />
-          <PortfolioSection />
-          <TechStackSection />
-          <ProcessSection />
-          <ContactSection />
+          <div className="relative">
+            <AppsShowcaseSection />
+            <SectionRobot
+              message="Каждое приложение — интерактивный прототип! Наведите курсор, чтобы попробовать: переводы, чаты, CRM-панели работают прямо здесь."
+              side="right"
+            />
+          </div>
+          <div className="relative">
+            <WhatWeBuildSection />
+            <SectionRobot
+              message="Три направления, три рабочих демо. E-commerce, бизнес-сайты и банковские системы — все переключаются автоматически!"
+              side="left"
+            />
+          </div>
+          <div className="relative">
+            <PortfolioSection />
+            <SectionRobot
+              message="Реальные проекты из туризма, финтеха, госсектора и ритейла. Все запущены и работают в продакшне."
+              side="right"
+            />
+          </div>
+          <div className="relative">
+            <TechStackSection />
+            <SectionRobot
+              message="React, TypeScript, Node.js, PostgreSQL — основной стек. Также работаем с Python, Flutter и облачными платформами."
+              side="left"
+            />
+          </div>
+          <div className="relative">
+            <ProcessSection />
+            <SectionRobot
+              message="6 чётких этапов от брифа до запуска. Средний срок MVP — 4-6 недель. На каждом шаге вы видите прогресс."
+              side="right"
+            />
+          </div>
+          <div className="relative">
+            <ContactSection />
+            <SectionRobot
+              message="Первая консультация бесплатно! Оставьте заявку — перезвоним в течение часа и оценим ваш проект."
+              side="left"
+            />
+          </div>
         </main>
         <Footer />
       </div>

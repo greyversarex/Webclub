@@ -71,6 +71,7 @@ shared/           # Shared code between client/server
 - Color system: Dark theme with purple accents
 - Responsive: Mobile-first with Tailwind breakpoints
 - Background: Matrix-style animated number rain effect
+- Section Robot: SVG robot mascot with speech bubble beside each section (xl+ screens), scroll-triggered fade-in, floating animation, pointer-events-none overlay. Component: `client/src/components/section-robot.tsx`, integrated in `home.tsx`
 
 ## Environment Variables
 
