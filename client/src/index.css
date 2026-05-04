@@ -93,6 +93,37 @@
   animation: slide-text-in 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
+@keyframes mockup-view-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.mockup-view-in {
+  animation: mockup-view-in 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes mockup-item-in {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.mockup-stagger > * {
+  animation: mockup-item-in 0.32s ease-out both;
+}
+.mockup-stagger > *:nth-child(1) { animation-delay: 40ms; }
+.mockup-stagger > *:nth-child(2) { animation-delay: 80ms; }
+.mockup-stagger > *:nth-child(3) { animation-delay: 120ms; }
+.mockup-stagger > *:nth-child(4) { animation-delay: 160ms; }
+.mockup-stagger > *:nth-child(5) { animation-delay: 200ms; }
+.mockup-stagger > *:nth-child(6) { animation-delay: 240ms; }
+.mockup-stagger > *:nth-child(7) { animation-delay: 280ms; }
+.mockup-stagger > *:nth-child(8) { animation-delay: 320ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mockup-view-in,
+  .mockup-stagger > * {
+    animation: none;
+  }
+}
+
 /* Mosaic tile pop-in animation — 3D fold-in with overshoot */
 @keyframes tile-pop {
   0%   { transform: perspective(480px) scale(0.05) rotateX(55deg); }

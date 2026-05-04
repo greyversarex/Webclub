@@ -80,7 +80,7 @@ function EcomInteractive() {
       {/* Body */}
       <div className="flex-1 overflow-y-auto custom-scroll">
         {view === "catalog" && (
-          <div className="p-4">
+          <div className="p-4 mockup-view-in">
             <div className="relative rounded-xl bg-gradient-to-br from-violet-500 to-cyan-500 p-4 text-white mb-4 overflow-hidden">
               <div className="absolute -top-4 -right-4 w-20 h-20 rounded-full bg-white/10 blur-xl" />
               <div className="text-[10px] font-bold uppercase tracking-widest opacity-90">Сезонная скидка</div>
@@ -101,7 +101,7 @@ function EcomInteractive() {
             </div>
 
             <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Популярное</div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3 mockup-stagger">
               {PRODUCTS.map((p) => (
                 <button key={p.id} onClick={() => { setSelectedId(p.id); setView("product"); }}
                   className="text-left group/card" data-testid={`product-${p.id}`}>
@@ -123,7 +123,7 @@ function EcomInteractive() {
         )}
 
         {view === "product" && (
-          <div>
+          <div className="mockup-view-in">
             <div className={`relative aspect-[5/4] bg-gradient-to-br ${product.bg}`}>
               <img src={product.image} alt={product.name} className="absolute inset-0 w-full h-full object-cover" />
               {product.oldPrice && (
@@ -176,7 +176,7 @@ function EcomInteractive() {
         )}
 
         {view === "cart" && (
-          <div className="p-4">
+          <div className="p-4 mockup-view-in">
             <div className="font-display font-bold text-base text-slate-900 mb-3">Корзина</div>
             {cartItems.length === 0 ? (
               <div className="text-center py-12 text-slate-400">
@@ -267,28 +267,35 @@ function BusinessInteractive() {
 
       <div className="flex-1 overflow-y-auto custom-scroll">
         {page === "home" && (
-          <>
-            <div className="relative px-5 py-7 bg-gradient-to-br from-white via-slate-50 to-cyan-50/40 overflow-hidden">
-              <div className="absolute -top-12 -right-12 w-44 h-44 rounded-full bg-gradient-to-br from-cyan-300/35 to-violet-400/20 blur-3xl" />
-              <div className="relative">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white border border-slate-200 shadow-sm text-[9px] text-slate-700 font-semibold mb-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          <div className="mockup-view-in">
+            <div className="relative h-[180px] overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
+                alt="Digital workspace"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-slate-900/20" />
+              <div className="relative h-full flex flex-col justify-end p-5">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 text-[9px] text-white font-semibold mb-2 w-fit">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                   Доступны для новых проектов
                 </div>
-                <h4 className="font-display font-black text-[22px] text-slate-900 leading-[1.1] tracking-tight mb-2.5">
-                  Создаём digital,<br />который <span className="bg-gradient-to-r from-cyan-600 to-violet-600 bg-clip-text text-transparent">влияет</span>
+                <h4 className="font-display font-black text-[20px] text-white leading-[1.1] tracking-tight">
+                  Создаём digital,<br />который <span className="text-cyan-400">влияет</span>
                 </h4>
-                <p className="text-[11px] text-slate-600 mb-4 leading-relaxed">
-                  Дизайн, разработка и продвижение для брендов, которые думают о завтра.
-                </p>
-                <div className="flex gap-2">
-                  <button onClick={() => setPage("contact")} className="bg-slate-900 text-white text-[11px] font-semibold px-3.5 py-2 rounded-md flex items-center gap-1.5 hover:bg-cyan-600 transition-colors">
-                    Начать проект <ArrowUpRight className="w-3 h-3" />
-                  </button>
-                  <button onClick={() => setPage("cases")} className="text-[11px] font-semibold text-slate-700 px-3.5 py-2 rounded-md border border-slate-300 bg-white hover:bg-slate-50">
-                    Кейсы
-                  </button>
-                </div>
+              </div>
+            </div>
+            <div className="px-5 py-4">
+              <p className="text-[11px] text-slate-600 leading-relaxed mb-3">
+                Дизайн, разработка и продвижение для брендов, которые думают о завтра.
+              </p>
+              <div className="flex gap-2">
+                <button onClick={() => setPage("contact")} className="bg-slate-900 text-white text-[11px] font-semibold px-3.5 py-2 rounded-md flex items-center gap-1.5 hover:bg-cyan-600 transition-colors">
+                  Начать проект <ArrowUpRight className="w-3 h-3" />
+                </button>
+                <button onClick={() => setPage("cases")} className="text-[11px] font-semibold text-slate-700 px-3.5 py-2 rounded-md border border-slate-300 bg-white hover:bg-slate-50">
+                  Кейсы
+                </button>
               </div>
             </div>
             <div className="px-5 py-3 border-t border-slate-200/70 bg-slate-50/60">
@@ -305,20 +312,33 @@ function BusinessInteractive() {
                 </div>
               ))}
             </div>
-            <div className="p-5">
-              <div className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-2">О нас</div>
-              <p className="text-[11px] text-slate-700 leading-relaxed">
-                Команда из 28 человек: продуктовые дизайнеры, инженеры и маркетологи. С 2009 года помогаем компаниям расти через digital-продукты.
-              </p>
+            <div className="px-5 py-4 border-t border-slate-200/70">
+              <div className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-2.5">Направления</div>
+              <div className="grid grid-cols-2 gap-2 mockup-stagger">
+                {[
+                  { i: Briefcase, t: "Стратегия", c: "from-cyan-500 to-blue-500" },
+                  { i: Award, t: "UX/UI дизайн", c: "from-violet-500 to-purple-500" },
+                  { i: Users, t: "Разработка", c: "from-rose-500 to-amber-500" },
+                  { i: TrendingUp, t: "Маркетинг", c: "from-emerald-500 to-teal-500" },
+                ].map((s, idx) => (
+                  <button key={idx} onClick={() => setPage("services")}
+                    className="flex items-center gap-2 p-2.5 rounded-lg border border-slate-200/70 hover:border-slate-300 transition-all hover:shadow-sm">
+                    <div className={`w-7 h-7 rounded-lg bg-gradient-to-br ${s.c} flex items-center justify-center flex-shrink-0`}>
+                      <s.i className="w-3.5 h-3.5 text-white" />
+                    </div>
+                    <span className="text-[11px] font-bold text-slate-700">{s.t}</span>
+                  </button>
+                ))}
+              </div>
             </div>
-          </>
+          </div>
         )}
 
         {page === "services" && (
-          <div className="p-5">
+          <div className="p-5 mockup-view-in">
             <div className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1">Услуги</div>
             <h4 className="font-display font-black text-[20px] text-slate-900 leading-tight mb-4">Что мы делаем</h4>
-            <div className="space-y-3">
+            <div className="space-y-3 mockup-stagger">
               {[
                 { i: Briefcase, t: "Стратегия и брендинг", d: "Позиционирование, нейминг, фирменный стиль и гайдлайны.", c: "from-cyan-500 to-blue-500" },
                 { i: Award, t: "Дизайн продуктов", d: "UX/UI для веба, мобильных и десктоп-приложений.", c: "from-violet-500 to-purple-500" },
@@ -341,10 +361,10 @@ function BusinessInteractive() {
         )}
 
         {page === "cases" && (
-          <div className="p-5">
+          <div className="p-5 mockup-view-in">
             <div className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1">Кейсы</div>
             <h4 className="font-display font-black text-[20px] text-slate-900 leading-tight mb-4">Избранные работы</h4>
-            <div className="space-y-3">
+            <div className="space-y-3 mockup-stagger">
               {[
                 { t: "HUAWEI Cloud", c: "Tech", img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=500&q=80", r: "+47% conversion" },
                 { t: "KASPI Marketplace", c: "E-commerce", img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=500&q=80", r: "1.2M MAU" },
@@ -368,7 +388,7 @@ function BusinessInteractive() {
         )}
 
         {page === "contact" && (
-          <div className="p-5">
+          <div className="p-5 mockup-view-in">
             <div className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1">Контакты</div>
             <h4 className="font-display font-black text-[20px] text-slate-900 leading-tight mb-4">Расскажите о проекте</h4>
             <div className="space-y-2.5">
@@ -428,7 +448,7 @@ function BankInteractive() {
 
       <div className="flex-1 overflow-y-auto custom-scroll-dark">
         {tab === "home" && (
-          <div className="px-5 py-5 relative">
+          <div className="px-5 py-5 relative mockup-view-in">
             <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-cyan-500/15 blur-3xl pointer-events-none" />
             <div className="relative">
               <div className="text-[10px] uppercase tracking-[0.2em] text-slate-400 mb-1 font-semibold">Общий баланс</div>
@@ -461,7 +481,7 @@ function BankInteractive() {
                 ))}
               </div>
               <div className="text-[10px] text-slate-400 uppercase tracking-[0.2em] font-bold mb-2">Последние</div>
-              <div className="space-y-2">
+              <div className="space-y-2 mockup-stagger">
                 {[
                   { n: "Зарплата", s: "ООО Технологии", a: "+85 000", p: true, I: ArrowDownLeft },
                   { n: "Wildberries", s: "Покупка", a: "−12 540", p: false, I: ShoppingBag },
@@ -484,7 +504,7 @@ function BankInteractive() {
         )}
 
         {tab === "cards" && (
-          <div className="p-5 space-y-4">
+          <div className="p-5 space-y-4 mockup-view-in">
             <div className="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-bold">Мои карты</div>
             {[
               { name: "PLATINUM", num: "•••• 4892", bal: "248 500 ₽", grad: "from-slate-700 via-slate-800 to-slate-950" },
@@ -514,7 +534,7 @@ function BankInteractive() {
         )}
 
         {tab === "ops" && (
-          <div className="p-5">
+          <div className="p-5 mockup-view-in">
             <div className="flex items-center justify-between mb-3">
               <div className="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-bold">Операции</div>
               <button className="text-[10px] text-cyan-400 font-bold flex items-center gap-1"><Filter className="w-3 h-3" />Фильтр</button>
@@ -557,11 +577,11 @@ function BankInteractive() {
         )}
 
         {tab === "stats" && (
-          <div className="p-5">
+          <div className="p-5 mockup-view-in">
             <div className="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-bold mb-1">Аналитика · Апрель</div>
             <div className="text-[24px] font-black tabular-nums leading-none mb-1">62 458 ₽</div>
             <div className="text-[10px] text-slate-500 mb-4">расходы за месяц</div>
-            <div className="space-y-2.5">
+            <div className="space-y-2.5 mockup-stagger">
               {[
                 { c: "Продукты", v: 18420, p: 30, color: "from-cyan-500 to-blue-500" },
                 { c: "Транспорт", v: 12100, p: 19, color: "from-violet-500 to-purple-500" },
