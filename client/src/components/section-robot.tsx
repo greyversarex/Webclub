@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 interface SectionRobotProps {
@@ -14,19 +14,19 @@ export function SectionRobot({ message, side = "left" }: SectionRobotProps) {
   const accentId = `rb-accent-${uid}`;
   const eyeId = `rb-eye-${uid}`;
   const [typed, setTyped] = useState("");
-  const [hasStarted, setHasStarted] = useState(false);
+  const startedRef = useRef(false);
 
   useEffect(() => {
-    if (!isVisible || hasStarted) return;
-    setHasStarted(true);
+    if (!isVisible || startedRef.current) return;
+    startedRef.current = true;
     let i = 0;
     const interval = setInterval(() => {
       i++;
       setTyped(message.slice(0, i));
       if (i >= message.length) clearInterval(interval);
-    }, 28);
+    }, 32);
     return () => clearInterval(interval);
-  }, [isVisible, hasStarted, message]);
+  }, [isVisible, message]);
 
   const isTyping = typed.length < message.length;
 
