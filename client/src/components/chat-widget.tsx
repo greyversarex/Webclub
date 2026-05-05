@@ -280,21 +280,21 @@ export function ChatWidget() {
           dismissTeaser();
           setIsOpen((prev) => !prev);
         }}
-        className={`fixed bottom-6 left-6 z-50 w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 ${
+        className={`fixed bottom-6 left-6 z-50 w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 ${
           isOpen
-            ? "bg-slate-700 hover:bg-slate-800 shadow-lg"
-            : "bg-gradient-to-br from-violet-500 to-purple-700 shadow-md shadow-violet-400/30 hover:shadow-lg hover:shadow-violet-500/40 hover:scale-105"
+            ? "bg-gradient-to-r from-slate-300 via-slate-200 to-slate-300 shadow-md shadow-slate-300/20 hover:shadow-lg"
+            : "bg-gradient-to-r from-slate-300 via-slate-200 to-slate-300 shadow-md shadow-slate-300/20 hover:shadow-lg hover:scale-105"
         } ${showTeaser && !isOpen ? "animate-bounce-subtle" : ""}`}
         data-testid="button-chat-toggle"
       >
         {isOpen ? (
-          <X className="w-6 h-6 text-white" />
+          <X className="w-6 h-6 text-slate-700" />
         ) : (
           <>
-            <MessageCircle className="w-6 h-6 text-white" />
+            <MessageCircle className="w-6 h-6 text-slate-700" />
             <span className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white" />
             {showTeaser && (
-              <span className="absolute inset-0 rounded-full bg-violet-500 animate-ping opacity-40" />
+              <span className="absolute inset-0 rounded-2xl bg-slate-400 animate-ping opacity-30" />
             )}
           </>
         )}
