@@ -65,7 +65,7 @@ export default function Home() {
           <div className="relative">
             <PortfolioSection />
             <SectionRobot
-              message="Реальные проекты из туризма, финтеха, госсектора и ритейла. Все запущены и работают в продакшне."
+              message="Реальные проекты для бизнеса, финтеха, госсектора и ритейла."
               side="right"
             />
           </div>
