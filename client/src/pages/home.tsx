@@ -51,14 +51,14 @@ export default function Home() {
           <div className="relative">
             <AppsShowcaseSection />
             <SectionRobot
-              message="Каждое приложение — интерактивный прототип! Наведите курсор, чтобы попробовать: переводы, чаты, CRM-панели работают прямо здесь."
+              message="Хотите, чтобы ваш бизнес охватил весь мир? Мы это устроим!"
               side="right"
             />
           </div>
           <div className="relative">
             <WhatWeBuildSection />
             <SectionRobot
-              message="Три направления, три рабочих демо. E-commerce, бизнес-сайты и банковские системы — все переключаются автоматически!"
+              message="Мы воплощаем любые идеи в жизнь. С нами у вас нет ограничений!"
               side="left"
             />
           </div>
@@ -86,7 +86,7 @@ export default function Home() {
           <div className="relative">
             <ContactSection />
             <SectionRobot
-              message="Первая консультация бесплатно! Оставьте заявку — перезвоним в течение часа и оценим ваш проект."
+              message="Давайте обсудим ваш проект прямо сейчас!"
               side="left"
             />
           </div>
