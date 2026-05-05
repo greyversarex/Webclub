@@ -7,15 +7,15 @@ const NEAR_TRACES = [
 ];
 
 const PULSES = [
-  { pathIdx: 0, color: "#06b6d4", speed: 160, phase: 0.00 },
-  { pathIdx: 1, color: "#a78bfa", speed: 140, phase: 0.40 },
-  { pathIdx: 2, color: "#22d3ee", speed: 150, phase: 0.70 },
-  { pathIdx: 0, color: "#a78bfa", speed: 160, phase: 0.55 },
-  { pathIdx: 1, color: "#22d3ee", speed: 140, phase: 0.85 },
-  { pathIdx: 2, color: "#06b6d4", speed: 150, phase: 0.20 },
+  { pathIdx: 0, color: "#06b6d4", speed: 160, phase: 0.00, size: 1.6 },
+  { pathIdx: 1, color: "#a78bfa", speed: 140, phase: 0.40, size: 1.0 },
+  { pathIdx: 2, color: "#22d3ee", speed: 150, phase: 0.70, size: 1.0 },
+  { pathIdx: 0, color: "#a78bfa", speed: 160, phase: 0.55, size: 1.0 },
+  { pathIdx: 1, color: "#22d3ee", speed: 140, phase: 0.85, size: 1.5 },
+  { pathIdx: 2, color: "#06b6d4", speed: 150, phase: 0.20, size: 1.0 },
 ];
 
-const TAIL_LEN = 110;
+const BASE_TAIL = 90;
 
 function hexToRgb(hex: string) {
   const r = parseInt(hex.slice(1, 3), 16);
@@ -96,8 +96,9 @@ export function ElectricPulses() {
         svgPt.y = rawPt.y;
         const { x, y } = svgPt.matrixTransform(ctm);
 
+        const tailLen = Math.round(BASE_TAIL * pulse.size);
         histories[pi].push({ x, y });
-        if (histories[pi].length > TAIL_LEN) histories[pi].shift();
+        if (histories[pi].length > tailLen) histories[pi].shift();
 
         const hist = histories[pi];
         if (hist.length < 3) return;
@@ -108,48 +109,51 @@ export function ElectricPulses() {
         ctx.globalCompositeOperation = "lighter";
         ctx.lineCap = "round";
 
-        // ── Soft outer glow halo ──────────────────────────────────────────
+        const sz = pulse.size;
+
+        // ── Outer glow halo ───────────────────────────────────────────────
         for (let i = 1; i < hist.length; i++) {
           const t = i / hist.length;
           ctx.beginPath();
           ctx.moveTo(hist[i - 1].x, hist[i - 1].y);
           ctx.lineTo(hist[i].x, hist[i].y);
-          ctx.strokeStyle = `rgba(${rgb},${t * t * 0.07})`;
-          ctx.lineWidth = t * 8;
+          ctx.strokeStyle = `rgba(${rgb},${t * t * 0.09 * sz})`;
+          ctx.lineWidth = t * 9 * sz;
           ctx.stroke();
         }
 
-        // ── Core thin line ────────────────────────────────────────────────
+        // ── Core line ─────────────────────────────────────────────────────
         for (let i = 1; i < hist.length; i++) {
           const t = i / hist.length;
           ctx.beginPath();
           ctx.moveTo(hist[i - 1].x, hist[i - 1].y);
           ctx.lineTo(hist[i].x, hist[i].y);
-          ctx.strokeStyle = `rgba(${rgb},${Math.pow(t, 1.6) * 0.65})`;
-          ctx.lineWidth = t * 1.4;
+          ctx.strokeStyle = `rgba(${rgb},${Math.pow(t, 1.5) * 0.75})`;
+          ctx.lineWidth = t * 1.6 * sz;
           ctx.stroke();
         }
 
         // ── Head corona ───────────────────────────────────────────────────
         const head = hist[hist.length - 1];
+        const coronaR = 16 * sz;
         const corona = ctx.createRadialGradient(
           head.x, head.y, 0,
-          head.x, head.y, 16
+          head.x, head.y, coronaR
         );
-        corona.addColorStop(0,    `rgba(${rgb},0.55)`);
-        corona.addColorStop(0.4,  `rgba(${rgb},0.18)`);
+        corona.addColorStop(0,    `rgba(${rgb},${0.6 * sz})`);
+        corona.addColorStop(0.4,  `rgba(${rgb},${0.2 * sz})`);
         corona.addColorStop(1,    `rgba(${rgb},0)`);
         ctx.beginPath();
-        ctx.arc(head.x, head.y, 16, 0, Math.PI * 2);
+        ctx.arc(head.x, head.y, coronaR, 0, Math.PI * 2);
         ctx.fillStyle = corona;
         ctx.fill();
 
         // ── Head dot ──────────────────────────────────────────────────────
         ctx.shadowColor = pulse.color;
-        ctx.shadowBlur = 8;
+        ctx.shadowBlur = 10 * sz;
         ctx.beginPath();
-        ctx.arc(head.x, head.y, 1.8, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${rgb},0.95)`;
+        ctx.arc(head.x, head.y, 2 * sz, 0, Math.PI * 2);
+        ctx.fillStyle = sz >= 1.4 ? "#ffffff" : `rgba(${rgb},0.95)`;
         ctx.fill();
         ctx.shadowBlur = 0;
 
