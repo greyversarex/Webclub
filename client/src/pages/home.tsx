@@ -5,6 +5,7 @@ import { AppsShowcaseSection } from "@/components/apps-showcase-section";
 import { PortfolioSection } from "@/components/portfolio-section";
 import { TechStackSection } from "@/components/tech-stack-section";
 import { ProcessSection } from "@/components/process-section";
+import { TestimonialsSection } from "@/components/testimonials-section";
 import { ContactSection } from "@/components/contact-section";
 import { Footer } from "@/components/footer";
 import { ChatWidget } from "@/components/chat-widget";
@@ -81,6 +82,13 @@ export default function Home() {
             <SectionRobot
               message="С нами вы в безопасности и постоянно в курсе дел. Работаем прозрачно, быстро и на полную мощность!"
               side="right"
+            />
+          </div>
+          <div className="relative">
+            <TestimonialsSection />
+            <SectionRobot
+              message="Уже 50+ компаний доверились нам. Вы следующий?"
+              side="left"
             />
           </div>
           <div className="relative">

@@ -128,11 +128,32 @@ export function HeroSection() {
               })}
             </div>
 
+            {/* ── Stats counter ─────────────────────────────────── */}
+            <div className="grid grid-cols-3 gap-3 mb-10">
+              {[
+                { value: "100+", label: t.hero.stats.projects },
+                { value: "8+", label: t.hero.stats.experience },
+                { value: "24/7", label: t.hero.stats.support },
+              ].map((stat, i) => (
+                <div
+                  key={i}
+                  className="group relative flex flex-col items-center justify-center py-3.5 rounded-2xl border border-slate-200/80 bg-white/70 backdrop-blur-sm shadow-[0_2px_12px_rgba(0,0,0,0.06)] transition-all duration-300 hover:shadow-[0_0_0_1.5px_rgba(139,92,246,0.35),0_4px_20px_rgba(139,92,246,0.12)] hover:-translate-y-0.5"
+                >
+                  <span className="font-display font-black text-2xl md:text-3xl text-transparent bg-gradient-to-br from-violet-600 to-cyan-500 bg-clip-text leading-none mb-1">
+                    {stat.value}
+                  </span>
+                  <span className="text-[11px] md:text-xs text-slate-500 font-medium text-center leading-tight">
+                    {stat.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+
             <div className="flex flex-wrap gap-4 mb-12">
               <Button
                 size="lg"
                 onClick={scrollToContact}
-                className="bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 text-slate-800 border-slate-300 shadow-lg shadow-slate-300/25"
+                className="relative overflow-hidden bg-gradient-to-r from-violet-600 to-violet-500 text-white border-0 shadow-[0_4px_20px_rgba(139,92,246,0.45)] hover:shadow-[0_6px_28px_rgba(139,92,246,0.6)] hover:-translate-y-0.5 transition-all duration-200"
                 data-testid="button-discuss-project"
               >
                 {t.hero.discussProject}
