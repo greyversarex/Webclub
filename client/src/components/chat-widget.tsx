@@ -280,10 +280,10 @@ export function ChatWidget() {
           dismissTeaser();
           setIsOpen((prev) => !prev);
         }}
-        className={`fixed bottom-6 left-6 z-50 w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 ${
+        className={`fixed bottom-6 left-6 z-50 w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 ${
           isOpen
-            ? "bg-slate-700 hover:bg-slate-800 rotate-0"
-            : "bg-violet-600 hover:bg-violet-700"
+            ? "bg-slate-700 hover:bg-slate-800 shadow-lg"
+            : "bg-gradient-to-br from-violet-500 to-purple-700 shadow-md shadow-violet-400/30 hover:shadow-lg hover:shadow-violet-500/40 hover:scale-105"
         } ${showTeaser && !isOpen ? "animate-bounce-subtle" : ""}`}
         data-testid="button-chat-toggle"
       >

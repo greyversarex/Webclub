@@ -150,21 +150,18 @@ export function HeroSection() {
             </div>
 
             <div className="flex flex-wrap gap-4 mb-12">
-              <button
+              <Button
+                size="lg"
                 onClick={scrollToContact}
-                className="flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-br from-violet-600 to-purple-700 text-white font-medium shadow-md shadow-violet-400/30 hover:shadow-lg hover:shadow-violet-500/40 hover:-translate-y-0.5 transition-all text-base"
+                className="bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 text-slate-800 border-slate-300 shadow-lg shadow-slate-300/25"
                 data-testid="button-discuss-project"
               >
-                <ArrowRight className="w-5 h-5" />
                 {t.hero.discussProject}
-              </button>
-              <button
-                onClick={scrollToServices}
-                className="flex items-center gap-2 px-6 py-3 rounded-lg border border-slate-300 bg-white/60 backdrop-blur-sm text-slate-700 font-medium shadow-sm hover:border-violet-300 hover:text-violet-700 hover:bg-white/80 hover:-translate-y-0.5 transition-all text-base"
-                data-testid="button-our-services"
-              >
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+              <Button variant="outline" size="lg" onClick={scrollToServices} data-testid="button-our-services">
                 {t.hero.ourServices}
-              </button>
+              </Button>
             </div>
 
           </div>
