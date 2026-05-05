@@ -15,7 +15,7 @@ const PULSES = [
   { pathIdx: 2, color: "#06b6d4", speed: 150, phase: 0.20 },
 ];
 
-const TAIL_LEN = 90;
+const TAIL_LEN = 110;
 
 function hexToRgb(hex: string) {
   const r = parseInt(hex.slice(1, 3), 16);
@@ -108,25 +108,25 @@ export function ElectricPulses() {
         ctx.globalCompositeOperation = "lighter";
         ctx.lineCap = "round";
 
-        // ── Wide outer glow halo ──────────────────────────────────────────
+        // ── Soft outer glow halo ──────────────────────────────────────────
         for (let i = 1; i < hist.length; i++) {
           const t = i / hist.length;
           ctx.beginPath();
           ctx.moveTo(hist[i - 1].x, hist[i - 1].y);
           ctx.lineTo(hist[i].x, hist[i].y);
-          ctx.strokeStyle = `rgba(${rgb},${t * t * 0.14})`;
-          ctx.lineWidth = t * 16;
+          ctx.strokeStyle = `rgba(${rgb},${t * t * 0.07})`;
+          ctx.lineWidth = t * 8;
           ctx.stroke();
         }
 
-        // ── Core bright line ──────────────────────────────────────────────
+        // ── Core thin line ────────────────────────────────────────────────
         for (let i = 1; i < hist.length; i++) {
           const t = i / hist.length;
           ctx.beginPath();
           ctx.moveTo(hist[i - 1].x, hist[i - 1].y);
           ctx.lineTo(hist[i].x, hist[i].y);
-          ctx.strokeStyle = `rgba(${rgb},${Math.pow(t, 1.4) * 0.95})`;
-          ctx.lineWidth = t * 3;
+          ctx.strokeStyle = `rgba(${rgb},${Math.pow(t, 1.6) * 0.65})`;
+          ctx.lineWidth = t * 1.4;
           ctx.stroke();
         }
 
@@ -134,22 +134,22 @@ export function ElectricPulses() {
         const head = hist[hist.length - 1];
         const corona = ctx.createRadialGradient(
           head.x, head.y, 0,
-          head.x, head.y, 28
+          head.x, head.y, 16
         );
-        corona.addColorStop(0,    `rgba(${rgb},0.85)`);
-        corona.addColorStop(0.35, `rgba(${rgb},0.35)`);
+        corona.addColorStop(0,    `rgba(${rgb},0.55)`);
+        corona.addColorStop(0.4,  `rgba(${rgb},0.18)`);
         corona.addColorStop(1,    `rgba(${rgb},0)`);
         ctx.beginPath();
-        ctx.arc(head.x, head.y, 28, 0, Math.PI * 2);
+        ctx.arc(head.x, head.y, 16, 0, Math.PI * 2);
         ctx.fillStyle = corona;
         ctx.fill();
 
-        // ── White-hot core dot ────────────────────────────────────────────
+        // ── Head dot ──────────────────────────────────────────────────────
         ctx.shadowColor = pulse.color;
-        ctx.shadowBlur = 16;
+        ctx.shadowBlur = 8;
         ctx.beginPath();
-        ctx.arc(head.x, head.y, 3.5, 0, Math.PI * 2);
-        ctx.fillStyle = "#ffffff";
+        ctx.arc(head.x, head.y, 1.8, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${rgb},0.95)`;
         ctx.fill();
         ctx.shadowBlur = 0;
 
