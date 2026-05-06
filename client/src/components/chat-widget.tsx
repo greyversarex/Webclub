@@ -292,7 +292,7 @@ export function ChatWidget() {
           <X className="w-6 h-6 text-white" />
         ) : (
           <>
-            <MessageCircle className="w-6 h-6 text-white" />
+            <span className="font-bold text-white text-lg tracking-tight leading-none select-none">AI</span>
             <span className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white" />
             {showTeaser && (
               <span className="absolute inset-0 rounded-full bg-violet-500 animate-ping opacity-40" />
