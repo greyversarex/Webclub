@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Phone, Send, Loader2, MapPin } from "lucide-react";
-import { MiniRunnerGame } from "@/components/mini-runner-game";
 import { SiTelegram, SiWhatsapp } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -200,8 +199,6 @@ export function ContactSection() {
                   </>
                 )}
               </Button>
-
-              <MiniRunnerGame />
             </form>
           </Card>
 
