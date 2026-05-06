@@ -280,11 +280,12 @@ export function ChatWidget() {
           dismissTeaser();
           setIsOpen((prev) => !prev);
         }}
-        className={`fixed bottom-6 left-6 z-50 w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 ${
-          isOpen
-            ? "bg-gradient-to-br from-blue-500 to-violet-600 shadow-lg shadow-violet-400/40 hover:shadow-xl hover:shadow-violet-500/50"
-            : "bg-gradient-to-br from-blue-500 to-violet-600 shadow-lg shadow-violet-400/40 hover:shadow-xl hover:shadow-violet-500/50 hover:scale-105"
-        } ${showTeaser && !isOpen ? "animate-bounce-subtle" : ""}`}
+        className={`fixed bottom-6 left-6 z-50 w-14 h-14 rounded-full flex items-center justify-center text-white transition-all duration-300
+          bg-gradient-to-br from-violet-600 to-cyan-500
+          shadow-[0_4px_20px_rgba(139,92,246,0.5)]
+          hover:shadow-[0_6px_28px_rgba(139,92,246,0.65)]
+          hover:scale-105 active:scale-95
+          ${showTeaser && !isOpen ? "animate-bounce-subtle" : ""}`}
         data-testid="button-chat-toggle"
       >
         {isOpen ? (
