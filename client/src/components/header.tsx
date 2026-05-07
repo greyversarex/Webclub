@@ -40,13 +40,7 @@ export function Header() {
   ];
 
   return (
-    <header
-      className={`header-shimmer fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "backdrop-blur-xl shadow-lg shadow-black/10"
-          : "backdrop-blur-md"
-      }`}
-    >
+    <header className="fixed top-0 left-0 right-0 z-50">
       <FallingNumbers direction="down" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         <div className="flex items-center justify-between h-16 md:h-20 gap-4">
