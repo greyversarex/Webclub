@@ -11,6 +11,7 @@ import { Footer } from "@/components/footer";
 import { ChatWidget } from "@/components/chat-widget";
 import { CircuitBackground } from "@/components/circuit-background";
 import { ElectricPulses } from "@/components/electric-pulses";
+import { CursorIllumination } from "@/components/cursor-illumination";
 import { SectionRobot } from "@/components/section-robot";
 import geometricBg from "@assets/Визитки_Personal_(1)_1765668694348.png";
 
@@ -44,6 +45,7 @@ export default function Home() {
 
       <CircuitBackground />
       <ElectricPulses />
+      <CursorIllumination />
 
       <div className="relative z-10">
         <Header />

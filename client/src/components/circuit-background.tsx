@@ -174,43 +174,43 @@ export function CircuitBackground() {
       </g>
 
       {/* ── FAR LAYER ───────────────────────────────────────────────────── */}
-      <g stroke="#0891b2" strokeWidth="0.8" fill="none" opacity="0.30"
+      <g stroke="#0891b2" strokeWidth="0.8" fill="none" opacity="0.10"
          strokeLinecap="round" strokeLinejoin="round">
         {farTraces.map((d, i) => <path key={i} d={d} />)}
       </g>
-      <g fill="#0891b2" opacity="0.40">
+      <g fill="#0891b2" opacity="0.14">
         {farNodes.map(([x, y], i) => <circle key={i} cx={x} cy={y} r="2" />)}
       </g>
 
       {/* ── MID LAYER ───────────────────────────────────────────────────── */}
-      <g stroke="#0891b2" strokeWidth="1.5" fill="none" opacity="0.50"
+      <g stroke="#0891b2" strokeWidth="1.5" fill="none" opacity="0.16"
          strokeLinecap="round" strokeLinejoin="round">
         {midTraces.map((d, i) => <path key={i} d={d} />)}
       </g>
       {/* Mid node halos */}
-      <g opacity="0.30">
+      <g opacity="0.08">
         {midNodes.map(([x, y], i) => (
           <circle key={i} cx={x} cy={y} r="14" fill="url(#node-halo)" />
         ))}
       </g>
-      <g fill="#0891b2" opacity="0.70">
+      <g fill="#0891b2" opacity="0.22">
         {midNodes.map(([x, y], i) => <circle key={i} cx={x} cy={y} r="3.5" />)}
       </g>
 
       {/* ── NEAR LAYER ──────────────────────────────────────────────────── */}
-      <g stroke="#06b6d4" strokeWidth="2.5" fill="none" opacity="0.75"
+      <g stroke="#06b6d4" strokeWidth="2.5" fill="none" opacity="0.22"
          strokeLinecap="round" filter="url(#glow-mid)">
         {nearTraces.map((d, i) => <path key={i} d={d} />)}
       </g>
       {/* Near node halos */}
-      <g opacity="0.35">
+      <g opacity="0.10">
         {nearNodes.map(([x, y], i) => (
           <circle key={i} cx={x} cy={y} r="22"
             fill={i % 2 === 0 ? "url(#node-halo)" : "url(#node-halo-v)"} />
         ))}
       </g>
       {/* Hexagonal near nodes */}
-      <g filter="url(#glow-mid)" opacity="0.85">
+      <g filter="url(#glow-mid)" opacity="0.28">
         {nearNodes.map(([x, y], i) => (
           <path key={i} d={hex(x, y, 5)}
             fill={i % 2 === 0 ? "#06b6d4" : "#a78bfa"}
