@@ -7,7 +7,6 @@ import { TechStackSection } from "@/components/tech-stack-section";
 import { ProcessSection } from "@/components/process-section";
 import { TestimonialsSection } from "@/components/testimonials-section";
 import { ContactSection } from "@/components/contact-section";
-import { Footer } from "@/components/footer";
 import { ChatWidget } from "@/components/chat-widget";
 import { CircuitBackground } from "@/components/circuit-background";
 import { ElectricPulses } from "@/components/electric-pulses";
@@ -101,7 +100,6 @@ export default function Home() {
             />
           </div>
         </main>
-        <Footer />
       </div>
       <ChatWidget />
     </div>

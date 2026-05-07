@@ -43,8 +43,8 @@ export function Header() {
     <header
       className={`header-shimmer fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-gradient-to-r from-slate-200 via-slate-100 via-50% to-slate-200 backdrop-blur-xl border-b border-slate-300/50 shadow-lg shadow-slate-300/20"
-          : "bg-gradient-to-r from-slate-200/95 via-slate-100/95 via-50% to-slate-200/95 backdrop-blur-md border-b border-transparent"
+          ? "backdrop-blur-xl shadow-lg shadow-black/10"
+          : "backdrop-blur-md"
       }`}
     >
       <FallingNumbers direction="down" />
