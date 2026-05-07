@@ -690,17 +690,10 @@ function InteractiveLaptop() {
 export function AppsShowcaseSection() {
   const { t } = useLanguage();
   const { ref, isVisible } = useScrollAnimation();
-  const [anyHovered, setAnyHovered] = useState(false);
 
   return (
-    <section ref={ref} className="py-16 md:py-24 relative overflow-hidden" data-testid="section-apps-showcase">
-      {/* Darkening overlay — appears on device hover to hint interactivity */}
-      <div
-        className={`absolute inset-0 bg-black pointer-events-none transition-opacity duration-500 ${anyHovered ? "opacity-20" : "opacity-0"}`}
-        style={{ zIndex: 1 }}
-      />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative" style={{ zIndex: 2 }}>
+    <section ref={ref} className="py-16 md:py-24 relative" data-testid="section-apps-showcase">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
         <div className="text-center mb-12 md:mb-16">
           <h2 className={`font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-800 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} data-testid="heading-apps-showcase">
             {t.appsShowcase.title}
@@ -711,12 +704,7 @@ export function AppsShowcaseSection() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div
-            className={`lg:col-span-4 flex flex-col items-center transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}
-            style={{ transitionDelay: "200ms" }}
-            onMouseEnter={() => setAnyHovered(true)}
-            onMouseLeave={() => setAnyHovered(false)}
-          >
+          <div className={`lg:col-span-4 flex flex-col items-center transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`} style={{ transitionDelay: "200ms" }}>
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 text-white shadow-md mb-6">
               <Smartphone className="w-3.5 h-3.5 text-cyan-400" strokeWidth={2.4} />
               <span className="font-mono text-[11px] tracking-[0.2em] uppercase font-bold">
@@ -726,12 +714,7 @@ export function AppsShowcaseSection() {
             <InteractivePhone />
           </div>
 
-          <div
-            className={`lg:col-span-8 flex flex-col items-center transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
-            style={{ transitionDelay: "350ms" }}
-            onMouseEnter={() => setAnyHovered(true)}
-            onMouseLeave={() => setAnyHovered(false)}
-          >
+          <div className={`lg:col-span-8 flex flex-col items-center transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`} style={{ transitionDelay: "350ms" }}>
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 text-white shadow-md mb-6">
               <Monitor className="w-3.5 h-3.5 text-violet-400" strokeWidth={2.4} />
               <span className="font-mono text-[11px] tracking-[0.2em] uppercase font-bold">
