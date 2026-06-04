@@ -39,10 +39,10 @@ export const translations = {
       title: "Что мы создаём",
       subtitle: "Полный спектр IT-направлений — от интернет-магазинов до защищённых банковских платформ",
       items: [
-        { title: "Интернет-магазины", description: "E-commerce платформы под ключ с каталогом, корзиной и приёмом онлайн-платежей" },
-        { title: "Сайты для бизнеса, обучения и компаний", description: "Корпоративные веб-решения для любого масштаба и сферы" },
-        { title: "Приложения Android / iOS / Windows", description: "Нативные и кросс-платформенные приложения с публикацией в магазинах" },
-        { title: "Банковские и государственные IT-проекты", description: "Защищённые системы для финтеха и госсектора с полным соответствием требованиям" },
+        { title: "🛒 Интернет-магазины", description: "E-commerce платформы под ключ с каталогом, корзиной и приёмом онлайн-платежей" },
+        { title: "🖥️ Сайты для бизнеса, обучения и компаний", description: "Корпоративные веб-решения для любого масштаба и сферы" },
+        { title: "📱 Приложения Android / iOS / Windows", description: "Нативные и кросс-платформенные приложения с публикацией в магазинах" },
+        { title: "🏦 Банковские и государственные IT-проекты", description: "Защищённые системы для финтеха и госсектора с полным соответствием требованиям" },
       ],
     },
     appsShowcase: {
@@ -247,10 +247,10 @@ export const translations = {
       title: "What we build",
       subtitle: "Full spectrum of IT directions — from online stores to secure banking platforms",
       items: [
-        { title: "Online stores", description: "Turnkey e-commerce platforms with catalog, cart and online payment processing" },
-        { title: "Business, education and corporate websites", description: "Corporate web solutions for any scale and industry" },
-        { title: "Android / iOS / Windows applications", description: "Native and cross-platform apps published to app stores" },
-        { title: "Banking and government IT projects", description: "Secure systems for fintech and public sector with full compliance" },
+        { title: "🛒 Online stores", description: "Turnkey e-commerce platforms with catalog, cart and online payment processing" },
+        { title: "🖥️ Business, education and corporate websites", description: "Corporate web solutions for any scale and industry" },
+        { title: "📱 Android / iOS / Windows applications", description: "Native and cross-platform apps published to app stores" },
+        { title: "🏦 Banking and government IT projects", description: "Secure systems for fintech and public sector with full compliance" },
       ],
     },
     appsShowcase: {
@@ -455,10 +455,10 @@ export const translations = {
       title: "Чӣ месозем",
       subtitle: "Доираи пурраи IT-самтҳо — аз мағозаҳои интернетӣ то платформаҳои бехатари бонкӣ",
       items: [
-        { title: "Мағозаҳои интернетӣ", description: "Платформаҳои тиҷорати электронии калидӣ бо феҳрист, сабад ва пардохти онлайн" },
-        { title: "Сайтҳо барои бизнес, таълим ва ширкатҳо", description: "Ҳалли веби корпоративӣ барои ҳама гуна андоза ва соҳа" },
-        { title: "Барномаҳои Android / iOS / Windows", description: "Барномаҳои нативӣ ва кросс-платформа бо нашр дар мағозаҳо" },
-        { title: "Лоиҳаҳои IT-и бонкӣ ва давлатӣ", description: "Системаҳои бехатар барои финтех ва бахши давлатӣ" },
+        { title: "🛒 Мағозаҳои интернетӣ", description: "Платформаҳои тиҷорати электронии калидӣ бо феҳрист, сабад ва пардохти онлайн" },
+        { title: "🖥️ Сайтҳо барои бизнес, таълим ва ширкатҳо", description: "Ҳалли веби корпоративӣ барои ҳама гуна андоза ва соҳа" },
+        { title: "📱 Барномаҳои Android / iOS / Windows", description: "Барномаҳои нативӣ ва кросс-платформа бо нашр дар мағозаҳо" },
+        { title: "🏦 Лоиҳаҳои IT-и бонкӣ ва давлатӣ", description: "Системаҳои бехатар барои финтех ва бахши давлатӣ" },
       ],
     },
     appsShowcase: {
