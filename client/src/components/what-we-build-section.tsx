@@ -1,13 +1,45 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, type ComponentType } from "react";
 import {
   ShoppingCart, Search, Heart, Star, ArrowUpRight, ArrowLeft, Plus, Minus, Trash2, Check,
   Home, BarChart3, CreditCard, Bell, ArrowDownLeft, ShoppingBag, Coffee,
   Briefcase, Mail, Phone, MapPin, Users, Award, Send, ChevronRight, TrendingUp, Filter,
-  Store, Building2, Landmark,
 } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/lib/language-context";
+
+function IconEcom({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" />
+      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+      <path d="M9 9h6" />
+    </svg>
+  );
+}
+
+function IconWebsite({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="3" width="20" height="14" rx="2" />
+      <path d="M8 21h8M12 17v4" />
+      <path d="M2 7h20" />
+      <circle cx="5" cy="5" r="0.7" fill="currentColor" stroke="none" />
+      <circle cx="8" cy="5" r="0.7" fill="currentColor" stroke="none" />
+      <circle cx="11" cy="5" r="0.7" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function IconBanking({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2L2 7h20L12 2z" />
+      <path d="M6 10v8M10 10v8M14 10v8M18 10v8" />
+      <path d="M2 18h20" /><path d="M2 22h20" />
+      <path d="M12 2v5" />
+    </svg>
+  );
+}
 
 /* ============================================================
    01 · INTERACTIVE E-COMMERCE
@@ -715,10 +747,10 @@ function BankInteractive() {
    SECTION
    ============================================================ */
 
-const mockupByOriginalIndex: Record<number, { Mockup: () => JSX.Element; Icon: LucideIcon; gradient: string }> = {
-  0: { Mockup: EcomInteractive, Icon: Store, gradient: "from-rose-500 to-amber-500" },
-  1: { Mockup: BusinessInteractive, Icon: Building2, gradient: "from-cyan-500 to-blue-500" },
-  3: { Mockup: BankInteractive, Icon: Landmark, gradient: "from-violet-500 to-indigo-600" },
+const mockupByOriginalIndex: Record<number, { Mockup: () => JSX.Element; Icon: ComponentType<{ className?: string }>; gradient: string }> = {
+  0: { Mockup: EcomInteractive, Icon: IconEcom, gradient: "from-rose-500 to-amber-500" },
+  1: { Mockup: BusinessInteractive, Icon: IconWebsite, gradient: "from-cyan-500 to-blue-500" },
+  3: { Mockup: BankInteractive, Icon: IconBanking, gradient: "from-violet-500 to-indigo-600" },
 };
 
 export function WhatWeBuildSection() {
