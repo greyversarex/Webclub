@@ -160,7 +160,7 @@ export const translations = {
     },
     testimonials: {
       title: "Что говорят клиенты",
-      subtitle: "Реальные отзывы компаний, которые уже работали с WebClub",
+      subtitle: "Реальные отзывы компаний, которые уже работали с нами",
       totalClients: "50+ довольных клиентов",
       avgRating: "4.9 / 5.0",
       reviews: [
@@ -169,7 +169,7 @@ export const translations = {
           initials: "АН",
           company: "Директор, TourTJ",
           rating: 5,
-          text: "WebClub сделали нам туристический сайт за 2 недели. Результат превзошёл ожидания — современный дизайн, быстрая загрузка и удобное управление контентом. Обращения от клиентов выросли втрое.",
+          text: "Сделали нам туристический сайт за 2 недели. Результат превзошёл ожидания — современный дизайн, быстрая загрузка и удобное управление контентом. Обращения от клиентов выросли втрое.",
         },
         {
           name: "Нилуфар Рашидова",
@@ -183,7 +183,7 @@ export const translations = {
           initials: "ФК",
           company: "ИТ-директор, АмонатБанк",
           rating: 5,
-          text: "Сложный корпоративный проект с высокими требованиями к безопасности. WebClub справились на отлично — документация, API, интеграции. Рекомендую как надёжного партнёра для банковских решений.",
+          text: "Сложный корпоративный проект с высокими требованиями к безопасности. Справились на отлично — документация, API, интеграции. Рекомендую как надёжного партнёра для банковских решений.",
         },
         {
           name: "Зарина Давлатова",
@@ -197,7 +197,7 @@ export const translations = {
           initials: "БЮ",
           company: "Основатель, LogisTJ",
           rating: 5,
-          text: "CRM-система для логистики с GPS-трекингом. Сложная задача — справились за 3 месяца. Сейчас управляем 200+ доставками в день через систему WebClub. Качество кода на высшем уровне.",
+          text: "CRM-система для логистики с GPS-трекингом. Сложная задача — справились за 3 месяца. Сейчас управляем 200+ доставками в день. Качество кода на высшем уровне.",
         },
         {
           name: "Камола Исмаилова",
@@ -368,7 +368,7 @@ export const translations = {
     },
     testimonials: {
       title: "What clients say",
-      subtitle: "Real reviews from companies that have already worked with WebClub",
+      subtitle: "Real reviews from companies that have already worked with us",
       totalClients: "50+ satisfied clients",
       avgRating: "4.9 / 5.0",
       reviews: [
@@ -377,7 +377,7 @@ export const translations = {
           initials: "AN",
           company: "Director, TourTJ",
           rating: 5,
-          text: "WebClub built our tourism website in 2 weeks. The result exceeded expectations — modern design, fast loading and easy content management. Client inquiries tripled.",
+          text: "Built our tourism website in 2 weeks. The result exceeded expectations — modern design, fast loading and easy content management. Client inquiries tripled.",
         },
         {
           name: "Nilufar Rashidova",
@@ -391,7 +391,7 @@ export const translations = {
           initials: "FK",
           company: "IT Director, AmonatBank",
           rating: 5,
-          text: "A complex corporate project with high security requirements. WebClub handled it excellently — documentation, API, integrations. I recommend them as a reliable partner for banking solutions.",
+          text: "A complex corporate project with high security requirements. Handled excellently — documentation, API, integrations. I recommend them as a reliable partner for banking solutions.",
         },
         {
           name: "Zarina Davlatova",
@@ -405,7 +405,7 @@ export const translations = {
           initials: "BY",
           company: "Founder, LogisTJ",
           rating: 5,
-          text: "CRM system for logistics with GPS tracking. A complex task — completed in 3 months. Now we manage 200+ deliveries per day through the WebClub system. Code quality is top-notch.",
+          text: "CRM system for logistics with GPS tracking. A complex task — completed in 3 months. Now we manage 200+ deliveries per day. Code quality is top-notch.",
         },
         {
           name: "Kamola Ismailova",
@@ -576,7 +576,7 @@ export const translations = {
     },
     testimonials: {
       title: "Мизоҷон чӣ мегӯянд",
-      subtitle: "Мулоҳизаҳои воқеии ширкатҳое, ки бо WebClub кор кардаанд",
+      subtitle: "Мулоҳизаҳои воқеии ширкатҳое, ки бо мо кор кардаанд",
       totalClients: "50+ мизоҷони қаноатманд",
       avgRating: "4.9 / 5.0",
       reviews: [
@@ -585,7 +585,7 @@ export const translations = {
           initials: "АН",
           company: "Директор, TourTJ",
           rating: 5,
-          text: "WebClub дар 2 ҳафта сайти туристии моро сохт. Натиҷа аз интизор баланд буд — дизайни муосир, боркунии зуд ва идоракунии осони мӯҳтаво. Мурољиатҳои мизоҷон се баробар зиёд шуд.",
+          text: "Дар 2 ҳафта сайти туристии моро сохтанд. Натиҷа аз интизор баланд буд — дизайни муосир, боркунии зуд ва идоракунии осони мӯҳтаво. Мурољиатҳои мизоҷон се баробар зиёд шуд.",
         },
         {
           name: "Нилуфар Рашидова",
@@ -599,7 +599,7 @@ export const translations = {
           initials: "ФК",
           company: "ИТ-директор, АмонатБанк",
           rating: 5,
-          text: "Лоиҳаи корпоративии мураккаб бо талаботи баланд ба бехатарӣ. WebClub олӣ иҷро карданд — ҳуҷҷатҳо, API, интегратсияҳо. Тавсия медиҳам.",
+          text: "Лоиҳаи корпоративии мураккаб бо талаботи баланд ба бехатарӣ. Олӣ иҷро карданд — ҳуҷҷатҳо, API, интегратсияҳо. Тавсия медиҳам.",
         },
         {
           name: "Зарина Давлатова",
@@ -613,7 +613,7 @@ export const translations = {
           initials: "БЮ",
           company: "Асосгузор, LogisTJ",
           rating: 5,
-          text: "Системаи CRM барои логистика бо GPS-пайгирӣ. Вазифаи мураккаб — дар 3 моҳ иҷро карданд. Акнун 200+ расонидани рӯзонаро тавассути системаи WebClub идора мекунем.",
+          text: "Системаи CRM барои логистика бо GPS-пайгирӣ. Вазифаи мураккаб — дар 3 моҳ иҷро карданд. Акнун 200+ расонидани рӯзонаро идора мекунем.",
         },
         {
           name: "Камола Исмаилова",
