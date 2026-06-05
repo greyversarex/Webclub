@@ -151,8 +151,7 @@ export function HeroSection() {
             </div>
 
             <div
-              className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-slate-100"
-              style={{ height: "420px" }}
+              className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-slate-100 h-[220px] sm:h-[300px] md:h-[380px] lg:h-[420px]"
             >
               {/* BASE LAYER — background-size 100% 100% matches tile mosaic exactly */}
               <div

@@ -721,7 +721,11 @@ export function AppsShowcaseSection() {
                 {t.appsShowcase.laptopLabel}
               </span>
             </div>
-            <InteractiveLaptop />
+            <div className="w-full overflow-x-auto pb-2 -mx-4 px-4 lg:mx-0 lg:px-0 lg:overflow-visible">
+              <div className="min-w-[540px] lg:min-w-0">
+                <InteractiveLaptop />
+              </div>
+            </div>
           </div>
         </div>
       </div>

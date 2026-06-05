@@ -138,8 +138,7 @@ export function PortfolioSection() {
 
           <div className="relative">
             <div
-              className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200/60 bg-slate-900"
-              style={{ height: "620px" }}
+              className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200/60 bg-slate-900 h-[220px] sm:h-[360px] md:h-[480px] lg:h-[620px]"
             >
               <div
                 className="absolute inset-0 transition-opacity"

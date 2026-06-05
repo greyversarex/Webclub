@@ -110,7 +110,7 @@ function EcomInteractive() {
   }, [hovered, autoStep]);
 
   return (
-    <div className="h-[640px] flex flex-col bg-white" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+    <div className="h-[520px] sm:h-[580px] md:h-[640px] flex flex-col bg-white" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       {/* Header */}
       <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200/70 bg-white z-10">
         <button onClick={() => setView("catalog")} className="flex items-center gap-2" data-testid="ecom-logo">
@@ -343,7 +343,7 @@ function BusinessInteractive() {
   }, [typedName, typedEmail, page, hovered]);
 
   return (
-    <div className="h-[640px] flex flex-col bg-white" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+    <div className="h-[520px] sm:h-[580px] md:h-[640px] flex flex-col bg-white" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <div className="border-b border-slate-200/70 bg-white z-10">
         <div className="flex items-center justify-between px-5 pt-3 pb-1.5">
           <div className="flex items-center gap-2">
@@ -546,7 +546,7 @@ function BankInteractive() {
   }, [hovered, autoStep]);
 
   return (
-    <div className="h-[640px] flex flex-col bg-slate-950 text-white" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+    <div className="h-[520px] sm:h-[580px] md:h-[640px] flex flex-col bg-slate-950 text-white" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/5 bg-gradient-to-r from-slate-950 to-slate-900">
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 rounded-md bg-gradient-to-br from-cyan-400 to-violet-500" />
