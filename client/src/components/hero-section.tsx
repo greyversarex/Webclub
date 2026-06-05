@@ -103,51 +103,22 @@ export function HeroSection() {
             <p className="text-lg text-slate-900 mb-8 max-w-xl">{t.hero.description}</p>
 
             <div className="mb-10 space-y-1">
-              {t.hero.features.map((feature, index) => {
-                const Icon = [Rocket, ShieldCheck, Award, Wallet][index] ?? Rocket;
-                return (
-                  <div
-                    key={index}
-                    className="group relative flex items-center gap-5 py-3 transition-all duration-300 hover:translate-x-1"
-                    data-testid={`text-feature-${index}`}
-                  >
-                    <span
-                      className="font-display font-black text-[28px] leading-none w-12 text-slate-300 transition-all duration-300 group-hover:text-transparent group-hover:bg-gradient-to-br group-hover:from-cyan-500 group-hover:to-violet-500 group-hover:bg-clip-text"
-                    >
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <Icon
-                      className="w-5 h-5 text-slate-700 flex-shrink-0 transition-all duration-300 group-hover:text-cyan-600 group-hover:[filter:drop-shadow(0_0_6px_rgba(6,182,212,0.5))]"
-                      strokeWidth={1.75}
-                    />
-                    <span className="text-base md:text-lg font-medium text-slate-900">
-                      {feature}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* ── Stats counter ─────────────────────────────────── */}
-            <div className="grid grid-cols-3 gap-3 mb-10">
-              {[
-                { value: "100+", label: t.hero.stats.projects },
-                { value: "8+", label: t.hero.stats.experience },
-                { value: "24/7", label: t.hero.stats.support },
-              ].map((stat, i) => (
+              {t.hero.features.map((feature, index) => (
                 <div
-                  key={i}
-                  className="group relative flex flex-col items-center justify-center py-3.5 rounded-2xl border border-slate-200/80 bg-white/70 backdrop-blur-sm shadow-[0_2px_12px_rgba(0,0,0,0.06)] transition-all duration-300 hover:shadow-[0_0_0_1.5px_rgba(139,92,246,0.35),0_4px_20px_rgba(139,92,246,0.12)] hover:-translate-y-0.5"
+                  key={index}
+                  className="group relative flex items-center gap-5 py-3 transition-all duration-300 hover:translate-x-1"
+                  data-testid={`text-feature-${index}`}
                 >
-                  <span className="font-display font-black text-2xl md:text-3xl text-transparent bg-gradient-to-br from-violet-600 to-cyan-500 bg-clip-text leading-none mb-1">
-                    {stat.value}
+                  <span className="font-display font-black text-[28px] leading-none w-12 text-slate-300 transition-all duration-300 group-hover:text-transparent group-hover:bg-gradient-to-br group-hover:from-cyan-500 group-hover:to-violet-500 group-hover:bg-clip-text">
+                    {String(index + 1).padStart(2, "0")}
                   </span>
-                  <span className="text-[11px] md:text-xs text-slate-500 font-medium text-center leading-tight">
-                    {stat.label}
+                  <span className="text-base md:text-lg font-medium text-slate-900">
+                    {feature}
                   </span>
                 </div>
               ))}
             </div>
+
 
             <div className="flex flex-wrap gap-4 mb-12">
               <Button

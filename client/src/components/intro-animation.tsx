@@ -10,7 +10,7 @@ export function IntroAnimation({ onComplete }: IntroAnimationProps) {
   const [opacity, setOpacity] = useState(1);
   const [glowIndex, setGlowIndex] = useState(-1);
   
-  const targetText = "WEBCLUB";
+  const targetText = "WEBCORTEX";
   const chars = "01アイウエオカキクケコサシスセソタチツテト0123456789";
   
   const getRandomChar = useCallback(() => {

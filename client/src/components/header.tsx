@@ -55,11 +55,11 @@ export function Header() {
           >
             <img 
               src="/logo.png" 
-              alt="WEBCLUB Logo" 
+              alt="WEBCORTEX Logo" 
               className="w-12 h-12 md:w-16 md:h-16 object-contain"
             />
             <span className="font-display font-bold text-xl md:text-2xl text-cyan-800">
-              WEBCLUB
+              WEBCORTEX
             </span>
           </a>
 
