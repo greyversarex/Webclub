@@ -193,20 +193,19 @@ export const AdaptiveVideo = forwardRef<AdaptiveVideoHandle, AdaptiveVideoProps>
           >
             <div
               className="
-                w-20 h-20 rounded-full
-                bg-white/20 backdrop-blur-sm border-2 border-white/60
+                w-10 h-10 rounded-full
+                bg-white/25 backdrop-blur-sm border border-white/60
                 flex items-center justify-center
-                shadow-[0_0_32px_rgba(0,0,0,0.4)]
+                shadow-[0_0_16px_rgba(0,0,0,0.4)]
                 transition-all duration-200
-                group-hover:bg-white/35 group-hover:scale-110 group-hover:border-white/90
+                group-hover:bg-white/40 group-hover:scale-110 group-hover:border-white/90
                 group-active:scale-95
               "
             >
-              {/* Triangle play icon — offset slightly right to look visually centred */}
               <svg
                 viewBox="0 0 24 24"
                 fill="black"
-                className="w-8 h-8 ml-1"
+                className="w-4 h-4 ml-0.5"
               >
                 <path d="M8 5v14l11-7z" />
               </svg>
