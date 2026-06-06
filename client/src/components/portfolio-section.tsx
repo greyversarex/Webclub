@@ -1,5 +1,4 @@
-import { useState, useRef } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useRef } from "react";
 import { Badge } from "@/components/ui/badge";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/lib/language-context";
@@ -53,6 +52,7 @@ const projectVideoSources: (VideoSources | null)[] = [
   { "480p": corporate480, "720p": corporate720, "1080p": corporate1080 },
   { "480p": finance480, "720p": finance720, "1080p": finance1080 },
 ];
+
 const accentColors = [
   "bg-violet-100 text-violet-700 border-violet-200",
   "bg-emerald-100 text-emerald-700 border-emerald-200",
@@ -64,37 +64,74 @@ const accentColors = [
   "bg-emerald-100 text-emerald-700 border-emerald-200",
 ];
 
-const TOTAL_PROJECTS = 8;
-const FADE_MS = 280;
+interface ProjectCardProps {
+  index: number;
+  title: string;
+  category: string;
+  description: string;
+  sources: VideoSources | null;
+  poster: string;
+  accentColor: string;
+  isVisible: boolean;
+  delay: string;
+}
+
+function ProjectCard({
+  index, title, category, description,
+  sources, poster, accentColor, isVisible, delay,
+}: ProjectCardProps) {
+  const videoRef = useRef<AdaptiveVideoHandle>(null);
+
+  return (
+    <div
+      className={`group flex flex-col rounded-2xl overflow-hidden bg-white border border-slate-200/80 shadow-md hover:shadow-xl transition-all duration-500 hover:-translate-y-1 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      }`}
+      style={{ transitionDelay: delay }}
+      data-testid={`card-portfolio-${index}`}
+    >
+      <div className="relative aspect-video bg-slate-900 overflow-hidden flex-shrink-0">
+        {sources ? (
+          <AdaptiveVideo
+            ref={videoRef}
+            sources={sources}
+            className="w-full h-full"
+            data-testid={`video-portfolio-${index}`}
+          />
+        ) : (
+          <img
+            src={poster}
+            alt={title}
+            className="w-full h-full object-cover"
+            data-testid={`img-portfolio-${index}`}
+          />
+        )}
+        <div className="absolute top-2 left-2 pointer-events-none z-10">
+          <Badge
+            variant="secondary"
+            className={`text-xs border backdrop-blur-sm ${accentColor}`}
+          >
+            {category}
+          </Badge>
+        </div>
+      </div>
+
+      <div className="p-4 flex flex-col gap-1 flex-1">
+        <h3 className="font-display font-bold text-sm md:text-base text-slate-800 leading-snug">
+          {title}
+        </h3>
+        <p className="text-xs md:text-sm text-slate-500 leading-snug line-clamp-2">
+          {description}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 export function PortfolioSection() {
   const { ref, isVisible } = useScrollAnimation();
   const { t } = useLanguage();
   const projects = t.portfolio.projects;
-
-  const [shown, setShown] = useState(0);
-  const [fading, setFading] = useState(false);
-
-  const videoRef = useRef<AdaptiveVideoHandle | null>(null);
-
-  const goTo = (idx: number) => {
-    if (idx === shown || fading) return;
-    if (videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.setCurrentTime(0);
-    }
-    setFading(true);
-    setTimeout(() => {
-      setShown(idx);
-      setFading(false);
-    }, FADE_MS);
-  };
-
-  const goPrev = () => goTo((shown - 1 + TOTAL_PROJECTS) % TOTAL_PROJECTS);
-  const goNext = () => goTo((shown + 1) % TOTAL_PROJECTS);
-
-  const project = projects[shown];
-  const currentSources = projectVideoSources[shown];
 
   return (
     <section
@@ -121,103 +158,23 @@ export function PortfolioSection() {
           </p>
         </div>
 
-        <div
-          className={`transition-all duration-700 delay-200 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <div className="mb-4 h-10 overflow-hidden">
-            <h3
-              key={shown}
-              className="slide-text-in font-display font-bold text-2xl md:text-3xl text-slate-800"
-              data-testid="text-portfolio-slide-title"
-            >
-              {project.title}
-            </h3>
-          </div>
-
-          <div className="relative">
-            <div
-              className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200/60 bg-slate-900 h-[220px] sm:h-[360px] md:h-[480px] lg:h-[620px]"
-            >
-              <div
-                className="absolute inset-0 transition-opacity"
-                style={{
-                  opacity: fading ? 0 : 1,
-                  transitionDuration: `${FADE_MS}ms`,
-                }}
-                key={shown}
-              >
-                {currentSources ? (
-                  <AdaptiveVideo
-                    ref={videoRef}
-                    sources={currentSources}
-                    className="w-full h-full object-contain"
-                    data-testid={`video-portfolio-${shown}`}
-                  />
-                ) : (
-                  <img
-                    src={projectPosters[shown]}
-                    alt={project.title}
-                    className="w-full h-full object-cover"
-                    data-testid={`img-portfolio-slide-${shown}`}
-                  />
-                )}
-              </div>
-
-              <div className="absolute top-4 left-4 pointer-events-none z-10">
-                <Badge
-                  variant="secondary"
-                  className={`text-xs border backdrop-blur-sm ${accentColors[shown]}`}
-                >
-                  {project.category}
-                </Badge>
-              </div>
-              <div className="absolute top-4 right-4 bg-black/40 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm pointer-events-none z-10">
-                {shown + 1} / {projects.length}
-              </div>
-            </div>
-
-            {/* Side navigation arrows */}
-            <button
-              onClick={goPrev}
-              aria-label="Previous project"
-              className="absolute left-2 md:-left-5 top-1/2 -translate-y-1/2 w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/90 hover:bg-white shadow-xl border border-slate-200 flex items-center justify-center text-slate-800 hover:text-violet-600 transition-all hover:scale-110 z-20"
-              data-testid="button-portfolio-prev"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-            <button
-              onClick={goNext}
-              aria-label="Next project"
-              className="absolute right-2 md:-right-5 top-1/2 -translate-y-1/2 w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/90 hover:bg-white shadow-xl border border-slate-200 flex items-center justify-center text-slate-800 hover:text-violet-600 transition-all hover:scale-110 z-20"
-              data-testid="button-portfolio-next"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
-          </div>
-
-          <div key={shown} className="slide-text-in mt-5" style={{ animationDelay: "0.08s", minHeight: "60px" }}>
-            <p className="text-slate-700 text-base leading-relaxed max-w-3xl">
-              {project.description}
-            </p>
-          </div>
-
-          <div className="flex items-center justify-center gap-2 mt-6">
-            {projects.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => goTo(i)}
-                className={`rounded-full transition-all duration-300 ${
-                  i === shown
-                    ? "w-8 h-2.5 bg-violet-600"
-                    : "w-2.5 h-2.5 bg-slate-300 hover:bg-slate-400"
-                }`}
-                data-testid={`button-portfolio-dot-${i}`}
-              />
-            ))}
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {projects.map((project, i) => (
+            <ProjectCard
+              key={i}
+              index={i}
+              title={project.title}
+              category={project.category}
+              description={project.description}
+              sources={projectVideoSources[i]}
+              poster={projectPosters[i]}
+              accentColor={accentColors[i]}
+              isVisible={isVisible}
+              delay={`${200 + i * 80}ms`}
+            />
+          ))}
         </div>
+
       </div>
     </section>
   );
