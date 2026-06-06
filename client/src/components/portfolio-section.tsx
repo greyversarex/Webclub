@@ -84,22 +84,17 @@ function ProjectCard({
 
   return (
     <div
-      className={`group flex flex-col rounded-2xl overflow-hidden bg-white border border-slate-200/80 shadow-md hover:shadow-xl transition-all duration-500 hover:-translate-y-1 ${
+      className={`group flex flex-col gap-1.5 transition-all duration-500 hover:-translate-y-1 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
       style={{ transitionDelay: delay }}
       data-testid={`card-portfolio-${index}`}
     >
-      <div className="px-4 pt-4 pb-2 flex items-center gap-2">
-        <Badge variant="secondary" className={`text-xs border flex-shrink-0 ${accentColor}`}>
-          {category}
-        </Badge>
-        <h3 className="font-display font-bold text-sm md:text-base text-slate-800 leading-snug truncate">
-          {title}
-        </h3>
-      </div>
+      <h3 className="font-display font-bold text-sm md:text-base text-slate-800 leading-snug px-1 truncate">
+        {title}
+      </h3>
 
-      <div className="relative aspect-video bg-slate-900 overflow-hidden flex-shrink-0">
+      <div className="relative rounded-2xl overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-500 aspect-video bg-slate-900 flex-shrink-0">
         {sources ? (
           <AdaptiveVideo
             ref={videoRef}
@@ -115,13 +110,16 @@ function ProjectCard({
             data-testid={`img-portfolio-${index}`}
           />
         )}
+        <div className="absolute top-2 left-2 pointer-events-none z-10">
+          <Badge variant="secondary" className={`text-xs border backdrop-blur-sm ${accentColor}`}>
+            {category}
+          </Badge>
+        </div>
       </div>
 
-      <div className="px-4 py-3">
-        <p className="text-xs md:text-sm text-slate-500 leading-snug line-clamp-2">
-          {description}
-        </p>
-      </div>
+      <p className="text-xs md:text-sm text-slate-500 leading-snug line-clamp-2 px-1">
+        {description}
+      </p>
     </div>
   );
 }
