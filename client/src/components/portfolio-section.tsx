@@ -90,6 +90,18 @@ function ProjectCard({
       style={{ transitionDelay: delay }}
       data-testid={`card-portfolio-${index}`}
     >
+      <div className="px-4 pt-4 pb-2 flex items-center gap-2">
+        <Badge
+          variant="secondary"
+          className={`text-xs border ${accentColor}`}
+        >
+          {category}
+        </Badge>
+        <h3 className="font-display font-bold text-sm md:text-base text-slate-800 leading-snug truncate">
+          {title}
+        </h3>
+      </div>
+
       <div className="relative aspect-video bg-slate-900 overflow-hidden flex-shrink-0">
         {sources ? (
           <AdaptiveVideo
@@ -106,20 +118,9 @@ function ProjectCard({
             data-testid={`img-portfolio-${index}`}
           />
         )}
-        <div className="absolute top-2 left-2 pointer-events-none z-10">
-          <Badge
-            variant="secondary"
-            className={`text-xs border backdrop-blur-sm ${accentColor}`}
-          >
-            {category}
-          </Badge>
-        </div>
       </div>
 
-      <div className="p-4 flex flex-col gap-1 flex-1">
-        <h3 className="font-display font-bold text-sm md:text-base text-slate-800 leading-snug">
-          {title}
-        </h3>
+      <div className="px-4 py-3">
         <p className="text-xs md:text-sm text-slate-500 leading-snug line-clamp-2">
           {description}
         </p>
