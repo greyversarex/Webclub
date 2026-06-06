@@ -5,8 +5,8 @@ import { SiWhatsapp, SiTelegram } from "react-icons/si";
 const contacts = [
   {
     id: "phone",
-    label: "+992 876 220 100",
-    href: "tel:+992876220100",
+    label: "+992 666 666 960",
+    href: "tel:+992666666960",
     icon: Phone,
     bg: "bg-emerald-500 hover:bg-emerald-400",
     shadow: "shadow-emerald-500/40",
@@ -14,7 +14,7 @@ const contacts = [
   {
     id: "telegram",
     label: "Telegram",
-    href: "https://t.me/+992876220100",
+    href: "https://t.me/+992666666960",
     icon: SiTelegram,
     bg: "bg-sky-500 hover:bg-sky-400",
     shadow: "shadow-sky-500/40",
@@ -22,7 +22,7 @@ const contacts = [
   {
     id: "whatsapp",
     label: "WhatsApp",
-    href: "https://wa.me/992876220100",
+    href: "https://wa.me/992666666960",
     icon: SiWhatsapp,
     bg: "bg-green-500 hover:bg-green-400",
     shadow: "shadow-green-500/40",

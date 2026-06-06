@@ -96,12 +96,12 @@ export function Footer() {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="tel:+992876220100"
+                  href="tel:+992666666960"
                   className="flex items-center gap-2 text-sm text-slate-600 hover:text-violet-600 transition-colors"
                   data-testid="link-footer-phone"
                 >
                   <Phone className="w-4 h-4" />
-                  +992 87 622 0100
+                  +992 666 666 960
                 </a>
               </li>
               <li>

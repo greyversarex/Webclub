@@ -57,6 +57,8 @@ export function HeroSection() {
   const [next, setNext]       = useState(0);
   const [animId, setAnimId]   = useState(0);
   const [animating, setAnimating] = useState(false);
+  const [visibleFeatures, setVisibleFeatures] = useState<boolean[]>([]);
+  const featuresRef = useRef<HTMLDivElement>(null);
 
   const shownRef     = useRef(0);
   const animatingRef = useRef(false);
@@ -81,6 +83,30 @@ export function HeroSection() {
     return () => clearInterval(id);
   }, []);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          const count = t.hero.features.length;
+          setVisibleFeatures(Array(count).fill(false));
+          t.hero.features.forEach((_, i) => {
+            setTimeout(() => {
+              setVisibleFeatures(prev => {
+                const next = [...prev];
+                next[i] = true;
+                return next;
+              });
+            }, 300 + i * 200);
+          });
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    if (featuresRef.current) observer.observe(featuresRef.current);
+    return () => observer.disconnect();
+  }, [t.hero.features]);
+
   const scrollToContact  = () => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
   const scrollToServices = () => document.querySelector("#services")?.scrollIntoView({ behavior: "smooth" });
 
@@ -102,11 +128,16 @@ export function HeroSection() {
             </h1>
             <p className="text-lg text-slate-900 mb-8 max-w-xl">{t.hero.description}</p>
 
-            <div className="mb-10 space-y-1">
+            <div ref={featuresRef} className="mb-10 space-y-1">
               {t.hero.features.map((feature, index) => (
                 <div
                   key={index}
-                  className="group relative flex items-center gap-5 py-3 transition-all duration-300 hover:translate-x-1"
+                  className="group relative flex items-center gap-5 py-3 transition-all duration-500 hover:translate-x-1"
+                  style={{
+                    opacity: visibleFeatures[index] ? 1 : 0,
+                    transform: visibleFeatures[index] ? "translateX(0)" : "translateX(-20px)",
+                    transition: "opacity 0.5s ease, transform 0.5s ease",
+                  }}
                   data-testid={`text-feature-${index}`}
                 >
                   <span className="font-display font-black text-[28px] leading-none w-12 text-slate-300 transition-all duration-300 group-hover:text-transparent group-hover:bg-gradient-to-br group-hover:from-cyan-500 group-hover:to-violet-500 group-hover:bg-clip-text">

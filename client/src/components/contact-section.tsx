@@ -216,7 +216,7 @@ export function ContactSection() {
 
               <div className="space-y-5">
                 <a
-                  href="tel:+992876220100"
+                  href="tel:+992666666960"
                   className="flex items-center gap-4 p-4 rounded-lg bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 border border-slate-300 hover-elevate active-elevate-2 transition-all hover:border-violet-400"
                   data-testid="link-phone-contact"
                 >
@@ -226,14 +226,14 @@ export function ContactSection() {
                   <div>
                     <div className="text-sm text-slate-900">{t.contact.phoneLabel}</div>
                     <div className="font-semibold text-slate-800 text-lg">
-                      +992 87 622 0100
+                      +992 666 666 960
                     </div>
                   </div>
                 </a>
 
                 <div className="flex gap-3">
                   <a
-                    href="https://t.me/+992876220100"
+                    href="https://t.me/+992666666960"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 flex items-center justify-center gap-2 p-3 rounded-lg bg-gradient-to-br from-sky-500 to-blue-600 text-white font-medium shadow-md shadow-sky-400/30 hover:shadow-lg hover:shadow-sky-400/40 transition-all"
@@ -244,7 +244,7 @@ export function ContactSection() {
                     Telegram
                   </a>
                   <a
-                    href="https://wa.me/992876220100"
+                    href="https://wa.me/992666666960"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 flex items-center justify-center gap-2 p-3 rounded-lg bg-gradient-to-br from-emerald-500 to-green-600 text-white font-medium shadow-md shadow-emerald-400/30 hover:shadow-lg hover:shadow-emerald-400/40 transition-all"
