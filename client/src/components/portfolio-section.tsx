@@ -117,9 +117,11 @@ function ProjectCard({
         </div>
       </div>
 
-      <p className="text-xs md:text-sm text-slate-500 leading-snug line-clamp-2 px-1">
-        {description}
-      </p>
+      <div className="bg-white rounded-xl px-3 py-2.5 shadow-sm border border-slate-100">
+        <p className="text-xs md:text-sm text-slate-500 leading-snug line-clamp-2">
+          {description}
+        </p>
+      </div>
     </div>
   );
 }
