@@ -58,6 +58,7 @@ export function HeroSection() {
   const [animId, setAnimId]   = useState(0);
   const [animating, setAnimating] = useState(false);
   const [visibleFeatures, setVisibleFeatures] = useState<boolean[]>([]);
+  const [activeFeature, setActiveFeature] = useState<number | null>(null);
   const featuresRef = useRef<HTMLDivElement>(null);
 
   const shownRef     = useRef(0);
@@ -84,10 +85,10 @@ export function HeroSection() {
   }, []);
 
   useEffect(() => {
+    const count = t.hero.features.length;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          const count = t.hero.features.length;
           setVisibleFeatures(Array(count).fill(false));
           t.hero.features.forEach((_, i) => {
             setTimeout(() => {
@@ -98,7 +99,20 @@ export function HeroSection() {
               });
             }, 300 + i * 200);
           });
+
+          const cycleStart = 300 + count * 200 + 400;
+          let current = 0;
+          const startCycle = setTimeout(() => {
+            setActiveFeature(0);
+            const id = setInterval(() => {
+              current = (current + 1) % count;
+              setActiveFeature(current);
+            }, 1400);
+            return () => clearInterval(id);
+          }, cycleStart);
+
           observer.disconnect();
+          return () => clearTimeout(startCycle);
         }
       },
       { threshold: 0.1 }
@@ -129,25 +143,38 @@ export function HeroSection() {
             <p className="text-lg text-slate-900 mb-8 max-w-xl">{t.hero.description}</p>
 
             <div ref={featuresRef} className="mb-10 space-y-1">
-              {t.hero.features.map((feature, index) => (
-                <div
-                  key={index}
-                  className="group relative flex items-center gap-5 py-3 transition-all duration-500 hover:translate-x-1"
-                  style={{
-                    opacity: visibleFeatures[index] ? 1 : 0,
-                    transform: visibleFeatures[index] ? "translateX(0)" : "translateX(-20px)",
-                    transition: "opacity 0.5s ease, transform 0.5s ease",
-                  }}
-                  data-testid={`text-feature-${index}`}
-                >
-                  <span className="font-display font-black text-[28px] leading-none w-12 text-slate-300 transition-all duration-300 group-hover:text-transparent group-hover:bg-gradient-to-br group-hover:from-cyan-500 group-hover:to-violet-500 group-hover:bg-clip-text">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="text-base md:text-lg font-medium text-slate-900">
-                    {feature}
-                  </span>
-                </div>
-              ))}
+              {t.hero.features.map((feature, index) => {
+                const isActive = activeFeature === index;
+                return (
+                  <div
+                    key={index}
+                    className="group relative flex items-center gap-5 py-3 transition-all duration-500 hover:translate-x-1"
+                    style={{
+                      opacity: visibleFeatures[index] ? 1 : 0,
+                      transform: visibleFeatures[index]
+                        ? isActive ? "translateX(4px)" : "translateX(0)"
+                        : "translateX(-20px)",
+                      transition: "opacity 0.5s ease, transform 0.5s ease",
+                    }}
+                    data-testid={`text-feature-${index}`}
+                  >
+                    <span
+                      className="font-display font-black text-[28px] leading-none w-12 transition-all duration-500"
+                      style={isActive ? {
+                        background: "linear-gradient(135deg, #06b6d4, #8b5cf6)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
+                      } : { color: "#cbd5e1" }}
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className={`text-base md:text-lg font-medium transition-colors duration-500 ${isActive ? "text-slate-700 font-semibold" : "text-slate-900"}`}>
+                      {feature}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
 
 
