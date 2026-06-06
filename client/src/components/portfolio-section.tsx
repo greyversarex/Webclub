@@ -94,33 +94,34 @@ function ProjectCard({
         {title}
       </h3>
 
-      <div className="relative rounded-2xl overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-500 aspect-video bg-slate-900 flex-shrink-0">
-        {sources ? (
-          <AdaptiveVideo
-            ref={videoRef}
-            sources={sources}
-            className="w-full h-full"
-            data-testid={`video-portfolio-${index}`}
-          />
-        ) : (
-          <img
-            src={poster}
-            alt={title}
-            className="w-full h-full object-cover"
-            data-testid={`img-portfolio-${index}`}
-          />
-        )}
-        <div className="absolute top-2 left-2 pointer-events-none z-10">
-          <Badge variant="secondary" className={`text-xs border backdrop-blur-sm ${accentColor}`}>
-            {category}
-          </Badge>
+      <div className="rounded-2xl overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-500 flex-shrink-0">
+        <div className="relative aspect-video bg-slate-900">
+          {sources ? (
+            <AdaptiveVideo
+              ref={videoRef}
+              sources={sources}
+              className="w-full h-full"
+              data-testid={`video-portfolio-${index}`}
+            />
+          ) : (
+            <img
+              src={poster}
+              alt={title}
+              className="w-full h-full object-cover"
+              data-testid={`img-portfolio-${index}`}
+            />
+          )}
+          <div className="absolute top-2 left-2 pointer-events-none z-10">
+            <Badge variant="secondary" className={`text-xs border backdrop-blur-sm ${accentColor}`}>
+              {category}
+            </Badge>
+          </div>
         </div>
-      </div>
-
-      <div className="bg-white rounded-xl px-3 py-2.5 shadow-sm border border-slate-100">
-        <p className="text-xs md:text-sm text-slate-500 leading-snug line-clamp-2">
-          {description}
-        </p>
+        <div className="bg-white px-3 py-2.5">
+          <p className="text-xs md:text-sm text-slate-500 leading-snug line-clamp-2">
+            {description}
+          </p>
+        </div>
       </div>
     </div>
   );
