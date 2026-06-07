@@ -14,16 +14,15 @@ export function SectionRobot({ message, side = "left" }: SectionRobotProps) {
   const accentId = `rb-accent-${uid}`;
   const eyeId = `rb-eye-${uid}`;
   const [typed, setTyped] = useState("");
-  const startedRef = useRef(false);
+  const iRef = useRef(0);
 
   useEffect(() => {
-    if (!isVisible || startedRef.current) return;
-    startedRef.current = true;
-    let i = 0;
+    if (!isVisible) return;
+    if (iRef.current >= message.length) return;
     const interval = setInterval(() => {
-      i++;
-      setTyped(message.slice(0, i));
-      if (i >= message.length) clearInterval(interval);
+      iRef.current++;
+      setTyped(message.slice(0, iRef.current));
+      if (iRef.current >= message.length) clearInterval(interval);
     }, 32);
     return () => clearInterval(interval);
   }, [isVisible, message]);
