@@ -154,11 +154,8 @@ export function IntroAnimation({ onComplete }: IntroAnimationProps) {
 
 function FallingColumn({ index, total }: { index: number; total: number }) {
   const [chars, setChars] = useState<string[]>([]);
-  const [offset, setOffset] = useState(0);
-  const animationRef = useRef<number>();
-  const startTimeRef = useRef(Date.now());
-  const speedRef = useRef(0.4 + Math.random() * 0.8);
-  const delayRef = useRef(Math.random() * 1000);
+  const durationRef = useRef(2 + Math.random() * 4);
+  const delayRef = useRef(-Math.random() * 5);
 
   useEffect(() => {
     const charCount = 30;
@@ -166,17 +163,6 @@ function FallingColumn({ index, total }: { index: number; total: number }) {
       Math.random() > 0.4 ? String(Math.floor(Math.random() * 10)) : ""
     );
     setChars(columnChars);
-
-    const animate = () => {
-      const elapsed = Date.now() - startTimeRef.current - delayRef.current;
-      if (elapsed > 0) {
-        const newOffset = (elapsed * speedRef.current * 0.05) % 100;
-        setOffset(newOffset);
-      }
-      animationRef.current = requestAnimationFrame(animate);
-    };
-
-    animationRef.current = requestAnimationFrame(animate);
 
     const charInterval = setInterval(() => {
       setChars(prev => {
@@ -189,12 +175,7 @@ function FallingColumn({ index, total }: { index: number; total: number }) {
       });
     }, 80 + Math.random() * 120);
 
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-      clearInterval(charInterval);
-    };
+    return () => clearInterval(charInterval);
   }, []);
 
   const leftPosition = ((index + 0.5) / total) * 100;
@@ -205,8 +186,9 @@ function FallingColumn({ index, total }: { index: number; total: number }) {
       style={{
         left: `${leftPosition}%`,
         top: 0,
-        transform: `translateY(${offset - 50}%)`,
         height: '150%',
+        willChange: 'transform',
+        animation: `intro-scroll-down ${durationRef.current}s linear ${delayRef.current}s infinite`,
       }}
     >
       {chars.map((char, i) => {
@@ -230,11 +212,8 @@ function FallingColumn({ index, total }: { index: number; total: number }) {
 
 function RisingColumn({ index, total }: { index: number; total: number }) {
   const [chars, setChars] = useState<string[]>([]);
-  const [offset, setOffset] = useState(0);
-  const animationRef = useRef<number>();
-  const startTimeRef = useRef(Date.now());
-  const speedRef = useRef(0.3 + Math.random() * 0.6);
-  const delayRef = useRef(Math.random() * 800);
+  const durationRef = useRef(3 + Math.random() * 4);
+  const delayRef = useRef(-Math.random() * 5);
 
   useEffect(() => {
     const charCount = 30;
@@ -242,17 +221,6 @@ function RisingColumn({ index, total }: { index: number; total: number }) {
       Math.random() > 0.5 ? String(Math.floor(Math.random() * 10)) : ""
     );
     setChars(columnChars);
-
-    const animate = () => {
-      const elapsed = Date.now() - startTimeRef.current - delayRef.current;
-      if (elapsed > 0) {
-        const newOffset = (elapsed * speedRef.current * 0.04) % 100;
-        setOffset(newOffset);
-      }
-      animationRef.current = requestAnimationFrame(animate);
-    };
-
-    animationRef.current = requestAnimationFrame(animate);
 
     const charInterval = setInterval(() => {
       setChars(prev => {
@@ -265,12 +233,7 @@ function RisingColumn({ index, total }: { index: number; total: number }) {
       });
     }, 100 + Math.random() * 150);
 
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-      clearInterval(charInterval);
-    };
+    return () => clearInterval(charInterval);
   }, []);
 
   const leftPosition = ((index + 0.5) / total) * 100 + 3;
@@ -281,8 +244,9 @@ function RisingColumn({ index, total }: { index: number; total: number }) {
       style={{
         left: `${leftPosition}%`,
         bottom: 0,
-        transform: `translateY(${50 - offset}%)`,
         height: '150%',
+        willChange: 'transform',
+        animation: `intro-scroll-up ${durationRef.current}s linear ${delayRef.current}s infinite`,
       }}
     >
       {chars.map((char, i) => {
