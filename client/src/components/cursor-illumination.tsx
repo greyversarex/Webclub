@@ -111,9 +111,26 @@ export function CursorIllumination() {
     window.addEventListener("mousemove", onMove);
     document.addEventListener("mouseleave", onLeave);
 
+    // The circuit SVG is fixed-positioned, so its screen matrix only changes on
+    // resize. Cache it instead of forcing a layout reflow every frame.
+    let ctm: DOMMatrix | null = null;
+    const updateCtm = () => {
+      const circuitSvg = document.querySelector(
+        '[data-testid="bg-circuit"]'
+      ) as SVGSVGElement | null;
+      ctm = (circuitSvg?.getScreenCTM() as DOMMatrix | null) ?? null;
+    };
+
+    let lastDrawX = -99999;
+    let lastDrawY = -99999;
+    let idleSkip = false;
+
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      updateCtm();
+      lastDrawX = -99999; // force a repaint after resize
+      idleSkip = false;
     };
     resize();
     window.addEventListener("resize", resize);
@@ -143,23 +160,43 @@ export function CursorIllumination() {
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
+      if (document.hidden) return;
 
       // Smooth mouse
       const lerp = rawMouse.active ? LERP : 0.03;
-      smoothMouse.x += (rawMouse.x - smoothMouse.x) * lerp;
-      smoothMouse.y += (rawMouse.y - smoothMouse.y) * lerp;
+      const ndx = rawMouse.x - smoothMouse.x;
+      const ndy = rawMouse.y - smoothMouse.y;
+      smoothMouse.x += ndx * lerp;
+      smoothMouse.y += ndy * lerp;
 
-      // Get CTM from the circuit SVG to transform 1920×1080 coords → screen coords
-      const circuitSvg = document.querySelector(
-        '[data-testid="bg-circuit"]'
-      ) as SVGSVGElement | null;
-      const ctm = circuitSvg?.getScreenCTM();
-      if (!ctm) return;
+      // Pointer left the window and the glow settled → clear once, then idle.
+      if (!rawMouse.active && Math.abs(ndx) < 0.4 && Math.abs(ndy) < 0.4) {
+        if (!idleSkip) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          idleSkip = true;
+        }
+        return;
+      }
 
-      // Transform SVG user coord → screen pixel
+      // Pointer present but barely moved since last paint → keep the last frame.
+      const moved =
+        Math.abs(smoothMouse.x - lastDrawX) + Math.abs(smoothMouse.y - lastDrawY);
+      if (!idleSkip && lastDrawX > -90000 && moved < 0.5) return;
+      idleSkip = false;
+
+      // CTM is cached; retry the lookup until the SVG has mounted.
+      if (!ctm) {
+        updateCtm();
+        if (!ctm) return;
+      }
+
+      lastDrawX = smoothMouse.x;
+      lastDrawY = smoothMouse.y;
+
+      // Transform SVG user coord → screen pixel via the cached affine matrix
       const toScreen = (x: number, y: number) => ({
-        x: ctm.a * x + ctm.e,
-        y: ctm.d * y + ctm.f,
+        x: ctm!.a * x + ctm!.c * y + ctm!.e,
+        y: ctm!.b * x + ctm!.d * y + ctm!.f,
       });
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);

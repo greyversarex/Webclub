@@ -51,9 +51,20 @@ export function ElectricPulses() {
     });
     const pathLens = pathEls.map((p) => p.getTotalLength());
 
+    // The circuit SVG is fixed-positioned, so its screen matrix only changes on
+    // resize. Cache it instead of forcing a layout reflow every frame.
+    let ctm: DOMMatrix | null = null;
+    const updateCtm = () => {
+      const circuitSvg = document.querySelector(
+        '[data-testid="bg-circuit"]'
+      ) as SVGSVGElement | null;
+      ctm = (circuitSvg?.getScreenCTM() as DOMMatrix | null) ?? null;
+    };
+
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      updateCtm();
     };
     resize();
     window.addEventListener("resize", resize);
@@ -66,16 +77,17 @@ export function ElectricPulses() {
 
     const animate = (now: number) => {
       animId = requestAnimationFrame(animate);
+      if (document.hidden) {
+        lastTime = now;
+        return;
+      }
+      // CTM is cached; retry the lookup until the SVG has mounted.
+      if (!ctm) {
+        updateCtm();
+        if (!ctm) return;
+      }
       const dt = Math.min(now - lastTime, 50);
       lastTime = now;
-
-      // Ask the real circuit SVG for its current transform matrix.
-      // getScreenCTM() converts SVG user coords → CSS pixels exactly as rendered.
-      const circuitSvg = document.querySelector(
-        '[data-testid="bg-circuit"]'
-      ) as SVGSVGElement | null;
-      const ctm = circuitSvg?.getScreenCTM();
-      if (!ctm) return;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -90,11 +102,9 @@ export function ElectricPulses() {
         if (wrapped) { histories[pi] = []; return; }
         const rawPt = pathEl.getPointAtLength(progresses[pi]);
 
-        // Convert SVG user coords → screen CSS pixels via the SVG's own CTM
-        const svgPt = measureSvg.createSVGPoint();
-        svgPt.x = rawPt.x;
-        svgPt.y = rawPt.y;
-        const { x, y } = svgPt.matrixTransform(ctm);
+        // Convert SVG user coords → screen CSS pixels via the cached CTM
+        const x = ctm!.a * rawPt.x + ctm!.c * rawPt.y + ctm!.e;
+        const y = ctm!.b * rawPt.x + ctm!.d * rawPt.y + ctm!.f;
 
         const tailLen = Math.round(BASE_TAIL * pulse.size);
         histories[pi].push({ x, y });

@@ -1,0 +1,1 @@
+- [Canvas background CTM caching](canvas-bg-perf.md) — never call getScreenCTM() per RAF frame; cache it (recompute on resize only) for the fixed circuit-bg overlays.
