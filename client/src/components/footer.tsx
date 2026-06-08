@@ -45,11 +45,11 @@ export function Footer() {
             >
               <img 
                 src="/logo.png" 
-                alt="WEBCORTEX Logo" 
+                alt="WEBCOREX Logo" 
                 className="w-14 h-14 object-contain"
               />
               <span className="font-display font-bold text-xl text-cyan-800">
-                WEBCORTEX
+                WEBCOREX
               </span>
             </button>
             <p className="text-sm text-slate-600">
@@ -133,7 +133,7 @@ export function Footer() {
         <div className="mt-12 pt-8 border-t border-slate-400/50">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-sm text-slate-600">
-              © {currentYear} WEBCORTEX. {t.footer.copyright}
+              © {currentYear} WEBCOREX. {t.footer.copyright}
             </p>
             <div className="flex gap-6">
               <button

@@ -55,11 +55,11 @@ export function Header() {
           >
             <img 
               src="/logo.png" 
-              alt="WEBCORTEX Logo" 
+              alt="WEBCOREX Logo" 
               className="w-12 h-12 md:w-16 md:h-16 object-contain"
             />
             <span className="it-shimmer-text font-display font-bold text-xl md:text-2xl bg-gradient-to-r from-slate-500 via-slate-300 to-slate-500 bg-clip-text text-transparent">
-              WEBCORTEX
+              WEBCOREX
             </span>
           </a>
 
