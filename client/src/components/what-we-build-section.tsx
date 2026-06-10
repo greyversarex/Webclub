@@ -823,7 +823,6 @@ export function WhatWeBuildSection() {
                     <Icon className="w-5 h-5 text-white relative" />
                   </div>
                   <div className="min-w-0">
-                    <div className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 tabular-nums leading-none mb-1">0{displayIdx + 1}</div>
                     <h3 className="font-display text-base md:text-lg font-bold text-slate-800 tracking-tight leading-tight" data-testid={`text-direction-title-${i}`}>
                       {item.title}
                     </h3>
