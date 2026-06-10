@@ -203,11 +203,11 @@ function EcomInteractive() {
               {PRODUCTS.map((p) => (
                 <button key={p.id} onClick={() => { setSelectedId(p.id); setView("product"); }}
                   className="text-left group/card" data-testid={`product-${p.id}`}>
-                  <div className={`relative aspect-square rounded-lg bg-gradient-to-br ${p.bg} overflow-hidden`}>
+                  <div className={`relative aspect-square rounded-xl bg-gradient-to-br ${p.bg} overflow-hidden ring-1 ring-slate-900/5 shadow-sm transition-shadow duration-300 group-hover/card:shadow-lg`}>
                     <img src={p.image} alt={p.name} loading="lazy"
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-110" />
                     {p.oldPrice && (
-                      <span className="absolute top-2 left-2 px-1.5 py-0.5 bg-rose-500 text-white text-[9px] font-black rounded">SALE</span>
+                      <span className="absolute top-2 left-2 px-1.5 py-0.5 bg-gradient-to-r from-rose-500 to-pink-600 text-white text-[9px] font-black rounded shadow-sm shadow-rose-500/40">SALE</span>
                     )}
                     <Heart className="absolute top-2 right-2 w-3.5 h-3.5 text-slate-700 bg-white/90 rounded-full p-0.5" />
                   </div>
@@ -807,23 +807,37 @@ export function WhatWeBuildSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-7 lg:gap-6 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-7 items-stretch">
           {visible.map(({ item, i }, displayIdx) => {
             const entry = mockupByOriginalIndex[i];
             if (!entry) return null;
             const { Mockup, Icon, gradient } = entry;
             return (
               <div key={i}
-                className={`group flex flex-col transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+                className={`flex flex-col transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
                 style={{ transitionDelay: isVisible ? `${200 + displayIdx * 100}ms` : "0ms" }}
                 data-testid={`card-direction-${i}`}>
-                <div className="flex items-center mb-4 px-1 min-h-[3.5rem]">
-                  <h3 className="font-display text-base md:text-lg font-bold text-slate-800 tracking-tight leading-tight" data-testid={`text-direction-title-${i}`}>
-                    {item.title}
-                  </h3>
+                <div className="flex items-center gap-3 mb-5 px-1 min-h-[3.25rem]">
+                  <div className={`relative w-11 h-11 rounded-2xl bg-gradient-to-br ${gradient} flex items-center justify-center shadow-lg ring-1 ring-white/50 shrink-0`}>
+                    <span className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white/35 to-transparent" />
+                    <Icon className="w-5 h-5 text-white relative" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 tabular-nums leading-none mb-1">0{displayIdx + 1}</div>
+                    <h3 className="font-display text-base md:text-lg font-bold text-slate-800 tracking-tight leading-tight" data-testid={`text-direction-title-${i}`}>
+                      {item.title}
+                    </h3>
+                  </div>
                 </div>
-                <div className="relative rounded-2xl bg-white border border-slate-200/70 shadow-[0_8px_30px_-12px_rgba(15,23,42,0.18)] overflow-hidden transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_30px_70px_-15px_rgba(6,182,212,0.4)] hover:border-cyan-400/50 flex-1 flex flex-col">
-                  <Mockup />
+
+                <div className="group/showcase relative flex-1 flex flex-col">
+                  <div className={`absolute -inset-3 rounded-[2.25rem] bg-gradient-to-br ${gradient} opacity-0 blur-2xl transition-opacity duration-700 group-hover/showcase:opacity-30 pointer-events-none`} />
+                  <div className="relative flex-1 flex flex-col rounded-[1.65rem] p-[1.5px] bg-gradient-to-b from-white/90 via-slate-200/70 to-slate-300/50 shadow-[0_10px_40px_-14px_rgba(15,23,42,0.28)] transition-all duration-500 group-hover/showcase:-translate-y-2 group-hover/showcase:shadow-[0_45px_90px_-25px_rgba(15,23,42,0.5)]">
+                    <div className="relative flex-1 flex flex-col rounded-[1.55rem] overflow-hidden bg-white">
+                      <span className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent z-20" />
+                      <Mockup />
+                    </div>
+                  </div>
                 </div>
               </div>
             );
