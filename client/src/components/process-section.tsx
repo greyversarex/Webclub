@@ -36,8 +36,11 @@ export function ProcessSection() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
         <div className="text-center mb-12 md:mb-16">
+          <div className={`flex justify-center mb-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+            <span className="section-eyebrow">{t.eyebrows.process}</span>
+          </div>
           <h2
-            className={`font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-800 transition-all duration-700 ${
+            className={`font-display text-3xl md:text-4xl lg:text-[3.25rem] font-bold mb-4 text-slate-900 tracking-tight transition-all duration-700 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
             data-testid="text-process-title"

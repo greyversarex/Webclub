@@ -48,7 +48,7 @@ export function Footer() {
                 alt="WEBCOREX Logo" 
                 className="w-14 h-14 object-contain"
               />
-              <span className="font-display font-bold text-xl text-cyan-800">
+              <span className="font-display font-bold text-xl aurora-text tracking-tight">
                 WEBCOREX
               </span>
             </button>

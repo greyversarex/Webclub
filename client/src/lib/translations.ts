@@ -8,6 +8,16 @@ export const translations = {
       advantages: "Преимущества",
       contacts: "Контакты",
     },
+    eyebrows: {
+      whatWeBuild: "Что мы создаём",
+      appsShowcase: "Мобайл и веб",
+      portfolio: "Портфолио",
+      techStack: "Технологии",
+      process: "Как мы работаем",
+      testimonials: "Отзывы",
+      contact: "Связаться с нами",
+      heroStudio: "IT-студия",
+    },
     hero: {
       title1: "Создаём",
       titleHighlight: "IT-решения",
@@ -210,6 +220,16 @@ export const translations = {
     },
   },
   en: {
+    eyebrows: {
+      whatWeBuild: "What We Build",
+      appsShowcase: "Mobile & Web",
+      portfolio: "Portfolio",
+      techStack: "Tech Stack",
+      process: "How We Work",
+      testimonials: "Reviews",
+      contact: "Get in Touch",
+      heroStudio: "IT Studio",
+    },
     nav: {
       services: "Services",
       portfolio: "Portfolio",
@@ -418,6 +438,16 @@ export const translations = {
     },
   },
   tj: {
+    eyebrows: {
+      whatWeBuild: "Мо чӣ месозем",
+      appsShowcase: "Мобайл ва веб",
+      portfolio: "Портфолио",
+      techStack: "Технологияҳо",
+      process: "Чӣ тавр кор мекунем",
+      testimonials: "Шарҳҳо",
+      contact: "Бо мо тамос гиред",
+      heroStudio: "IT-студия",
+    },
     nav: {
       services: "Хизматҳо",
       portfolio: "Портфолио",

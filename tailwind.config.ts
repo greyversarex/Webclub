@@ -83,10 +83,10 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["Inter", "var(--font-sans)", "system-ui", "sans-serif"],
+        sans: ["Plus Jakarta Sans", "Inter", "var(--font-sans)", "system-ui", "sans-serif"],
         serif: ["var(--font-serif)"],
         mono: ["var(--font-mono)"],
-        display: ["DM Sans", "Inter", "sans-serif"],
+        display: ["Space Grotesk", "DM Sans", "Inter", "sans-serif"],
       },
       keyframes: {
         "accordion-down": {

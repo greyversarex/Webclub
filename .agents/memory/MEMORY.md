@@ -1,1 +1,1 @@
-- [Canvas background CTM caching](canvas-bg-perf.md) — never call getScreenCTM() per RAF frame; cache it (recompute on resize only) for the fixed circuit-bg overlays.
+- [i18n string convention](i18n-strings.md) — all user-facing copy goes in translations.ts (ru/en/tj) via useLanguage; never hardcode, even decorative kickers.
