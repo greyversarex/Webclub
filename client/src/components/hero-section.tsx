@@ -133,17 +133,14 @@ export function HeroSection() {
 
           {/* ── Left: text ─────────────────────────────────────── */}
           <div className="order-1 self-center">
-            <div className="section-eyebrow mb-5" data-testid="text-hero-eyebrow">
-              WEBCOREX · {t.eyebrows.heroStudio}
-            </div>
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-[4.25rem] font-bold text-slate-900 leading-[1.05] tracking-tight mb-6">
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-800 leading-tight mb-6">
               {t.hero.title1}{" "}
-              <span className="it-shimmer-text bg-gradient-to-r from-violet-600 via-cyan-500 to-violet-600 bg-clip-text text-transparent">
+              <span className="it-shimmer-text bg-gradient-to-r from-slate-500 via-slate-300 to-slate-500 bg-clip-text text-transparent">
                 {t.hero.titleHighlight}
               </span>
               {" "}{t.hero.title2}
             </h1>
-            <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-xl leading-relaxed">{t.hero.description}</p>
+            <p className="text-lg text-slate-900 mb-8 max-w-xl">{t.hero.description}</p>
 
             <div ref={featuresRef} className="mb-10 space-y-1">
               {t.hero.features.map((feature, index) => {
@@ -185,22 +182,13 @@ export function HeroSection() {
               <Button
                 size="lg"
                 onClick={scrollToContact}
-                className="group relative overflow-hidden bg-gradient-to-r from-violet-600 via-violet-500 to-cyan-500 text-white border-0 shadow-[0_10px_30px_-10px_rgba(139,92,246,0.65)] hover:shadow-[0_16px_40px_-12px_rgba(139,92,246,0.8)] transition-all duration-300 hover:-translate-y-0.5"
+                className="bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 text-slate-800 border-slate-300 shadow-lg shadow-slate-300/25"
                 data-testid="button-discuss-project"
               >
-                <span className="relative z-10 flex items-center font-semibold">
-                  {t.hero.discussProject}
-                  <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
-                </span>
-                <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                {t.hero.discussProject}
+                <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={scrollToServices}
-                className="border-slate-300 bg-white/60 backdrop-blur-sm text-slate-700 hover:text-violet-700 hover:border-violet-300 hover:bg-white/80 transition-all duration-300"
-                data-testid="button-our-services"
-              >
+              <Button variant="outline" size="lg" onClick={scrollToServices} data-testid="button-our-services">
                 {t.hero.ourServices}
               </Button>
             </div>
@@ -220,9 +208,8 @@ export function HeroSection() {
               </h2>
             </div>
 
-            <div className="relative rounded-2xl p-[1.5px] bg-gradient-to-br from-violet-300/70 via-white/40 to-cyan-300/70 shadow-[0_30px_70px_-25px_rgba(124,58,237,0.45)]">
             <div
-              className="relative rounded-[15px] overflow-hidden border border-white/60 bg-slate-100 h-[220px] sm:h-[300px] md:h-[380px] lg:h-[420px]"
+              className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-slate-100 h-[220px] sm:h-[300px] md:h-[380px] lg:h-[420px]"
             >
               {/* BASE LAYER — background-size 100% 100% matches tile mosaic exactly */}
               <div
@@ -277,7 +264,6 @@ export function HeroSection() {
                 style={{ zIndex: 3 }}
               />
             </div>
-            </div>
 
             <div key={shown} className="slide-text-in mt-4" style={{ animationDelay: "0.08s", minHeight: "80px" }}>
               <div className="flex items-center gap-2 mb-2 flex-wrap">
@@ -300,7 +286,7 @@ export function HeroSection() {
                   onClick={() => goTo(i)}
                   className={`rounded-full transition-all duration-300 ${
                     i === shown
-                      ? "w-7 h-2 bg-gradient-to-r from-violet-600 to-cyan-500 shadow-[0_0_12px_rgba(139,92,246,0.6)]"
+                      ? "w-6 h-2 bg-violet-600"
                       : "w-2 h-2 bg-slate-300 hover:bg-slate-400"
                   }`}
                   data-testid={`button-slide-dot-${i}`}

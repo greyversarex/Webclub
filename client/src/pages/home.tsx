@@ -15,7 +15,7 @@ import geometricBg from "@assets/Визитки_Personal_(1)_1765668694348.png";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background relative grain-overlay">
+    <div className="min-h-screen bg-background relative">
       {/* Base geometric texture */}
       <img
         src={geometricBg}
