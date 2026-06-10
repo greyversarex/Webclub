@@ -89,7 +89,7 @@ function InteractivePhone() {
                       <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Баланс</span>
                       <span className="text-[10px] text-emerald-600 font-bold">▲ 5.2%</span>
                     </div>
-                    <div className="text-[22px] font-black text-slate-900 tabular-nums leading-none mb-3">248 500 ₽</div>
+                    <div className="text-[22px] font-black text-slate-900 tabular-nums leading-none mb-3">248 500 TJS</div>
                     <svg viewBox="0 0 120 30" className="w-full h-7">
                       <defs>
                         <linearGradient id="ph-spark" x1="0" y1="0" x2="0" y2="1">
@@ -129,11 +129,11 @@ function InteractivePhone() {
                   </div>
                   <div className="space-y-2.5">
                     {[
-                      { n: "Анна К.", s: "Перевод", a: "+5 000 ₽", p: true, color: "bg-rose-100 text-rose-700" },
-                      { n: "Spotify", s: "Подписка", a: "−299 ₽", p: false, color: "bg-emerald-100 text-emerald-700" },
-                      { n: "Wildberries", s: "Покупка", a: "−2 540 ₽", p: false, color: "bg-violet-100 text-violet-700" },
-                      { n: "Зарплата", s: "Технологии", a: "+85 000 ₽", p: true, color: "bg-cyan-100 text-cyan-700" },
-                      { n: "АЗС Лукойл", s: "Топливо", a: "−2 200 ₽", p: false, color: "bg-amber-100 text-amber-700" },
+                      { n: "Анна К.", s: "Перевод", a: "+5 000 TJS", p: true, color: "bg-rose-100 text-rose-700" },
+                      { n: "Spotify", s: "Подписка", a: "−299 TJS", p: false, color: "bg-emerald-100 text-emerald-700" },
+                      { n: "Wildberries", s: "Покупка", a: "−2 540 TJS", p: false, color: "bg-violet-100 text-violet-700" },
+                      { n: "Зарплата", s: "Технологии", a: "+85 000 TJS", p: true, color: "bg-cyan-100 text-cyan-700" },
+                      { n: "АЗС Лукойл", s: "Топливо", a: "−2 200 TJS", p: false, color: "bg-amber-100 text-amber-700" },
                     ].map((tx, i) => (
                       <div key={i} className="flex items-center gap-3">
                         <div className={`w-9 h-9 rounded-full ${tx.color} flex items-center justify-center text-[11px] font-black`}>
@@ -415,7 +415,7 @@ function InteractiveLaptop() {
                 <div>
                   <div className="grid grid-cols-4 gap-3 mb-5">
                     {[
-                      { l: "Выручка", v: "₽ 4.2M", d: "+12.5%", up: true, c: "from-cyan-500 to-blue-500" },
+                      { l: "Выручка", v: "TJS 4.2M", d: "+12.5%", up: true, c: "from-cyan-500 to-blue-500" },
                       { l: "Заказы", v: "1 247", d: "+8.2%", up: true, c: "from-violet-500 to-purple-500" },
                       { l: "Клиенты", v: "2 893", d: "+15.4%", up: true, c: "from-emerald-500 to-teal-500" },
                       { l: "Конверсия", v: "3.8%", d: "−0.3%", up: false, c: "from-rose-500 to-pink-500" },
@@ -493,10 +493,10 @@ function InteractiveLaptop() {
                     </div>
                     <div>
                       {[
-                        { n: "#10472", c: "Анна Кузнецова", a: "8 990 ₽", st: "Оплачен", color: "bg-emerald-100 text-emerald-700" },
-                        { n: "#10471", c: "Иван Петров", a: "15 450 ₽", st: "В пути", color: "bg-cyan-100 text-cyan-700" },
-                        { n: "#10470", c: "Дмитрий С.", a: "3 200 ₽", st: "Новый", color: "bg-violet-100 text-violet-700" },
-                        { n: "#10469", c: "Ольга Новикова", a: "27 800 ₽", st: "Возврат", color: "bg-rose-100 text-rose-700" },
+                        { n: "#10472", c: "Анна Кузнецова", a: "8 990 TJS", st: "Оплачен", color: "bg-emerald-100 text-emerald-700" },
+                        { n: "#10471", c: "Иван Петров", a: "15 450 TJS", st: "В пути", color: "bg-cyan-100 text-cyan-700" },
+                        { n: "#10470", c: "Дмитрий С.", a: "3 200 TJS", st: "Новый", color: "bg-violet-100 text-violet-700" },
+                        { n: "#10469", c: "Ольга Новикова", a: "27 800 TJS", st: "Возврат", color: "bg-rose-100 text-rose-700" },
                       ].map((o, i) => (
                         <div key={i} className="flex items-center px-4 py-2 border-b border-slate-100 last:border-0 text-[10px] hover:bg-slate-50 transition-colors">
                           <div className="w-20 font-mono font-bold text-slate-700">{o.n}</div>
@@ -531,14 +531,14 @@ function InteractiveLaptop() {
                       <div className="col-span-1"></div>
                     </div>
                     {[
-                      { n: "#10472", c: "Анна Кузнецова", d: "сегодня, 14:32", a: "8 990 ₽", st: "Оплачен", color: "bg-emerald-100 text-emerald-700" },
-                      { n: "#10471", c: "Иван Петров", d: "сегодня, 12:08", a: "15 450 ₽", st: "В пути", color: "bg-cyan-100 text-cyan-700" },
-                      { n: "#10470", c: "Дмитрий Соколов", d: "сегодня, 10:41", a: "3 200 ₽", st: "Новый", color: "bg-violet-100 text-violet-700" },
-                      { n: "#10469", c: "Ольга Новикова", d: "вчера, 19:20", a: "27 800 ₽", st: "Возврат", color: "bg-rose-100 text-rose-700" },
-                      { n: "#10468", c: "Сергей Михайлов", d: "вчера, 16:55", a: "12 100 ₽", st: "Оплачен", color: "bg-emerald-100 text-emerald-700" },
-                      { n: "#10467", c: "Виктория Лебедева", d: "вчера, 14:30", a: "5 670 ₽", st: "Доставлен", color: "bg-slate-100 text-slate-700" },
-                      { n: "#10466", c: "Алексей Орлов", d: "29 апр, 18:11", a: "9 320 ₽", st: "Оплачен", color: "bg-emerald-100 text-emerald-700" },
-                      { n: "#10465", c: "Мария Жукова", d: "29 апр, 11:42", a: "44 990 ₽", st: "В пути", color: "bg-cyan-100 text-cyan-700" },
+                      { n: "#10472", c: "Анна Кузнецова", d: "сегодня, 14:32", a: "8 990 TJS", st: "Оплачен", color: "bg-emerald-100 text-emerald-700" },
+                      { n: "#10471", c: "Иван Петров", d: "сегодня, 12:08", a: "15 450 TJS", st: "В пути", color: "bg-cyan-100 text-cyan-700" },
+                      { n: "#10470", c: "Дмитрий Соколов", d: "сегодня, 10:41", a: "3 200 TJS", st: "Новый", color: "bg-violet-100 text-violet-700" },
+                      { n: "#10469", c: "Ольга Новикова", d: "вчера, 19:20", a: "27 800 TJS", st: "Возврат", color: "bg-rose-100 text-rose-700" },
+                      { n: "#10468", c: "Сергей Михайлов", d: "вчера, 16:55", a: "12 100 TJS", st: "Оплачен", color: "bg-emerald-100 text-emerald-700" },
+                      { n: "#10467", c: "Виктория Лебедева", d: "вчера, 14:30", a: "5 670 TJS", st: "Доставлен", color: "bg-slate-100 text-slate-700" },
+                      { n: "#10466", c: "Алексей Орлов", d: "29 апр, 18:11", a: "9 320 TJS", st: "Оплачен", color: "bg-emerald-100 text-emerald-700" },
+                      { n: "#10465", c: "Мария Жукова", d: "29 апр, 11:42", a: "44 990 TJS", st: "В пути", color: "bg-cyan-100 text-cyan-700" },
                     ].map((o, i) => (
                       <div key={i} className="grid grid-cols-12 px-4 py-2 border-b border-slate-100 last:border-0 text-[10px] hover:bg-slate-50 items-center transition-colors">
                         <div className="col-span-2 font-mono font-bold text-slate-700">{o.n}</div>
@@ -559,7 +559,7 @@ function InteractiveLaptop() {
                     {[
                       { l: "Всего клиентов", v: "2 893" },
                       { l: "Активные за месяц", v: "1 124" },
-                      { l: "Средний чек", v: "8 740 ₽" },
+                      { l: "Средний чек", v: "8 740 TJS" },
                     ].map((s, i) => (
                       <div key={i} className="rounded-lg border border-slate-200/70 p-3">
                         <div className="text-[9px] uppercase tracking-wider text-slate-500 font-bold">{s.l}</div>
@@ -569,12 +569,12 @@ function InteractiveLaptop() {
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     {[
-                      { n: "Анна Кузнецова", e: "anna@mail.ru", o: 12, sum: "84 200 ₽", c: "from-rose-400 to-pink-500", in: "АК" },
-                      { n: "Иван Петров", e: "ivan.petrov@gmail.com", o: 8, sum: "67 540 ₽", c: "from-cyan-400 to-blue-500", in: "ИП" },
-                      { n: "Дмитрий Соколов", e: "d.sokolov@yandex.ru", o: 5, sum: "32 100 ₽", c: "from-violet-400 to-purple-500", in: "ДС" },
-                      { n: "Ольга Новикова", e: "olga.n@outlook.com", o: 21, sum: "184 800 ₽", c: "from-amber-400 to-orange-500", in: "ОН" },
-                      { n: "Сергей Михайлов", e: "smikh@bk.ru", o: 3, sum: "18 100 ₽", c: "from-emerald-400 to-teal-500", in: "СМ" },
-                      { n: "Виктория Л.", e: "vlebed@mail.ru", o: 7, sum: "44 670 ₽", c: "from-slate-500 to-slate-700", in: "ВЛ" },
+                      { n: "Анна Кузнецова", e: "anna@mail.ru", o: 12, sum: "84 200 TJS", c: "from-rose-400 to-pink-500", in: "АК" },
+                      { n: "Иван Петров", e: "ivan.petrov@gmail.com", o: 8, sum: "67 540 TJS", c: "from-cyan-400 to-blue-500", in: "ИП" },
+                      { n: "Дмитрий Соколов", e: "d.sokolov@yandex.ru", o: 5, sum: "32 100 TJS", c: "from-violet-400 to-purple-500", in: "ДС" },
+                      { n: "Ольга Новикова", e: "olga.n@outlook.com", o: 21, sum: "184 800 TJS", c: "from-amber-400 to-orange-500", in: "ОН" },
+                      { n: "Сергей Михайлов", e: "smikh@bk.ru", o: 3, sum: "18 100 TJS", c: "from-emerald-400 to-teal-500", in: "СМ" },
+                      { n: "Виктория Л.", e: "vlebed@mail.ru", o: 7, sum: "44 670 TJS", c: "from-slate-500 to-slate-700", in: "ВЛ" },
                     ].map((u, i) => (
                       <div key={i} className="flex items-center gap-3 p-3 rounded-lg border border-slate-200/70 hover:border-cyan-400 transition-colors">
                         <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${u.c} flex items-center justify-center text-white text-[12px] font-black flex-shrink-0`}>{u.in}</div>
@@ -596,7 +596,7 @@ function InteractiveLaptop() {
               {view === "analytics" && (
                 <div>
                   <div className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1">Апрель 2026</div>
-                  <div className="text-[24px] font-black text-slate-900 tabular-nums leading-none mb-1">₽ 4 248 500</div>
+                  <div className="text-[24px] font-black text-slate-900 tabular-nums leading-none mb-1">TJS 4 248 500</div>
                   <div className="text-[10px] text-emerald-600 font-bold mb-4">▲ +12.5% относительно марта</div>
                   <div className="rounded-lg border border-slate-200/70 p-4 mb-4">
                     <div className="text-[11px] font-bold text-slate-900 mb-3">Выручка по каналам</div>

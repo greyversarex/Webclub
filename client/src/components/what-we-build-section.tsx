@@ -41,6 +41,42 @@ function IconBanking({ className }: { className?: string }) {
   );
 }
 
+/* ── Brand logo badges (used inside the interactive mockups) ─────────────── */
+
+function LogoSnkr() {
+  return (
+    <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-cyan-400 via-sky-500 to-violet-600 flex items-center justify-center ring-1 ring-white/40 shadow-md shadow-cyan-500/30">
+      <svg viewBox="0 0 24 24" className="w-4 h-4">
+        <path fill="white" d="M2.6 15.9c0-.7.45-1.2 1.1-1.4l4.5-1.45 2.2-3.05c.4-.55 1.2-.6 1.66-.12.3.3.4.72.28 1.12l-.18.6 6.05 1.55c1.2.3 2.05 1.1 2.28 2.3l.1.55c.12.66-.38 1.26-1.05 1.26H3.7c-.62 0-1.1-.5-1.1-1.12v-1.8z" />
+        <rect x="2.6" y="17.7" width="18.8" height="1.5" rx="0.75" fill="white" opacity="0.55" />
+      </svg>
+    </div>
+  );
+}
+
+function LogoAltitude() {
+  return (
+    <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-slate-700 via-slate-900 to-black flex items-center justify-center ring-1 ring-white/15 shadow-md shadow-black/40">
+      <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
+        <path d="M1.5 19L8 8l3.3 5.5L13.8 9 22.5 19z" fill="white" />
+        <path d="M8 8l1.7 2.85L8.4 13 6.3 11.5z" fill="#38bdf8" />
+      </svg>
+    </div>
+  );
+}
+
+function LogoSbr() {
+  return (
+    <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-cyan-400 via-blue-500 to-violet-600 flex items-center justify-center ring-1 ring-white/30 shadow-md shadow-violet-500/30">
+      <svg viewBox="0 0 24 24" className="w-4 h-4" fill="white">
+        <rect x="3" y="13" width="3.6" height="7" rx="1.2" opacity="0.8" />
+        <rect x="10.2" y="9" width="3.6" height="11" rx="1.2" opacity="0.9" />
+        <rect x="17.4" y="5" width="3.6" height="15" rx="1.2" />
+      </svg>
+    </div>
+  );
+}
+
 /* ============================================================
    01 · INTERACTIVE E-COMMERCE
    ============================================================ */
@@ -115,7 +151,7 @@ function EcomInteractive() {
       <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200/70 bg-white z-10">
         <button onClick={() => setView("catalog")} className="flex items-center gap-2" data-testid="ecom-logo">
           {view !== "catalog" && <ArrowLeft className="w-4 h-4 text-slate-700" />}
-          <div className="w-6 h-6 rounded-md bg-gradient-to-br from-cyan-500 to-violet-500" />
+          <LogoSnkr />
           <span className="font-display font-black text-sm text-slate-900 tracking-tight">SNKR</span>
         </button>
         <div className="flex items-center gap-3.5 text-slate-500">
@@ -177,7 +213,7 @@ function EcomInteractive() {
                   </div>
                   <div className="text-[9px] text-slate-500 mt-1.5 uppercase tracking-wider font-semibold">{p.brand}</div>
                   <div className="text-[11px] font-bold text-slate-900 leading-tight">{p.name}</div>
-                  <div className="text-[11px] font-black text-slate-900 tabular-nums mt-0.5">{p.price.toLocaleString("ru")} ₽</div>
+                  <div className="text-[11px] font-black text-slate-900 tabular-nums mt-0.5">{p.price.toLocaleString("ru")} TJS</div>
                 </button>
               ))}
             </div>
@@ -200,7 +236,7 @@ function EcomInteractive() {
                 <span className="text-[10px] text-slate-500 ml-1">{product.rating} · {product.reviews} отзывов</span>
               </div>
               <div className="flex items-baseline gap-2 mt-3">
-                <span className="text-xl font-black text-slate-900 tabular-nums">{product.price.toLocaleString("ru")} ₽</span>
+                <span className="text-xl font-black text-slate-900 tabular-nums">{product.price.toLocaleString("ru")} TJS</span>
                 {product.oldPrice && <span className="text-xs text-slate-400 line-through">{product.oldPrice.toLocaleString("ru")}</span>}
               </div>
               <div className="flex items-center gap-2.5 mt-4">
@@ -228,7 +264,7 @@ function EcomInteractive() {
                             : "bg-gradient-to-r from-cyan-500 to-violet-500 text-white"
                 }`}>
                 {justAdded ? <><Check className="w-4 h-4" /> Добавлено в корзину</>
-                           : <>В корзину · {product.price.toLocaleString("ru")} ₽</>}
+                           : <>В корзину · {product.price.toLocaleString("ru")} TJS</>}
               </button>
               <div className="text-[10px] text-slate-500 mt-3 leading-relaxed">
                 Доставка завтра · Возврат 30 дней · Гарантия 1 год
@@ -259,7 +295,7 @@ function EcomInteractive() {
                       <div className="flex-1 min-w-0">
                         <div className="text-[10px] text-slate-500 uppercase font-bold">{it.p.brand}</div>
                         <div className="text-[12px] font-bold text-slate-900 leading-tight truncate">{it.p.name}</div>
-                        <div className="text-[11px] font-black text-slate-900 tabular-nums mt-0.5">{(it.p.price * it.qty).toLocaleString("ru")} ₽</div>
+                        <div className="text-[11px] font-black text-slate-900 tabular-nums mt-0.5">{(it.p.price * it.qty).toLocaleString("ru")} TJS</div>
                       </div>
                       <div className="flex items-center gap-1">
                         <button onClick={() => setCart((c) => c.map((x) => (x.id === it.id ? { ...x, qty: Math.max(1, x.qty - 1) } : x)))}
@@ -279,9 +315,9 @@ function EcomInteractive() {
                   ))}
                 </div>
                 <div className="mt-4 p-3 rounded-lg bg-slate-50 border border-slate-200/70">
-                  <div className="flex justify-between text-[11px] text-slate-600 mb-1"><span>Товары</span><span className="tabular-nums">{total.toLocaleString("ru")} ₽</span></div>
+                  <div className="flex justify-between text-[11px] text-slate-600 mb-1"><span>Товары</span><span className="tabular-nums">{total.toLocaleString("ru")} TJS</span></div>
                   <div className="flex justify-between text-[11px] text-slate-600 mb-1"><span>Доставка</span><span>Бесплатно</span></div>
-                  <div className="flex justify-between font-black text-sm text-slate-900 mt-2 pt-2 border-t border-slate-200/70"><span>Итого</span><span className="tabular-nums">{total.toLocaleString("ru")} ₽</span></div>
+                  <div className="flex justify-between font-black text-sm text-slate-900 mt-2 pt-2 border-t border-slate-200/70"><span>Итого</span><span className="tabular-nums">{total.toLocaleString("ru")} TJS</span></div>
                 </div>
                 <button className="w-full mt-3 bg-gradient-to-r from-cyan-500 to-violet-500 text-white text-sm font-semibold py-3 rounded-lg shadow-md flex items-center justify-center gap-2">
                   Оформить заказ <ArrowUpRight className="w-4 h-4" />
@@ -347,9 +383,7 @@ function BusinessInteractive() {
       <div className="border-b border-slate-200/70 bg-white z-10">
         <div className="flex items-center justify-between px-5 pt-3 pb-1.5">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-md bg-gradient-to-br from-slate-900 to-slate-700 flex items-center justify-center">
-              <span className="text-white text-[9px] font-black">A</span>
-            </div>
+            <LogoAltitude />
             <span className="font-display font-black text-sm text-slate-900 tracking-tight">ALTITUDE</span>
           </div>
         </div>
@@ -549,7 +583,7 @@ function BankInteractive() {
     <div className="h-[520px] sm:h-[580px] md:h-[640px] flex flex-col bg-slate-950 text-white" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/5 bg-gradient-to-r from-slate-950 to-slate-900">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-md bg-gradient-to-br from-cyan-400 to-violet-500" />
+          <LogoSbr />
           <span className="font-display font-black text-sm tracking-tight">SBR · PRO</span>
         </div>
         <div className="flex items-center gap-3">
@@ -571,7 +605,7 @@ function BankInteractive() {
             <div className="relative">
               <div className="text-[10px] uppercase tracking-[0.2em] text-slate-400 mb-1 font-semibold">Общий баланс</div>
               <div className="flex items-baseline gap-3 mb-4">
-                <span className="text-[26px] font-black tabular-nums leading-none">1 248 500 ₽</span>
+                <span className="text-[26px] font-black tabular-nums leading-none">1 248 500 TJS</span>
                 <span className="text-[10px] text-emerald-400 font-bold flex items-center gap-0.5"><ArrowUpRight className="w-3 h-3" />+5.2%</span>
               </div>
               <div className="relative h-[72px] mb-5">
@@ -613,7 +647,7 @@ function BankInteractive() {
                       <div className="text-[11px] font-bold leading-none">{tx.n}</div>
                       <div className="text-[9px] text-slate-500 mt-0.5">{tx.s}</div>
                     </div>
-                    <div className={`text-[11px] font-black tabular-nums ${tx.p ? "text-emerald-400" : "text-white"}`}>{tx.a} ₽</div>
+                    <div className={`text-[11px] font-black tabular-nums ${tx.p ? "text-emerald-400" : "text-white"}`}>{tx.a} TJS</div>
                   </div>
                 ))}
               </div>
@@ -625,9 +659,9 @@ function BankInteractive() {
           <div className="p-5 space-y-4 mockup-view-in">
             <div className="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-bold">Мои карты</div>
             {[
-              { name: "PLATINUM", num: "•••• 4892", bal: "248 500 ₽", grad: "from-slate-700 via-slate-800 to-slate-950" },
-              { name: "TRAVEL", num: "•••• 1027", bal: "1 000 000 ₽", grad: "from-cyan-500 via-blue-600 to-violet-700" },
-              { name: "CASHBACK", num: "•••• 7741", bal: "0 ₽", grad: "from-amber-400 via-orange-500 to-rose-500" },
+              { name: "PLATINUM", num: "•••• 4892", bal: "248 500 TJS", grad: "from-slate-700 via-slate-800 to-slate-950" },
+              { name: "TRAVEL", num: "•••• 1027", bal: "1 000 000 TJS", grad: "from-cyan-500 via-blue-600 to-violet-700" },
+              { name: "CASHBACK", num: "•••• 7741", bal: "0 TJS", grad: "from-amber-400 via-orange-500 to-rose-500" },
             ].map((c, i) => (
               <div key={i} className={`relative rounded-2xl p-4 bg-gradient-to-br ${c.grad} text-white shadow-xl overflow-hidden`}>
                 <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-white/10 blur-xl" />
@@ -685,7 +719,7 @@ function BankInteractive() {
                         <div className="text-[11px] font-bold leading-none">{tx.n}</div>
                         <div className="text-[9px] text-slate-500 mt-0.5">{tx.s} · {tx.t}</div>
                       </div>
-                      <div className={`text-[11px] font-black tabular-nums ${tx.p ? "text-emerald-400" : "text-white"}`}>{tx.a} ₽</div>
+                      <div className={`text-[11px] font-black tabular-nums ${tx.p ? "text-emerald-400" : "text-white"}`}>{tx.a} TJS</div>
                     </div>
                   ))}
                 </div>
@@ -697,7 +731,7 @@ function BankInteractive() {
         {tab === "stats" && (
           <div className="p-5 mockup-view-in">
             <div className="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-bold mb-1">Аналитика · Апрель</div>
-            <div className="text-[24px] font-black tabular-nums leading-none mb-1">62 458 ₽</div>
+            <div className="text-[24px] font-black tabular-nums leading-none mb-1">62 458 TJS</div>
             <div className="text-[10px] text-slate-500 mb-4">расходы за месяц</div>
             <div className="space-y-2.5 mockup-stagger">
               {[
@@ -711,7 +745,7 @@ function BankInteractive() {
                 <div key={i}>
                   <div className="flex justify-between items-center text-[11px] mb-1">
                     <span className="text-slate-300 font-medium">{c.c}</span>
-                    <span className="text-white font-bold tabular-nums">{c.v.toLocaleString("ru")} ₽</span>
+                    <span className="text-white font-bold tabular-nums">{c.v.toLocaleString("ru")} TJS</span>
                   </div>
                   <div className="h-2 rounded-full bg-white/5 overflow-hidden">
                     <div className={`h-full bg-gradient-to-r ${c.color} rounded-full transition-all duration-500`} style={{ width: `${c.p * 2.8}%` }} />
