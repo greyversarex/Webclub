@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Star, Quote } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/lib/language-context";
@@ -10,6 +10,73 @@ const avatarColors = [
   "from-rose-500 to-pink-600",
   "from-amber-500 to-orange-500",
 ];
+
+function TypewriterText({
+  text,
+  start,
+  startDelay = 0,
+  baseSpeed = 20,
+}: {
+  text: string;
+  start: boolean;
+  startDelay?: number;
+  baseSpeed?: number;
+}) {
+  const [count, setCount] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+
+  // Latch: begin once the section first scrolls into view, and stay started.
+  useEffect(() => {
+    if (start) setHasStarted(true);
+  }, [start]);
+
+  // Run the typing animation independently of later visibility toggles.
+  // Re-runs (and resets) when the text changes, e.g. on language switch.
+  useEffect(() => {
+    if (!hasStarted) return;
+
+    const reduce =
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      setCount(text.length);
+      return;
+    }
+
+    setCount(0);
+    let i = 0;
+    let timer: ReturnType<typeof setTimeout>;
+    const tick = () => {
+      i += 1;
+      setCount(i);
+      if (i < text.length) {
+        const ch = text[i - 1];
+        const delay = /[.,!?…—]/.test(ch)
+          ? 160 + Math.random() * 220
+          : baseSpeed + Math.random() * baseSpeed;
+        timer = setTimeout(tick, delay);
+      }
+    };
+    const initial = setTimeout(tick, startDelay);
+    return () => {
+      clearTimeout(initial);
+      clearTimeout(timer);
+    };
+  }, [hasStarted, text, startDelay, baseSpeed]);
+
+  const done = count >= text.length;
+  return (
+    <>
+      {text.slice(0, count)}
+      <span
+        aria-hidden="true"
+        className={`inline-block w-[2px] h-[0.95em] bg-violet-500 ml-px align-text-bottom ${
+          start && !done ? "animate-pulse opacity-100" : "opacity-0"
+        }`}
+      />
+    </>
+  );
+}
 
 export function TestimonialsSection() {
   const { ref, isVisible } = useScrollAnimation();
@@ -57,9 +124,19 @@ export function TestimonialsSection() {
             >
               <Quote className="w-7 h-7 text-violet-200 mb-3 flex-shrink-0" />
 
-              <p className="text-slate-700 text-sm leading-relaxed flex-1 mb-5">
-                {review.text}
-              </p>
+              <div className="relative flex-1 mb-5">
+                <p className="text-slate-700 text-sm leading-relaxed invisible" aria-hidden="true">
+                  {review.text}
+                </p>
+                <p className="text-slate-700 text-sm leading-relaxed absolute inset-0">
+                  <TypewriterText
+                    text={review.text}
+                    start={isVisible}
+                    startDelay={i * 180}
+                    baseSpeed={16 + (i % 3) * 6}
+                  />
+                </p>
+              </div>
 
               <div className="flex items-center gap-3 pt-4 border-t border-slate-100">
                 <div
