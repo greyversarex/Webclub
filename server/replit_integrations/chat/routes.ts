@@ -12,7 +12,7 @@ function getAIClient(): { client: OpenAI; model: string } {
           "X-Title": "WebCorex Chat",
         },
       }),
-      model: "meta-llama/llama-3.3-70b-instruct:free",
+      model: "qwen/qwen3-8b:free",
     };
   }
   if (process.env.GROQ_API_KEY) {
