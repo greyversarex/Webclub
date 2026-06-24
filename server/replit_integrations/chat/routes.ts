@@ -1,20 +1,25 @@
 import type { Express, Request, Response } from "express";
 import OpenAI from "openai";
 
+const FREE_MODELS = [
+  "google/gemma-3-12b-it:free",
+  "mistralai/mistral-7b-instruct:free",
+  "meta-llama/llama-3.1-8b-instruct:free",
+  "microsoft/phi-3-mini-128k-instruct:free",
+];
+
+function getOpenRouterClient(): OpenAI {
+  return new OpenAI({
+    apiKey: process.env.OPENROUTER_API_KEY,
+    baseURL: "https://openrouter.ai/api/v1",
+    defaultHeaders: {
+      "HTTP-Referer": "https://webcorex.net",
+      "X-Title": "WebCorex Chat",
+    },
+  });
+}
+
 function getAIClient(): { client: OpenAI; model: string } {
-  if (process.env.OPENROUTER_API_KEY) {
-    return {
-      client: new OpenAI({
-        apiKey: process.env.OPENROUTER_API_KEY,
-        baseURL: "https://openrouter.ai/api/v1",
-        defaultHeaders: {
-          "HTTP-Referer": "https://webcorex.net",
-          "X-Title": "WebCorex Chat",
-        },
-      }),
-      model: "qwen/qwen3-8b:free",
-    };
-  }
   if (process.env.GROQ_API_KEY) {
     return {
       client: new OpenAI({
@@ -63,6 +68,49 @@ export function registerChatRoutes(app: Express): void {
       res.setHeader("Content-Type", "text/event-stream");
       res.setHeader("Cache-Control", "no-cache");
       res.setHeader("Connection", "keep-alive");
+
+      if (process.env.OPENROUTER_API_KEY) {
+        const client = getOpenRouterClient();
+        let lastError: unknown;
+
+        for (const model of FREE_MODELS) {
+          try {
+            const stream = await client.chat.completions.create({
+              model,
+              messages: [
+                { role: "system", content: SYSTEM_PROMPT },
+                ...messages,
+              ],
+              stream: true,
+              max_tokens: 1024,
+            });
+
+            for await (const chunk of stream) {
+              const content = chunk.choices[0]?.delta?.content || "";
+              if (content) {
+                res.write(`data: ${JSON.stringify({ content })}\n\n`);
+              }
+            }
+
+            res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
+            res.end();
+            return;
+          } catch (err: any) {
+            const status = err?.status || err?.code;
+            if (status === 429 || status === 404 || status === 503) {
+              console.warn(`Model ${model} unavailable (${status}), trying next...`);
+              lastError = err;
+              continue;
+            }
+            throw err;
+          }
+        }
+
+        console.error("All OpenRouter models failed:", lastError);
+        res.write(`data: ${JSON.stringify({ error: "Ошибка соединения с AI" })}\n\n`);
+        res.end();
+        return;
+      }
 
       const { client: openai, model } = getAIClient();
       const stream = await openai.chat.completions.create({
