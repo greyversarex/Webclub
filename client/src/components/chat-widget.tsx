@@ -1,8 +1,31 @@
 import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, Bot, User, Loader2 } from "lucide-react";
+import { X, Send, User, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useLanguage } from "@/lib/language-context";
+
+function AIAvatar({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
+  const dims = size === "sm" ? "w-7 h-7" : size === "lg" ? "w-12 h-12" : "w-9 h-9";
+  const inner = size === "sm" ? 12 : size === "lg" ? 20 : 15;
+  return (
+    <div className={`${dims} relative flex-shrink-0`}>
+      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-violet-500 via-purple-600 to-cyan-500 animate-pulse opacity-60 blur-[3px]" />
+      <div className="relative w-full h-full rounded-full bg-gradient-to-br from-violet-500 via-purple-600 to-cyan-500 flex items-center justify-center shadow-lg shadow-violet-500/40">
+        <svg width={inner} height={inner} viewBox="0 0 24 24" fill="none">
+          <rect x="4" y="8" width="16" height="12" rx="3" fill="white" fillOpacity="0.95"/>
+          <rect x="9" y="4" width="6" height="5" rx="2" fill="white" fillOpacity="0.95"/>
+          <circle cx="9" cy="13" r="2" fill="#7c3aed"/>
+          <circle cx="15" cy="13" r="2" fill="#7c3aed"/>
+          <rect x="9" y="17" width="6" height="1.5" rx="0.75" fill="#7c3aed" fillOpacity="0.7"/>
+          <line x1="12" y1="4" x2="12" y2="8" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+          <circle cx="12" cy="3" r="1.2" fill="#a78bfa"/>
+          <line x1="4" y1="13" x2="1.5" y2="13" stroke="white" strokeOpacity="0.8" strokeWidth="1.5" strokeLinecap="round"/>
+          <line x1="20" y1="13" x2="22.5" y2="13" stroke="white" strokeOpacity="0.8" strokeWidth="1.5" strokeLinecap="round"/>
+        </svg>
+      </div>
+    </div>
+  );
+}
 
 interface Message {
   role: "user" | "assistant";
@@ -151,13 +174,14 @@ export function ChatWidget() {
           style={{ height: "480px" }}
           data-testid="chat-widget-panel"
         >
-          <div className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-slate-800 to-slate-700 text-white">
-            <div className="w-8 h-8 rounded-full bg-violet-500 flex items-center justify-center flex-shrink-0">
-              <Bot className="w-4 h-4" />
-            </div>
+          <div className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-slate-900 to-slate-800 text-white">
+            <AIAvatar size="md" />
             <div className="flex-1 min-w-0">
               <p className="font-semibold text-sm">WebClub AI</p>
-              <p className="text-xs text-slate-300">IT-консультант</p>
+              <p className="text-xs text-violet-300 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                IT-консультант
+              </p>
             </div>
             <Button
               variant="ghost"
@@ -177,17 +201,13 @@ export function ChatWidget() {
                 className={`flex gap-2 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}
                 data-testid={`chat-message-${i}`}
               >
-                <div
-                  className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                    msg.role === "assistant"
-                      ? "bg-violet-100 text-violet-600"
-                      : "bg-slate-200 text-slate-600"
-                  }`}
-                >
+                <div className="flex-shrink-0 mt-0.5">
                   {msg.role === "assistant" ? (
-                    <Bot className="w-3.5 h-3.5" />
+                    <AIAvatar size="sm" />
                   ) : (
-                    <User className="w-3.5 h-3.5" />
+                    <div className="w-7 h-7 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center">
+                      <User className="w-3.5 h-3.5" />
+                    </div>
                   )}
                 </div>
                 <div
@@ -255,9 +275,7 @@ export function ChatWidget() {
               <X className="w-3.5 h-3.5" />
             </button>
             <div className="flex items-start gap-2 mb-2">
-              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-violet-500 to-violet-700 flex items-center justify-center flex-shrink-0 shadow-md shadow-violet-500/30">
-                <Bot className="w-3.5 h-3.5 text-white" />
-              </div>
+              <AIAvatar size="sm" />
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-semibold text-slate-800">WebClub AI</p>
                 <p className="text-[10px] text-emerald-600 flex items-center gap-1">
@@ -297,8 +315,18 @@ export function ChatWidget() {
           <X className="w-6 h-6 text-white" />
         ) : (
           <>
-            <span className="font-bold text-white text-lg tracking-tight leading-none select-none">AI</span>
-            <span className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white" />
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <rect x="4" y="8" width="16" height="12" rx="3" fill="white" fillOpacity="0.95"/>
+              <rect x="9" y="4" width="6" height="5" rx="2" fill="white" fillOpacity="0.95"/>
+              <circle cx="9" cy="13" r="2" fill="#7c3aed"/>
+              <circle cx="15" cy="13" r="2" fill="#7c3aed"/>
+              <rect x="9" y="17" width="6" height="1.5" rx="0.75" fill="#7c3aed" fillOpacity="0.7"/>
+              <line x1="12" y1="4" x2="12" y2="8" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+              <circle cx="12" cy="3" r="1.2" fill="#a78bfa"/>
+              <line x1="4" y1="13" x2="1.5" y2="13" stroke="white" strokeOpacity="0.8" strokeWidth="1.5" strokeLinecap="round"/>
+              <line x1="20" y1="13" x2="22.5" y2="13" stroke="white" strokeOpacity="0.8" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
+            <span className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-400 rounded-full border-2 border-white shadow-sm" />
             {showTeaser && (
               <span className="absolute inset-0 rounded-full bg-violet-500 animate-ping opacity-40" />
             )}
