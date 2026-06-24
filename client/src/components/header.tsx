@@ -58,7 +58,7 @@ export function Header() {
               alt="WEBCOREX Logo" 
               className="w-12 h-12 md:w-16 md:h-16 object-contain"
             />
-            <span className="it-shimmer-text font-display font-bold text-xl md:text-2xl bg-gradient-to-r from-slate-500 via-slate-300 to-slate-500 bg-clip-text text-transparent">
+            <span className="it-shimmer-text font-display font-bold text-xl md:text-2xl bg-gradient-to-r from-slate-500 via-slate-300 to-slate-500 bg-clip-text text-transparent pl-[0px] pr-[0px] ml-[-17px] mr-[-17px]">
               WEBCOREX
             </span>
           </a>
@@ -120,7 +120,6 @@ export function Header() {
           </div>
         </div>
       </div>
-
       {isMobileMenuOpen && (
         <div className="md:hidden bg-gradient-to-r from-slate-200 via-slate-100 via-50% to-slate-200 backdrop-blur-xl border-b border-slate-300/50">
           <nav className="flex flex-col p-4 gap-2">
