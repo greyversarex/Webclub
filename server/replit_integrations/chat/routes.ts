@@ -2,6 +2,19 @@ import type { Express, Request, Response } from "express";
 import OpenAI from "openai";
 
 function getAIClient(): { client: OpenAI; model: string } {
+  if (process.env.OPENROUTER_API_KEY) {
+    return {
+      client: new OpenAI({
+        apiKey: process.env.OPENROUTER_API_KEY,
+        baseURL: "https://openrouter.ai/api/v1",
+        defaultHeaders: {
+          "HTTP-Referer": "https://webcorex.net",
+          "X-Title": "WebCorex Chat",
+        },
+      }),
+      model: "meta-llama/llama-3.3-70b-instruct:free",
+    };
+  }
   if (process.env.GROQ_API_KEY) {
     return {
       client: new OpenAI({
