@@ -1,0 +1,145 @@
+root@msk-1-vm-85bg:~# cat > /var/www/webclub/.env << 'EOF'
+NODE_ENV=production
+PORT=5000
+DATABASE_URL=postgresql://webclub:webclub123@localhost:5432/webclub
+SESSION_SECRET=supersecretkey123456789abc
+OPENAI_API_KEY=placeholder
+EOF
+
+cd /var/www/webclub && npm run db:push && npm run build && npm install -g pm2 && pm2 start dist/index.cjs --name webclub && pm2 save && pm2 startup
+
+> rest-express@1.0.0 db:push
+> drizzle-kit push
+
+No config path provided, using default 'drizzle.config.ts'
+Reading config file '/var/www/webclub/drizzle.config.ts'
+Using 'pg' driver for database querying
+[✓] Pulling schema from database...
+[i] No changes detected
+
+> rest-express@1.0.0 build
+> tsx script/build.ts
+
+building client...
+vite v5.4.20 building for production...
+transforming (1) index.htmlBrowserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+
+A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+✓ 1723 modules transformed.
+../dist/public/index.html                                                   2.83 kB │ gzip:   1.25 kB
+../dist/public/assets/Визитки_Personal_(1)_1765668694348-CIPdomiw.png     439.95 kB
+../dist/public/assets/government_services_portal-Dh-lzQSL.png             722.38 kB
+../dist/public/assets/e-commerce_platform_mockup-CXsb6-sX.png             952.39 kB
+../dist/public/assets/logistics_system_dashboard-B2nGvJM8.png             998.19 kB
+../dist/public/assets/education_platform_interface-DuS6aUkA.png         1,045.00 kB
+../dist/public/assets/corporate_portal_dashboard-d7BQ1CWS.png           1,084.55 kB
+../dist/public/assets/banking_mobile_app_interface-DjYrPmWr.png         1,203.40 kB
+../dist/public/assets/crm_480p-DaAwdX0P.mp4                             1,577.50 kB
+../dist/public/assets/logistics_480p-f0fFzC-7.mp4                       1,611.63 kB
+../dist/public/assets/analytics_480p-C9wsxS4Z.mp4                       1,618.17 kB
+../dist/public/assets/landing_480p-CYsdWlEU.mp4                         1,755.45 kB
+../dist/public/assets/analytics_720p-C0DFdgbb.mp4                       2,276.41 kB
+../dist/public/assets/crm_720p-CDOJ2vhP.mp4                             2,276.57 kB
+../dist/public/assets/finance_480p-D24_SLIw.mp4                         2,347.87 kB
+../dist/public/assets/logistics_720p-B5UQ9lJU.mp4                       2,659.27 kB
+../dist/public/assets/corporate_480p-jkm8Ghbs.mp4                       2,698.18 kB
+../dist/public/assets/gov_docflow_480p-C7SA73TB.mp4                     2,776.79 kB
+../dist/public/assets/landing_720p-5GH7CUNn.mp4                         3,072.14 kB
+../dist/public/assets/finance_720p-B4V4o4XN.mp4                         3,283.85 kB
+../dist/public/assets/analytics_1080p-faFeBFe4.mp4                      3,460.19 kB
+../dist/public/assets/crm_1080p-ByiEXWh1.mp4                            3,667.50 kB
+../dist/public/assets/tourism_480p--tA3d2lE.mp4                         3,841.61 kB
+../dist/public/assets/gov_docflow_720p-BKRNUMPl.mp4                     4,267.49 kB
+../dist/public/assets/corporate_720p-Cu9wEhhj.mp4                       4,781.49 kB
+../dist/public/assets/finance_1080p-CGJaYFcA.mp4                        5,390.94 kB
+../dist/public/assets/logistics_1080p-DiGQ6cdl.mp4                      5,494.77 kB
+../dist/public/assets/landing_1080p-Sjrw87Q8.mp4                        6,101.42 kB
+../dist/public/assets/gov_docflow_1080p-Bo5WRyen.mp4                    7,226.77 kB
+../dist/public/assets/tourism_720p-Do4ffbxX.mp4                         7,491.01 kB
+../dist/public/assets/corporate_1080p-38QZSocA.mp4                      9,179.83 kB
+../dist/public/assets/tourism_1080p-Bc3KXyfy.mp4                       15,251.17 kB
+../dist/public/assets/index-C7vFxa4c.css                                  130.80 kB │ gzip:  20.10 kB
+../dist/public/assets/index-BeMFaRre.js                                   480.46 kB │ gzip: 149.92 kB
+✓ built in 11.97s
+building server...
+
+  dist/index.cjs  1.0mb ⚠️
+
+⚡ Done in 681ms
+
+changed 90 packages in 10s
+
+8 packages are looking for funding
+  run `npm fund` for details
+[PM2][ERROR] Script already launched, add -f option to force re-execution
+root@msk-1-vm-85bg:/var/www/webclub# cd /var/www/webclub && npm run db:push && npm run build && npm install -g pm2 && pm2 start dist/index.cjs --name webclub && pm2 save && pm2 startup
+
+> rest-express@1.0.0 db:push
+> drizzle-kit push
+
+No config path provided, using default 'drizzle.config.ts'
+Reading config file '/var/www/webclub/drizzle.config.ts'
+Using 'pg' driver for database querying
+[✓] Pulling schema from database...
+[i] No changes detected
+
+> rest-express@1.0.0 build
+> tsx script/build.ts
+
+building client...
+vite v5.4.20 building for production...
+transforming (1) index.htmlBrowserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+transforming (5) ../node_modules/wouter/esm/index.js
+A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+✓ 1723 modules transformed.
+../dist/public/index.html                                                   2.83 kB │ gzip:   1.25 kB
+../dist/public/assets/Визитки_Personal_(1)_1765668694348-CIPdomiw.png     439.95 kB
+../dist/public/assets/government_services_portal-Dh-lzQSL.png             722.38 kB
+../dist/public/assets/e-commerce_platform_mockup-CXsb6-sX.png             952.39 kB
+../dist/public/assets/logistics_system_dashboard-B2nGvJM8.png             998.19 kB
+../dist/public/assets/education_platform_interface-DuS6aUkA.png         1,045.00 kB
+../dist/public/assets/corporate_portal_dashboard-d7BQ1CWS.png           1,084.55 kB
+../dist/public/assets/banking_mobile_app_interface-DjYrPmWr.png         1,203.40 kB
+../dist/public/assets/crm_480p-DaAwdX0P.mp4                             1,577.50 kB
+../dist/public/assets/logistics_480p-f0fFzC-7.mp4                       1,611.63 kB
+../dist/public/assets/analytics_480p-C9wsxS4Z.mp4                       1,618.17 kB
+../dist/public/assets/landing_480p-CYsdWlEU.mp4                         1,755.45 kB
+../dist/public/assets/analytics_720p-C0DFdgbb.mp4                       2,276.41 kB
+../dist/public/assets/crm_720p-CDOJ2vhP.mp4                             2,276.57 kB
+../dist/public/assets/finance_480p-D24_SLIw.mp4                         2,347.87 kB
+../dist/public/assets/logistics_720p-B5UQ9lJU.mp4                       2,659.27 kB
+../dist/public/assets/corporate_480p-jkm8Ghbs.mp4                       2,698.18 kB
+../dist/public/assets/gov_docflow_480p-C7SA73TB.mp4                     2,776.79 kB
+../dist/public/assets/landing_720p-5GH7CUNn.mp4                         3,072.14 kB
+../dist/public/assets/finance_720p-B4V4o4XN.mp4                         3,283.85 kB
+../dist/public/assets/analytics_1080p-faFeBFe4.mp4                      3,460.19 kB
+../dist/public/assets/crm_1080p-ByiEXWh1.mp4                            3,667.50 kB
+../dist/public/assets/tourism_480p--tA3d2lE.mp4                         3,841.61 kB
+../dist/public/assets/gov_docflow_720p-BKRNUMPl.mp4                     4,267.49 kB
+../dist/public/assets/corporate_720p-Cu9wEhhj.mp4                       4,781.49 kB
+../dist/public/assets/finance_1080p-CGJaYFcA.mp4                        5,390.94 kB
+../dist/public/assets/logistics_1080p-DiGQ6cdl.mp4                      5,494.77 kB
+../dist/public/assets/landing_1080p-Sjrw87Q8.mp4                        6,101.42 kB
+../dist/public/assets/gov_docflow_1080p-Bo5WRyen.mp4                    7,226.77 kB
+../dist/public/assets/tourism_720p-Do4ffbxX.mp4                         7,491.01 kB
+../dist/public/assets/corporate_1080p-38QZSocA.mp4                      9,179.83 kB
+../dist/public/assets/tourism_1080p-Bc3KXyfy.mp4                       15,251.17 kB
+../dist/public/assets/index-C7vFxa4c.css                                  130.80 kB │ gzip:  20.10 kB
+../dist/public/assets/index-BeMFaRre.js                                   480.46 kB │ gzip: 149.92 kB
+✓ built in 12.32s
+building server...
+
+  dist/index.cjs  1.0mb ⚠️
+
+⚡ Done in 788ms
+
+changed 90 packages in 4s
+
+8 packages are looking for funding
+  run `npm fund` for details
+[PM2][ERROR] Script already launched, add -f option to force re-execution
+root@msk-1-vm-85bg:/var/www/webclub#
