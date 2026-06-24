@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { X, Send, Bot, User, Loader2 } from "lucide-react";
+import { X, Send, User, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useLanguage } from "@/lib/language-context";
@@ -152,8 +152,8 @@ export function ChatWidget() {
           data-testid="chat-widget-panel"
         >
           <div className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-slate-800 to-slate-700 text-white">
-            <div className="w-8 h-8 rounded-full bg-violet-500 flex items-center justify-center flex-shrink-0">
-              <Bot className="w-4 h-4" />
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-600 to-cyan-500 flex items-center justify-center flex-shrink-0 shadow-md shadow-violet-500/40">
+              <span className="font-bold text-white text-xs tracking-tight leading-none select-none">AI</span>
             </div>
             <div className="flex-1 min-w-0">
               <p className="font-semibold text-sm">WebClub AI</p>
@@ -180,12 +180,12 @@ export function ChatWidget() {
                 <div
                   className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
                     msg.role === "assistant"
-                      ? "bg-violet-100 text-violet-600"
+                      ? "bg-gradient-to-br from-violet-600 to-cyan-500"
                       : "bg-slate-200 text-slate-600"
                   }`}
                 >
                   {msg.role === "assistant" ? (
-                    <Bot className="w-3.5 h-3.5" />
+                    <span className="font-bold text-white text-[10px] tracking-tight leading-none select-none">AI</span>
                   ) : (
                     <User className="w-3.5 h-3.5" />
                   )}
@@ -255,8 +255,8 @@ export function ChatWidget() {
               <X className="w-3.5 h-3.5" />
             </button>
             <div className="flex items-start gap-2 mb-2">
-              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-violet-500 to-violet-700 flex items-center justify-center flex-shrink-0 shadow-md shadow-violet-500/30">
-                <Bot className="w-3.5 h-3.5 text-white" />
+              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-violet-600 to-cyan-500 flex items-center justify-center flex-shrink-0 shadow-md shadow-violet-500/30">
+                <span className="font-bold text-white text-[10px] tracking-tight leading-none select-none">AI</span>
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-semibold text-slate-800">WebClub AI</p>
