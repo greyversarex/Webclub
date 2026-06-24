@@ -1,11 +1,23 @@
 import type { Express, Request, Response } from "express";
 import OpenAI from "openai";
 
-function getOpenAIClient() {
-  return new OpenAI({
-    apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY || process.env.OPENAI_API_KEY,
-    baseURL: process.env.AI_INTEGRATIONS_OPENAI_BASE_URL || undefined,
-  });
+function getAIClient(): { client: OpenAI; model: string } {
+  if (process.env.GROQ_API_KEY) {
+    return {
+      client: new OpenAI({
+        apiKey: process.env.GROQ_API_KEY,
+        baseURL: "https://api.groq.com/openai/v1",
+      }),
+      model: "llama-3.3-70b-versatile",
+    };
+  }
+  return {
+    client: new OpenAI({
+      apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY || process.env.OPENAI_API_KEY,
+      baseURL: process.env.AI_INTEGRATIONS_OPENAI_BASE_URL || undefined,
+    }),
+    model: "gpt-5.1",
+  };
 }
 
 const SYSTEM_PROMPT = `Ты — умный ИТ-консультант компании WebClub. Помогаешь клиентам разобраться в IT-решениях, отвечаешь на вопросы об услугах компании и даёшь профессиональные советы.
@@ -39,15 +51,15 @@ export function registerChatRoutes(app: Express): void {
       res.setHeader("Cache-Control", "no-cache");
       res.setHeader("Connection", "keep-alive");
 
-      const openai = getOpenAIClient();
+      const { client: openai, model } = getAIClient();
       const stream = await openai.chat.completions.create({
-        model: "gpt-5.1",
+        model,
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
           ...messages,
         ],
         stream: true,
-        max_completion_tokens: 1024,
+        max_tokens: 1024,
       });
 
       for await (const chunk of stream) {
