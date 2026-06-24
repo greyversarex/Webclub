@@ -1,0 +1,40 @@
+[PM2][ERROR] Script already launched, add -f option to force re-execution
+root@msk-1-vm-85bg:/var/www/webclub# ^C
+root@msk-1-vm-85bg:/var/www/webclub# pm2 restart webclub
+Use --update-env to update environment variables
+[PM2] Applying action restartProcessId on app [webclub](ids: [ 0 ])
+[PM2] [webclub](0) ✓
+┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐
+│ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │
+├────┼────────────────────┼──────────┼──────┼───────────┼──────────┼──────────┤
+│ 0  │ webclub            │ fork     │ 1    │ online    │ 0%       │ 18.0mb   │
+└────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘
+root@msk-1-vm-85bg:/var/www/webclub# curl -I http://201.51.12.108
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Wed, 24 Jun 2026 13:47:20 GMT
+Content-Type: text/html
+Content-Length: 615
+Last-Modified: Wed, 24 Jun 2026 12:37:45 GMT
+Connection: keep-alive
+ETag: "6a3bcf99-267"
+Accept-Ranges: bytes
+
+root@msk-1-vm-85bg:/var/www/webclub# certbot --nginx -d webcorex.net -d www.webcorex.net
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Requesting a certificate for webcorex.net and www.webcorex.net
+
+Certbot failed to authenticate some domains (authenticator: nginx). The Certificate Authority reported these problems:
+  Domain: webcorex.net
+  Type:   connection
+  Detail: 201.51.12.108: Fetching http://webcorex.net/.well-known/acme-challenge/RC1hXH2mv-QxVWcmafoyVY3nvfUphUQAyB9VwOaFsoo: Timeout during connect (likely firewall problem)
+
+  Domain: www.webcorex.net
+  Type:   connection
+  Detail: 201.51.12.108: Fetching http://www.webcorex.net/.well-known/acme-challenge/R7FO7LoVln0B1jE3l1VDAZCNpTRwJgvyHSmCy3Y3OLk: Timeout after connect (your server may be slow or overloaded)
+
+Hint: The Certificate Authority failed to verify the temporary nginx configuration changes made by Certbot. Ensure the listed domains point to this nginx server and that it is accessible from the internet.
+
+Some challenges have failed.
+Ask for help or search for solutions at https://community.letsencrypt.org. See the logfile /var/log/letsencrypt/letsencrypt.log or re-run Certbot with -v for more details.
+root@msk-1-vm-85bg:/var/www/webclub#
