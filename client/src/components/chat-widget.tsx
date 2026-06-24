@@ -77,6 +77,9 @@ export function ChatWidget() {
     const assistantMessage: Message = { role: "assistant", content: "" };
     setMessages([...newMessages, assistantMessage]);
 
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000);
+
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
@@ -84,6 +87,7 @@ export function ChatWidget() {
         body: JSON.stringify({
           messages: newMessages.map((m) => ({ role: m.role, content: m.content })),
         }),
+        signal: controller.signal,
       });
 
       if (!response.ok) throw new Error("Request failed");
@@ -122,11 +126,12 @@ export function ChatWidget() {
         const updated = [...prev];
         updated[updated.length - 1] = {
           role: "assistant",
-          content: "Извините, произошла ошибка. Попробуйте ещё раз.",
+          content: "Извините, сервис временно недоступен. Попробуйте позже.",
         };
         return updated;
       });
     } finally {
+      clearTimeout(timeout);
       setIsLoading(false);
     }
   };
