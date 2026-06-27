@@ -149,6 +149,9 @@ export const translations = {
     process: {
       title: "Как мы работаем",
       subtitle: "Прозрачный процесс от первой встречи до запуска и поддержки. Вы знаете, что происходит на каждом этапе.",
+      stageLabel: "Этап",
+      ofLabel: "из",
+      progressLabel: "Выполнение этапа",
       steps: [
         { title: "Бриф и анализ", description: "Изучаем задачу, ваш бизнес и аудиторию. Согласовываем цели, сроки и бюджет." },
         { title: "Дизайн и прототип", description: "Создаём UX/UI-дизайн, кликабельный прототип и согласовываем визуальный стиль." },
@@ -357,6 +360,9 @@ export const translations = {
     process: {
       title: "How we work",
       subtitle: "A transparent process from first meeting to launch and support. You know what's happening at every stage.",
+      stageLabel: "Stage",
+      ofLabel: "of",
+      progressLabel: "Stage progress",
       steps: [
         { title: "Brief & analysis", description: "We study your task, business and audience. We align on goals, timeline and budget." },
         { title: "Design & prototype", description: "We craft UX/UI design, an interactive prototype and agree on the visual style." },
@@ -565,6 +571,9 @@ export const translations = {
     process: {
       title: "Мо чӣ гуна кор мекунем",
       subtitle: "Раванди шаффоф аз аввалин мулоқот то оғоз ва дастгирӣ. Шумо медонед, ки дар ҳар марҳила чӣ рӯй медиҳад.",
+      stageLabel: "Марҳила",
+      ofLabel: "аз",
+      progressLabel: "Иҷрои марҳила",
       steps: [
         { title: "Бриф ва таҳлил", description: "Мо вазифа, бизнес ва аудиторияи шуморо меомӯзем. Ҳадафҳо, мӯҳлатҳо ва буҷетро мувофиқа мекунем." },
         { title: "Дизайн ва прототип", description: "UX/UI-дизайн, прототипи интерактивӣ месозем ва услуби визуалиро мувофиқа мекунем." },

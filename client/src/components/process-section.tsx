@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ClipboardList,
   Palette,
@@ -11,22 +11,58 @@ import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/lib/language-context";
 
 const stepIcons = [ClipboardList, Palette, Code2, Bug, Rocket, HeadphonesIcon];
+const AUTOPLAY_DURATION_MS = 5000;
 
 export function ProcessSection() {
   const { ref, isVisible } = useScrollAnimation();
   const { t } = useLanguage();
-  const [activeStep, setActiveStep] = useState<number | null>(null);
+  const steps = t.process.steps;
+
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const transitionTimeout = useRef<number | null>(null);
+
+  const goTo = (idx: number) => {
+    if (idx === activeIdx) return;
+    setIsTransitioning(true);
+    if (transitionTimeout.current) window.clearTimeout(transitionTimeout.current);
+    transitionTimeout.current = window.setTimeout(() => {
+      setActiveIdx(idx);
+      setIsTransitioning(false);
+    }, 300);
+  };
 
   useEffect(() => {
+    return () => {
+      if (transitionTimeout.current) window.clearTimeout(transitionTimeout.current);
+    };
+  }, []);
+
+  // Autoplay the active step + drive the progress bar, but only while the
+  // section is on screen. Uses requestAnimationFrame so it pauses when the
+  // tab is hidden and stays smooth without a tight setInterval.
+  useEffect(() => {
     if (!isVisible) return;
-    let current = 0;
-    setActiveStep(0);
-    const interval = setInterval(() => {
-      current = (current + 1) % t.process.steps.length;
-      setActiveStep(current);
-    }, 2200);
-    return () => clearInterval(interval);
-  }, [isVisible, t.process.steps.length]);
+    let raf = 0;
+    const start = performance.now();
+    setProgress(0);
+    const tick = (now: number) => {
+      const elapsed = now - start;
+      setProgress(Math.min((elapsed / AUTOPLAY_DURATION_MS) * 100, 100));
+      if (elapsed >= AUTOPLAY_DURATION_MS) {
+        goTo((activeIdx + 1) % steps.length);
+        return;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isVisible, activeIdx, steps.length]);
+
+  const activeStep = steps[activeIdx];
+  const ActiveIcon = stepIcons[activeIdx];
 
   return (
     <section
@@ -35,6 +71,7 @@ export function ProcessSection() {
       className="py-16 md:py-24 relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
+        {/* Header */}
         <div className="text-center mb-12 md:mb-16">
           <h2
             className={`font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white transition-all duration-700 ${
@@ -53,140 +90,122 @@ export function ProcessSection() {
           </p>
         </div>
 
-        {/* Desktop / tablet — horizontal timeline */}
-        <div className="hidden md:block relative">
-          <div className="absolute top-8 left-0 right-0 h-0.5 bg-slate-200 mx-12" aria-hidden="true">
-            <div
-              className="h-full bg-gradient-to-r from-violet-500 via-violet-400 to-emerald-500 transition-all duration-1000 shadow-[0_0_12px_rgba(139,92,246,0.6)]"
-              style={{
-                width: isVisible ? "100%" : "0%",
-                transitionDelay: "300ms",
-              }}
-            />
-          </div>
-
-          <div className="grid grid-cols-6 gap-4 relative">
-            {t.process.steps.map((step, index) => {
-              const Icon = stepIcons[index];
-              const isActive = activeStep === index;
+        <div
+          className={`flex flex-col lg:flex-row gap-6 lg:gap-8 items-stretch max-w-6xl mx-auto transition-all duration-700 delay-200 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
+          {/* Rail */}
+          <div className="flex flex-col gap-3 w-full lg:w-1/3 shrink-0 order-2 lg:order-1">
+            {steps.map((step, idx) => {
+              const isActive = idx === activeIdx;
+              const Icon = stepIcons[idx];
               return (
-                <div
-                  key={index}
-                  className={`flex flex-col items-center text-center transition-all duration-700 ${
-                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => goTo(idx)}
+                  aria-current={isActive ? "step" : undefined}
+                  aria-pressed={isActive}
+                  data-testid={`button-process-step-${idx}`}
+                  className={`relative flex items-center gap-4 p-4 rounded-xl border text-left transition-all duration-300 ${
+                    isActive
+                      ? "bg-white/10 border-violet-500/50 shadow-[0_0_20px_rgba(139,92,246,0.15)]"
+                      : "bg-white/[0.02] border-white/10 hover:bg-white/[0.06]"
                   }`}
-                  style={{
-                    transitionDelay: isVisible ? `${400 + index * 120}ms` : "0ms",
-                  }}
-                  data-testid={`process-step-${index}`}
                 >
                   <div
-                    className={`relative w-16 h-16 rounded-full flex items-center justify-center mb-4 border-2 transition-all duration-500 ${
+                    className={`flex items-center justify-center w-10 h-10 rounded-full bg-black/30 border transition-all duration-300 ${
                       isActive
-                        ? "bg-gradient-to-br from-violet-600 to-violet-700 border-violet-300 scale-110 shadow-[0_0_30px_rgba(139,92,246,0.6)]"
-                        : "bg-white/10 border-white/20 shadow-md"
+                        ? "border-cyan-400 text-cyan-300 shadow-[0_0_10px_rgba(34,211,238,0.3)]"
+                        : "border-white/20 text-white/50"
                     }`}
                   >
-                    <Icon
-                      className={`w-7 h-7 transition-colors duration-500 ${
-                        isActive ? "text-white" : "text-violet-400"
-                      }`}
-                    />
-                    <span
-                      className={`absolute -top-2 -right-2 w-6 h-6 rounded-full text-[11px] font-bold flex items-center justify-center border-2 transition-colors duration-500 ${
-                        isActive
-                          ? "bg-emerald-500 text-white border-white/30"
-                          : "bg-white/10 text-violet-300 border-violet-400/30"
-                      }`}
-                    >
-                      {index + 1}
-                    </span>
+                    <Icon className="w-5 h-5" />
                   </div>
-                  <h3
-                    className={`font-display font-semibold text-base mb-2 transition-colors duration-500 ${
-                      isActive ? "text-violet-300" : "text-white"
-                    }`}
-                  >
-                    {step.title}
-                  </h3>
-                  <p className="text-sm text-white/60 leading-snug">
-                    {step.description}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Mobile — vertical timeline */}
-        <div className="md:hidden relative">
-          <div
-            className="absolute left-8 top-0 bottom-0 w-0.5 bg-white/10"
-            aria-hidden="true"
-          >
-            <div
-              className="w-full bg-gradient-to-b from-violet-500 via-violet-400 to-emerald-500 transition-all duration-1000"
-              style={{
-                height: isVisible ? "100%" : "0%",
-                transitionDelay: "300ms",
-              }}
-            />
-          </div>
-
-          <div className="space-y-6">
-            {t.process.steps.map((step, index) => {
-              const Icon = stepIcons[index];
-              const isActive = activeStep === index;
-              return (
-                <div
-                  key={index}
-                  className={`flex gap-5 transition-all duration-700 ${
-                    isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
-                  }`}
-                  style={{
-                    transitionDelay: isVisible ? `${300 + index * 100}ms` : "0ms",
-                  }}
-                  data-testid={`process-step-mobile-${index}`}
-                >
-                  <div className="relative flex-shrink-0">
-                    <div
-                      className={`relative w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-500 ${
-                        isActive
-                          ? "bg-gradient-to-br from-violet-600 to-violet-700 border-violet-300 scale-110 shadow-[0_0_25px_rgba(139,92,246,0.5)]"
-                          : "bg-white/10 border-white/20 shadow-md"
-                      }`}
-                    >
-                      <Icon
-                        className={`w-7 h-7 transition-colors duration-500 ${
-                          isActive ? "text-white" : "text-violet-400"
-                        }`}
-                      />
-                      <span
-                        className={`absolute -top-1 -right-1 w-6 h-6 rounded-full text-[11px] font-bold flex items-center justify-center border-2 transition-colors duration-500 ${
-                          isActive
-                            ? "bg-emerald-500 text-white border-white/30"
-                            : "bg-white/10 text-violet-300 border-violet-400/30"
-                        }`}
-                      >
-                        {index + 1}
-                      </span>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs font-semibold text-violet-300 mb-0.5">
+                      {t.process.stageLabel} {idx + 1}
                     </div>
-                  </div>
-                  <div className="flex-1 pt-2">
-                    <h3
-                      className={`font-display font-semibold text-lg mb-1 transition-colors duration-500 ${
-                        isActive ? "text-violet-300" : "text-white"
+                    <div
+                      className={`font-medium text-sm transition-colors ${
+                        isActive ? "text-white" : "text-white/60"
                       }`}
                     >
                       {step.title}
-                    </h3>
-                    <p className="text-sm text-white/60 leading-relaxed">
-                      {step.description}
-                    </p>
+                    </div>
                   </div>
-                </div>
+
+                  {isActive && (
+                    <div className="absolute bottom-0 left-0 h-0.5 w-full rounded-b-xl overflow-hidden bg-white/10">
+                      <div
+                        className="h-full bg-gradient-to-r from-violet-500 to-cyan-400"
+                        style={{ width: `${progress}%` }}
+                      />
+                    </div>
+                  )}
+                </button>
               );
             })}
+          </div>
+
+          {/* Featured panel */}
+          <div className="relative flex-1 overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 md:p-12 flex flex-col justify-center min-h-[420px] order-1 lg:order-2 shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+            {/* Ambient glows */}
+            <div className="absolute -top-[20%] -right-[10%] w-[60%] h-[60%] rounded-full bg-violet-500 opacity-[0.10] blur-[80px] pointer-events-none" />
+            <div className="absolute -bottom-[20%] -left-[10%] w-[60%] h-[60%] rounded-full bg-cyan-400 opacity-[0.08] blur-[80px] pointer-events-none" />
+
+            <div
+              className={`relative z-10 flex flex-col h-full transition-all duration-300 ${
+                isTransitioning
+                  ? "opacity-0 translate-y-2 scale-[0.98]"
+                  : "opacity-100 translate-y-0 scale-100"
+              }`}
+            >
+              <div className="flex items-center justify-between mb-10">
+                <div className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-white/5 border border-white/15 shadow-[0_0_30px_rgba(34,211,238,0.1)]">
+                  <ActiveIcon className="w-8 h-8 md:w-10 md:h-10 text-cyan-300" />
+                </div>
+                <div
+                  className="text-sm font-semibold tracking-wider text-violet-300 uppercase"
+                  data-testid="text-process-active-stage"
+                >
+                  {t.process.stageLabel} {activeIdx + 1} {t.process.ofLabel}{" "}
+                  {steps.length}
+                </div>
+              </div>
+
+              <div className="flex-1">
+                <h3
+                  className="font-display text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight leading-tight"
+                  data-testid="text-process-active-title"
+                >
+                  {activeStep.title}
+                </h3>
+                <p
+                  className="text-lg md:text-2xl text-white/70 leading-relaxed"
+                  data-testid="text-process-active-desc"
+                >
+                  {activeStep.description}
+                </p>
+              </div>
+
+              {/* Progress indicator */}
+              <div className="mt-12">
+                <div className="flex items-center justify-between text-xs font-semibold text-white/40 mb-3">
+                  <span>{t.process.progressLabel}</span>
+                  <span data-testid="text-process-progress">
+                    {Math.round(progress)}%
+                  </span>
+                </div>
+                <div className="w-full h-1.5 bg-black/30 rounded-full overflow-hidden border border-white/10">
+                  <div
+                    className="h-full bg-gradient-to-r from-violet-500 to-cyan-400 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)]"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

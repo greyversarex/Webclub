@@ -1,3 +1,8 @@
 uploads = []
-generated = []
 outputs = []
+
+[[generated]]
+id = "PP1wqc4z5FpI4Q3hfLSjF"
+uri = "file://attached_assets/generated_images/government_services_portal.png"
+type = "image"
+title = "generated_image"
