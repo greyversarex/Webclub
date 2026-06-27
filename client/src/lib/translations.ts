@@ -35,6 +35,17 @@ export const translations = {
         { title: "Логистическая система", category: "Логистика", description: "Управление складом и доставкой с отслеживанием по GPS в реальном времени." },
       ],
     },
+    heroShowcase: {
+      eyebrow: "Наши продукты",
+      items: [
+        { title: "Приложения и игры", description: "Для iOS и Android с запуском в App Store и Play Market" },
+        { title: "Коммерция и продажи", description: "Интернет-магазины, торговые площадки и B2B-порталы" },
+        { title: "Сайты и лендинги", description: "Корпоративные сайты и промо-страницы под бренд" },
+        { title: "Стартапы и MVP", description: "Разработка для демонстраций и тестирования идей" },
+        { title: "Автоматизация", description: "CRM и ERP системы, софт для управления бизнесом" },
+        { title: "Системное ПО", description: "Программы под Windows, macOS, Linux и кастомные утилиты" },
+      ],
+    },
     whatWeBuild: {
       title: "Что мы создаём",
       subtitle: "Полный спектр IT-направлений — от интернет-магазинов до защищённых банковских платформ",
@@ -246,6 +257,17 @@ export const translations = {
         { title: "Logistics System", category: "Logistics", description: "Warehouse and delivery management with real-time GPS tracking." },
       ],
     },
+    heroShowcase: {
+      eyebrow: "Our products",
+      items: [
+        { title: "Apps & games", description: "For iOS and Android, launched on the App Store and Play Market" },
+        { title: "Commerce & sales", description: "Online stores, marketplaces and B2B portals" },
+        { title: "Websites & landings", description: "Corporate sites and branded promo pages" },
+        { title: "Startups & MVP", description: "Builds for demos and validating ideas fast" },
+        { title: "Automation", description: "CRM and ERP systems, software to run your business" },
+        { title: "System software", description: "Programs for Windows, macOS, Linux and custom utilities" },
+      ],
+    },
     whatWeBuild: {
       title: "What we build",
       subtitle: "Full spectrum of IT directions — from online stores to secure banking platforms",
@@ -455,6 +477,17 @@ export const translations = {
         { title: "Платформаи таълимӣ", category: "EdTech", description: "Платформаи онлайни таълим бо курсҳо, тестҳо ва видеолексияҳо." },
         { title: "Портали давлатӣ", category: "GovTech", description: "Хизматҳои рақамии давлатӣ бо имзои электронӣ ва гардиши ҳуҷҷатҳо." },
         { title: "Системаи логистикӣ", category: "Логистика", description: "Идоракунии анбор ва интиқол бо пайгирии GPS дар вақти воқеӣ." },
+      ],
+    },
+    heroShowcase: {
+      eyebrow: "Маҳсулоти мо",
+      items: [
+        { title: "Барномаҳо ва бозиҳо", description: "Барои iOS ва Android бо нашр дар App Store ва Play Market" },
+        { title: "Тиҷорат ва фурӯш", description: "Мағозаҳои онлайн, майдончаҳои савдо ва портали B2B" },
+        { title: "Сайтҳо ва лендингҳо", description: "Сайтҳои корпоративӣ ва саҳифаҳои промо барои бренд" },
+        { title: "Стартапҳо ва MVP", description: "Таҳия барои намоиш ва санҷиши зудтари ғояҳо" },
+        { title: "Автоматизатсия", description: "Системаҳои CRM ва ERP, нармафзор барои идоракунии бизнес" },
+        { title: "Нармафзори системавӣ", description: "Барномаҳо барои Windows, macOS, Linux ва утилитаҳои фармоишӣ" },
       ],
     },
     whatWeBuild: {

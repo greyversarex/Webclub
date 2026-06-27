@@ -1,3 +1,4 @@
 - [Canvas background CTM caching](canvas-bg-perf.md) — never call getScreenCTM() per RAF frame; cache it (recompute on resize only) for the fixed circuit-bg overlays.
+- [Centered float transform conflict](hero-centered-float-transform.md) — a keyframe animation on a Tailwind-centered element must re-include translate(-50%,-50%) or it jumps off-center.
 - [Cosmic site background](cosmic-galaxy-bg.md) — sections stay transparent for the site-wide Galaxy WebGL bg; "unable to create webgl context" in screenshots is a headless limit, not a bug.
 - [WebGL preview fallback](webgl-preview-fallback.md) — Replit preview iframe can't create a GL context; every WebGL/3D feature needs a CSS fallback (detect + lazy + error boundary).

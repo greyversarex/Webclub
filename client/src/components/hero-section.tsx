@@ -1,119 +1,10 @@
-import {
-  Component,
-  Suspense,
-  lazy,
-  useEffect,
-  useRef,
-  useState,
-  type ReactNode,
-} from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/language-context";
-
-const HeroCube = lazy(() => import("./hero-cube"));
+import { HeroShowcase } from "./hero-showcase";
 
 const TECH_BADGES = ["AI", "CRM", "ERP", "Web", "Mobile", "Automation"];
-
-function detectWebGL(): boolean {
-  try {
-    const canvas = document.createElement("canvas");
-    return !!(
-      window.WebGLRenderingContext &&
-      (canvas.getContext("webgl2") || canvas.getContext("webgl"))
-    );
-  } catch {
-    return false;
-  }
-}
-
-/* Premium CSS-only cube — shown whenever WebGL is unavailable (e.g. the Replit
-   preview iframe) or if the 3D scene fails to initialise. */
-function CubeFallback({ reduced }: { reduced: boolean }) {
-  return (
-    <div
-      className="absolute inset-0 flex items-center justify-center"
-      data-testid="hero-cube-fallback"
-    >
-      <div className="hero-cube-scene">
-        <div className={`hero-cube-3d ${reduced ? "" : "hero-cube-spin"}`}>
-          <div className="hero-cube-face" style={{ transform: "translateZ(110px)" }} />
-          <div className="hero-cube-face" style={{ transform: "rotateY(180deg) translateZ(110px)" }} />
-          <div className="hero-cube-face" style={{ transform: "rotateY(90deg) translateZ(110px)" }} />
-          <div className="hero-cube-face" style={{ transform: "rotateY(-90deg) translateZ(110px)" }} />
-          <div className="hero-cube-face" style={{ transform: "rotateX(90deg) translateZ(110px)" }} />
-          <div className="hero-cube-face" style={{ transform: "rotateX(-90deg) translateZ(110px)" }} />
-        </div>
-        <div className="hero-cube-core" />
-        <div className="hero-cube-logo">WEBCOREX</div>
-      </div>
-    </div>
-  );
-}
-
-class CubeErrorBoundary extends Component<
-  { fallback: ReactNode; children: ReactNode },
-  { hasError: boolean }
-> {
-  state = { hasError: false };
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-  render() {
-    return this.state.hasError ? this.props.fallback : this.props.children;
-  }
-}
-
-function HeroVisual({ reduced }: { reduced: boolean }) {
-  const [webgl, setWebgl] = useState<boolean | null>(null);
-  const [active, setActive] = useState(true);
-  const wrapRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setWebgl(detectWebGL());
-  }, []);
-
-  // Pause the render loop while the hero is scrolled out of view (perf).
-  useEffect(() => {
-    const el = wrapRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => setActive(entry.isIntersecting),
-      { threshold: 0.05 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  const fallback = <CubeFallback reduced={reduced} />;
-
-  return (
-    <div
-      ref={wrapRef}
-      className="relative w-full aspect-square max-w-[460px] sm:max-w-[520px] mx-auto"
-      data-testid="hero-cube-stage"
-    >
-      {/* ambient glow pad behind the cube */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(circle at 50% 50%, rgba(70,110,230,0.22), transparent 62%)",
-          filter: "blur(20px)",
-        }}
-      />
-      {webgl === null ? null : webgl ? (
-        <CubeErrorBoundary fallback={fallback}>
-          <Suspense fallback={fallback}>
-            <HeroCube reduced={reduced} active={active} />
-          </Suspense>
-        </CubeErrorBoundary>
-      ) : (
-        fallback
-      )}
-    </div>
-  );
-}
 
 export function HeroSection() {
   const { t } = useLanguage();
@@ -148,7 +39,7 @@ export function HeroSection() {
           maskImage: "linear-gradient(to bottom, #000 82%, transparent 100%)",
         }}
       />
-      {/* soft volumetric fog near the cube */}
+      {/* soft volumetric fog near the showcase */}
       <div
         className="absolute pointer-events-none"
         style={{
@@ -238,9 +129,9 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* ── Right: interactive 3D glass cube ──────────────────── */}
+          {/* ── Right: interactive product showcase ──────────────── */}
           <div className="order-1 lg:order-2 w-full">
-            <HeroVisual reduced={reduced} />
+            <HeroShowcase reduced={reduced} />
           </div>
 
         </div>
