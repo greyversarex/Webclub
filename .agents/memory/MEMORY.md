@@ -1,1 +1,2 @@
 - [Canvas background CTM caching](canvas-bg-perf.md) — never call getScreenCTM() per RAF frame; cache it (recompute on resize only) for the fixed circuit-bg overlays.
+- [WebGL preview fallback](webgl-preview-fallback.md) — Replit preview iframe can't create a GL context; every WebGL/3D feature needs a CSS fallback (detect + lazy + error boundary).
