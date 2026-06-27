@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Phone, Send, Loader2, MapPin } from "lucide-react";
+import { Phone, Loader2, MapPin, Rocket } from "lucide-react";
 import { SiTelegram, SiWhatsapp } from "react-icons/si";
-import { Button } from "@/components/ui/button";
+import MagicRings from "./magic-rings";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
@@ -180,25 +180,53 @@ export function ContactSection() {
                 />
               </div>
 
-              <Button
-                type="submit"
-                size="lg"
-                className="w-full bg-gradient-to-r from-violet-600 to-cyan-600 text-white border-0 shadow-lg shadow-violet-500/30"
-                disabled={isSubmitting}
-                data-testid="button-submit-contact"
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    {t.contact.submitting}
-                  </>
-                ) : (
-                  <>
-                    <Send className="w-4 h-4 mr-2" />
-                    {t.contact.submit}
-                  </>
-                )}
-              </Button>
+              <div className="relative w-full h-32 rounded-2xl overflow-hidden border border-white/10 bg-[#05060f]/70">
+                <div className="absolute inset-0 pointer-events-none">
+                  <MagicRings
+                    color="#A855F7"
+                    colorTwo="#6366F1"
+                    ringCount={6}
+                    speed={1}
+                    attenuation={10}
+                    lineThickness={2}
+                    baseRadius={0.35}
+                    radiusStep={0.1}
+                    scaleRate={0.1}
+                    opacity={1}
+                    blur={0}
+                    noiseAmount={0.1}
+                    rotation={0}
+                    ringGap={1.5}
+                    fadeIn={0.7}
+                    fadeOut={0.5}
+                    followMouse={false}
+                    mouseInfluence={0.2}
+                    hoverScale={1.2}
+                    parallax={0.05}
+                    clickBurst={false}
+                  />
+                </div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    data-testid="button-submit-contact"
+                    className="group inline-flex items-center gap-2 px-8 py-3 rounded-full font-semibold text-white bg-white/10 hover:bg-white/15 border border-white/25 backdrop-blur-md shadow-[0_8px_30px_-6px_rgba(168,85,247,0.6)] transition-all hover:scale-[1.04] disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        {t.contact.submitting}
+                      </>
+                    ) : (
+                      <>
+                        <Rocket className="w-4 h-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                        {t.contact.launch}
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
             </form>
           </Card>
 

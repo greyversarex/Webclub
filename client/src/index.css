@@ -761,3 +761,12 @@
   .hero-eyebrow-dot { animation: none !important; }
   .it-shimmer-text { animation: none !important; }
 }
+
+/* Magic rings WebGL effect mount (behind the contact launch button) */
+.magic-rings-container {
+  width: 100%;
+  height: 100%;
+}
+.magic-rings-container canvas {
+  display: block;
+}
