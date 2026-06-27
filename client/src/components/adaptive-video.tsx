@@ -11,6 +11,7 @@ export type VideoSources = Partial<Record<QualityTier, string>>;
 interface AdaptiveVideoProps {
   sources: VideoSources;
   className?: string;
+  onPlayingChange?: (playing: boolean) => void;
   "data-testid"?: string;
 }
 
@@ -47,7 +48,7 @@ function resolveTier(choice: QualityChoice, sources: VideoSources): QualityTier 
 }
 
 export const AdaptiveVideo = forwardRef<AdaptiveVideoHandle, AdaptiveVideoProps>(
-  ({ sources, className, "data-testid": testId }, ref) => {
+  ({ sources, className, onPlayingChange, "data-testid": testId }, ref) => {
     const { language } = useLanguage();
     const videoRef = useRef<HTMLVideoElement>(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -84,11 +85,13 @@ export const AdaptiveVideo = forwardRef<AdaptiveVideoHandle, AdaptiveVideoProps>
       if (!v) return;
       if (v.readyState < 2) setIsLoading(true);
       setIsPaused(false);
-    }, []);
-    const handlePause = useCallback(() => setIsPaused(true), []);
+      onPlayingChange?.(true);
+    }, [onPlayingChange]);
+    const handlePause = useCallback(() => { setIsPaused(true); onPlayingChange?.(false); }, [onPlayingChange]);
     const handleCanPlay = useCallback(() => setIsLoading(false), []);
     const handleWaiting = useCallback(() => setIsLoading(true), []);
-    const handlePlaying = useCallback(() => { setIsLoading(false); setIsPaused(false); }, []);
+    const handlePlaying = useCallback(() => { setIsLoading(false); setIsPaused(false); onPlayingChange?.(true); }, [onPlayingChange]);
+    const handleEnded = useCallback(() => { setIsPaused(true); onPlayingChange?.(false); }, [onPlayingChange]);
 
     const handleOverlayClick = useCallback(() => {
       const v = videoRef.current;
@@ -180,6 +183,7 @@ export const AdaptiveVideo = forwardRef<AdaptiveVideoHandle, AdaptiveVideoProps>
           onCanPlay={handleCanPlay}
           onWaiting={handleWaiting}
           onPlaying={handlePlaying}
+          onEnded={handleEnded}
         />
 
         {/* Play button overlay — shown when video is paused */}
