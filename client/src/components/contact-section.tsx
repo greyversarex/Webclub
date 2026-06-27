@@ -181,8 +181,16 @@ export function ContactSection() {
               </div>
 
               <div className="flex justify-center pt-2">
-                <div className="relative w-[240px] h-[240px] max-w-full">
-                  <div className="absolute inset-0 pointer-events-none">
+                <div className="relative w-[280px] h-[280px] max-w-full">
+                  <div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      WebkitMaskImage:
+                        "radial-gradient(circle closest-side, #000 45%, transparent 95%)",
+                      maskImage:
+                        "radial-gradient(circle closest-side, #000 45%, transparent 95%)",
+                    }}
+                  >
                     <MagicRings
                       color="#A855F7"
                       colorTwo="#6366F1"
@@ -190,7 +198,7 @@ export function ContactSection() {
                       speed={1}
                       attenuation={10}
                       lineThickness={2}
-                      baseRadius={0.35}
+                      baseRadius={0.3}
                       radiusStep={0.1}
                       scaleRate={0.1}
                       opacity={1}
