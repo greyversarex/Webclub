@@ -37,7 +37,7 @@ export function ProcessSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
         <div className="text-center mb-12 md:mb-16">
           <h2
-            className={`font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-800 transition-all duration-700 ${
+            className={`font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white transition-all duration-700 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
             data-testid="text-process-title"
@@ -45,7 +45,7 @@ export function ProcessSection() {
             {t.process.title}
           </h2>
           <p
-            className={`text-slate-900 text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
+            className={`text-white/60 text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
@@ -84,19 +84,19 @@ export function ProcessSection() {
                     className={`relative w-16 h-16 rounded-full flex items-center justify-center mb-4 border-2 transition-all duration-500 ${
                       isActive
                         ? "bg-gradient-to-br from-violet-600 to-violet-700 border-violet-300 scale-110 shadow-[0_0_30px_rgba(139,92,246,0.6)]"
-                        : "bg-white border-slate-200 shadow-md"
+                        : "bg-white/10 border-white/20 shadow-md"
                     }`}
                   >
                     <Icon
                       className={`w-7 h-7 transition-colors duration-500 ${
-                        isActive ? "text-white" : "text-violet-600"
+                        isActive ? "text-white" : "text-violet-400"
                       }`}
                     />
                     <span
                       className={`absolute -top-2 -right-2 w-6 h-6 rounded-full text-[11px] font-bold flex items-center justify-center border-2 transition-colors duration-500 ${
                         isActive
-                          ? "bg-emerald-500 text-white border-white"
-                          : "bg-white text-violet-600 border-violet-200"
+                          ? "bg-emerald-500 text-white border-white/30"
+                          : "bg-white/10 text-violet-300 border-violet-400/30"
                       }`}
                     >
                       {index + 1}
@@ -104,12 +104,12 @@ export function ProcessSection() {
                   </div>
                   <h3
                     className={`font-display font-semibold text-base mb-2 transition-colors duration-500 ${
-                      isActive ? "text-violet-700" : "text-slate-800"
+                      isActive ? "text-violet-300" : "text-white"
                     }`}
                   >
                     {step.title}
                   </h3>
-                  <p className="text-sm text-slate-700 leading-snug">
+                  <p className="text-sm text-white/60 leading-snug">
                     {step.description}
                   </p>
                 </div>
@@ -121,7 +121,7 @@ export function ProcessSection() {
         {/* Mobile — vertical timeline */}
         <div className="md:hidden relative">
           <div
-            className="absolute left-8 top-0 bottom-0 w-0.5 bg-slate-200"
+            className="absolute left-8 top-0 bottom-0 w-0.5 bg-white/10"
             aria-hidden="true"
           >
             <div
@@ -153,19 +153,19 @@ export function ProcessSection() {
                       className={`relative w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-500 ${
                         isActive
                           ? "bg-gradient-to-br from-violet-600 to-violet-700 border-violet-300 scale-110 shadow-[0_0_25px_rgba(139,92,246,0.5)]"
-                          : "bg-white border-slate-200 shadow-md"
+                          : "bg-white/10 border-white/20 shadow-md"
                       }`}
                     >
                       <Icon
                         className={`w-7 h-7 transition-colors duration-500 ${
-                          isActive ? "text-white" : "text-violet-600"
+                          isActive ? "text-white" : "text-violet-400"
                         }`}
                       />
                       <span
                         className={`absolute -top-1 -right-1 w-6 h-6 rounded-full text-[11px] font-bold flex items-center justify-center border-2 transition-colors duration-500 ${
                           isActive
-                            ? "bg-emerald-500 text-white border-white"
-                            : "bg-white text-violet-600 border-violet-200"
+                            ? "bg-emerald-500 text-white border-white/30"
+                            : "bg-white/10 text-violet-300 border-violet-400/30"
                         }`}
                       >
                         {index + 1}
@@ -175,12 +175,12 @@ export function ProcessSection() {
                   <div className="flex-1 pt-2">
                     <h3
                       className={`font-display font-semibold text-lg mb-1 transition-colors duration-500 ${
-                        isActive ? "text-violet-700" : "text-slate-800"
+                        isActive ? "text-violet-300" : "text-white"
                       }`}
                     >
                       {step.title}
                     </h3>
-                    <p className="text-sm text-slate-700 leading-relaxed">
+                    <p className="text-sm text-white/60 leading-relaxed">
                       {step.description}
                     </p>
                   </div>

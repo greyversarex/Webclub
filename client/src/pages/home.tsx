@@ -8,8 +8,6 @@ import { ProcessSection } from "@/components/process-section";
 import { TestimonialsSection } from "@/components/testimonials-section";
 import { ContactSection } from "@/components/contact-section";
 import { ChatWidget } from "@/components/chat-widget";
-import { CircuitBackground } from "@/components/circuit-background";
-import { ElectricPulses } from "@/components/electric-pulses";
 import { SectionRobot } from "@/components/section-robot";
 import { GalaxyBackground } from "@/components/galaxy-background";
 
@@ -32,9 +30,6 @@ export default function Home() {
         speed={0.6}
         transparent={false}
       />
-
-      <CircuitBackground />
-      <ElectricPulses />
 
       <div className="relative z-10">
         <Header />

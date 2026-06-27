@@ -94,14 +94,14 @@ export function TestimonialsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
         <div className="text-center mb-12 md:mb-16">
           <h2
-            className={`font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-800 transition-all duration-700 ${
+            className={`font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white transition-all duration-700 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
             {t.testimonials.title}
           </h2>
           <p
-            className={`text-slate-600 text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
+            className={`text-white/60 text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
@@ -116,7 +116,7 @@ export function TestimonialsSection() {
           {reviews.map((review, i) => (
             <div
               key={i}
-              className={`relative flex flex-col bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200/80 shadow-[0_2px_16px_rgba(0,0,0,0.06)] p-6 transition-all duration-700 hover:shadow-[0_8px_32px_rgba(139,92,246,0.14)] hover:-translate-y-1 ${
+              className={`relative flex flex-col bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 shadow-[0_2px_16px_rgba(0,0,0,0.3)] p-6 transition-all duration-700 hover:shadow-[0_8px_32px_rgba(139,92,246,0.2)] hover:-translate-y-1 hover:border-violet-400/30 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
               style={{ transitionDelay: isVisible ? `${i * 80}ms` : "0ms" }}
@@ -125,10 +125,10 @@ export function TestimonialsSection() {
               <Quote className="w-7 h-7 text-violet-200 mb-3 flex-shrink-0" />
 
               <div className="relative flex-1 mb-5">
-                <p className="text-slate-700 text-sm leading-relaxed invisible" aria-hidden="true">
+                <p className="text-white/70 text-sm leading-relaxed invisible" aria-hidden="true">
                   {review.text}
                 </p>
-                <p className="text-slate-700 text-sm leading-relaxed absolute inset-0">
+                <p className="text-white/70 text-sm leading-relaxed absolute inset-0">
                   <TypewriterText
                     text={review.text}
                     start={isVisible}
@@ -138,7 +138,7 @@ export function TestimonialsSection() {
                 </p>
               </div>
 
-              <div className="flex items-center gap-3 pt-4 border-t border-slate-100">
+              <div className="flex items-center gap-3 pt-4 border-t border-white/10">
                 <div
                   className={`w-10 h-10 rounded-full bg-gradient-to-br ${avatarColors[i % avatarColors.length]} flex items-center justify-center flex-shrink-0 shadow-sm`}
                 >
@@ -147,8 +147,8 @@ export function TestimonialsSection() {
                   </span>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-slate-800 text-sm truncate">{review.name}</p>
-                  <p className="text-slate-500 text-xs truncate">{review.company}</p>
+                  <p className="font-semibold text-white text-sm truncate">{review.name}</p>
+                  <p className="text-white/50 text-xs truncate">{review.company}</p>
                 </div>
                 <div className="flex items-center gap-0.5 flex-shrink-0" data-testid={`rating-testimonial-${i}`}>
                   {Array.from({ length: 5 }).map((_, s) => (
@@ -175,7 +175,7 @@ export function TestimonialsSection() {
               {avatarColors.slice(0, 4).map((color, i) => (
                 <div
                   key={i}
-                  className={`w-8 h-8 rounded-full bg-gradient-to-br ${color} border-2 border-white flex items-center justify-center`}
+                  className={`w-8 h-8 rounded-full bg-gradient-to-br ${color} border-2 border-black/30 flex items-center justify-center`}
                 >
                   <span className="text-white font-bold text-[10px]">
                     {reviews[i]?.initials[0] ?? "?"}
@@ -183,7 +183,7 @@ export function TestimonialsSection() {
                 </div>
               ))}
             </div>
-            <span className="text-slate-600 text-sm font-medium ml-1">
+            <span className="text-white/60 text-sm font-medium ml-1">
               {t.testimonials.totalClients}
             </span>
           </div>
@@ -191,7 +191,7 @@ export function TestimonialsSection() {
             {Array.from({ length: 5 }).map((_, i) => (
               <Star key={i} className="w-4 h-4 fill-amber-400 stroke-amber-400" />
             ))}
-            <span className="text-slate-700 font-semibold text-sm ml-1">{t.testimonials.avgRating}</span>
+            <span className="text-white/80 font-semibold text-sm ml-1">{t.testimonials.avgRating}</span>
           </div>
         </div>
       </div>

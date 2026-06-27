@@ -75,14 +75,14 @@ export function ContactSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
         <div className="text-center mb-12 md:mb-16">
           <h2 
-            className={`font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-800 transition-all duration-700 ${
+            className={`font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white transition-all duration-700 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
             {t.contact.title}
           </h2>
           <p 
-            className={`text-slate-900 text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
+            className={`text-white/60 text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
@@ -92,20 +92,20 @@ export function ContactSection() {
 
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12">
           <Card 
-            className={`p-6 md:p-8 bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 backdrop-blur-sm border-slate-300 hover:border-violet-300 transition-all duration-500 shadow-lg shadow-slate-300/20 ${
+            className={`p-6 md:p-8 bg-white/5 backdrop-blur-sm border-white/10 hover:border-violet-400/40 transition-all duration-500 shadow-lg shadow-black/20 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
             style={{ transitionDelay: isVisible ? '200ms' : '0ms' }}
           >
-            <h3 className="font-display font-semibold text-xl text-slate-800 mb-6 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-violet-500" />
+            <h3 className="font-display font-semibold text-xl text-white mb-6 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-violet-400" />
               {t.contact.formTitle}
             </h3>
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label
                   htmlFor="name"
-                  className="block text-sm font-medium text-slate-900 mb-2"
+                  className="block text-sm font-medium text-white/70 mb-2"
                 >
                   {t.contact.name} *
                 </label>
@@ -117,7 +117,7 @@ export function ContactSection() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="bg-white/70 border-slate-300 focus:border-violet-500 focus:ring-violet-500/20 text-slate-800 placeholder:text-slate-400"
+                  className="bg-white/5 border-white/15 focus:border-violet-400 text-white placeholder:text-white/30"
                   data-testid="input-name"
                 />
               </div>
@@ -125,7 +125,7 @@ export function ContactSection() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-slate-900 mb-2"
+                  className="block text-sm font-medium text-white/70 mb-2"
                 >
                   {t.contact.email}
                 </label>
@@ -136,7 +136,7 @@ export function ContactSection() {
                   placeholder="example@email.com"
                   value={formData.email}
                   onChange={handleChange}
-                  className="bg-white/70 border-slate-300 focus:border-violet-500 focus:ring-violet-500/20 text-slate-800 placeholder:text-slate-400"
+                  className="bg-white/5 border-white/15 focus:border-violet-400 text-white placeholder:text-white/30"
                   data-testid="input-email"
                 />
               </div>
@@ -144,7 +144,7 @@ export function ContactSection() {
               <div>
                 <label
                   htmlFor="phone"
-                  className="block text-sm font-medium text-slate-900 mb-2"
+                  className="block text-sm font-medium text-white/70 mb-2"
                 >
                   {t.contact.phone} *
                 </label>
@@ -156,7 +156,7 @@ export function ContactSection() {
                   value={formData.phone}
                   onChange={handleChange}
                   required
-                  className="bg-white/70 border-slate-300 focus:border-violet-500 focus:ring-violet-500/20 text-slate-800 placeholder:text-slate-400"
+                  className="bg-white/5 border-white/15 focus:border-violet-400 text-white placeholder:text-white/30"
                   data-testid="input-phone"
                 />
               </div>
@@ -164,7 +164,7 @@ export function ContactSection() {
               <div>
                 <label
                   htmlFor="message"
-                  className="block text-sm font-medium text-slate-900 mb-2"
+                  className="block text-sm font-medium text-white/70 mb-2"
                 >
                   {t.contact.message}
                 </label>
@@ -175,7 +175,7 @@ export function ContactSection() {
                   rows={4}
                   value={formData.message}
                   onChange={handleChange}
-                  className="resize-none bg-white/70 border-slate-300 focus:border-violet-500 focus:ring-violet-500/20 text-slate-800 placeholder:text-slate-400"
+                  className="resize-none bg-white/5 border-white/15 focus:border-violet-400 text-white placeholder:text-white/30"
                   data-testid="input-message"
                 />
               </div>
@@ -183,7 +183,7 @@ export function ContactSection() {
               <Button
                 type="submit"
                 size="lg"
-                className="w-full bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 text-slate-800 border-slate-300 shadow-lg shadow-slate-300/25"
+                className="w-full bg-gradient-to-r from-violet-600 to-cyan-600 text-white border-0 shadow-lg shadow-violet-500/30"
                 disabled={isSubmitting}
                 data-testid="button-submit-contact"
               >
@@ -204,28 +204,28 @@ export function ContactSection() {
 
           <div className="space-y-6">
             <Card 
-              className={`p-6 md:p-8 bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 backdrop-blur-sm border-slate-300 hover:border-emerald-300 transition-all duration-500 shadow-lg shadow-slate-300/20 ${
+              className={`p-6 md:p-8 bg-white/5 backdrop-blur-sm border-white/10 hover:border-emerald-400/40 transition-all duration-500 shadow-lg shadow-black/20 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
               style={{ transitionDelay: isVisible ? '300ms' : '0ms' }}
             >
-              <h3 className="font-display font-semibold text-xl text-slate-800 mb-6 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+              <h3 className="font-display font-semibold text-xl text-white mb-6 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400" />
                 {t.contact.contactInfo}
               </h3>
 
               <div className="space-y-5">
                 <a
                   href="tel:+992666666960"
-                  className="flex items-center gap-4 p-4 rounded-lg bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 border border-slate-300 hover-elevate active-elevate-2 transition-all hover:border-violet-400"
+                  className="flex items-center gap-4 p-4 rounded-lg bg-white/5 border border-white/10 hover-elevate active-elevate-2 transition-all hover:border-violet-400/40"
                   data-testid="link-phone-contact"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-slate-300 via-slate-200 to-slate-300 flex items-center justify-center flex-shrink-0 shadow-md shadow-slate-300/20">
-                    <Phone className="w-6 h-6 text-slate-700" />
+                  <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-6 h-6 text-white/80" />
                   </div>
                   <div>
-                    <div className="text-sm text-slate-900">{t.contact.phoneLabel}</div>
-                    <div className="font-semibold text-slate-800 text-lg">
+                    <div className="text-sm text-white/60">{t.contact.phoneLabel}</div>
+                    <div className="font-semibold text-white text-lg">
                       +992 666 666 960
                     </div>
                   </div>
@@ -260,22 +260,22 @@ export function ContactSection() {
             </Card>
 
             <Card 
-              className={`p-6 md:p-8 bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 backdrop-blur-sm border-slate-300 hover:border-violet-300 transition-all duration-500 shadow-lg shadow-slate-300/20 ${
+              className={`p-6 md:p-8 bg-white/5 backdrop-blur-sm border-white/10 hover:border-violet-400/40 transition-all duration-500 shadow-lg shadow-black/20 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
               style={{ transitionDelay: isVisible ? '400ms' : '0ms' }}
               data-testid="card-office"
             >
-              <h3 className="font-display font-semibold text-xl text-slate-800 mb-2 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-violet-500" />
+              <h3 className="font-display font-semibold text-xl text-white mb-2 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-violet-400" />
                 {t.contact.officeTitle}
               </h3>
-              <div className="flex items-center gap-2 text-slate-700 text-sm mb-4">
-                <MapPin className="w-4 h-4 text-violet-600" />
+              <div className="flex items-center gap-2 text-white/60 text-sm mb-4">
+                <MapPin className="w-4 h-4 text-violet-400" />
                 <span data-testid="text-office-address">{t.contact.officeAddress}</span>
               </div>
 
-              <div className="rounded-xl overflow-hidden border border-slate-300 shadow-md shadow-slate-300/20">
+              <div className="rounded-xl overflow-hidden border border-white/10 shadow-md shadow-black/30">
                 <iframe
                   title={t.contact.officeTitle}
                   src="https://yandex.com/map-widget/v1/?ll=68.7837%2C38.5668&z=17&pt=68.7837%2C38.5668%2Cpm2rdm"

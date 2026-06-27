@@ -58,7 +58,7 @@ export function Header() {
               alt="WEBCOREX Logo" 
               className="w-12 h-12 md:w-16 md:h-16 object-contain"
             />
-            <span className="it-shimmer-text font-display font-bold text-xl md:text-2xl bg-gradient-to-r from-slate-500 via-slate-300 to-slate-500 bg-clip-text text-transparent pl-[0px] pr-[0px] ml-[-17px] mr-[-17px]">
+            <span className="it-shimmer-text font-display font-bold text-xl md:text-2xl bg-gradient-to-r from-violet-300 via-white to-violet-300 bg-clip-text text-transparent pl-[0px] pr-[0px] ml-[-17px] mr-[-17px]">
               WEBCOREX
             </span>
           </a>
@@ -68,11 +68,11 @@ export function Header() {
               <button
                 key={item.href}
                 onClick={() => scrollToSection(item.href)}
-                className="px-5 py-2 text-sm font-medium text-slate-600 rounded-full transition-all duration-200
-                  bg-white/60 backdrop-blur-sm
-                  border border-white/80 shadow-[0_1px_3px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.04)]
-                  hover:text-violet-700 hover:border-violet-300/70 hover:bg-white/80
-                  hover:shadow-[0_0_0_1px_rgba(139,92,246,0.2),0_4px_12px_rgba(139,92,246,0.12)]
+                className="px-5 py-2 text-sm font-medium text-white/80 rounded-full transition-all duration-200
+                  bg-white/5 backdrop-blur-sm
+                  border border-white/10 shadow-[0_1px_3px_rgba(0,0,0,0.3)]
+                  hover:text-white hover:border-violet-400/50 hover:bg-white/10
+                  hover:shadow-[0_0_0_1px_rgba(139,92,246,0.3),0_4px_12px_rgba(139,92,246,0.15)]
                   active:scale-[0.97] active:shadow-none"
                 data-testid={`link-nav-${item.href.replace('#', '')}`}
               >
@@ -85,15 +85,15 @@ export function Header() {
             <div className="hidden sm:flex items-center gap-1 mr-2">
               {languages.map((lang, index) => (
                 <div key={lang.code} className="flex items-center">
-                  {index > 0 && <span className="text-slate-500 mx-0.5">/</span>}
+                  {index > 0 && <span className="text-white/30 mx-0.5">/</span>}
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setLanguage(lang.code)}
-                    className={`px-2 text-xs font-medium hover:bg-slate-300/50 ${
+                    className={`px-2 text-xs font-medium hover:bg-white/10 ${
                       language === lang.code
-                        ? "text-slate-800"
-                        : "text-slate-500 hover:text-slate-800"
+                        ? "text-white"
+                        : "text-white/50 hover:text-white"
                     }`}
                     data-testid={`button-lang-${lang.code}`}
                   >
@@ -106,7 +106,7 @@ export function Header() {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden text-slate-700 hover:bg-slate-300/50"
+              className="md:hidden text-white/70 hover:bg-white/10"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Menu"
               data-testid="button-mobile-menu"
@@ -121,13 +121,13 @@ export function Header() {
         </div>
       </div>
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-gradient-to-r from-slate-200 via-slate-100 via-50% to-slate-200 backdrop-blur-xl border-b border-slate-300/50">
+        <div className="md:hidden bg-black/70 backdrop-blur-xl border-b border-white/10">
           <nav className="flex flex-col p-4 gap-2">
             {navItems.map((item) => (
               <button
                 key={item.href}
                 onClick={() => scrollToSection(item.href)}
-                className="px-4 py-3 text-left text-base font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-300/50 rounded-md transition-colors"
+                className="px-4 py-3 text-left text-base font-medium text-white/80 hover:text-white hover:bg-white/10 rounded-md transition-colors"
                 data-testid={`link-mobile-nav-${item.href.replace('#', '')}`}
               >
                 {item.label}
@@ -142,8 +142,8 @@ export function Header() {
                   onClick={() => setLanguage(lang.code)}
                   className={`px-3 text-sm font-medium ${
                     language === lang.code
-                      ? "bg-slate-300/50 text-slate-800"
-                      : "text-slate-500"
+                      ? "bg-white/10 text-white"
+                      : "text-white/50"
                   }`}
                   data-testid={`button-mobile-lang-${lang.code}`}
                 >

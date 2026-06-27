@@ -90,7 +90,7 @@ function ProjectCard({
       style={{ transitionDelay: delay }}
       data-testid={`card-portfolio-${index}`}
     >
-      <h3 className="font-display font-bold text-sm md:text-base text-slate-800 leading-snug px-1 truncate">
+      <h3 className="font-display font-bold text-sm md:text-base text-white leading-snug px-1 truncate">
         {title}
       </h3>
 
@@ -117,8 +117,8 @@ function ProjectCard({
             </Badge>
           </div>
         </div>
-        <div className="bg-white px-3 py-2.5">
-          <p className="text-xs md:text-sm text-slate-500 leading-snug line-clamp-2">
+        <div className="bg-black/40 px-3 py-2.5">
+          <p className="text-xs md:text-sm text-white/60 leading-snug line-clamp-2">
             {description}
           </p>
         </div>
@@ -142,14 +142,14 @@ export function PortfolioSection() {
 
         <div className="text-center mb-10 md:mb-14">
           <h2
-            className={`font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-800 transition-all duration-700 ${
+            className={`font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white transition-all duration-700 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
             {t.portfolio.subtitle}
           </h2>
           <p
-            className={`text-slate-500 text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
+            className={`text-white/60 text-lg max-w-2xl mx-auto transition-all duration-700 delay-100 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
