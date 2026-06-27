@@ -1,0 +1,228 @@
+WEBCOREX Hero – Digital Core (Art Direction)
+
+We are NOT creating a decorative 3D object.
+
+We are creating the visual symbol of Webcorex.
+
+This object will become the company's identity and the first thing every visitor remembers.
+
+Its purpose is to communicate one idea:
+
+"All digital products are born from one intelligent core."
+
+The object must feel premium, elegant and futuristic, not flashy or cyberpunk.
+
+Main Concept
+
+Create an abstract "Digital Core".
+
+In the center there is a floating crystal energy core.
+
+Around it there are several thin transparent glass rings.
+
+The rings rotate slowly on different axes.
+
+Small glowing particles travel along the rings like streams of digital data.
+
+Everything should feel alive, calm and expensive.
+
+No aggressive animation.
+
+No gaming aesthetics.
+
+No sci-fi spaceship.
+
+Imagine an object that Apple would place inside an exhibition room.
+
+The Crystal
+
+The center crystal is the heart of the composition.
+
+Requirements:
+
+• Transparent crystal material
+• Multi-layer geometry
+• Refraction
+• Reflection
+• Internal light scattering
+• Slight blue/purple energy glow
+• Very subtle pulsating light
+• Perfectly sharp edges
+
+The crystal should look valuable.
+
+Almost like a rare technological diamond.
+
+Glass Rings
+
+Use 4–6 rings.
+
+Different diameters.
+
+Different tilt angles.
+
+Ultra-thin premium glass.
+
+Some rings are complete circles.
+
+Some are slightly broken or segmented.
+
+They rotate extremely slowly.
+
+Each ring catches light differently.
+
+The rings should create depth instead of visual noise.
+
+Data Particles
+
+Tiny glowing particles move along ring paths.
+
+Movement is smooth.
+
+Very slow.
+
+Particles leave almost invisible light trails.
+
+This creates the feeling that information is constantly flowing through the system.
+
+Floating Technology Nodes
+
+Around the object place only a few tiny floating symbols.
+
+AI
+
+CRM
+
+ERP
+
+WEB
+
+Mobile
+
+Automation
+
+Do NOT make them labels around the object.
+
+Instead they should feel like tiny satellites.
+
+Minimal.
+
+Elegant.
+
+Semi-transparent.
+
+They should never steal attention from the core.
+
+Lighting
+
+Lighting is everything.
+
+Avoid bright bloom.
+
+Avoid overexposed white light.
+
+The object should be readable from every angle.
+
+Use:
+
+HDRI reflections
+
+Soft rim light
+
+Blue key light
+
+Purple secondary light
+
+Subtle ambient lighting
+
+Glass must remain visible at all times.
+
+Materials
+
+Everything must use physically based rendering.
+
+Glass should have:
+
+Transmission
+
+Thickness
+
+IOR
+
+Subtle chromatic aberration
+
+High-quality reflections
+
+Clean edges
+
+Absolutely no cheap plastic appearance.
+
+Interaction
+
+Auto rotation.
+
+Very slow.
+
+Mouse movement slightly changes viewing angle.
+
+Dragging rotates the entire object.
+
+After release, smooth inertia returns.
+
+No sudden movement.
+
+No dramatic effects.
+
+Background
+
+Deep dark blue gradient.
+
+Almost black.
+
+Very subtle fog.
+
+Very few floating particles.
+
+No stars.
+
+No planets.
+
+No galaxies.
+
+No colorful explosions.
+
+The background exists only to emphasize the object.
+
+Platform
+
+The object should NOT float randomly.
+
+Place it on a premium circular glass platform.
+
+Almost invisible.
+
+Very soft reflection.
+
+This makes the object feel like an expensive exhibition piece.
+
+Emotional Goal
+
+When someone opens the website, they should immediately think:
+
+"This company builds serious technology."
+
+Not:
+
+"Nice 3D animation."
+
+The object must represent intelligence, engineering, precision and innovation.
+
+Less decoration.
+
+More meaning.
+
+Premium over flashy.
+
+Apple over Cyberpunk.
+
+Luxury over spectacle.
