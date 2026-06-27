@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, type ComponentType } from "react";
 import {
   ShoppingCart, Search, Heart, Star, ArrowUpRight, ArrowLeft, Plus, Minus, Trash2, Check,
-  Home, BarChart3, CreditCard, Bell, ArrowDownLeft, ShoppingBag, Coffee,
+  Home, BarChart3, CreditCard, Bell, ArrowDownLeft, ShoppingBag, Coffee, Lock,
   Briefcase, Mail, Phone, MapPin, Users, Award, Send, ChevronRight, TrendingUp, Filter,
 } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
@@ -778,13 +778,98 @@ function BankInteractive() {
 }
 
 /* ============================================================
+   DEVICE FRAMES
+   ============================================================ */
+
+function TiltCard({ children, className }: { children: React.ReactNode; className?: string }) {
+  const innerRef = useRef<HTMLDivElement>(null);
+  const reduceRef = useRef(false);
+
+  useEffect(() => {
+    reduceRef.current = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+  }, []);
+
+  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = innerRef.current;
+    if (!el || reduceRef.current) return;
+    const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    el.style.transform = `rotateX(${(-py * 6).toFixed(2)}deg) rotateY(${(px * 6).toFixed(2)}deg) translateY(-8px)`;
+  };
+  const handleLeave = () => {
+    const el = innerRef.current;
+    if (el) el.style.transform = "rotateX(0deg) rotateY(0deg) translateY(0px)";
+  };
+
+  return (
+    <div
+      className={className}
+      style={{ perspective: "1300px" }}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+    >
+      <div
+        ref={innerRef}
+        className="relative will-change-transform transition-transform duration-300 ease-out"
+        style={{ transformStyle: "preserve-3d" }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function PhoneFrame({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="relative mx-auto w-full max-w-[360px]">
+      {/* side buttons */}
+      <span className="absolute -left-[2px] top-[96px] w-[3px] h-8 rounded-l-sm bg-slate-700" />
+      <span className="absolute -left-[2px] top-[144px] w-[3px] h-12 rounded-l-sm bg-slate-700" />
+      <span className="absolute -right-[2px] top-[128px] w-[3px] h-16 rounded-r-sm bg-slate-700" />
+      {/* body */}
+      <div className="relative rounded-[2.7rem] p-[3px] bg-gradient-to-b from-slate-600 via-slate-800 to-black shadow-[0_35px_80px_-22px_rgba(0,0,0,0.75)]">
+        <div className="relative rounded-[2.5rem] p-[7px] bg-black">
+          <div className="relative rounded-[2rem] overflow-hidden bg-white">
+            {/* dynamic island */}
+            <div className="absolute top-2 left-1/2 -translate-x-1/2 z-30 w-20 h-5 rounded-full bg-black flex items-center justify-end pr-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-slate-600" />
+            </div>
+            {children}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BrowserFrame({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="relative rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-[0_35px_80px_-22px_rgba(0,0,0,0.7)]">
+      {/* chrome bar */}
+      <div className="flex items-center gap-2 px-4 h-10 bg-gradient-to-b from-slate-700 to-slate-800 border-b border-black/40">
+        <span className="w-3 h-3 rounded-full bg-[#ff5f57]" />
+        <span className="w-3 h-3 rounded-full bg-[#febc2e]" />
+        <span className="w-3 h-3 rounded-full bg-[#28c840]" />
+        <div className="ml-3 flex-1 max-w-[230px] h-6 rounded-md bg-slate-900/70 flex items-center px-3 gap-1.5">
+          <Lock className="w-3 h-3 text-emerald-400 shrink-0" />
+          <span className="text-[10px] text-slate-300 font-mono truncate">altitude.tj</span>
+        </div>
+      </div>
+      <div className="bg-white">{children}</div>
+    </div>
+  );
+}
+
+/* ============================================================
    SECTION
    ============================================================ */
 
-const mockupByOriginalIndex: Record<number, { Mockup: () => JSX.Element; Icon: ComponentType<{ className?: string }>; gradient: string }> = {
-  0: { Mockup: EcomInteractive, Icon: IconEcom, gradient: "from-rose-500 to-amber-500" },
-  1: { Mockup: BusinessInteractive, Icon: IconWebsite, gradient: "from-cyan-500 to-blue-500" },
-  3: { Mockup: BankInteractive, Icon: IconBanking, gradient: "from-violet-500 to-indigo-600" },
+type FrameKind = "phone" | "browser";
+const mockupByOriginalIndex: Record<number, { Mockup: () => JSX.Element; Icon: ComponentType<{ className?: string }>; gradient: string; frame: FrameKind }> = {
+  0: { Mockup: EcomInteractive, Icon: IconEcom, gradient: "from-rose-500 to-amber-500", frame: "phone" },
+  1: { Mockup: BusinessInteractive, Icon: IconWebsite, gradient: "from-cyan-500 to-blue-500", frame: "browser" },
+  3: { Mockup: BankInteractive, Icon: IconBanking, gradient: "from-violet-500 to-indigo-600", frame: "phone" },
 };
 
 export function WhatWeBuildSection() {
@@ -811,7 +896,7 @@ export function WhatWeBuildSection() {
           {visible.map(({ item, i }, displayIdx) => {
             const entry = mockupByOriginalIndex[i];
             if (!entry) return null;
-            const { Mockup, Icon, gradient } = entry;
+            const { Mockup, Icon, gradient, frame } = entry;
             return (
               <div key={i}
                 className={`flex flex-col transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
@@ -829,15 +914,14 @@ export function WhatWeBuildSection() {
                   </div>
                 </div>
 
-                <div className="group/showcase relative flex-1 flex flex-col">
-                  <div className={`absolute -inset-3 rounded-[2.25rem] bg-gradient-to-br ${gradient} opacity-0 blur-2xl transition-opacity duration-700 group-hover/showcase:opacity-30 pointer-events-none`} />
-                  <div className="relative flex-1 flex flex-col rounded-[1.65rem] p-[1.5px] bg-gradient-to-b from-white/90 via-slate-200/70 to-slate-300/50 shadow-[0_10px_40px_-14px_rgba(15,23,42,0.28)] transition-all duration-500 group-hover/showcase:-translate-y-2 group-hover/showcase:shadow-[0_45px_90px_-25px_rgba(15,23,42,0.5)]">
-                    <div className="relative flex-1 flex flex-col rounded-[1.55rem] overflow-hidden bg-white">
-                      <span className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent z-20" />
-                      <Mockup />
-                    </div>
-                  </div>
-                </div>
+                <TiltCard className="group/showcase relative flex-1 flex flex-col justify-center">
+                  <div className={`absolute inset-2 rounded-[3rem] bg-gradient-to-br ${gradient} opacity-20 blur-3xl transition-opacity duration-700 group-hover/showcase:opacity-45 pointer-events-none`} />
+                  {frame === "phone" ? (
+                    <PhoneFrame><Mockup /></PhoneFrame>
+                  ) : (
+                    <BrowserFrame><Mockup /></BrowserFrame>
+                  )}
+                </TiltCard>
               </div>
             );
           })}
