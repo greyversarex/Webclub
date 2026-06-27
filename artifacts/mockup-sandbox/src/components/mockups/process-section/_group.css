@@ -1,0 +1,27 @@
+/* Shared cosmic-premium palette for the "Как мы работаем" process-section variants.
+   Each variant imports this for brand continuity, then owns its own layout, motion,
+   and composition. DO NOT add @keyframes or variant-specific styles here — keep those
+   inside each component (inline <style> or a per-variant file) to avoid parallel conflicts. */
+
+:root {
+  /* Deep space background */
+  --cosmic-bg:          230 40% 4%;
+  --cosmic-bg-2:        250 45% 7%;
+  --cosmic-panel:       250 40% 10%;
+
+  /* Violet -> Cyan accent spectrum */
+  --cosmic-violet:        263 80% 62%;
+  --cosmic-violet-bright: 270 92% 72%;
+  --cosmic-indigo:        245 75% 58%;
+  --cosmic-cyan:          190 95% 55%;
+  --cosmic-cyan-bright:   185 100% 66%;
+
+  /* Text */
+  --cosmic-text:        220 35% 97%;
+  --cosmic-text-muted:  225 20% 72%;
+  --cosmic-text-dim:    228 16% 55%;
+
+  /* Hairline borders / glass edges */
+  --cosmic-border:      250 45% 26%;
+  --cosmic-glass:       250 40% 14%;
+}
