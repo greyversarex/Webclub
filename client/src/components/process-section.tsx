@@ -62,7 +62,6 @@ export function ProcessSection() {
   }, [isVisible, activeIdx, steps.length]);
 
   const activeStep = steps[activeIdx];
-  const ActiveIcon = stepIcons[activeIdx];
 
   return (
     <section
@@ -162,10 +161,7 @@ export function ProcessSection() {
                   : "opacity-100 translate-y-0 scale-100"
               }`}
             >
-              <div className="flex items-center justify-between mb-10">
-                <div className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-white/5 border border-white/15 shadow-[0_0_30px_rgba(34,211,238,0.1)]">
-                  <ActiveIcon className="w-8 h-8 md:w-10 md:h-10 text-cyan-300" />
-                </div>
+              <div className="flex items-center justify-end mb-10">
                 <div
                   className="text-sm font-semibold tracking-wider text-violet-300 uppercase"
                   data-testid="text-process-active-stage"
