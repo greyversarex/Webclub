@@ -179,7 +179,7 @@ function CubeScene({ reduced, active }: { reduced: boolean; active: boolean }) {
       const s = reduced ? 1 : 1 + Math.sin(t * 1.4) * 0.06;
       core.current.scale.setScalar(s);
       const mat = core.current.material as THREE.MeshStandardMaterial;
-      if (mat) mat.emissiveIntensity = reduced ? 2.4 : 2.2 + Math.sin(t * 1.4) * 0.8;
+      if (mat) mat.emissiveIntensity = reduced ? 1.15 : 1.1 + Math.sin(t * 1.4) * 0.28;
     }
   });
 
@@ -219,23 +219,23 @@ function CubeScene({ reduced, active }: { reduced: boolean; active: boolean }) {
 
         {/* glowing energy core */}
         <mesh ref={core}>
-          <icosahedronGeometry args={[0.55, 4]} />
+          <icosahedronGeometry args={[0.42, 4]} />
           <meshStandardMaterial
-            color="#4f7cff"
+            color="#5b86ff"
             emissive="#4f7cff"
-            emissiveIntensity={2.4}
-            roughness={0.25}
+            emissiveIntensity={1.15}
+            roughness={0.3}
             metalness={0}
             toneMapped={false}
           />
         </mesh>
         {/* soft additive halo around the core */}
-        <mesh scale={1.35}>
-          <icosahedronGeometry args={[0.55, 2]} />
+        <mesh scale={1.3}>
+          <icosahedronGeometry args={[0.42, 2]} />
           <meshBasicMaterial
             color="#6f8cff"
             transparent
-            opacity={0.12}
+            opacity={0.07}
             blending={THREE.AdditiveBlending}
             depthWrite={false}
             toneMapped={false}
@@ -264,7 +264,7 @@ function CubeScene({ reduced, active }: { reduced: boolean; active: boolean }) {
       <Particles reduced={reduced} />
 
       <EffectComposer enableNormalPass={false}>
-        <Bloom mipmapBlur luminanceThreshold={0.6} intensity={0.7} radius={0.65} />
+        <Bloom mipmapBlur luminanceThreshold={0.85} luminanceSmoothing={0.3} intensity={0.42} radius={0.5} />
       </EffectComposer>
     </>
   );
