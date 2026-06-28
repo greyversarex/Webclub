@@ -8,7 +8,6 @@ import { ProcessSection } from "@/components/process-section";
 import { TestimonialsSection } from "@/components/testimonials-section";
 import { ContactSection } from "@/components/contact-section";
 import { ChatWidget } from "@/components/chat-widget";
-import { SectionRobot } from "@/components/section-robot";
 import { GalaxyBackground } from "@/components/galaxy-background";
 
 export default function Home() {
@@ -35,55 +34,13 @@ export default function Home() {
         <Header />
         <main>
           <HeroSection />
-          <div className="relative">
-            <AppsShowcaseSection />
-            <SectionRobot
-              message="Хотите, чтобы ваш бизнес охватил весь мир? Мы это устроим!"
-              side="right"
-            />
-          </div>
-          <div className="relative">
-            <WhatWeBuildSection />
-            <SectionRobot
-              message="Мы воплощаем любые идеи в жизнь. С нами у вас нет ограничений!"
-              side="left"
-            />
-          </div>
-          <div className="relative">
-            <PortfolioSection />
-            <SectionRobot
-              message="Реальные проекты для бизнеса, финтеха, госсектора и ритейла."
-              side="right"
-            />
-          </div>
-          <div className="relative">
-            <TechStackSection />
-            <SectionRobot
-              message="React, TypeScript, Node.js, PostgreSQL — основной стек. Также работаем с Python, Flutter и облачными платформами."
-              side="left"
-            />
-          </div>
-          <div className="relative">
-            <ProcessSection />
-            <SectionRobot
-              message="С нами вы в безопасности и постоянно в курсе дел. Работаем прозрачно, быстро и на полную мощность!"
-              side="right"
-            />
-          </div>
-          <div className="relative">
-            <TestimonialsSection />
-            <SectionRobot
-              message="Уже 50+ компаний доверились нам. Вы следующий?"
-              side="left"
-            />
-          </div>
-          <div className="relative">
-            <ContactSection />
-            <SectionRobot
-              message="Давайте обсудим ваш проект прямо сейчас!"
-              side="left"
-            />
-          </div>
+          <AppsShowcaseSection />
+          <WhatWeBuildSection />
+          <PortfolioSection />
+          <TechStackSection />
+          <ProcessSection />
+          <TestimonialsSection />
+          <ContactSection />
         </main>
       </div>
       <ChatWidget />
