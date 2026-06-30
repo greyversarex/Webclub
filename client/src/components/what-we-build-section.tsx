@@ -798,7 +798,7 @@ function TiltCard({ children, className }: { children: React.ReactNode; classNam
     const el = scrollRef.current;
     if (!wrap || !el) return;
 
-    const MAX_TILT = 24; // degrees at the top/bottom edges of the viewport
+    const MAX_TILT = 38; // degrees at the top/bottom edges of the viewport
     let ticking = false;
     let raf = 0;
 
