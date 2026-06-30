@@ -1,0 +1,185 @@
+root@msk-1-vm-85bg:/var/www/webclub# pnpm install
+pnpm run build
+Lockfile is up to date, resolution step is skipped
+Packages: +99
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 99, reused 99, downloaded 0, added 99, done
+node_modules/.pnpm/esbuild@0.21.5/node_modules/esbuild: Running postinstall script...
+node_modules/.pnpm/esbuild@0.18.20/node_modules/esbuild: Running postinstall scrnode_modules/.pnpm/esbuild@0.21.5/node_modules/esbuild: Running postinstall scrinode_modules/.pnpm/esbuild@0.18.20/node_modules/esbuild: Running postinstall scrnode_modules/.pnpm/esbuild@0.25.12/node_modules/esbuild: Running postinstall script, done in 215ms
+
+devDependencies:
++ @replit/vite-plugin-cartographer 0.4.11
++ @replit/vite-plugin-dev-banner 0.1.2
++ @replit/vite-plugin-runtime-error-modal 0.0.3
++ @tailwindcss/typography 0.5.20
++ @tailwindcss/vite 4.3.2
++ @types/connect-pg-simple 7.0.3
++ @types/express 4.17.21
++ @types/express-session 1.19.0
++ @types/node 20.16.11
++ @types/passport 1.0.17
++ @types/passport-local 1.0.38
++ @types/react 18.3.31
++ @types/react-dom 18.3.7
++ @types/ws 8.18.1
++ @vitejs/plugin-react 4.7.0
++ autoprefixer 10.5.2
++ drizzle-kit 0.31.10
++ esbuild 0.25.12
++ postcss 8.5.16
++ tailwindcss 3.4.19
++ tsx 4.22.4
++ typescript 5.6.3
++ vite 5.4.21
+
+Done in 3.3s using pnpm v10.34.4
+
+> rest-express@1.0.0 build /var/www/webclub
+> tsx script/build.ts
+
+building client...
+vite v5.4.21 building for production...
+transforming (5) ../node_modules/.pnpm/wouter@3.10.0_react@18.3.1/node_modu
+A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+✓ 1792 modules transformed.
+x Build failed in 11.05s
+client/src/components/tech-stack-section.tsx (1:90): "SiAmazon" is not exported by "node_modules/.pnpm/react-icons@5.7.0_react@18.3.1/node_modules/react-icons/si/index.mjs", imported by "client/src/components/tech-stack-section.tsx".
+file: /var/www/webclub/client/src/components/tech-stack-section.tsx:1:90
+
+1: import { SiReact, SiNodedotjs, SiTypescript, SiPython, SiPostgresql, SiMongodb, SiDocker, SiAmazon, SiVuedotjs, SiAng...
+                                                                                             ^
+2: import { useEffect, useRef, useState } from "react";
+3: import { useLanguage } from "@/lib/language-context";
+
+    at getRollupError (file:///var/www/webclub/node_modules/.pnpm/rollup@4.62.2/node_modules/rollup/dist/es/shared/parseAst.js:317:41)
+    at error (file:///var/www/webclub/node_modules/.pnpm/rollup@4.62.2/node_modules/rollup/dist/es/shared/parseAst.js:313:42)
+    at Module.error (/var/www/webclub/node_modules/.pnpm/rollup@4.62.2/node_modules/rollup/dist/es/shared/node-entry.js:17396:16)
+    at Module.traceVariable (/var/www/webclub/node_modules/.pnpm/rollup@4.62.2/node_modules/rollup/dist/es/shared/node-entry.js:17829:29)
+    at ModuleScope.findVariable (/var/www/webclub/node_modules/.pnpm/rollup@4.62.2/node_modules/rollup/dist/es/shared/node-entry.js:15419:39)
+    at Identifier.bind (/var/www/webclub/node_modules/.pnpm/rollup@4.62.2/node_modules/rollup/dist/es/shared/node-entry.js:5451:40)
+    at Property.bind (/var/www/webclub/node_modules/.pnpm/rollup@4.62.2/node_modules/rollup/dist/es/shared/node-entry.js:2833:23)
+    at ObjectExpression.bind (/var/www/webclub/node_modules/.pnpm/rollup@4.62.2/node_modules/rollup/dist/es/shared/node-entry.js:2829:28)
+    at ArrayExpression.bind (/var/www/webclub/node_modules/.pnpm/rollup@4.62.2/node_modules/rollup/dist/es/shared/node-entry.js:2829:28)
+    at VariableDeclarator.bind (/var/www/webclub/node_modules/.pnpm/rollup@4.62.2/node_modules/rollup/dist/es/shared/node-entry.js:2833:23) {
+  binding: 'SiAmazon',
+  code: 'MISSING_EXPORT',
+  exporter: '/var/www/webclub/node_modules/.pnpm/react-icons@5.7.0_react@18.3.1/node_modules/react-icons/si/index.mjs',
+  id: '/var/www/webclub/client/src/components/tech-stack-section.tsx',
+  url: 'https://rollupjs.org/troubleshooting/#error-name-is-not-exported-by-module',
+  pos: 137,
+  loc: {
+    column: 90,
+    file: '/var/www/webclub/client/src/components/tech-stack-section.tsx',
+    line: 1
+  },
+  frame: '1: import { SiReact, SiNodedotjs, SiTypescript, SiPython, SiPostgresql, SiMongodb, SiDocker, SiAmazon, SiVuedotjs, SiAng...\n' +
+    '                                                                                             ^\n' +
+    '2: import { useEffect, useRef, useState } from "react";\n' +
+    '3: import { useLanguage } from "@/lib/language-context";',
+  watchFiles: [
+    '/var/www/webclub/client/index.html',
+    '/var/www/webclub/client/src/main.tsx',
+    '/var/www/webclub/package.json',
+    '/var/www/webclub/node_modules/.pnpm/react@18.3.1/node_modules/react/jsx-runtime.js',
+    '/var/www/webclub/client/src/index.css',
+    '/var/www/webclub/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/client.js',
+    '/var/www/webclub/client/src/App.tsx',
+    '/var/www/webclub/node_modules/.pnpm/react@18.3.1/node_modules/react/cjs/react-jsx-runtime.production.min.js',
+    '/var/www/webclub/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/index.js',
+    '/var/www/webclub/node_modules/.pnpm/wouter@3.10.0_react@18.3.1/node_modules/wouter/src/index.js',
+    '/var/www/webclub/node_modules/.pnpm/react@18.3.1/node_modules/react/index.js',
+    '/var/www/webclub/node_modules/.pnpm/@tanstack+react-query@5.101.2_react@18.3.1/node_modules/@tanstack/react-query/build/modern/index.js',
+    '/var/www/webclub/client/src/lib/queryClient.ts',
+    '/var/www/webclub/client/src/components/ui/tooltip.tsx',
+    '/var/www/webclub/client/src/components/ui/toaster.tsx',
+    '/var/www/webclub/client/src/components/theme-provider.tsx',
+    '/var/www/webclub/client/src/lib/language-context.tsx',
+    '/var/www/webclub/client/src/components/intro-animation.tsx',
+    '/var/www/webclub/client/src/pages/home.tsx',
+    '/var/www/webclub/client/src/pages/not-found.tsx',
+    '/var/www/webclub/client/src/components/floating-contact.tsx',
+    '/var/www/webclub/client/src/hooks/use-network-quality.ts',
+    '/var/www/webclub/client/src/hooks/use-scroll-animation.ts',
+    '/var/www/webclub/client/src/hooks/use-toast.ts',
+    '/var/www/webclub/client/src/lib/translations.ts',
+    '/var/www/webclub/client/src/lib/utils.ts',
+    '/var/www/webclub/client/src/components/adaptive-video.tsx',
+    '/var/www/webclub/client/src/components/advantages-section.tsx',
+    '/var/www/webclub/client/src/components/apps-showcase-section.tsx',
+    '/var/www/webclub/client/src/components/chat-widget.tsx',
+    '/var/www/webclub/client/src/components/circuit-background.tsx',
+    '/var/www/webclub/client/src/components/contact-section.tsx',
+    '/var/www/webclub/client/src/components/cursor-illumination.tsx',
+    '/var/www/webclub/client/src/components/electric-pulses.tsx',
+    '/var/www/webclub/client/src/components/falling-numbers.tsx',
+    '/var/www/webclub/client/src/components/footer.tsx',
+    '/var/www/webclub/client/src/components/galaxy-background.tsx',
+    '/var/www/webclub/client/src/components/header.tsx',
+    '/var/www/webclub/client/src/components/hero-section.tsx',
+    '/var/www/webclub/client/src/components/hero-showcase.tsx',
+    '/var/www/webclub/client/src/components/interactive-background.tsx',
+    '/var/www/webclub/client/src/components/magic-rings.tsx',
+    '/var/www/webclub/client/src/components/mini-runner-game.tsx',
+    '/var/www/webclub/client/src/components/portfolio-section.tsx',
+    '/var/www/webclub/client/src/components/process-section.tsx',
+    '/var/www/webclub/client/src/components/services-section.tsx',
+    '/var/www/webclub/client/src/components/tech-stack-section.tsx',
+    '/var/www/webclub/client/src/components/testimonials-section.tsx',
+    '/var/www/webclub/client/src/components/theme-toggle.tsx',
+    '/var/www/webclub/client/src/components/what-we-build-section.tsx',
+    '/var/www/webclub/client/src/hooks/use-mobile.tsx',
+    '/var/www/webclub/client/src/components/ui/accordion.tsx',
+    '/var/www/webclub/client/src/components/ui/alert-dialog.tsx',
+    '/var/www/webclub/client/src/components/ui/alert.tsx',
+    '/var/www/webclub/client/src/components/ui/aspect-ratio.tsx',
+    '/var/www/webclub/client/src/components/ui/avatar.tsx',
+    '/var/www/webclub/client/src/components/ui/badge.tsx',
+    '/var/www/webclub/client/src/components/ui/breadcrumb.tsx',
+    '/var/www/webclub/client/src/components/ui/button.tsx',
+    '/var/www/webclub/client/src/components/ui/calendar.tsx',
+    '/var/www/webclub/client/src/components/ui/card.tsx',
+    '/var/www/webclub/client/src/components/ui/carousel.tsx',
+    '/var/www/webclub/client/src/components/ui/chart.tsx',
+    '/var/www/webclub/client/src/components/ui/checkbox.tsx',
+    '/var/www/webclub/client/src/components/ui/collapsible.tsx',
+    '/var/www/webclub/client/src/components/ui/command.tsx',
+    '/var/www/webclub/client/src/components/ui/context-menu.tsx',
+    '/var/www/webclub/client/src/components/ui/dialog.tsx',
+    '/var/www/webclub/client/src/components/ui/drawer.tsx',
+    '/var/www/webclub/client/src/components/ui/dropdown-menu.tsx',
+    '/var/www/webclub/client/src/components/ui/form.tsx',
+    '/var/www/webclub/client/src/components/ui/hover-card.tsx',
+    '/var/www/webclub/client/src/components/ui/input-otp.tsx',
+    '/var/www/webclub/client/src/components/ui/input.tsx',
+    '/var/www/webclub/client/src/components/ui/label.tsx',
+    '/var/www/webclub/client/src/components/ui/menubar.tsx',
+    '/var/www/webclub/client/src/components/ui/navigation-menu.tsx',
+    '/var/www/webclub/client/src/components/ui/pagination.tsx',
+    '/var/www/webclub/client/src/components/ui/popover.tsx',
+    '/var/www/webclub/client/src/components/ui/progress.tsx',
+    '/var/www/webclub/client/src/components/ui/radio-group.tsx',
+    '/var/www/webclub/client/src/components/ui/resizable.tsx',
+    '/var/www/webclub/client/src/components/ui/scroll-area.tsx',
+    '/var/www/webclub/client/src/components/ui/select.tsx',
+    '/var/www/webclub/client/src/components/ui/separator.tsx',
+    '/var/www/webclub/client/src/components/ui/sheet.tsx',
+    '/var/www/webclub/client/src/components/ui/sidebar.tsx',
+    '/var/www/webclub/client/src/components/ui/skeleton.tsx',
+    '/var/www/webclub/client/src/components/ui/slider.tsx',
+    '/var/www/webclub/client/src/components/ui/switch.tsx',
+    '/var/www/webclub/client/src/components/ui/table.tsx',
+    '/var/www/webclub/client/src/components/ui/tabs.tsx',
+    '/var/www/webclub/client/src/components/ui/textarea.tsx',
+    '/var/www/webclub/client/src/components/ui/toast.tsx',
+    '/var/www/webclub/client/src/components/ui/toggle-group.tsx',
+    '/var/www/webclub/client/src/components/ui/toggle.tsx',
+    '/var/www/webclub/tailwind.config.ts',
+    '/var/www/webclub/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.production.min.js',
+    '/var/www/webclub/node_modules/.pnpm/react@18.3.1/node_modules/react/cjs/react.production.min.js',
+    '/var/www/webclub/node_modules/.pnpm/wouter@3.10.0_react@18.3.1/node_modules/wouter/src/paths.js',
+    ... 1723 more items
+  ],
+  [Symbol(augmented)]: true
+}
+ ELIFECYCLE  Command failed with exit code 1.
+root@msk-1-vm-85bg:/var/www/webclub#
