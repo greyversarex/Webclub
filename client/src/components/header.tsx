@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FallingNumbers } from "@/components/falling-numbers";
-import GooeyNav from "@/components/gooey-nav";
 import { useLanguage } from "@/lib/language-context";
 import { Language } from "@/lib/translations";
 
@@ -64,18 +63,23 @@ export function Header() {
             </span>
           </a>
 
-          <div className="hidden md:flex items-center">
-            <GooeyNav
-              items={navItems}
-              particleCount={20}
-              particleDistances={[80, 10]}
-              particleR={140}
-              animationTime={600}
-              timeVariance={300}
-              colors={[1, 2, 3, 1, 2, 3, 1, 4]}
-              onSelect={(href) => scrollToSection(href)}
-            />
-          </div>
+          <nav className="hidden md:flex items-center gap-2">
+            {navItems.map((item) => (
+              <button
+                key={item.href}
+                onClick={() => scrollToSection(item.href)}
+                className="px-5 py-2 text-sm font-medium text-white/80 rounded-full transition-all duration-200
+                  bg-white/5 backdrop-blur-sm
+                  border border-white/10 shadow-[0_1px_3px_rgba(0,0,0,0.3)]
+                  hover:text-white hover:border-violet-400/50 hover:bg-white/10
+                  hover:shadow-[0_0_0_1px_rgba(139,92,246,0.3),0_4px_12px_rgba(139,92,246,0.15)]
+                  active:scale-[0.97] active:shadow-none"
+                data-testid={`link-nav-${item.href.replace('#', '')}`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
 
           <div className="flex items-center gap-2">
             <div className="hidden sm:flex items-center gap-1 mr-2">
