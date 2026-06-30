@@ -832,32 +832,32 @@ function PhoneFrame({ children }: { children: React.ReactNode }) {
         <div className="relative rounded-[2.5rem] p-[7px] bg-black">
           <div className="relative rounded-[2rem] overflow-hidden bg-white" style={{ height: 560 }}>
             {/* dynamic island */}
-            <div className="absolute top-2 left-1/2 -translate-x-1/2 z-30 w-[72px] h-[18px] rounded-full bg-black" />
-            {/* status bar */}
-            <div className="relative z-20 flex items-center justify-between px-5 pt-2 pb-1 bg-transparent">
-              <span className="text-[10px] font-semibold text-black/80" style={{ paddingTop: 2 }}>9:41</span>
-              <div className="flex items-center gap-[3px] mt-[18px]">
+            <div className="absolute top-[10px] left-1/2 -translate-x-1/2 z-30 w-[80px] h-[22px] rounded-full bg-black" />
+            {/* status bar — sits below the dynamic island (top ~36px) */}
+            <div className="relative z-20 flex items-center justify-between px-5 bg-transparent" style={{ paddingTop: 38, paddingBottom: 4 }}>
+              <span className="text-[10px] font-semibold leading-none text-black/80">9:41</span>
+              <div className="flex items-center gap-[5px]">
                 {/* signal bars */}
-                <svg viewBox="0 0 17 12" className="w-[17px] h-[12px]" fill="currentColor">
+                <svg viewBox="0 0 17 12" className="w-[15px] h-[11px]" fill="currentColor">
                   <rect x="0" y="9" width="3" height="3" rx="0.5" className="text-black/80" />
                   <rect x="4.5" y="6" width="3" height="6" rx="0.5" className="text-black/80" />
                   <rect x="9" y="3" width="3" height="9" rx="0.5" className="text-black/80" />
                   <rect x="13.5" y="0" width="3" height="12" rx="0.5" className="text-black/80" />
                 </svg>
                 {/* wifi */}
-                <svg viewBox="0 0 16 12" className="w-[16px] h-[12px]" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-                  <path d="M8 10.5h.01M3.5 6.5A6.5 6.5 0 0 1 12.5 6.5M1 3.5A10 10 0 0 1 15 3.5" className="text-black/80" />
+                <svg viewBox="0 0 16 12" className="w-[15px] h-[11px]" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+                  <path d="M8 10h.01M3 6a7 7 0 0 1 10 0M0.5 3a11 11 0 0 1 15 0" className="text-black/80" />
                 </svg>
                 {/* battery */}
-                <svg viewBox="0 0 25 12" className="w-[25px] h-[12px]" fill="none">
-                  <rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="currentColor" strokeOpacity="0.35" className="text-black" />
-                  <rect x="2" y="2" width="16" height="8" rx="2" fill="currentColor" className="text-black/80" />
-                  <path d="M23 4v4a2 2 0 0 0 0-4z" fill="currentColor" className="text-black/50" />
+                <svg viewBox="0 0 25 12" className="w-[22px] h-[11px]" fill="none">
+                  <rect x="0.5" y="0.5" width="21" height="11" rx="3" stroke="currentColor" strokeOpacity="0.4" className="text-black" />
+                  <rect x="2" y="2" width="15" height="8" rx="1.5" fill="currentColor" className="text-black/80" />
+                  <path d="M23 4v4a2 2 0 0 0 0-4z" fill="currentColor" className="text-black/40" />
                 </svg>
               </div>
             </div>
-            {/* scrollable content */}
-            <div className="overflow-hidden" style={{ height: 'calc(100% - 44px)' }}>
+            {/* content below status bar */}
+            <div className="overflow-hidden" style={{ height: 'calc(100% - 56px)' }}>
               {children}
             </div>
           </div>
@@ -892,7 +892,7 @@ function BrowserFrame({ children }: { children: React.ReactNode }) {
 type FrameKind = "phone" | "browser";
 const mockupByOriginalIndex: Record<number, { Mockup: () => JSX.Element; Icon: ComponentType<{ className?: string }>; gradient: string; frame: FrameKind }> = {
   0: { Mockup: EcomInteractive, Icon: IconEcom, gradient: "from-rose-500 to-amber-500", frame: "phone" },
-  1: { Mockup: BusinessInteractive, Icon: IconWebsite, gradient: "from-cyan-500 to-blue-500", frame: "browser" },
+  1: { Mockup: BusinessInteractive, Icon: IconWebsite, gradient: "from-cyan-500 to-blue-500", frame: "phone" },
   3: { Mockup: BankInteractive, Icon: IconBanking, gradient: "from-violet-500 to-indigo-600", frame: "phone" },
 };
 
