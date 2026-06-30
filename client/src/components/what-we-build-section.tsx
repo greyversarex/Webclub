@@ -782,17 +782,57 @@ function BankInteractive() {
    ============================================================ */
 
 function TiltCard({ children, className }: { children: React.ReactNode; className?: string }) {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const reduceRef = useRef(false);
 
+  // Scroll-linked rotation: the card is tilted while it sits away from the
+  // viewport's vertical center and rotates flat (facing the viewer) as it
+  // scrolls through the center — like a billboard turning to face your eyes.
   useEffect(() => {
     reduceRef.current = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+    if (reduceRef.current) return;
+
+    const wrap = wrapRef.current;
+    const el = scrollRef.current;
+    if (!wrap || !el) return;
+
+    const MAX_TILT = 14; // degrees at the top/bottom edges of the viewport
+    let ticking = false;
+    let raf = 0;
+
+    const update = () => {
+      ticking = false;
+      const r = wrap.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const cardCenter = r.top + r.height / 2;
+      // +1 when the card sits at the viewport bottom, -1 at the top, 0 centered
+      let dist = (cardCenter - vh / 2) / (vh / 2);
+      dist = Math.max(-1, Math.min(1, dist));
+      el.style.transform = `rotateX(${(dist * MAX_TILT).toFixed(2)}deg)`;
+    };
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      raf = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, []);
 
   const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = innerRef.current;
-    if (!el || reduceRef.current) return;
-    const r = el.getBoundingClientRect();
+    const wrap = wrapRef.current;
+    if (!el || !wrap || reduceRef.current) return;
+    const r = wrap.getBoundingClientRect();
     const px = (e.clientX - r.left) / r.width - 0.5;
     const py = (e.clientY - r.top) / r.height - 0.5;
     el.style.transform = `rotateX(${(-py * 6).toFixed(2)}deg) rotateY(${(px * 6).toFixed(2)}deg) translateY(-8px)`;
@@ -804,17 +844,24 @@ function TiltCard({ children, className }: { children: React.ReactNode; classNam
 
   return (
     <div
+      ref={wrapRef}
       className={className}
       style={{ perspective: "1300px" }}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
     >
       <div
-        ref={innerRef}
-        className="relative will-change-transform transition-transform duration-300 ease-out"
+        ref={scrollRef}
+        className="relative will-change-transform"
         style={{ transformStyle: "preserve-3d" }}
       >
-        {children}
+        <div
+          ref={innerRef}
+          className="relative will-change-transform transition-transform duration-300 ease-out"
+          style={{ transformStyle: "preserve-3d" }}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );
