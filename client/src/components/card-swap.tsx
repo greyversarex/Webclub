@@ -52,12 +52,15 @@ export function CardSwap({
   return (
     <div
       className="relative w-full select-none"
-      style={{ perspective: "1100px", height: 380 }}
+      style={{ perspective: "1100px", height: 440 }}
       onMouseEnter={() => pauseOnHover && setPaused(true)}
       onMouseLeave={() => pauseOnHover && setPaused(false)}
     >
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="relative" style={{ width: "min(100%, 460px)", height: 300 }}>
+        <div
+          className="relative"
+          style={{ width: "min(100%, 460px)", height: 300, transform: "translateY(90px)" }}
+        >
           {cards.map((card, i) => {
             const slot = order.indexOf(i);
             const isFront = slot === 0;
