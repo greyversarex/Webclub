@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Webcorex Estate OS — продажа квартир, новостройки, ипотека, агентство</title>
+<style>
+:root{
+  --ink:#0f172a; --muted:#63758a; --line:#dbe2eb; --bg:#f5f7fa;
+  --gov:#0f172a; --gov2:#1e293b; --steel:#475569; --sky:#0ea5e9; --sky2:#38bdf8; --gold:#fff; --gold2:#fff; --green:#16a76f; --red:#dc2626; --orange:#fff;
+  --shadow:0 24px 70px rgba(15,23,42,.14);
+  --shadow2:0 12px 34px rgba(15,23,42,.10);
+  --r:28px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--ink);background:var(--bg);overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+  radial-gradient(circle at 8% 5%,rgba(14,165,233,.10),transparent 28%),
+  radial-gradient(circle at 90% 10%,rgba(71,85,105,.10),transparent 26%),
+  radial-gradient(circle at 50% 86%,rgba(15,23,42,.06),transparent 34%)}
+a{text-decoration:none;color:inherit}
+button,input,select,textarea{font:inherit}
+.wrap{width:min(1200px,calc(100% - 42px));margin:0 auto}
+img{display:block}
+
+/* ===== NAVIGATION ===== */
+.nav{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.86);backdrop-filter:blur(18px);border-bottom:1px solid rgba(15,23,42,.08)}
+.nav-inner{height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;gap:12px;align-items:center;min-width:max-content}
+.logo{width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg,#0f172a,#0ea5e9 50%,#475569);display:grid;place-items:center;color:#fff;font-weight:950;font-size:27px;letter-spacing:-4px;box-shadow:0 14px 34px rgba(14,165,233,.28);position:relative}
+.logo:after{content:"";position:absolute;right:-4px;top:-4px;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid #fff}
+.brand b{display:block;font-size:14px;letter-spacing:.16em}
+.brand small{display:block;color:var(--muted);margin-top:2px}
+.links{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.links a{font-size:13px;font-weight:850;color:#53657a;padding:9px 12px;border-radius:999px}
+.links a:hover{background:#e0f2fe;color:#0c4a6e}
+.btn{border:0;border-radius:999px;padding:13px 18px;font-weight:950;cursor:pointer;display:inline-flex;gap:9px;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f172a,#0ea5e9);color:#fff;box-shadow:0 14px 34px rgba(14,165,233,.30);transition:.2s;font-size:14px}
+.btn:hover{transform:translateY(-2px);box-shadow:0 20px 46px rgba(14,165,233,.36)}
+.btn.white{background:#fff;color:var(--ink);border:1px solid var(--line);box-shadow:var(--shadow2)}
+.btn.gold{background:linear-gradient(135deg,#fff,#fff);color:#0f172a;box-shadow:0 14px 34px rgba(255,255,255,.24)}
+.btn.green{background:linear-gradient(135deg,#16a76f,#22c55e);color:#fff;box-shadow:0 14px 34px rgba(22,167,111,.28)}
+
+/* ===== HERO BANNER (полноширинная длинная фотография) ===== */
+.hero{padding:0;background:var(--bg)}
+.hero-banner{
+  position:relative;
+  width:100%;
+  min-height:560px;
+  background-color:#1e293b;
+  background-image:url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=2400&q=80');
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  align-items:flex-end;
+  padding:80px 0 60px;
+}
+.hero-banner:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top,rgba(8,15,28,.85) 0%,rgba(8,15,28,.40) 50%,transparent 100%);
+  pointer-events:none;
+}
+.hero-overlay{position:relative;z-index:2;color:#fff;width:100%}
+.kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.20);backdrop-filter:blur(10px);border-radius:999px;padding:9px 14px;color:#bae6fd;font-weight:950;font-size:13px;margin-bottom:18px}
+.dot{width:9px;height:9px;border-radius:50%;background:#fff;box-shadow:0 0 0 7px rgba(255,255,255,.24);animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 7px rgba(255,255,255,.24)}50%{box-shadow:0 0 0 12px rgba(255,255,255,0)}100%{box-shadow:0 0 0 7px rgba(255,255,255,.24)}}
+h1{font-size:clamp(38px,5.5vw,68px);line-height:.96;letter-spacing:-.05em;margin:0 0 18px;color:#fff;max-width:920px}
+.accent{background:linear-gradient(135deg,#38bdf8 0%,#fff 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:18px;line-height:1.5;color:#e2e8f0;max-width:760px;margin:0 0 26px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:0}
+
+/* ===== HERO STATS + WIDGETS ===== */
+.hero-secondary{padding:40px 0 80px;background:var(--bg)}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:start}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.stat{background:#fff;border:1px solid rgba(15,23,42,.08);box-shadow:var(--shadow2);border-radius:22px;padding:18px}
+.stat b{font-size:28px;display:block;color:#0f172a;letter-spacing:-.02em}
+.stat span{color:var(--muted);font-size:13px;line-height:1.4;display:block;margin-top:6px}
+
+.side-ui{display:grid;gap:14px}
+.mini-panel{padding:18px;background:#fff;border:1px solid rgba(15,23,42,.08);box-shadow:var(--shadow2);border-radius:22px}
+.deals-mock{display:grid;gap:10px}
+.deal-line{display:flex;justify-content:space-between;gap:10px;align-items:center;background:#e0f2fe;border:1px solid #bae6fd;border-radius:14px;padding:11px 13px}
+.deal-line b{font-size:13px;display:block}
+.deal-line small{color:#65778d;font-size:11px;display:block;margin-top:2px}
+.tag{display:inline-flex;border-radius:999px;padding:6px 10px;background:#e0f2fe;color:#0c4a6e;font-size:11px;font-weight:950}
+.tag.hot{background:#fee2e2;color:#c61f35}
+.tag.wait{background:#fff1cd;color:#0f172a}
+.tag.gold{background:#fef3c7;color:#0f172a}
+.tag.green{background:#dcfce7;color:#16a34a}
+
+.lead-mock{padding:18px;background:linear-gradient(135deg,#0f172a,#0ea5e9);border-radius:22px;color:#fff;position:relative;overflow:hidden}
+.lead-mock:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 30%,rgba(14,165,233,.4),transparent 50%)}
+.lead-mock .top{display:flex;justify-content:space-between;margin-bottom:12px;position:relative;z-index:1}
+.lead-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px;position:relative;z-index:1}
+.lead-row div{background:rgba(255,255,255,.10);border-radius:12px;padding:10px;text-align:center}
+.lead-row small{font-size:10px;opacity:.7;display:block}
+.lead-row b{font-size:16px;color:#fff;display:block;margin-top:3px;font-weight:950}
+
+/* ===== SECTIONS ===== */
+.section{padding:78px 0}
+.white{background:#fff}
+.sky{background:linear-gradient(180deg,#e0f2fe,#f1f5f9)}
+.cream{background:linear-gradient(135deg,#fffaf0,#fff3d8)}
+.gold{background:linear-gradient(135deg,#fef3c7,#fde68a)}
+.mint{background:linear-gradient(135deg,#f0fdf4,#dcfce7)}
+.head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:32px}
+.head h2{margin:0;font-size:clamp(30px,4vw,54px);line-height:1.05;letter-spacing:-.045em;color:#0f172a}
+.head p{margin:0;color:#65778d;max-width:560px;font-size:17px;line-height:1.55}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.card{background:#fff;border:1px solid rgba(15,23,42,.08);box-shadow:var(--shadow2);border-radius:var(--r);padding:24px;overflow:hidden;position:relative}
+.card h3{font-size:22px;margin:0 0 9px}
+.card p{margin:0;color:#5f7187;line-height:1.55}
+.icon{width:56px;height:56px;border-radius:20px;background:linear-gradient(135deg,#e0f2fe,#fff);border:1px solid #bae6fd;color:#0c4a6e;display:grid;place-items:center;font-size:27px;margin-bottom:16px}
+.icon.gold{background:linear-gradient(135deg,#fef3c7,#fff);border:1px solid #fde68a;color:#0f172a}
+.icon.green{background:linear-gradient(135deg,#dcfce7,#fff);border:1px solid #bbf7d0;color:#16a34a}
+.icon.gov{background:linear-gradient(135deg,#1e293b,#fff);border:1px solid #334155;color:#0f172a}
+.icon.red{background:linear-gradient(135deg,#fee2e2,#fff);border:1px solid #fecaca;color:#c61f35}
+.icon.sky{background:linear-gradient(135deg,#bae6fd,#fff);border:1px solid #7dd3fc;color:#0c4a6e}
+.notice{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid rgba(14,165,233,.16);border-radius:28px;padding:24px;box-shadow:var(--shadow2)}
+.notice .icon{flex:0 0 auto;margin:0}
+.notice p{margin:4px 0 0;color:#52657b;line-height:1.55}
+
+/* ===== PROPERTY CATALOG ===== */
+.catalog-shell{display:grid;grid-template-columns:330px 1fr;gap:20px;align-items:start}
+.filters{position:sticky;top:96px;background:#fff;border:1px solid rgba(15,23,42,.08);box-shadow:var(--shadow2);border-radius:28px;padding:22px}
+.field{margin-bottom:14px}
+.field label{display:block;font-weight:850;font-size:13px;color:#25364c;margin-bottom:8px}
+.field input,.field select,.field textarea{width:100%;background:#fff;border:1px solid #dbe2eb;border-radius:16px;padding:13px 14px;color:#0f172a;outline:none;font-family:inherit}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--sky);box-shadow:0 0 0 4px rgba(14,165,233,.14)}
+.chip-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.chip{border:1px solid #dbe2eb;background:#fff;padding:9px 12px;border-radius:999px;font-size:12px;font-weight:850;color:#53657a;cursor:pointer}
+.chip.active{background:linear-gradient(135deg,#0f172a,#0ea5e9);color:#fff;border-color:transparent}
+
+.properties{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.property{padding:0;cursor:pointer;transition:.22s;background:#fff;border-radius:28px;overflow:hidden;box-shadow:var(--shadow2);border:1px solid rgba(15,23,42,.08);position:relative}
+.property:hover{transform:translateY(-4px);box-shadow:0 28px 70px rgba(15,23,42,.18)}
+.property-img{height:240px;background-color:#e0f2fe;background-size:cover;background-position:center;position:relative;overflow:hidden}
+.property-img:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(8,15,28,.50),transparent 60%)}
+.property-badges{position:absolute;z-index:2;left:14px;top:14px;display:flex;gap:6px;flex-wrap:wrap}
+.property-badge{border-radius:999px;padding:7px 11px;font-size:11px;font-weight:950;color:#fff;background:rgba(15,23,42,.85);backdrop-filter:blur(10px)}
+.property-badge.gold{background:linear-gradient(135deg,#fff,#fff);color:#0f172a}
+.property-badge.sky{background:linear-gradient(135deg,#0ea5e9,#38bdf8);color:#083344}
+.property-badge.green{background:linear-gradient(135deg,#16a76f,#22c55e);color:#fff}
+.property-rating{position:absolute;z-index:2;right:14px;top:14px;border-radius:999px;background:rgba(255,255,255,.94);color:#0f172a;padding:7px 11px;font-size:12px;font-weight:950;display:flex;gap:4px;align-items:center}
+.property-body{padding:20px}
+.property-top{display:flex;justify-content:space-between;gap:10px;align-items:start;margin-bottom:8px}
+.property-top h3{font-size:20px;margin:0;letter-spacing:-.02em}
+.property-price{font-size:22px;font-weight:950;color:#0f172a;text-align:right;line-height:1.1}
+.property-price small{display:block;font-size:11px;color:var(--muted);font-weight:700;text-decoration:line-through}
+.property-meta{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+.property-meta span{border-radius:999px;background:#e0f2fe;color:#475569;padding:6px 9px;font-size:11px;font-weight:850}
+.property-meta span.gold{background:#fef3c7;color:#0f172a}
+.property-meta span.green{background:#dcfce7;color:#16a34a}
+.property-foot{border-top:1px solid #e6edf7;padding-top:14px;display:flex;justify-content:space-between;align-items:center}
+.property-actions{display:flex;gap:6px}
+.small-btn{border:0;border-radius:12px;background:#0f172a;color:#fff;font-weight:900;padding:9px 12px;cursor:pointer;font-size:12px}
+.small-btn.gold{background:linear-gradient(135deg,#fff,#fff);color:#0f172a}
+.small-btn.outline{background:#fff;color:#0c4a6e;border:1px solid #bae6fd}
+.small-btn.green{background:linear-gradient(135deg,#16a76f,#22c55e);color:#fff}
+
+/* ===== CALCULATORS (mortgage + installment) ===== */
+.calc-layout{display:grid;grid-template-columns:1.1fr 1fr;gap:20px}
+.calc-card{background:#fff;border:1px solid rgba(15,23,42,.08);box-shadow:var(--shadow2);border-radius:28px;padding:22px}
+.calc-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.calc-tab{border:1px solid #dbe2eb;background:#fff;padding:10px 14px;border-radius:14px;font-size:13px;font-weight:850;color:#53657a;cursor:pointer}
+.calc-tab.active{background:linear-gradient(135deg,#0f172a,#0ea5e9);color:#fff;border-color:transparent;box-shadow:0 10px 22px rgba(14,165,233,.22)}
+.calc-result{margin-top:14px;border-radius:22px;background:linear-gradient(135deg,#e0f2fe,#fff);border:1px solid #bae6fd;padding:18px}
+.calc-row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #bae6fd;padding:10px 0}
+.calc-row:last-child{border-bottom:0}
+.calc-row span{color:#65778d;font-size:13px}
+.calc-row b{font-size:18px;color:#0f172a}
+.calc-row.loss b{color:#c61f35}
+.calc-row.save b{color:#16a34a}
+.calc-highlight{font-size:36px;font-weight:950;color:#0c4a6e;margin:14px 0 6px;text-align:center;letter-spacing:-.02em}
+
+/* ===== MAP ===== */
+.map-layout{display:grid;grid-template-columns:1.4fr .8fr;gap:20px}
+.city-map{height:560px;border-radius:32px;overflow:hidden;position:relative;background:linear-gradient(135deg,#e0f2fe,#fef3c7);border:1px solid #bae6fd;box-shadow:var(--shadow2)}
+.city-map:before{content:"";position:absolute;inset:0;background-image:linear-gradient(28deg,transparent 0 44%,rgba(14,165,233,.20) 44% 45%,transparent 45%),linear-gradient(120deg,transparent 0 36%,rgba(255,255,255,.16) 36% 37%,transparent 37%),linear-gradient(90deg,rgba(15,23,42,.06) 1px,transparent 1px),linear-gradient(rgba(15,23,42,.06) 1px,transparent 1px);background-size:100% 100%,100% 100%,52px 52px,52px 52px}
+.heat{position:absolute;border-radius:50%;filter:blur(14px);opacity:.55}
+.h1{left:14%;top:18%;width:240px;height:175px;background:rgba(14,165,233,.30)}
+.h2{left:46%;top:35%;width:280px;height:205px;background:rgba(255,255,255,.24)}
+.h3{left:5%;top:62%;width:230px;height:160px;background:rgba(22,167,111,.22)}
+.city-label{position:absolute;border-radius:999px;background:#fff;border:1px solid #dbe2eb;box-shadow:var(--shadow2);padding:8px 12px;font-size:12px;font-weight:950;color:#31445d}
+.cl1{left:13%;top:15%}.cl2{left:55%;top:21%}.cl3{left:36%;top:57%}.cl4{left:70%;top:72%}.cl5{left:20%;top:78%}
+.prop-pin{position:absolute;width:34px;height:34px;border:3px solid #fff;border-radius:50%;background:#0ea5e9;box-shadow:0 0 0 10px rgba(14,165,233,.20),0 12px 30px rgba(15,23,42,.18);cursor:pointer;animation:pulse 1.6s infinite;display:grid;place-items:center;color:#fff;font-size:14px}
+.prop-pin.gold{background:#fff;box-shadow:0 0 0 10px rgba(255,255,255,.16),0 12px 30px rgba(15,23,42,.18)}
+.prop-pin.green{background:#16a76f;box-shadow:0 0 0 10px rgba(22,167,111,.20),0 12px 30px rgba(15,23,42,.18)}
+.prop-pin.red{background:#dc2626;box-shadow:0 0 0 10px rgba(220,38,38,.20),0 12px 30px rgba(15,23,42,.18)}
+.p1{left:32%;top:36%}.p2{left:60%;top:48%}.p3{left:24%;top:70%}.p4{left:78%;top:32%}.p5{left:48%;top:78%}
+.map-overlay{position:absolute;left:18px;right:18px;bottom:18px;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);border:1px solid #dbe2eb;border-radius:22px;padding:16px;box-shadow:var(--shadow2)}
+.map-overlay b{font-size:18px}
+.map-overlay span{display:block;color:#65778d;font-size:13px;margin-top:4px}
+
+.map-side{display:grid;gap:14px}
+.nearby-card{padding:16px;background:#fff;border:1px solid #bae6fd;border-radius:18px;display:grid;gap:10px}
+.nearby-card b{font-size:14px;display:block}
+.nearby-item{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid #e6edf7;font-size:13px}
+.nearby-item:last-child{border-bottom:0}
+.nearby-item b{font-size:13px;font-weight:950;color:#0f172a}
+.nearby-item small{color:#65778d;font-size:11px}
+
+/* ===== 3D CONFIGURATOR ===== */
+.configurator{display:grid;grid-template-columns:1.4fr .8fr;gap:20px}
+.config-viewer{height:520px;border-radius:32px;background:radial-gradient(circle at center,#1e293b 0%,#0f172a 100%);position:relative;overflow:hidden;display:grid;place-items:center;border:1px solid #334155;box-shadow:var(--shadow2)}
+.config-viewer:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,rgba(14,165,233,.20),transparent 40%),radial-gradient(circle at 70% 70%,rgba(255,255,255,.16),transparent 40%)}
+.config-room{position:relative;z-index:1;width:100%;height:280px;background-color:#475569;background-image:url('https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=900&q=80');background-size:cover;background-position:center;border-radius:14px;box-shadow:0 30px 60px rgba(0,0,0,.5);display:grid;place-items:center}
+.config-room:before{content:"🏠";position:absolute;inset:0;display:grid;place-items:center;font-size:120px;opacity:0;animation:roomFloat 4s ease-in-out infinite}
+@keyframes roomFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.config-360{position:absolute;top:18px;left:18px;background:rgba(255,255,255,.92);color:#0f172a;padding:10px 14px;border-radius:14px;font-weight:850;font-size:13px;display:flex;gap:8px;align-items:center;cursor:pointer}
+.config-actions{position:absolute;top:18px;right:18px;display:flex;gap:8px}
+.config-actions button{background:rgba(255,255,255,.92);color:#0f172a;border:0;border-radius:14px;padding:10px 12px;font-weight:850;cursor:pointer;font-size:12px}
+.config-actions button.active{background:#0ea5e9;color:#fff}
+.color-ring{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);display:flex;gap:10px;z-index:2;background:rgba(0,0,0,.5);padding:10px 14px;border-radius:999px;backdrop-filter:blur(10px)}
+.color-swatch{width:32px;height:32px;border-radius:50%;cursor:pointer;border:3px solid rgba(255,255,255,.2);transition:.16s}
+.color-swatch.active{border-color:#fff;transform:scale(1.18);box-shadow:0 0 0 4px rgba(255,255,255,.18)}
+
+.config-options{display:grid;gap:14px}
+.config-option{background:#fff;border:1px solid rgba(15,23,42,.08);box-shadow:var(--shadow2);border-radius:18px;padding:16px}
+.config-option b{display:block;font-size:14px;margin-bottom:10px;color:#0f172a}
+.opts{display:grid;gap:8px}
+.opt{display:flex;justify-content:space-between;gap:10px;align-items:center;border:1px solid #dbe2eb;background:#f1f5f9;border-radius:14px;padding:10px 13px;cursor:pointer;transition:.16s;font-size:13px}
+.opt.active{background:linear-gradient(135deg,#0f172a,#0ea5e9);color:#fff;border-color:transparent;box-shadow:0 10px 22px rgba(14,165,233,.22)}
+.opt span{font-size:11px;opacity:.75;font-weight:600}
+.opt b{margin:0;font-size:13px}
+.config-total{border-radius:18px;background:linear-gradient(135deg,#0f172a,#0ea5e9);color:#fff;padding:18px}
+.config-total .row{display:flex;justify-content:space-between;padding:5px 0;font-size:13px;opacity:.92}
+.config-total .total-line{border-top:1px solid rgba(255,255,255,.18);padding-top:12px;margin-top:8px;display:flex;justify-content:space-between;align-items:center}
+.config-total .total-line b{font-size:30px;font-weight:950;letter-spacing:-.02em;color:#fff}
+
+/* ===== TRADE-IN ===== */
+.tradein-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.vin-input{display:flex;gap:10px;align-items:center}
+.vin-input input{flex:1;font-family:'Courier New',monospace;letter-spacing:.18em;text-align:center;font-weight:950;font-size:18px;background:linear-gradient(135deg,#0f172a,#0ea5e9);color:#fff;border:0;padding:14px;border-radius:16px}
+.vin-input input::placeholder{color:rgba(255,255,255,.4)}
+.scan-btn{border:0;border-radius:16px;background:linear-gradient(135deg,#fff,#fff);color:#0f172a;font-weight:950;padding:14px 18px;cursor:pointer;white-space:nowrap}
+.trade-result{border-radius:22px;background:linear-gradient(135deg,#0f172a,#0ea5e9);color:#fff;padding:22px;margin-top:14px;position:relative;overflow:hidden}
+.trade-result:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 30%,rgba(255,255,255,.18),transparent 50%)}
+.trade-result .price-line{display:flex;justify-content:space-between;gap:14px;align-items:end;margin:14px 0;position:relative;z-index:1}
+.trade-result .price-line b{font-size:42px;font-weight:950;letter-spacing:-.02em}
+.trade-result .price-line small{opacity:.7}
+.price-factor{display:grid;gap:8px;margin:14px 0;position:relative;z-index:1}
+.factor{display:grid;grid-template-columns:1fr 80px;gap:10px;align-items:center;background:rgba(255,255,255,.08);border-radius:12px;padding:10px 13px;font-size:13px}
+.factor span{color:rgba(255,255,255,.6);font-size:11px}
+.factor b{text-align:right;font-weight:950}
+
+/* ===== CONSTRUCTION PROGRESS ===== */
+.construction-layout{display:grid;grid-template-columns:1.2fr 1fr;gap:20px}
+.construction-photo{height:460px;background-color:#475569;background-image:url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1200&q=80');background-size:cover;background-position:center;border-radius:28px;position:relative;overflow:hidden;border:1px solid rgba(15,23,42,.08);box-shadow:var(--shadow2)}
+.construction-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(8,15,28,.50),transparent 60%)}
+.construction-photo .photo-caption{position:absolute;left:22px;right:22px;bottom:22px;color:#fff;z-index:2}
+.construction-photo .photo-caption b{font-size:24px;display:block}
+.construction-photo .photo-caption span{color:#bae6fd;display:block;margin-top:6px;font-size:14px}
+.construction-live{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.20);border-radius:14px;padding:12px 14px;display:inline-block;margin-top:14px;backdrop-filter:blur(10px)}
+.construction-live b{color:#fff;font-size:14px}
+
+.timeline-construction{display:grid;gap:14px}
+.tl-step{display:grid;grid-template-columns:60px 1fr auto;gap:14px;align-items:center;background:#fff;border:1px solid #dbe2eb;border-radius:18px;padding:14px;position:relative}
+.tl-step.done{background:linear-gradient(135deg,#dcfce7,#fff);border-color:#bbf7d0}
+.tl-step.active{background:linear-gradient(135deg,#fef3c7,#fff);border-color:#fde68a}
+.tl-step .num{width:54px;height:54px;border-radius:16px;background:#f1f5f9;color:#0c4a6e;font-weight:950;display:grid;place-items:center;font-size:18px}
+.tl-step.done .num{background:#16a76f;color:#fff}
+.tl-step.active .num{background:linear-gradient(135deg,#fff,#fff);color:#0f172a;animation:pulse 1.6s infinite;box-shadow:0 8px 20px rgba(255,255,255,.22)}
+.tl-step b{display:block;font-size:14px}
+.tl-step small{color:#65778d;font-size:12px;display:block;margin-top:3px}
+.tl-step .date{font-size:11px;color:#65778d;font-weight:850}
+
+/* ===== BUYING PROCESS ===== */
+.process-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.process-step{background:#fff;border:1px solid rgba(15,23,42,.08);box-shadow:var(--shadow2);border-radius:22px;padding:18px;text-align:center;position:relative}
+.process-step .num{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,#0f172a,#0ea5e9);color:#fff;font-weight:950;font-size:22px;display:grid;place-items:center;margin:0 auto 14px}
+.process-step.active .num{background:linear-gradient(135deg,#fff,#fff);color:#0f172a;box-shadow:0 10px 30px rgba(255,255,255,.24);transform:scale(1.1)}
+.process-step.done .num{background:linear-gradient(135deg,#16a76f,#22c55e);color:#fff}
+.process-step b{display:block;font-size:14px;margin-bottom:6px}
+.process-step small{color:#65778d;font-size:12px;display:block;line-height:1.45}
+.process-arrow{position:absolute;top:50%;right:-22px;font-size:24px;color:#0ea5e9;z-index:1;transform:translateY(-50%)}
+
+/* ===== INVESTMENT ===== */
+.investment-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.invest-card{padding:20px;border-radius:22px;background:linear-gradient(135deg,#0f172a,#0ea5e9);color:#fff;position:relative;overflow:hidden}
+.invest-card:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 30%,rgba(255,255,255,.18),transparent 50%)}
+.invest-stat{padding:18px;background:rgba(255,255,255,.10);border-radius:16px;margin-bottom:12px;position:relative;z-index:1}
+.invest-stat b{font-size:24px;color:#fff;display:block;letter-spacing:-.02em}
+.invest-stat small{color:#bae6fd;font-size:12px;display:block;margin-top:3px}
+.invest-chart{height:240px;display:flex;align-items:end;gap:10px;padding:18px 4px 28px;margin-top:14px;background:rgba(255,255,255,.05);border-radius:18px;position:relative;z-index:1}
+.invest-chart div{flex:1;height:var(--h);border-radius:14px 14px 6px 6px;background:linear-gradient(180deg,#fff,#fff);position:relative}
+.invest-chart div:after{content:attr(data-m);position:absolute;left:50%;bottom:-24px;transform:translateX(-50%);font-size:11px;color:#bae6fd;font-weight:850}
+.invest-chart div b{position:absolute;top:-22px;font-size:11px;color:#fff;font-weight:950}
+
+.invest-features{display:grid;gap:12px}
+.invest-feat{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid #bae6fd;border-radius:18px;padding:14px}
+.invest-feat .ico{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#e0f2fe,#fff);border:1px solid #bae6fd;display:grid;place-items:center;color:#0c4a6e;font-size:18px;flex:0 0 auto}
+.invest-feat b{display:block;font-size:14px}
+.invest-feat small{color:#65778d;font-size:12px;display:block;margin-top:3px;line-height:1.4}
+
+/* ===== DOCS ===== */
+.doc-layout{display:grid;grid-template-columns:1.4fr 1fr;gap:20px}
+.doc-types{display:grid;gap:10px}
+.doc-type{display:grid;grid-template-columns:50px 1fr auto;gap:12px;align-items:center;background:#fff;border:1px solid #bae6fd;border-radius:18px;padding:13px;cursor:pointer;transition:.16s}
+.doc-type:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(15,23,42,.10)}
+.doc-ico{width:50px;height:50px;border-radius:14px;background:linear-gradient(135deg,#e0f2fe,#fff);border:1px solid #bae6fd;display:grid;place-items:center;font-size:22px;color:#0c4a6e}
+.doc-type b{display:block;font-size:14px}
+.doc-type small{color:#65778d;font-size:12px;display:block;margin-top:3px}
+.doc-status{padding:6px 12px;border-radius:999px;font-weight:950;font-size:11px}
+
+/* ===== PROMO ===== */
+.promo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.promo{padding:22px;border-radius:24px;background:linear-gradient(135deg,#0f172a,#0ea5e9);color:#fff;position:relative;overflow:hidden;cursor:pointer;transition:.22s}
+.promo:hover{transform:translateY(-4px);box-shadow:0 22px 50px rgba(15,23,42,.20)}
+.promo:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 30%,rgba(255,255,255,.18),transparent 50%)}
+.promo.gold{background:linear-gradient(135deg,#fff,#fff);color:#0f172a}
+.promo.gold:before{background:radial-gradient(circle at 80% 30%,rgba(255,255,255,.18),transparent 50%)}
+.promo.green{background:linear-gradient(135deg,#16a76f,#22c55e);color:#fff}
+.promo.green:before{background:radial-gradient(circle at 80% 30%,rgba(34,197,94,.3),transparent 50%)}
+.promo-badge{display:inline-block;background:rgba(255,255,255,.15);color:#fff;padding:5px 10px;border-radius:999px;font-weight:950;font-size:11px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;position:relative;z-index:1}
+.promo.gold .promo-badge{background:rgba(0,0,0,.10);color:#0f172a}
+.promo h3{font-size:24px;margin:8px 0;color:#fff;position:relative;z-index:1}
+.promo.gold h3{color:#0f172a}
+.promo p{font-size:13px;color:#bae6fd;line-height:1.5;margin:8px 0 14px;position:relative;z-index:1}
+.promo.gold p{color:rgba(44,28,0,.7)}
+.promo-discount{font-size:48px;font-weight:950;letter-spacing:-.04em;margin:14px 0;color:#fff;position:relative;z-index:1;line-height:1}
+.promo.gold .promo-discount{color:#0f172a}
+.promo-discount small{display:block;font-size:13px;color:#bae6fd;font-weight:600;text-decoration:line-through;margin-top:4px}
+.promo.gold .promo-discount small{color:rgba(44,28,0,.5)}
+.promo-foot{display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:1px solid rgba(255,255,255,.18);position:relative;z-index:1}
+.promo.gold .promo-foot{border-top-color:rgba(44,28,0,.2)}
+.promo-foot small{color:#bae6fd;font-size:11px}
+.promo.gold .promo-foot small{color:rgba(44,28,0,.6)}
+
+/* ===== MOBILE APP ===== */
+.app-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
+.phone-mockup{background:linear-gradient(135deg,#0f172a,#0ea5e9);border-radius:40px;padding:14px;max-width:280px;margin:0 auto;box-shadow:0 30px 60px rgba(15,23,42,.30)}
+.phone-screen{background:#f5f7fa;border-radius:28px;padding:14px;height:480px;overflow:hidden}
+.phone-status{display:flex;justify-content:space-between;font-size:10px;color:#0f172a;margin-bottom:10px;font-weight:850}
+.phone-content{padding:6px}
+.phone-greeting{margin-bottom:12px}
+.phone-greeting b{display:block;font-size:14px;color:#0f172a}
+.phone-greeting small{color:#65778d;font-size:11px;display:block;margin-top:3px}
+.phone-card{background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;box-shadow:0 4px 12px rgba(15,23,42,.06)}
+.phone-card b{display:block;font-size:12px;color:#0f172a}
+.phone-card small{color:#65778d;font-size:10px;display:block;margin-top:3px}
+.phone-card .big-num{font-size:22px;font-weight:950;color:#0ea5e9;display:block;margin-top:6px;letter-spacing:-.02em}
+.phone-card.gold-card{background:linear-gradient(135deg,#fef3c7,#fff);border:1px solid #fde68a}
+.phone-card.gold-card .big-num{color:#fff}
+.phone-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.phone-actions button{border:0;background:#fff;border-radius:10px;padding:8px;font-size:10px;font-weight:850;color:#0c4a6e;box-shadow:0 4px 12px rgba(15,23,42,.06);cursor:pointer}
+.phone-actions button.primary{background:linear-gradient(135deg,#0ea5e9,#38bdf8);color:#fff}
+
+.app-features{display:grid;gap:12px}
+.app-feat{display:flex;gap:12px;align-items:center;background:#fff;border:1px solid #bae6fd;border-radius:18px;padding:13px}
+.app-feat .ico{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#e0f2fe,#fff);border:1px solid #bae6fd;display:grid;place-items:center;color:#0c4a6e;font-size:18px;flex:0 0 auto}
+.app-feat b{display:block;font-size:14px}
+.app-feat small{color:#65778d;font-size:12px;display:block;margin-top:3px;line-height:1.4}
+
+/* ===== REVIEWS ===== */
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.review{padding:22px;background:#fff;border:1px solid rgba(15,23,42,.08);border-radius:22px;box-shadow:var(--shadow2);position:relative}
+.review-quote{font-size:48px;color:#0ea5e9;opacity:.3;line-height:1;position:absolute;top:14px;right:18px;font-family:Georgia,serif}
+.review-text{color:#475569;font-size:14px;line-height:1.55;margin:0 0 14px}
+.review-stars{color:#fff;font-size:14px;margin-bottom:10px;letter-spacing:2px}
+.review-author{display:flex;align-items:center;gap:12px;padding-top:12px;border-top:1px solid #e6edf7}
+.review-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#0ea5e9,#38bdf8);color:#fff;display:grid;place-items:center;font-weight:950;font-size:14px}
+.review-author b{display:block;font-size:13px;color:#0f172a}
+.review-author small{color:#65778d;font-size:11px;display:block;margin-top:2px}
+
+/* ===== ADMIN ===== */
+.dash{display:grid;grid-template-columns:260px 1fr;gap:20px}
+.side{background:#0f172a;color:#cbd5e1;border-radius:28px;padding:18px}
+.side button{width:100%;border:0;background:transparent;color:#cbd5e1;display:flex;gap:10px;align-items:center;text-align:left;border-radius:16px;padding:12px;margin-bottom:5px;cursor:pointer;font-weight:850;font-size:14px}
+.side button.active,.side button:hover{background:rgba(255,255,255,.10);color:#fff}
+.admin-view{display:grid;gap:18px}
+.admin-title{display:flex;justify-content:space-between;gap:14px;align-items:center}
+.admin-title h3{margin:0;font-size:26px;color:#0f172a}
+.admin-title p{margin:5px 0 0;color:#65778d}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.kpi{border-radius:22px;background:#fff;border:1px solid rgba(15,23,42,.08);padding:18px;box-shadow:var(--shadow2)}
+.kpi span{font-size:12px;color:#65778d}
+.kpi b{display:block;font-size:28px;margin:6px 0;color:#0f172a;letter-spacing:-.02em;font-weight:950}
+.kpi small{font-weight:950;color:#0c4a6e}
+.chart{height:240px;display:flex;align-items:end;gap:10px;padding:14px 4px 28px}
+.chart div{flex:1;height:var(--h);border-radius:14px 14px 6px 6px;background:linear-gradient(180deg,#38bdf8,#0f172a);position:relative}
+.chart div:after{content:attr(data-m);position:absolute;left:50%;bottom:-24px;transform:translateX(-50%);font-size:11px;color:#65778d;font-weight:850}
+.data-table{display:grid;gap:10px}
+.data-row{display:grid;grid-template-columns:1.1fr .75fr .7fr .75fr;gap:10px;align-items:center;background:#e0f2fe;border:1px solid #bae6fd;border-radius:18px;padding:13px}
+.data-row span,.data-row small{color:#65778d;font-size:12px}
+.data-row b{font-size:14px}
+.action-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.action-card{background:linear-gradient(135deg,#fff,#e0f2fe);border:1px solid #bae6fd;border-radius:22px;padding:18px;box-shadow:var(--shadow2)}
+.action-card b{display:block;font-size:24px;color:#0f172a;font-weight:950}
+.action-card span{display:block;color:#65778d;font-size:13px;margin-top:4px}
+.automation{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.auto-card{border-radius:22px;background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;padding:18px;border:1px solid #334155}
+.auto-card small{color:#38bdf8;font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.auto-card b{display:block;font-size:18px;margin:6px 0;font-weight:950}
+.auto-card p{color:#cbd5e1;font-size:12px;margin:0;line-height:1.5}
+.glow-card{background:linear-gradient(135deg,#0f172a,#0ea5e9)!important;color:#fff;border:0;box-shadow:0 24px 60px rgba(14,165,233,.26)}
+.glow-card b{color:#fff!important}
+.glow-card p,.glow-card span{color:#bae6fd!important}
+.bar{height:9px;border-radius:999px;background:#e0f2fe;overflow:hidden;margin-top:12px}
+.bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#0ea5e9,#fff);width:var(--w)}
+
+/* ===== FOOTER ===== */
+.footer{background:#0f172a;color:#fff;padding:48px 0 60px}
+.footer-grid{display:flex;justify-content:space-between;gap:20px;align-items:center}
+.footer p{color:#94a3b8;margin:6px 0 0}
+.contact{display:flex;gap:10px;flex-wrap:wrap}
+.contact a{padding:10px 13px;border-radius:999px;background:rgba(255,255,255,.10);color:#fff;font-weight:850}
+
+@media(max-width:1000px){
+  .links{display:none}
+  .hero-grid,.catalog-shell,.calc-layout,.map-layout,.configurator,.tradein-layout,.construction-layout,.investment-layout,.doc-layout,.app-layout,.reviews-grid,.dash{grid-template-columns:1fr}
+  .grid-3,.grid-2,.kpis,.action-grid,.properties,.promo-grid,.reviews-grid{grid-template-columns:repeat(2,1fr)}
+  .process-steps{grid-template-columns:repeat(2,1fr)}
+  .head{display:block}
+  .head p{margin-top:14px}
+  .filters{position:relative;top:auto}
+  .data-row{grid-template-columns:1fr}
+  .city-map{height:440px}
+  .construction-photo{height:320px}
+  .hero-banner{min-height:480px;padding:60px 0 50px}
+}
+@media(max-width:620px){
+  .wrap{width:min(100% - 24px,1200px)}
+  .nav-inner{height:auto;padding:12px 0}
+  .brand small,.nav .btn{display:none}
+  .section{padding:60px 0}
+  h1{font-size:36px}
+  .lead{font-size:16px}
+  .stats,.grid-3,.grid-2,.properties,.promo-grid,.reviews-grid,.kpis,.action-grid,.process-steps{grid-template-columns:1fr}
+  .footer-grid{display:block}
+  .contact{margin-top:18px}
+  .hero-banner{min-height:420px;padding:50px 0 40px}
+}
+
+/* ===== CLEAN WHITE ACCENTS: gold/orange removed by request ===== */
+.btn.gold{background:#fff!important;color:#0f172a!important;border:1px solid rgba(15,23,42,.12)!important;box-shadow:var(--shadow2)!important}
+.small-btn.gold{background:#fff!important;color:#0f172a!important;border:1px solid rgba(15,23,42,.12)!important}
+.tag.gold,.tag.wait,.tag.orange{background:#fff!important;color:#0f172a!important;border:1px solid rgba(15,23,42,.12)!important}
+.room-badge.gold,.property-badge.gold,.doctor-badge.gold,.promo-badge{background:rgba(255,255,255,.94)!important;color:#0f172a!important}
+.icon.gold{background:#fff!important;color:#0f172a!important;border:1px solid #dbe2eb!important}
+.tour-tab.active,.calc-tab.active,.spec-tab.active,.slot.active,.tour-tab.active{background:linear-gradient(135deg,#0f172a,#0ea5e9)!important;color:#fff!important}
+.accent{background:linear-gradient(135deg,#38bdf8 0%,#fff 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important}
+.kicker .dot,.dot{background:#fff!important;box-shadow:0 0 0 7px rgba(255,255,255,.22)!important}
+@keyframes pulse{0%{box-shadow:0 0 0 7px rgba(255,255,255,.22)}50%{box-shadow:0 0 0 12px rgba(255,255,255,0)}100%{box-shadow:0 0 0 7px rgba(255,255,255,.22)}}
+.summary-box .total-line b,.rate-card.featured .price,.transfer-info b,.guest-cabinet .row b,.phone-card.gold-card .big-num,.invest-stat b,.promo-discount,.config-total .total-line b,.lead-row b,.pulse-row b{color:#fff!important}
+.room-amenities span.gold,.property-meta span.gold,.hall-features span.gold{background:#fff!important;color:#0f172a!important;border:1px solid #dbe2eb!important}
+.tier.featured .tier-icon{background:#fff!important;color:#0f172a!important;border:1px solid #dbe2eb!important}
+.promo.gold{background:linear-gradient(135deg,#0f172a,#0ea5e9)!important;color:#fff!important}
+.promo.gold h3,.promo.gold p,.promo.gold .promo-discount,.promo.gold .promo-foot small{color:#fff!important}
+
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top"><div class="logo">W</div><div><b>WEBCOREX</b><small>Estate OS</small></div></a>
+    <div class="links">
+      <a href="#advantages">Преимущества</a>
+      <a href="#catalog">Каталог</a>
+      <a href="#configurator">Конфигуратор</a>
+      <a href="#mortgage">Ипотека</a>
+      <a href="#map">Карта</a>
+      <a href="#tradein">Trade-in</a>
+      <a href="#construction">Ход стройки</a>
+      <a href="#process">Сделка</a>
+      <a href="#investment">Инвестиции</a>
+      <a href="#promo">Акции</a>
+      <a href="#app">Приложение</a>
+      <a href="#admin">Админка</a>
+    </div>
+    <a class="btn gold" href="#contact">Получить демо</a>
+  </div>
+</nav>
+
+<main id="top">
+
+<!-- HERO BANNER -->
+<section class="hero">
+  <div class="hero-banner">
+    <div class="wrap">
+      <div class="hero-overlay">
+        <div class="kicker"><span class="dot"></span> Для строительных компаний, застройщиков и агентств недвижимости Таджикистана</div>
+        <h1><span class="accent">Estate OS</span><br>продажа квартир, новостройки, ипотека и агентство в одной системе</h1>
+        <p class="lead">Современный сайт застройщика с каталогом квартир и фото 360°, интерактивный 3D-конфигуратор планировки, онлайн-расчёт ипотеки/рассрочки/Trade-in, бронирование просмотра, ход строительства с веб-камерой, юридический документооборот и админ-панель для отдела продаж.</p>
+        <div class="actions">
+          <a class="btn gold" href="#catalog">Выбрать квартиру</a>
+          <a class="btn white" href="#mortgage">Рассчитать ипотеку</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS + WIDGETS -->
+  <div class="hero-secondary">
+    <div class="wrap hero-grid">
+      <div>
+        <h3 style="margin:0 0 14px;font-size:20px;color:#0f172a">📈 Эффект после запуска Estate OS</h3>
+        <div class="stats">
+          <div class="stat"><b>+45%</b><span>рост онлайн-продаж после запуска конфигуратора</span></div>
+          <div class="stat"><b>−38%</b><span>время от заявки до сделки благодаря онлайн-ипотеке</span></div>
+          <div class="stat"><b>24/7</b><span>приём заявок без участия менеджера</span></div>
+        </div>
+      </div>
+      <div class="side-ui">
+        <div class="mini-panel">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <b style="font-size:14px">Активные сделки</b>
+            <span class="tag">live</span>
+          </div>
+          <div class="deals-mock">
+            <div class="deal-line"><div><b>#КВ-1842 · 3-к · 78 м²</b><br><small>ЖК «Панорама» · ипотека</small></div><span class="tag gold">VIP</span></div>
+            <div class="deal-line"><div><b>#КВ-1843 · 2-к · 64 м²</b><br><small>ЖК «Сомони» · рассрочка</small></div><span class="tag green">сделка</span></div>
+            <div class="deal-line"><div><b>#КВ-1844 · 1-к · 42 м²</b><br><small>Trade-in · оценка</small></div><span class="tag wait">расчёт</span></div>
+            <div class="deal-line"><div><b>#КМ-122 · дом 220 м²</b><br><small>Коттеджный посёлок</small></div><span class="tag hot">срочно</span></div>
+          </div>
+        </div>
+        <div class="lead-mock">
+          <div class="top"><span>📊 Лиды сегодня</span><span style="color:#fff">● live</span></div>
+          <div style="font-size:13px;opacity:.85">Новые заявки и их источники</div>
+          <div class="lead-row">
+            <div><small>Всего</small><b>42</b></div>
+            <div><small>С сайта</small><b>28</b></div>
+            <div><small>Горячие</small><b>14</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ADVANTAGES -->
+<section class="section white" id="advantages">
+  <div class="wrap">
+    <div class="head">
+      <h2>Преимущества Estate OS</h2>
+      <p>Каталог объектов, 3D-конфигуратор, ипотека, CRM, документы, ход стройки, инвестиции и аналитика продаж в одной системе.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card"><div class="icon">1</div><h3>Каталог квартир</h3><p>Ключевой модуль системы, который снижает ручную работу, повышает контроль и помогает бизнесу зарабатывать больше.</p></div><div class="card"><div class="icon">2</div><h3>3D-конфигуратор</h3><p>Ключевой модуль системы, который снижает ручную работу, повышает контроль и помогает бизнесу зарабатывать больше.</p></div><div class="card"><div class="icon">3</div><h3>Ипотека и рассрочка</h3><p>Ключевой модуль системы, который снижает ручную работу, повышает контроль и помогает бизнесу зарабатывать больше.</p></div><div class="card"><div class="icon">4</div><h3>Trade-in</h3><p>Ключевой модуль системы, который снижает ручную работу, повышает контроль и помогает бизнесу зарабатывать больше.</p></div><div class="card"><div class="icon">5</div><h3>Ход строительства</h3><p>Ключевой модуль системы, который снижает ручную работу, повышает контроль и помогает бизнесу зарабатывать больше.</p></div><div class="card"><div class="icon">6</div><h3>Документы и ЭЦП</h3><p>Ключевой модуль системы, который снижает ручную работу, повышает контроль и помогает бизнесу зарабатывать больше.</p></div><div class="card"><div class="icon">7</div><h3>CRM лидов</h3><p>Ключевой модуль системы, который снижает ручную работу, повышает контроль и помогает бизнесу зарабатывать больше.</p></div><div class="card"><div class="icon">8</div><h3>Аналитика продаж</h3><p>Ключевой модуль системы, который снижает ручную работу, повышает контроль и помогает бизнесу зарабатывать больше.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMS -->
+<section class="section sky" id="problems">
+  <div class="wrap">
+    <div class="head">
+      <h2>Проблемы застройщиков и агентств, которые съедают прибыль</h2>
+      <p>Менеджеры тратят время на расчёты, клиенты уходят к конкурентам из-за долгого оформления ипотеки, склад документов в хаосе, а отдел маркетинга не знает, какие объекты продаются лучше.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card"><div class="icon red">⏳</div><h3>Долгое оформление ипотеки</h3><p>Клиент ждёт одобрения банка несколько дней. За это время 60% покупателей уходят к конкурентам.</p></div>
+      <div class="card"><div class="icon">🤷</div><h3>Клиенты не могут выбрать планировку</h3><p>Нет визуального представления, каким будет жильё. Менеджер объясняет на пальцах — клиент сомневается.</p></div>
+      <div class="card"><div class="icon gold">📞</div><h3>Запись на просмотр только по звонку</h3><p>Менеджер занят, администратор не успевает. Клиенты уезжают к конкурентам.</p></div>
+      <div class="card"><div class="icon gov">📦</div><h3>Склад документов в хаосе</h3><p>ДДУ, договоры, акты — в папках на компьютере. Юрист тратит часы на поиск.</p></div>
+      <div class="card"><div class="icon green">💰</div><h3>Trade-in на глазок</h3><p>Оценка подержанного жилья субъективна. Клиент считает, что его «обманули», уходит без сделки.</p></div>
+      <div class="card"><div class="icon">📊</div><h3>Нет аналитики продаж</h3><p>Какие объекты и ЖК продаются лучше, какие комплектации выбирают, где клиенты «отваливаются» — владелец не знает.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROPERTY CATALOG -->
+<section class="section white" id="catalog">
+  <div class="wrap">
+    <div class="head">
+      <h2>Каталог объектов с фото 360° и фильтрами</h2>
+      <p>Покупатель выбирает тип недвижимости, район, площадь, этаж, цену. Система показывает только релевантные объекты, фото 360°, цену, ежемесячный платёж по ипотеке и наличие.</p>
+    </div>
+    <div class="catalog-shell">
+      <div class="filters">
+        <div class="field"><label>Поиск</label><input id="search" placeholder="ЖК, район, метро…" oninput="applyFilters()"></div>
+        <div class="field"><label>Тип недвижимости</label><select id="type" onchange="applyFilters()"><option value="all">Все</option><option>Квартира</option><option>Апартаменты</option><option>Дом / коттедж</option><option>Коммерческая</option></select></div>
+        <div class="field"><label>Жилой комплекс</label><select id="complex" onchange="applyFilters()"><option value="all">Все ЖК</option><option>Панорама</option><option>Сомони</option><option>Зеравшан</option><option>Искандер</option></select></div>
+        <label style="font-weight:850;font-size:13px;color:#25364c;display:block;margin-bottom:8px">Количество комнат</label>
+        <div class="chip-row">
+          <span class="chip active" onclick="toggleChip(this)">Все</span>
+          <span class="chip" onclick="toggleChip(this)">Студия</span>
+          <span class="chip" onclick="toggleChip(this)">1-к</span>
+          <span class="chip" onclick="toggleChip(this)">2-к</span>
+          <span class="chip" onclick="toggleChip(this)">3-к</span>
+          <span class="chip" onclick="toggleChip(this)">4+</span>
+        </div>
+        <div class="field"><label>Цена до (TJS)</label><input type="number" value="900000" oninput="applyFilters()"></div>
+        <div class="field"><label>Площадь от (м²)</label><input type="number" value="40" oninput="applyFilters()"></div>
+        <div class="field"><label>Этаж</label><select><option>Любой</option><option>1–3</option><option>4–9</option><option>10–16</option><option>Последний</option></select></div>
+        <div style="background:linear-gradient(135deg,#e0f2fe,#fff);border:1px solid #bae6fd;border-radius:16px;padding:13px;margin-top:8px">
+          <b style="font-size:13px;display:block">Найдено объектов</b>
+          <span id="foundCount" style="font-size:30px;font-weight:950;color:#0c4a6e;letter-spacing:-.02em">12</span>
+        </div>
+      </div>
+      <div class="properties" id="propList"></div>
+    </div>
+  </div>
+</section>
+
+<!-- MORTGAGE CALCULATOR -->
+<section class="section sky" id="mortgage">
+  <div class="wrap">
+    <div class="head">
+      <h2>Калькулятор ипотеки, рассрочки и Trade-in за 1 минуту</h2>
+      <p>Покупатель видит ежемесячный платёж, переплату, график погашения. Может сразу подать заявку — она уходит партнёру-банку, и одобрение приходит в течение часа.</p>
+    </div>
+    <div class="calc-layout">
+      <div class="calc-card">
+        <div class="calc-tabs">
+          <span class="calc-tab active" onclick="pickCalcTab(this,'mortgage')">🏦 Ипотека</span>
+          <span class="calc-tab" onclick="pickCalcTab(this,'installment')">📅 Рассрочка</span>
+          <span class="calc-tab" onclick="pickCalcTab(this,'tradein')">🔄 Trade-in</span>
+          <span class="calc-tab" onclick="pickCalcTab(this,'cash')">💵 Наличные</span>
+        </div>
+        <div class="field"><label>Стоимость объекта (TJS)</label><input id="propPrice" type="number" value="650000" oninput="calcMortgage()"></div>
+        <div class="field"><label>Первоначальный взнос (%)</label><input id="downPay" type="number" value="20" oninput="calcMortgage()"></div>
+        <div class="field"><label>Срок (лет)</label><input id="years" type="number" value="15" oninput="calcMortgage()"></div>
+        <div class="field"><label>Ставка (% годовых)</label><input id="rate" type="number" value="14" step="0.1" oninput="calcMortgage()"></div>
+        <div class="field"><label>Материнский капитал</label><select><option>Нет</option><option>Да · 80 000 TJS</option></select></div>
+        <div class="field"><label>Страхование жизни</label><label style="display:flex;gap:8px;align-items:center;font-size:13px;font-weight:600;padding:10px;background:#f1f5f9;border-radius:14px"><input type="checkbox" checked> Включить в расчёт (+0.5%)</label></div>
+        <button class="btn green" style="width:100%;margin-top:8px" onclick="alert('Заявка отправлена в банк-партнёр! Предварительное одобрение через 30 минут.')">Подать заявку на ипотеку</button>
+      </div>
+      <div>
+        <div class="calc-result" id="mortgageResult"></div>
+        <div class="action-grid" style="margin-top:14px">
+          <div class="action-card"><b>14 банков</b><span>партнёров онлайн</span></div>
+          <div class="action-card"><b>30 мин</b><span>среднее время одобрения</span></div>
+          <div class="action-card"><b>92%</b><span>процент одобрения</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3D CONFIGURATOR -->
+<section class="section white" id="configurator">
+  <div class="wrap">
+    <div class="head">
+      <h2>3D-конфигуратор квартиры: клиент видит жильё своей мечты</h2>
+      <p>Покупатель крутит квартиру на 360°, выбирает цвет стен, тип отделки, кухню и сантехнику. Цена и платёж по ипотеке обновляются в реальном времени. Готовая конфигурация уходит менеджеру как заявка.</p>
+    </div>
+    <div class="configurator">
+      <div class="config-viewer">
+        <div class="config-360">🔄 360°</div>
+        <div class="config-actions">
+          <button class="active" onclick="pickConfigView(this,'Экстерьер')">Экстерьер</button>
+          <button onclick="pickConfigView(this,'Интерьер')">Интерьер</button>
+          <button onclick="pickConfigView(this,'Сбоку')">Сбоку</button>
+        </div>
+        <div class="config-room"></div>
+        <div class="color-ring">
+          <span class="color-swatch active" style="background:#f5f5f5" onclick="pickColor(this,'Белый')"></span>
+          <span class="color-swatch" style="background:#d4b896" onclick="pickColor(this,'Бежевый')"></span>
+          <span class="color-swatch" style="background:#a8b5a3" onclick="pickColor(this,'Серо-зелёный')"></span>
+          <span class="color-swatch" style="background:#5a7d9a" onclick="pickColor(this,'Синий')"></span>
+          <span class="color-swatch" style="background:#c9a17d" onclick="pickColor(this,'Тёплый бежевый')"></span>
+          <span class="color-swatch" style="background:#7a5c3e" onclick="pickColor(this,'Тёмное дерево')"></span>
+        </div>
+      </div>
+      <div class="config-options">
+        <div class="config-option"><b>🏠 Планировка</b>
+          <div class="opts">
+            <div class="opt" onclick="pickOpt(this)"><b>2-к · 58 м²</b><span>+0 TJS</span></div>
+            <div class="opt active" onclick="pickOpt(this)"><b>2-к · 64 м² · евро</b><span>+24 000 TJS</span></div>
+            <div class="opt" onclick="pickOpt(this)"><b>3-к · 78 м² · семейная</b><span>+62 000 TJS</span></div>
+            <div class="opt" onclick="pickOpt(this)"><b>4-к · 92 м² · премиум</b><span>+118 000 TJS</span></div>
+          </div>
+        </div>
+        <div class="config-option"><b>🎨 Отделка стен</b>
+          <div class="opts">
+            <div class="opt active" onclick="pickOpt(this)"><b>White Box</b><span>включено</span></div>
+            <div class="opt" onclick="pickOpt(this)"><b>Чистовая · обои</b><span>+18 000 TJS</span></div>
+            <div class="opt" onclick="pickOpt(this)"><b>Дизайнерская</b><span>+42 000 TJS</span></div>
+          </div>
+        </div>
+        <div class="config-option"><b>🍳 Кухня</b>
+          <div class="opts">
+            <div class="opt active" onclick="pickOpt(this)"><b>Базовая · IKEA</b><span>включено</span></div>
+            <div class="opt" onclick="pickOpt(this)"><b>Итальянская · Scavolini</b><span>+84 000 TJS</span></div>
+            <div class="opt" onclick="pickOpt(this)"><b>Премиум · SieMatic</b><span>+184 000 TJS</span></div>
+          </div>
+        </div>
+        <div class="config-option"><b>🚿 Сантехника</b>
+          <div class="opts">
+            <div class="opt active" onclick="pickOpt(this)"><b>Villeroy & Boch</b><span>включено</span></div>
+            <div class="opt" onclick="pickOpt(this)"><b>Duravit · Hansgrohe</b><span>+34 000 TJS</span></div>
+            <div class="opt" onclick="pickOpt(this)"><b>Премиум · Hansgrohe Axor</b><span>+78 000 TJS</span></div>
+          </div>
+        </div>
+        <div class="config-total">
+          <div class="row"><span>Базовая стоимость</span><span>624 000 TJS</span></div>
+          <div class="row"><span>Планировка евро-2к</span><span>+24 000 TJS</span></div>
+          <div class="row"><span>НДС включён</span><span>14%</span></div>
+          <div class="total-line"><div><small style="opacity:.7">Итого</small><br><b>648 000 TJS</b></div><button class="btn gold" style="padding:10px 14px;font-size:13px;color:#0f172a" onclick="alert('Квартира забронирована! Менеджер свяжется в течение 15 минут.')">Забронировать</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="section sky" id="map">
+  <div class="wrap">
+    <div class="head">
+      <h2>Карта объектов и инфраструктуры</h2>
+      <p>Покупатель открывает карту с ЖК, ценами, сроками сдачи и ближайшей инфраструктурой. Кликает на пин — видит все детали и планировки.</p>
+    </div>
+    <div class="map-layout">
+      <div class="city-map">
+        <span class="heat h1"></span><span class="heat h2"></span><span class="heat h3"></span>
+        <span class="city-label cl1">🏙 ЖК «Панорама»</span>
+        <span class="city-label cl2">🏛 ЖК «Сомони»</span>
+        <span class="city-label cl3">🌳 ЖК «Зеравшан»</span>
+        <span class="city-label cl4">🏘 ЖК «Искандер»</span>
+        <span class="city-label cl5">🏪 Коттеджный посёлок</span>
+        <span class="prop-pin p1" style="cursor:pointer" onclick="setProp('ЖК «Панорама»','🏙 384 квартиры · сдача Q4 2026 · от 580 000 TJS')">🏙</span>
+        <span class="prop-pin gold p2" onclick="setProp('ЖК «Сомони»','🏛 премиум-класс · 220 квартир · сдача Q2 2027 · от 920 000 TJS')">🏛</span>
+        <span class="prop-pin green p3" onclick="setProp('ЖК «Зеравшан»','🌳 семейный · 480 квартир · сдача Q1 2026 · от 420 000 TJS')">🌳</span>
+        <span class="prop-pin red p4" onclick="setProp('ЖК «Искандер»','🏘 у озера · 120 квартир · сдача Q3 2026 · от 680 000 TJS')">🏘</span>
+        <span class="prop-pin gold p5" onclick="setProp('Коттеджный посёлок','🏪 48 домов · участки от 6 соток · от 1 240 000 TJS')">🏪</span>
+        <div class="map-overlay">
+          <b id="propTitle">ЖК «Панорама»</b>
+          <span id="propSub">🏙 384 квартиры · сдача Q4 2026 · от 580 000 TJS</span>
+        </div>
+      </div>
+      <div class="map-side">
+        <div class="nearby-card">
+          <b>🏫 Инфраструктура рядом</b>
+          <div class="nearby-item"><div><b>🏫 Школа №12</b><small>пешком 5 мин · рейтинг 4.6</small></div><span style="color:#16a34a;font-weight:950;font-size:12px">★★★★★</span></div>
+          <div class="nearby-item"><div><b>🏥 Поликлиника №3</b><small>пешком 8 мин · детская и взрослая</small></div><span style="color:#16a34a;font-weight:950;font-size:12px">4.8</span></div>
+          <div class="nearby-item"><div><b>🛒 Супермаркет Asia Mall</b><small>5 мин на авто · 24/7</small></div><span style="color:#fff;font-weight:950;font-size:12px">4.5</span></div>
+          <div class="nearby-item"><div><b>🌳 Парк «Победа»</b><small>10 мин пешком · детские площадки</small></div><span style="color:#0c4a6e;font-weight:950;font-size:12px">4.7</span></div>
+          <div class="nearby-item"><div><b>🏛 Музей</b><small>15 мин на авто</small></div><span style="color:#fff;font-weight:950;font-size:12px">4.9</span></div>
+          <div class="nearby-item"><div><b>🚇 Метро «Центральная»</b><small>8 мин пешком · новая станция 2027</small></div><span style="color:#dc2626;font-weight:950;font-size:12px">открытие</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRADE-IN -->
+<section class="section white" id="tradein">
+  <div class="wrap">
+    <div class="head">
+      <h2>Trade-in: честная оценка за 2 минуты</h2>
+      <p>Клиент вводит VIN (если авто) или адрес объекта, описывает состояние — система сравнивает с рыночными аналогами и выдаёт объективную цену. Никаких торгов с менеджером — цифры прозрачны.</p>
+    </div>
+    <div class="tradein-layout">
+      <div>
+        <div class="card">
+          <h3>🏠 Данные вашего объекта</h3>
+          <div class="field" style="margin-top:14px"><label>Тип объекта</label>
+            <select><option>Квартира</option><option>Дом / коттедж</option><option>Коммерческая</option></select>
+          </div>
+          <div class="field"><label>Адрес</label>
+            <input value="Душанбе, ул. Исмоили Сомони 45, кв. 12">
+          </div>
+          <div class="grid-2" style="margin-top:14px">
+            <div class="field"><label>Площадь (м²)</label><input type="number" value="58"></div>
+            <div class="field"><label>Этаж</label><input type="number" value="5"></div>
+          </div>
+          <div class="grid-2">
+            <div class="field"><label>Год постройки</label><input type="number" value="2015"></div>
+            <div class="field"><label>Состояние</label><select><option>Хорошее</option><option>Отличное</option><option>Среднее</option></select></div>
+          </div>
+          <div class="field"><label>Дополнительно</label><textarea rows="3" placeholder="Ремонт, мебель, техника, особенности…"></textarea></div>
+          <button class="btn gold" style="width:100%;color:#0f172a" onclick="alert('Оценка готова! Средняя рыночная цена: 384 000 TJS. Наше предложение Trade-in: 365 000 TJS')">Оценить объект</button>
+        </div>
+      </div>
+      <div>
+        <div class="trade-result">
+          <span class="tag gold" style="margin-bottom:14px;display:inline-flex;background:#fff;color:#0f172a">Оценка готова</span>
+          <div class="price-line"><div><small style="opacity:.7">Рыночная стоимость</small><br><b>384 000 TJS</b></div><div style="text-align:right"><small style="opacity:.7">Наше предложение</small><br><b style="color:#fff">365 000 TJS</b></div></div>
+          <div style="background:rgba(255,255,255,.10);border-radius:14px;padding:14px;margin:14px 0;font-size:13px;color:#bae6fd;position:relative;z-index:1">
+            ✓ Оценка по реальным аналогам на сайте olx.tj<br>
+            ✓ 86 объявлений в радиусе 5 км<br>
+            ✓ С учётом ремонта, этажа и состояния<br>
+            ✓ Без скрытых комиссий и уловок
+          </div>
+          <b style="font-size:14px;display:block;margin:14px 0 8px;color:#fff;position:relative;z-index:1">Факторы оценки</b>
+          <div class="price-factor">
+            <div class="factor"><div>Базовая стоимость 2015 г.<span>Market data</span></div><b style="color:#8fffc4">+420 000</b></div>
+            <div class="factor"><div>Состояние «Хорошее»<span>бонус</span></div><b style="color:#8fffc4">+18 000</b></div>
+            <div class="factor"><div>Этаж 5 из 9<span>средний</span></div><b style="color:#ff9d8f">−12 000</b></div>
+            <div class="factor"><div>Площадь 58 м²<span>норма</span></div><b style="color:#cbd5e1">±0</b></div>
+            <div class="factor"><div>Документы в порядке<span>бонус</span></div><b style="color:#8fffc4">+5 000</b></div>
+          </div>
+          <button class="btn gold" style="width:100%;margin-top:14px;color:#0f172a" onclick="alert('Trade-in принят! 365 000 TJS зачтены в стоимость нового жилья.')">Зачесть в стоимость</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONSTRUCTION PROGRESS -->
+<section class="section sky" id="construction">
+  <div class="wrap">
+    <div class="head">
+      <h2>Ход строительства: камера в реальном времени</h2>
+      <p>Покупатель видит стройку своего будущего дома через веб-камеру 24/7. Таймлайн этапов строительства, процент готовности, прогноз сдачи. Доверие через прозрачность.</p>
+    </div>
+    <div class="construction-layout">
+      <div class="construction-photo">
+        <div class="photo-caption">
+          <b>ЖК «Панорама» · Корпус B</b>
+          <span>сдача Q4 2026 · 67% готовности · 184 из 220 квартир продано</span>
+          <div class="construction-live"><b>● LIVE · веб-камера на крыше 14-этажного корпуса</b></div>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin:0 0 14px;font-size:18px">📅 Этапы строительства</h3>
+        <div class="timeline-construction">
+          <div class="tl-step done"><div class="num">✓</div><div><b>Фундамент и каркас</b><br><small>сентябрь 2024 · завершено</small></div><span class="date">100%</span></div>
+          <div class="tl-step done"><div class="num">✓</div><div><b>Стены и перекрытия</b><br><small>январь 2025 · завершено</small></div><span class="date">100%</span></div>
+          <div class="tl-step active"><div class="num">⚙</div><div><b>Кровля и фасад</b><br><small>март 2026 · в процессе</small></div><span class="date" style="color:#fff;font-weight:950">68%</span></div>
+          <div class="tl-step"><div class="num">4</div><div><b>Инженерные сети</b><br><small>июнь 2026 · запланировано</small></div><span class="date">0%</span></div>
+          <div class="tl-step"><div class="num">5</div><div><b>Внутренняя отделка</b><br><small>август 2026 · запланировано</small></div><span class="date">0%</span></div>
+          <div class="tl-step"><div class="num">6</div><div><b>Благоустройство и сдача</b><br><small>октябрь 2026 · запланировано</small></div><span class="date">0%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUYING PROCESS -->
+<section class="section white" id="process">
+  <div class="wrap">
+    <div class="head">
+      <h2>Процесс покупки: 5 шагов от заявки до ключей</h2>
+      <p>Покупатель видит каждый этап сделки, юридическую проверку, подписание документов и регистрацию права собственности. Всё прозрачно и безопасно.</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step done"><div class="num">1</div><b>Бронь и ипотека</b><small>Заявка · одобрение банка · 30 мин</small></div>
+      <div class="process-step active"><div class="num">2</div><b>Договор и юрпроверка</b><small>ДДУ · проверка документов · 3 дня</small></div>
+      <div class="process-step"><div class="num">3</div><b>Регистрация в ЕГРН</b><small>Подача в Росреестр · 5 дней</small></div>
+      <div class="process-step"><div class="num">4</div><b>Оплата и акт</b><small>Подписание акта · оплата</small></div>
+      <div class="process-step"><div class="num">5</div><b>Ключи и заселение</b><small>Приёмка квартиры · новоселье</small></div>
+    </div>
+    <div class="notice" style="margin-top:24px">
+      <div class="icon gov">📄</div>
+      <p><strong style="color:#0f172a">Юридическая проверка бесплатно:</strong> наши юристы проверяют документы застройщика, историю участка, обременения и риски. Вы получаете юридическое заключение до подписания ДДУ.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INVESTMENT -->
+<section class="section gold" id="investment">
+  <div class="wrap">
+    <div class="head">
+      <h2>Инвестиционная программа: рост капитала на 28% за 3 года</h2>
+      <p>Инвесторы покупают квартиры на ранних стадиях строительства и продают после сдачи. Рост стоимости от 20% до 35% за 2-3 года. Доступно от 320 000 TJS.</p>
+    </div>
+    <div class="investment-layout">
+      <div class="invest-card">
+        <span class="tag gold" style="margin-bottom:14px;display:inline-block;background:#fff;color:#0f172a">📈 Прогноз доходности</span>
+        <b style="font-size:18px;display:block;margin:8px 0;position:relative;z-index:1">ЖК «Панорама» · 1-к · 42 м²</b>
+        <div class="invest-stat"><b>+28%</b><small>рост стоимости к сдаче Q4 2026</small></div>
+        <div class="invest-stat"><b>320 000 TJS</b><small>вход сейчас · 448 000 TJS при сдаче</small></div>
+        <div class="invest-stat"><b>+128 000 TJS</b><small>прибыль инвестора за 18 месяцев</small></div>
+        <div class="invest-chart">
+          <div style="--h:32%"><b>320K</b><span data-m="Q2 24"></span></div>
+          <div style="--h:48%"><b>360K</b><span data-m="Q3 24"></span></div>
+          <div style="--h:62%"><b>392K</b><span data-m="Q4 24"></span></div>
+          <div style="--h:74%"><b>420K</b><span data-m="Q1 25"></span></div>
+          <div style="--h:88%"><b>448K</b><span data-m="Q4 25"></span></div>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin:0 0 14px;font-size:18px">💼 Преимущества для инвестора</h3>
+        <div class="invest-features">
+          <div class="invest-feat"><div class="ico">📈</div><div><b>Рост стоимости 20-35%</b><small>к моменту сдачи объекта · историческая доходность</small></div></div>
+          <div class="invest-feat"><div class="ico">💰</div><div><b>Рассрочка на стройку</b><small>платите поэтапно · без банка и процентов</small></div></div>
+          <div class="invest-feat"><div class="ico">🔒</div><div><b>Юридическая чистота</b><small>ДДУ зарегистрирован в ЕГРН · защита 214-ФЗ</small></div></div>
+          <div class="invest-feat"><div class="ico">📊</div><div><b>Прозрачные отчёты</b><small>еженедельный отчёт о ходе строительства</small></div></div>
+          <div class="invest-feat"><div class="ico">🤝</div><div><b>Помощь с перепродажей</b><small>наше агентство поможет продать после сдачи</small></div></div>
+          <div class="invest-feat"><div class="ico">📞</div><div><b>Личный менеджер</b><small>консультация инвестора 24/7</small></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMOS -->
+<section class="section white" id="promo">
+  <div class="wrap">
+    <div class="head">
+      <h2>Акции и спецпредложения для покупателей</h2>
+      <p>Раннее бронирование, Trade-in с доплатой, беспроцентная рассрочка, скидки на паркинг и кладовку. Акции обновляются автоматически и показываются целевой аудитории.</p>
+    </div>
+    <div class="promo-grid">
+      <div class="promo">
+        <span class="promo-badge">🔥 Горячая</span>
+        <h3>Раннее бронирование</h3>
+        <p>Купите квартиру на этапе строительства и получите максимальную скидку. Цена фиксируется договором.</p>
+        <div class="promo-discount">−15%<small>от прайса на старте продаж</small></div>
+        <div class="promo-foot"><small>Действует до 30.06.2026</small><button class="btn gold" style="padding:8px 14px;font-size:12px;color:#0f172a" onclick="alert('Заявка отправлена!')">Участвовать</button></div>
+      </div>
+      <div class="promo gold">
+        <span class="promo-badge">💰 Trade-in</span>
+        <h3>Обмен с доплатой</h3>
+        <p>Зачёт стоимости старого жилья в новую квартиру. Доплата — от 0 TJS при равноценном обмене.</p>
+        <div class="promo-discount">+0%<small>доплата при равноценном обмене</small></div>
+        <div class="promo-foot"><small>Оценка за 2 минуты онлайн</small><button class="btn" style="padding:8px 14px;font-size:12px;background:#0f172a;color:#fff" onclick="alert('Trade-in открыт!')">Оценить</button></div>
+      </div>
+      <div class="promo green">
+        <span class="promo-badge">🎁 Беспроцентная</span>
+        <h3>Рассрочка 0% на 24 мес</h3>
+        <p>Рассрочка от застройщика без банка и процентов. Только фиксированный платёж каждый месяц.</p>
+        <div class="promo-discount">0%<small>на 24 месяца от застройщика</small></div>
+        <div class="promo-foot"><small>Первый взнос от 20%</small><button class="btn" style="padding:8px 14px;font-size:12px;background:#0f172a;color:#fff" onclick="alert('Заявка отправлена!')">Оформить</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOBILE APP -->
+<section class="section sky" id="app">
+  <div class="wrap">
+    <div class="head">
+      <h2>Мобильное приложение покупателя</h2>
+      <p>Покупатель управляет сделкой из телефона: выбор квартиры, 3D-тур, расчёт ипотеки, документы, чат с менеджером, веб-камера стройки, push-уведомления об этапах.</p>
+    </div>
+    <div class="app-layout">
+      <div class="phone-mockup">
+        <div class="phone-screen">
+          <div class="phone-status">
+            <span>9:41</span>
+            <span>●●●●● WiFi 100%</span>
+          </div>
+          <div class="phone-content">
+            <div class="phone-greeting">
+              <b>Здравствуйте,</b>
+              <small>Мадина · квартира #218</small>
+            </div>
+            <div class="phone-card gold-card">
+              <b>ЖК «Панорама» · 2-к</b>
+              <small>бронирование · сдача Q4 2026</small>
+              <div class="big-num">648 000</div>
+              <small style="color:#fff">от 21 350 TJS/мес</small>
+            </div>
+            <div class="phone-actions">
+              <button class="primary">📷 Камера</button>
+              <button>📄 Документы</button>
+              <button>💳 Ипотека</button>
+              <button>💬 Чат</button>
+            </div>
+            <div class="phone-card" style="margin-top:8px">
+              <b>📊 Ход строительства</b>
+              <small>корпус B · готовность 67%</small>
+              <div class="bar" style="margin-top:6px;background:#e0f2fe"><i style="width:67%;background:linear-gradient(90deg,#0ea5e9,#fff)"></i></div>
+            </div>
+            <div class="phone-card">
+              <b>📅 Следующий этап</b>
+              <small>кровля и фасад · до 15.07</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin:0 0 14px;font-size:18px">📱 Возможности приложения</h3>
+        <div class="app-features">
+          <div class="app-feat"><div class="ico">🏠</div><div><b>Каталог квартир с 3D</b><small>360°-тур по квартире в реальном времени</small></div></div>
+          <div class="app-feat"><div class="ico">📷</div><div><b>Веб-камера стройки</b><small>смотрите за ходом строительства 24/7</small></div></div>
+          <div class="app-feat"><div class="ico">📄</div><div><b>Электронные документы</b><small>ДДУ, акты, справки — в телефоне с ЭЦП</small></div></div>
+          <div class="app-feat"><div class="ico">💳</div><div><b>Калькулятор ипотеки</b><small>расчёт платежа и графика погашения</small></div></div>
+          <div class="app-feat"><div class="ico">💬</div><div><b>Чат с менеджером</b><small>ответ в течение 5 минут в рабочее время</small></div></div>
+          <div class="app-feat"><div class="ico">📅</div><div><b>Бронирование просмотра</b><small>выбрать дату и время одним тапом</small></div></div>
+          <div class="app-feat"><div class="ico">🔔</div><div><b>Push-уведомления</b><small>«Этап строительства завершён», «Документ подписан»</small></div></div>
+          <div class="app-feat"><div class="ico">📊</div><div><b>История платежей</b><small>все взносы, рассрочка, Trade-in</small></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section white" id="reviews">
+  <div class="wrap">
+    <div class="head">
+      <h2>Отзывы покупателей — репутация застройщика</h2>
+      <p>Все отзывы с Яндекс.Недвижимость, ЦИАН, Авито и внутренней системы — в одной панели. AI анализирует тональность, владелец видит, что хвалят и что улучшить.</p>
+    </div>
+    <div style="display:flex;gap:18px;align-items:center;margin-bottom:18px;flex-wrap:wrap">
+      <div style="background:linear-gradient(135deg,#0f172a,#0ea5e9);color:#fff;padding:18px 24px;border-radius:22px;display:flex;gap:18px;align-items:center"><div><b style="font-size:36px;display:block;letter-spacing:-.02em">4.8</b><small style="color:#bae6fd">из 5</small></div><div><div style="color:#fff;font-size:18px;letter-spacing:4px">★★★★★</div><small style="color:#bae6fd">на основе 624 отзывов</small></div></div>
+      <div style="background:#fff;border:1px solid #e6edf7;border-radius:22px;padding:14px 18px;display:flex;gap:18px"><div><b style="font-size:24px;color:#0f172a">4.7</b><small style="display:block;color:#65778d">Яндекс</small></div><div><b style="font-size:24px;color:#0f172a">4.9</b><small style="display:block;color:#65778d">ЦИАН</small></div><div><b style="font-size:24px;color:#0f172a">4.8</b><small style="display:block;color:#65778d">Google</small></div></div>
+    </div>
+    <div class="reviews-grid">
+      <div class="review">
+        <span class="review-quote">"</span>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">Купили 2-к в «Панораме» через приложение — всё за 2 дня: выбор, ипотека, документы. Веб-камера показывает стройку каждый день. Сдача в Q4 2026, очень ждём!</p>
+        <div class="review-author"><div class="review-avatar">МС</div><div><b>Мадина Саидова</b><small>Душанбе · 12.04.2026 · ЖК «Панорама»</small></div></div>
+      </div>
+      <div class="review">
+        <span class="review-quote">"</span>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">Купил квартиру как инвестор — рост стоимости +24% за год. Документы прозрачные, юристы проверили всё. Очень рекомендую!</p>
+        <div class="review-author"><div class="review-avatar">ФА</div><div><b>Фаррух Алиев</b><small>Москва · 02.03.2026 · инвестор</small></div></div>
+      </div>
+      <div class="review">
+        <span class="review-quote">"</span>
+        <div class="review-stars">★★★★☆</div>
+        <p class="review-text">Trade-in прошёл идеально: оценка онлайн за 2 минуты, доплата минимальная. Заехали через месяц после сделки. Единственное — паркинг хотелось бы дешевле.</p>
+        <div class="review-author"><div class="review-avatar">ОР</div><div><b>Олимджон Рахимов</b><small>Худжанд · 18.02.2026 · Trade-in</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADMIN -->
+<section class="section cream" id="admin">
+  <div class="wrap">
+    <div class="head">
+      <h2>Админ-панель застройщика / агентства</h2>
+      <p>CRM лидов, склад объектов, сделки, ипотека, документооборот, маркетинг, аналитика и отчёты — всё в одном окне с мобильной версией для менеджеров.</p>
+    </div>
+    <div class="dash">
+      <aside class="side">
+        <button class="active" onclick="showEstateAdmin('dashboard',this)">📊 Dashboard</button>
+        <button onclick="showEstateAdmin('leads',this)">👥 CRM лиды</button>
+        <button onclick="showEstateAdmin('deals',this)">🤝 Сделки</button>
+        <button onclick="showEstateAdmin('objects',this)">🏢 Склад объектов</button>
+        <button onclick="showEstateAdmin('mortgage',this)">🏦 Ипотека</button>
+        <button onclick="showEstateAdmin('docs',this)">📄 Документы</button>
+        <button onclick="showEstateAdmin('finance',this)">💰 Финансы</button>
+      </aside>
+      <div id="estateAdminView" class="admin-view"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section sky" id="contact">
+  <div class="wrap">
+    <div class="card" style="padding:34px;background:linear-gradient(135deg,#fff,#e0f2fe);border:1px solid #bae6fd">
+      <div class="head" style="margin-bottom:0">
+        <div>
+          <div class="kicker" style="background:linear-gradient(135deg,#0f172a,#0ea5e9);color:#fff;border:0"><span class="dot"></span> Запуск под вашу компанию</div>
+          <h2>Настроим Estate OS под ваши ЖК, объекты и процессы</h2>
+        </div>
+        <p>Подключим сайт, каталог, 3D-конфигуратор, онлайн-ипотеку, Trade-in, веб-камеру стройки, юридический документооборот, CRM лидов, мобильное приложение покупателя и отчёты владельцу.</p>
+      </div>
+      <div class="actions" style="margin:26px 0 0">
+        <a class="btn" href="tel:+992666666960">+992 666-666-960</a>
+        <a class="btn gold" href="https://webcorex.net">webcorex.net</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div class="brand"><div class="logo">W</div><div><b style="color:#fff">WEBCOREX</b><p>Estate OS · продажа квартир, новостройки, ипотека, Trade-in и админ-панель для застройщиков и агентств</p></div></div>
+    <div class="contact">
+      <a href="tel:+992666666960">+992 666-666-960</a>
+      <a href="https://webcorex.net">webcorex.net</a>
+      <a href="#top">Наверх ↑</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ===== CATALOG DATA =====
+const properties=[
+  {id:1,name:'2-к · Панорама · 64 м²',complex:'Панорама',price:648000,oldPrice:null,area:64,rooms:2,floor:8,district:'Сино',img:'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80',badge:'Новинка',rating:4.8,cls:'new',ready:'Q4 2026'},
+  {id:2,name:'1-к · Сомони · 42 м²',complex:'Сомони',price:920000,oldPrice:null,area:42,rooms:1,floor:12,district:'Центр',img:'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=600&q=80',badge:'Премиум',rating:4.9,cls:'new',ready:'Q2 2027'},
+  {id:3,name:'3-к · Зеравшан · 78 м²',complex:'Зеравшан',price:420000,oldPrice:null,area:78,rooms:3,floor:5,district:'Истаравшан',img:'https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=600&q=80',badge:'Семейный',rating:4.7,cls:'new',ready:'Q1 2026'},
+  {id:4,name:'4-к · Сомони · 110 м²',complex:'Сомони',price:1280000,oldPrice:null,area:110,rooms:4,floor:14,district:'Центр',img:'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=600&q=80',badge:'VIP',rating:4.9,cls:'new',ready:'Q2 2027'},
+  {id:5,name:'Студия · Панорама · 28 м²',complex:'Панорама',price:380000,oldPrice:420000,area:28,rooms:0,floor:3,district:'Сино',img:'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=600&q=80',badge:'−10%',rating:4.6,cls:'sale',ready:'Q4 2026'},
+  {id:6,name:'2-к · Искандер · 58 м²',complex:'Искандер',price:680000,oldPrice:null,area:58,rooms:2,floor:6,district:'Искандеркуль',img:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=600&q=80',badge:'У озера',rating:4.8,cls:'new',ready:'Q3 2026'},
+  {id:7,name:'Дом 220 м² · Участок 6 сот',complex:'Коттедж',price:1240000,oldPrice:null,area:220,rooms:5,floor:2,district:'Рудаки',img:'https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=600&q=80',badge:'Коттедж',rating:4.9,cls:'new',ready:'Готов'},
+  {id:8,name:'3-к · Панорама · 92 м²',complex:'Панорама',price:780000,oldPrice:null,area:92,rooms:3,floor:11,district:'Сино',img:'https://images.unsplash.com/photo-1571055107559-3e67626fa8be?auto=format&fit=crop&w=600&q=80',badge:'Семейный',rating:4.8,cls:'new',ready:'Q4 2026'},
+  {id:9,name:'1-к · Зеравшан · 38 м²',complex:'Зеравшан',price:320000,oldPrice:null,area:38,rooms:1,floor:2,district:'Истаравшан',img:'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=600&q=80',badge:'Инвестиция',rating:4.5,cls:'new',ready:'Q1 2026'},
+  {id:10,name:'Апартаменты · Сомони · 86 м²',complex:'Сомони',price:1180000,oldPrice:null,area:86,rooms:3,floor:9,district:'Центр',img:'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=600&q=80',badge:'Премиум',rating:4.9,cls:'new',ready:'Q2 2027'},
+  {id:11,name:'Коммерция · Панорама · 240 м²',complex:'Панорама',price:2840000,oldPrice:null,area:240,rooms:0,floor:1,district:'Сино',img:'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80',badge:'Бизнес',rating:4.7,cls:'new',ready:'Q4 2026'},
+  {id:12,name:'2-к · Панорама · 68 м²',complex:'Панорама',price:580000,oldPrice:null,area:68,rooms:2,floor:9,district:'Сино',img:'https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=600&q=80',badge:'Видовой',rating:4.8,cls:'new',ready:'Q4 2026'}
+];
+
+function renderProperties(list=properties){
+  document.getElementById('propList').innerHTML=list.map(p=>`<article class="property">
+    <div class="property-img" style="background-image:url('${p.img}')">
+      <div class="property-badges"><span class="property-badge ${p.badge==='−10%'?'gold':p.badge==='Премиум'||p.badge==='VIP'?'sky':p.badge==='Инвестиция'?'green':''}">${p.badge}</span></div>
+      <span class="property-rating">★ ${p.rating}</span>
+    </div>
+    <div class="property-body">
+      <div class="property-top"><h3>${p.name}</h3><div class="property-price">${p.price.toLocaleString('ru-RU')} TJS${p.oldPrice?`<small>${p.oldPrice.toLocaleString('ru-RU')} TJS</small>`:''}</div></div>
+      <div class="property-meta"><span>🏢 ${p.complex}</span><span>📐 ${p.area} м²</span><span>🚪 ${p.rooms===0?'Студия':p.rooms+'-к'}</span><span>📍 ${p.district}</span><span>🏗 ${p.ready}</span></div>
+      <div class="property-foot"><small>${p.price>=1000000?`от ${Math.round(p.price/180/12).toLocaleString('ru-RU')} TJS/мес ипотека`:p.floor>=10?'видовая сторона':'вход со двора'}</small><div class="property-actions"><button class="small-btn outline" onclick="event.stopPropagation()">3D-тур</button><button class="small-btn gold" onclick="event.stopPropagation();alert('Заявка отправлена!')">Бронировать</button></div></div>
+    </div>
+  </article>`).join('');
+  document.getElementById('foundCount').textContent=list.length;
+}
+function applyFilters(){
+  const q=document.getElementById('search').value.toLowerCase();
+  const type=document.getElementById('type').value;
+  const complex=document.getElementById('complex').value;
+  renderProperties(properties.filter(p=>(complex==='all'||p.complex===complex)&&p.name.toLowerCase().includes(q)));
+}
+function toggleChip(el){el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active')}
+function pickOpt(el){el.parentElement.querySelectorAll('.opt').forEach(o=>o.classList.remove('active'));el.classList.add('active')}
+function pickConfigView(el,v){el.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));el.classList.add('active')}
+function pickColor(el,c){el.parentElement.querySelectorAll('.color-swatch').forEach(s=>s.classList.remove('active'));el.classList.add('active')}
+function setProp(t,s){document.getElementById('propTitle').textContent=t;document.getElementById('propSub').textContent=s}
+
+// ===== MORTGAGE CALC =====
+let calcMode='mortgage';
+function pickCalcTab(el,mode){el.parentElement.querySelectorAll('.calc-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');calcMode=mode;calcMortgage()}
+function calcMortgage(){
+  const price=+document.getElementById('propPrice').value||0;
+  const down=+document.getElementById('downPay').value||0;
+  const years=+document.getElementById('years').value||1;
+  const rate=(+document.getElementById('rate').value||0)/100/12;
+  const downSum=price*down/100;
+  const loan=price-downSum;
+  const n=years*12;
+  const monthly=rate?Math.round(loan*(rate*Math.pow(1+rate,n))/(Math.pow(1+rate,n)-1)):Math.round(loan/n);
+  const total=monthly*n;
+  const overpay=total-loan;
+  let html=`<div class="calc-row"><span>Стоимость объекта</span><b>${price.toLocaleString('ru-RU')} TJS</b></div>`;
+  html+=`<div class="calc-row"><span>Первоначальный взнос</span><b>${Math.round(downSum).toLocaleString('ru-RU')} TJS</b></div>`;
+  html+=`<div class="calc-row"><span>Сумма кредита</span><b>${Math.round(loan).toLocaleString('ru-RU')} TJS</b></div>`;
+  html+=`<div class="calc-row"><span>Срок</span><b>${years} лет (${n} мес)</b></div>`;
+  html+=`<div class="calc-row"><span>Ставка</span><b>${(+document.getElementById('rate').value||0).toFixed(1)}% годовых</b></div>`;
+  html+=`<div class="calc-row loss"><span>Переплата</span><b>${Math.round(overpay).toLocaleString('ru-RU')} TJS</b></div>`;
+  if(calcMode==='installment'){html+=`<div class="calc-row save"><span>Рассрочка от застройщика</span><b style="color:#16a34a">0% годовых</b></div>`;}
+  if(calcMode==='tradein'){html+=`<div class="calc-row save"><span>Зачёт Trade-in</span><b style="color:#16a34a">−365 000 TJS</b></div>`;html+=`<div class="calc-row"><span>Доплата</span><b>${(price-365000).toLocaleString('ru-RU')} TJS</b></div>`;}
+  if(calcMode==='cash'){html+=`<div class="calc-row save"><span>Скидка при 100% оплате</span><b style="color:#16a34a">−5%</b></div>`;}
+  html+=`<div class="calc-highlight">${monthly.toLocaleString('ru-RU')} TJS/мес</div>`;
+  html+=`<p style="margin:6px 0 0;color:#65778d;font-size:13px;text-align:center">Ежемесячный платёж</p>`;
+  document.getElementById('mortgageResult').innerHTML=html;
+}
+
+// ===== ADMIN VIEWS =====
+const estateAdminViews={
+dashboard:`<div class="admin-title"><div><h3>Центр управления продажами</h3><p>Объекты, сделки, лиды, ипотека и финансы в реальном времени.</p></div><span class="tag">live</span></div>
+<div class="kpis">
+  <div class="kpi"><span>Продажи за месяц</span><b>14</b><small>объектов ↑ 22%</small></div>
+  <div class="kpi"><span>Выручка</span><b>9.8M</b><small>TJS</small></div>
+  <div class="kpi"><span>Активных лидов</span><b>184</b><small>↑ 18%</small></div>
+  <div class="kpi"><span>Конверсия</span><b>14.2%</b><small>↑ 3.1%</small></div>
+</div>
+<div class="grid-2">
+  <div class="card"><h3>Продажи по ЖК</h3><div class="chart"><div style="--h:88%" data-m="Пан"></div><div style="--h:62%" data-m="Сом"></div><div style="--h:48%" data-m="Зер"></div><div style="--h:32%" data-m="Иск"></div><div style="--h:24%" data-m="Кот"></div></div></div>
+  <div class="card glow-card"><h3>AI-рекомендация</h3><p>ЖК «Панорама» даёт 64% продаж. Рекомендуется расширить рекламу и поднять цену видовых этажей на 3-5%. Это даст <b style="color:#fff">+184 000 TJS</b> в месяц.</p><div class="bar"><i style="width:86%"></i></div></div>
+</div>`,
+
+leads:`<div class="admin-title"><div><h3>CRM лиды и заявки</h3><p>Все клиенты с источником, интересующим объектом и следующим шагом менеджера.</p></div><span class="tag hot">8 горячих</span></div>
+<div class="data-table">
+  <div class="data-row"><div><b>Мадина С.</b><br><span>2-к · 64 м² · Панорама · ипотека</span></div><span>Сайт + Telegram</span><span class="tag hot">горячий</span><small>просмотр завтра</small></div>
+  <div class="data-row"><div><b>Фаррух А.</b><br><span>1-к · Сомони · инвестиция</span></div><span>Instagram</span><span class="tag green">сделка</span><small>документы готовы</small></div>
+  <div class="data-row"><div><b>Олимджон Р.</b><br><span>Trade-in · 58 м²</span></div><span>Сайт</span><span class="tag wait">ждёт оценку</span><small>смотрел 4 раза</small></div>
+  <div class="data-row"><div><b>Джамиля Х.</b><br><span>Дом 220 м² · коттедж</span></div><span>Telegram</span><span class="tag blue">новая</span><small>3D-тур сохранила</small></div>
+</div>
+<div class="action-grid">
+  <div class="action-card"><b>42</b><span>новых лидов за неделю</span></div>
+  <div class="action-card"><b>8</b><span>требуют звонка сегодня</span></div>
+  <div class="action-card"><b>14.2%</b><span>конверсия в сделку</span></div>
+</div>`,
+
+deals:`<div class="admin-title"><div><h3>Активные сделки</h3><p>Все сделки с этапом, юридическим статусом и прогнозом закрытия.</p></div><span class="tag">32 активных</span></div>
+<div class="data-table">
+  <div class="data-row"><div><b>#КВ-1842 · 2-к Панорама</b><br><span>Мадина С. · 648 000 TJS</span></div><span>Договор + юрпроверка</span><span class="tag gold">VIP</span><small>3 дня до подписания</small></div>
+  <div class="data-row"><div><b>#КВ-1843 · 2-к Сомони</b><br><span>Фаррух А. · 920 000 TJS</span></div><span>Регистрация ЕГРН</span><span class="tag green">в процессе</span><small>ипотека одобрена</small></div>
+  <div class="data-row"><div><b>#КВ-1844 · Trade-in</b><br><span>Олимджон Р. · 680 000 TJS</span></div><span>Оценка + бронь</span><span class="tag wait">оценка</span><small>выезд сегодня</small></div>
+</div>`,
+
+objects:`<div class="admin-title"><div><h3>Склад объектов</h3><p>Все объекты и ЖК с ценами, статусом и количеством свободных квартир.</p></div><span class="tag">184 объекта</span></div>
+<div class="data-table">
+  <div class="data-row"><div><b>ЖК «Панорама»</b><br><span>384 квартиры · сдача Q4 2026</span></div><span>92 свободно</span><span class="tag green">активные продажи</span><small>42% продано</small></div>
+  <div class="data-row"><div><b>ЖК «Сомони»</b><br><span>220 квартир · премиум · Q2 2027</span></div><span>34 свободно</span><span class="tag gold">VIP</span><small>22% продано</small></div>
+  <div class="data-row"><div><b>ЖК «Зеравшан»</b><br><span>480 квартир · семейный · Q1 2026</span></div><span>6 свободно</span><span class="tag hot">почти продано</span><small>98% продано</small></div>
+  <div class="data-row"><div><b>ЖК «Искандер»</b><br><span>120 квартир · у озера · Q3 2026</span></div><span>18 свободно</span><span class="tag">активные продажи</span><small>15% продано</small></div>
+</div>`,
+
+mortgage:`<div class="admin-title"><div><h3>Ипотека и банки-партнёры</h3><p>Все заявки с этапом одобрения, ставками и условиями банков.</p></div><span class="tag blue">14 банков-партнёров</span></div>
+<div class="action-grid">
+  <div class="action-card"><b>42</b><span>заявок в работе</span></div>
+  <div class="action-card"><b>30 мин</b><span>среднее одобрение</span></div>
+  <div class="action-card"><b>92%</b><span>одобренных</span></div>
+</div>
+<div class="automation">
+  <div class="auto-card"><small>Партнёры</small><b>14 банков</b><p>Амонатбанк, Халык, Эсхата, Капитал, РСК, ВТБ, Сбербанк, Альфа и др.</p></div>
+  <div class="auto-card"><small>Ставки</small><b>от 12.5% до 16%</b><p>зависит от первоначального взноса и срока</p></div>
+  <div class="auto-card"><small>Материнский капитал</small><b>используется</b><p>первоначальный взнос или погашение</p></div>
+  <div class="auto-card"><small>Электронная заявка</small><b>все банки</b><p>одна форма для всех партнёров · авто-распределение</p></div>
+</div>`,
+
+docs:`<div class="admin-title"><div><h3>Документооборот</h3><p>Все документы с типами, статусами и электронной подписью.</p></div><span class="tag blue">e-подпись</span></div>
+<div class="data-table">
+  <div class="data-row"><div><b>ДДУ #КВ-1842</b><br><span>2-к Панорама · Мадина С.</span></div><span>подписан ЭЦП</span><span class="tag green">отправлен</span><small>регистрация 3 дня</small></div>
+  <div class="data-row"><div><b>Счёт #INV-4812</b><br><span>первоначальный взнос</span></div><span>оплачено</span><span class="tag green">закрыт</span><small>130 000 TJS</small></div>
+  <div class="data-row"><div><b>Акт приёма-передачи</b><br><span>ЖК «Зеравшан» · Олимджон Р.</span></div><span>ожидает подпись</span><span class="tag wait">в работе</span><small>сдача через 30 дн</small></div>
+  <div class="data-row"><div><b>Договор Trade-in</b><br><span>Олимджон Р. · 365 000 TJS</span></div><span>на согласовании</span><span class="tag">юрист</span><small>оценка готова</small></div>
+</div>`,
+
+finance:`<div class="admin-title"><div><h3>Финансы и отчёты</h3><p>Выручка по ЖК, маржа, налоги и автоматические отчёты владельцу.</p></div><span class="tag blue">PDF/Excel</span></div>
+<div class="action-grid">
+  <div class="action-card"><b>9.8M TJS</b><span>выручка за месяц</span></div>
+  <div class="action-card"><b>3.2M TJS</b><span>себестоимость (33%)</span></div>
+  <div class="action-card"><b>6.6M TJS</b><span>чистая прибыль (67%)</span></div>
+</div>
+<div class="card"><h3>Что получает владелец в ежедневном отчёте</h3><p>Продажи по ЖК и типам, поступления по сделкам, статус строительства, новые лиды, конверсия менеджеров, проблемные сделки и AI-рекомендации по ценам и продвижению.</p></div>`
+};
+
+function showEstateAdmin(tab,btn){
+  document.getElementById('estateAdminView').innerHTML=estateAdminViews[tab]||estateAdminViews.dashboard;
+  document.querySelectorAll('#admin .side button').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+}
+
+renderProperties();calcMortgage();showEstateAdmin('dashboard');
+</script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0edf17c1e4f0b9c',t:'MTc4MTk5MTc0NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

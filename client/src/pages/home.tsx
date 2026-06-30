@@ -3,6 +3,7 @@ import { HeroSection } from "@/components/hero-section";
 import { WhatWeBuildSection } from "@/components/what-we-build-section";
 import { AppsShowcaseSection } from "@/components/apps-showcase-section";
 import { PortfolioSection } from "@/components/portfolio-section";
+import { PrototypesSection } from "@/components/prototypes-section";
 import { TechStackSection } from "@/components/tech-stack-section";
 import { ProcessSection } from "@/components/process-section";
 import { TestimonialsSection } from "@/components/testimonials-section";
@@ -40,6 +41,7 @@ export default function Home() {
           {!isMobile && <AppsShowcaseSection />}
           <WhatWeBuildSection />
           <PortfolioSection />
+          <PrototypesSection />
           <TechStackSection />
           <ProcessSection />
           <TestimonialsSection />

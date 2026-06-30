@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Webcorex Hotel OS — система управления отелем нового поколения</title>
+<style>
+:root{
+  --ink:#0f172a; --muted:#63758a; --line:#dbe2eb; --bg:#f5f7fa;
+  --gov:#0f172a; --gov2:#1e293b; --steel:#475569; --sky:#0ea5e9; --sky2:#38bdf8; --gold:#fff; --gold2:#fff; --green:#16a76f; --red:#dc2626;
+  --shadow:0 24px 70px rgba(15,23,42,.14);
+  --shadow2:0 12px 34px rgba(15,23,42,.10);
+  --r:28px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--ink);background:var(--bg);overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+  radial-gradient(circle at 8% 5%,rgba(14,165,233,.10),transparent 28%),
+  radial-gradient(circle at 90% 10%,rgba(71,85,105,.10),transparent 26%),
+  radial-gradient(circle at 50% 86%,rgba(15,23,42,.06),transparent 34%)}
+a{text-decoration:none;color:inherit}
+button,input,select,textarea{font:inherit}
+.wrap{width:min(1200px,calc(100% - 42px));margin:0 auto}
+img{display:block}
+
+/* ===== NAVIGATION ===== */
+.nav{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.86);backdrop-filter:blur(18px);border-bottom:1px solid rgba(15,23,42,.08)}
+.nav-inner{height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;gap:12px;align-items:center;min-width:max-content}
+.logo{width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg,#0f172a,#0ea5e9 50%,#475569);display:grid;place-items:center;color:#fff;font-weight:950;font-size:27px;letter-spacing:-4px;box-shadow:0 14px 34px rgba(14,165,233,.28);position:relative}
+.logo:after{content:"";position:absolute;right:-4px;top:-4px;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid #fff}
+.brand b{display:block;font-size:14px;letter-spacing:.16em}
+.brand small{display:block;color:var(--muted);margin-top:2px}
+.links{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.links a{font-size:13px;font-weight:850;color:#53657a;padding:9px 12px;border-radius:999px}
+.links a:hover{background:#e0f2fe;color:#0c4a6e}
+.btn{border:0;border-radius:999px;padding:13px 18px;font-weight:950;cursor:pointer;display:inline-flex;gap:9px;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f172a,#0ea5e9);color:#fff;box-shadow:0 14px 34px rgba(14,165,233,.30);transition:.2s;font-size:14px}
+.btn:hover{transform:translateY(-2px);box-shadow:0 20px 46px rgba(14,165,233,.36)}
+.btn.white{background:#fff;color:var(--ink);border:1px solid var(--line);box-shadow:var(--shadow2)}
+.btn.gold{background:linear-gradient(135deg,#fff,#fff);color:#0f172a;box-shadow:0 14px 34px rgba(255,255,255,.24)}
+.btn.sky{background:linear-gradient(135deg,#0ea5e9,#38bdf8);color:#083344;box-shadow:0 14px 34px rgba(14,165,233,.30)}
+
+/* ===== HERO BANNER (полноширинная длинная фотография) ===== */
+.hero{padding:0 0 0;background:var(--bg)}
+.hero-banner{
+  position:relative;
+  width:100%;
+  min-height:560px;
+  background-color:#1e293b;
+  background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=2400&q=80');
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  align-items:flex-end;
+  padding:80px 0 60px;
+}
+.hero-banner:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top,rgba(8,15,28,.85) 0%,rgba(8,15,28,.40) 50%,transparent 100%);
+  pointer-events:none;
+}
+.hero-overlay{position:relative;z-index:2;color:#fff;width:100%}
+.kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.20);backdrop-filter:blur(10px);border-radius:999px;padding:9px 14px;color:#bae6fd;font-weight:950;font-size:13px;margin-bottom:18px}
+.dot{width:9px;height:9px;border-radius:50%;background:#fff;box-shadow:0 0 0 7px rgba(255,255,255,.24);animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 7px rgba(255,255,255,.24)}50%{box-shadow:0 0 0 12px rgba(255,255,255,0)}100%{box-shadow:0 0 0 7px rgba(255,255,255,.24)}}
+h1{font-size:clamp(38px,5.5vw,68px);line-height:.96;letter-spacing:-.05em;margin:0 0 18px;color:#fff;max-width:920px}
+.accent{background:linear-gradient(135deg,#38bdf8 0%,#fff 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:18px;line-height:1.5;color:#e2e8f0;max-width:760px;margin:0 0 26px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:0}
+
+/* ===== HERO STATS + WIDGETS (под фотографией) ===== */
+.hero-secondary{padding:40px 0 80px;background:var(--bg)}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:start}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.stat{background:#fff;border:1px solid rgba(15,23,42,.08);box-shadow:var(--shadow2);border-radius:22px;padding:18px}
+.stat b{font-size:28px;display:block;color:#0f172a;letter-spacing:-.02em}
+.stat span{color:var(--muted);font-size:13px;line-height:1.4;display:block;margin-top:6px}
+
+.side-ui{display:grid;gap:14px}
+.mini-panel{padding:18px;background:#fff;border:1px solid rgba(15,23,42,.08);box-shadow:var(--shadow2);border-radius:22px}
+.booking-mock{display:grid;gap:10px}
+.bk-line{display:flex;justify-content:space-between;gap:10px;align-items:center;background:#e0f2fe;border:1px solid #bae6fd;border-radius:14px;padding:11px 13px}
+.bk-line b{font-size:13px;display:block}
+.bk-line small{color:#65778d;font-size:11px;display:block;margin-top:2px}
+.tag{display:inline-flex;border-radius:999px;padding:6px 10px;background:#e0f2fe;color:#0c4a6e;font-size:11px;font-weight:950}
+.tag.hot{background:#fee2e2;color:#c61f35}
+.tag.wait{background:#fff1cd;color:#0f172a}
+.tag.gold{background:#fef3c7;color:#0f172a}
+.tag.green{background:#e7f8f1;color:#0b7c4f}
+
+.tracker-mock{padding:18px;background:#fff;border:1px solid rgba(15,23,42,.08);box-shadow:var(--shadow2);border-radius:22px}
+.tracker-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.tracker-cell{padding:12px;background:#e0f2fe;border-radius:14px;text-align:center}
+.tracker-cell small{font-size:10px;color:#65778d;text-transform:uppercase;letter-spacing:.06em;display:block;font-weight:850}
+.tracker-cell b{font-size:18px;color:#0c4a6e;display:block;margin-top:4px;font-weight:950}
+
+/* ===== SECTIONS ===== */
+.section{padding:78px 0}
+.white{background:#fff}
+.sky{background:linear-gradient(180deg,#e0f2fe,#f1f5f9)}
+.cream{background:linear-gradient(135deg,#fffaf0,#fff3d8)}
+.gold{background:linear-gradient(135deg,#fef3c7,#fde68a)}
+.mint{background:linear-gradient(135deg,#f0fdf4,#dcfce7)}
+.head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:32px}
+.head h2{margin:0;font-size:clamp(30px,4vw,54px);line-height:1.05;letter-spacing:-.045em;color:#0f172a}
+.head p{margin:0;color:#65778d;max-width:560px;font-size:17px;line-height:1.55}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.card{background:#fff;border:1px solid rgba(15,23,42,.08);box-shadow:var(--shadow2);border-radius:var(--r);padding:24px;overflow:hidden;position:relative}
+.card h3{font-size:22px;margin:0 0 9px}
+.card p{margin:0;color:#5f7187;line-height:1.55}
+.icon{width:56px;height:56px;border-radius:20px;background:linear-gradient(135deg,#e0f2fe,#fff);border:1px solid #bae6fd;color:#0c4a6e;display:grid;place-items:center;font-size:27px;margin-bottom:16px}
+.icon.gold{background:linear-gradient(135deg,#fef3c7,#fff);border:1px solid #fde68a;color:#0f172a}
+.icon.green{background:linear-gradient(135deg,#dcfce7,#fff);border:1px solid #bbf7d0;color:#16a34a}
+.icon.gov{background:linear-gradient(135deg,#1e293b,#fff);border:1px solid #334155;color:#0f172a}
+.icon.red{background:linear-gradient(135deg,#fee2e2,#fff);border:1px solid #fecaca;color:#c61f35}
+.icon.sky{background:linear-gradient(135deg,#bae6fd,#fff);border:1px solid #7dd3fc;color:#0c4a6e}
+.notice{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid rgba(14,165,233,.16);border-radius:28px;padding:24px;box-shadow:var(--shadow2)}
+.notice .icon{flex:0 0 auto;margin:0}
+.notice p{margin:4px 0 0;color:#52657b;line-height:1.55}
+
+/* ===== ROOMS CATALOG ===== */
+.rooms-shell{display:grid;grid-template-columns:330px 1fr;gap:20px;align-items:start}
+.book-widget{position:sticky;top:96px;background:#fff;border:1px solid rgba(15,23,42,.08);box-shadow:var(--shadow2);border-radius:28px;padding:22px}
+.field{margin-bottom:14px}
+.field label{display:block;font-weight:850;font-size:13px;color:#25364c;margin-bottom:8px}
+.field input,.field select,.field textarea{width:100%;background:#fff;border:1px solid #dbe2eb;border-radius:16px;padding:13px 14px;color:#0f172a;outline:none;font-family:inherit}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--sky);box-shadow:0 0 0 4px rgba(14,165,233,.14)}
+.date-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.summary-box{border-radius:18px;background:linear-gradient(135deg,#0f172a,#0ea5e9);color:#fff;padding:18px;margin-top:14px}
+.summary-box .line{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;opacity:.92}
+.summary-box .total-line{border-top:1px solid rgba(255,255,255,.18);padding-top:12px;margin-top:8px;display:flex;justify-content:space-between;align-items:end}
+.summary-box .total-line b{font-size:28px;font-weight:950;letter-spacing:-.02em;color:#fff}
+
+.rooms{display:grid;gap:18px}
+.room{padding:0;cursor:pointer;transition:.22s;background:#fff;border-radius:28px;overflow:hidden;box-shadow:var(--shadow2);border:1px solid rgba(15,23,42,.08);position:relative}
+.room:hover{transform:translateY(-4px);box-shadow:0 28px 70px rgba(15,23,42,.18)}
+.room-img{height:280px;background-color:#e0f2fe;background-size:cover;background-position:center;position:relative;overflow:hidden}
+.room-img:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(8,15,28,.50),transparent 60%)}
+.room-badges{position:absolute;z-index:2;left:14px;top:14px;display:flex;gap:6px;flex-wrap:wrap}
+.room-badge{border-radius:999px;padding:7px 11px;font-size:11px;font-weight:950;color:#fff;background:rgba(15,23,42,.85);backdrop-filter:blur(10px)}
+.room-badge.gold{background:linear-gradient(135deg,#fff,#fff);color:#0f172a}
+.room-badge.sky{background:linear-gradient(135deg,#0ea5e9,#38bdf8);color:#083344}
+.room-rating{position:absolute;z-index:2;right:14px;top:14px;border-radius:999px;background:rgba(255,255,255,.94);color:#0f172a;padding:7px 11px;font-size:12px;font-weight:950;display:flex;gap:4px;align-items:center}
+.room-body{padding:22px}
+.room-top{display:flex;justify-content:space-between;gap:10px;align-items:start;margin-bottom:8px}
+.room-top h3{font-size:24px;margin:0;letter-spacing:-.02em}
+.room-price{font-size:24px;font-weight:950;color:#0f172a;text-align:right}
+.room-price small{display:block;font-size:11px;color:var(--muted);font-weight:700;text-decoration:line-through}
+.room-amenities{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 14px}
+.room-amenities span{border-radius:999px;background:#e0f2fe;color:#475569;padding:6px 9px;font-size:11px;font-weight:850;display:flex;gap:5px;align-items:center}
+.room-amenities span.gold{background:#fef3c7;color:#0f172a}
+.room-desc{color:#5f7187;font-size:14px;line-height:1.55;margin:10px 0}
+.room-foot{border-top:1px solid #e6edf7;padding-top:14px;display:flex;justify-content:space-between;align-items:center}
+.room-actions{display:flex;gap:8px}
+.small-btn{border:0;border-radius:12px;background:#0f172a;color:#fff;font-weight:900;padding:9px 14px;cursor:pointer;font-size:13px}
+.small-btn.gold{background:linear-gradient(135deg,#fff,#fff);color:#0f172a}
+.small-btn.outline{background:#fff;color:#0c4a6e;border:1px solid #bae6fd}
+
+/* ===== AVAILABILITY CALENDAR ===== */
+.cal-layout{display:grid;grid-template-columns:1.2fr 1fr;gap:20px}
+.calendar-card{background:#fff;border:1px solid rgba(15,23,42,.08);box-shadow:var(--shadow2);border-radius:28px;padding:22px}
+.cal-month{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.cal-month b{font-size:18px}
+.cal-month button{background:#e0f2fe;border:0;width:36px;height:36px;border-radius:12px;color:#0c4a6e;cursor:pointer;font-weight:950;font-size:16px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal-dow{text-align:center;font-size:11px;color:var(--muted);font-weight:850;padding:8px 0;text-transform:uppercase;letter-spacing:.06em}
+.cal-day{aspect-ratio:1;display:grid;place-items:center;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:12px;font-weight:850;font-size:14px;color:#0f172a;cursor:pointer;transition:.16s;position:relative}
+.cal-day:hover{transform:scale(1.06);border-color:var(--sky)}
+.cal-day.full{background:#fee2e2;color:#c61f35;cursor:not-allowed;border-color:#fecaca}
+.cal-day.low{background:#fef3c7;color:#0f172a;border-color:#fde68a}
+.cal-day.active{background:linear-gradient(135deg,#0f172a,#0ea5e9);color:#fff;border-color:transparent;box-shadow:0 10px 22px rgba(14,165,233,.22)}
+.cal-day .dot-mark{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:#fff}
+.cal-day.active .dot-mark{background:#fff}
+.cal-legend{display:flex;gap:14px;margin-top:14px;font-size:12px;color:#65778d;flex-wrap:wrap}
+.cal-legend span{display:flex;gap:6px;align-items:center}
+.ls{width:12px;height:12px;border-radius:4px}
+.ls.free{background:#f1f5f9;border:1px solid #e2e8f0}
+.ls.full{background:#fee2e2;border:1px solid #fecaca}
+.ls.low{background:#fef3c7;border:1px solid #fde68a}
+
+.rate-list{display:grid;gap:10px}
+.rate-card{padding:14px;border-radius:18px;background:linear-gradient(135deg,#f1f5f9,#fff);border:1px solid #e2e8f0;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
+.rate-card b{font-size:14px;display:block}
+.rate-card small{color:#65778d;font-size:12px;display:block;margin-top:3px}
+.rate-card .price{font-size:20px;font-weight:950;color:#0f172a}
+.rate-card.featured{background:linear-gradient(135deg,#0f172a,#0ea5e9);color:#fff;border-color:transparent}
+.rate-card.featured small{color:rgba(255,255,255,.7)}
+.rate-card.featured .price{color:#fff}
+
+/* ===== TOURS ===== */
+.tour-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.tour-tab{border:1px solid #dbe2eb;background:#fff;padding:10px 14px;border-radius:14px;font-size:13px;font-weight:850;color:#53657a;cursor:pointer}
+.tour-tab.active{background:linear-gradient(135deg,#0f172a,#0ea5e9);color:#fff;border-color:transparent;box-shadow:0 10px 22px rgba(14,165,233,.22)}
+.tours{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tour{padding:0;cursor:pointer;transition:.22s;background:#fff;border-radius:24px;overflow:hidden;box-shadow:var(--shadow2);border:1px solid rgba(15,23,42,.08)}
+.tour:hover{transform:translateY(-4px);box-shadow:0 22px 50px rgba(15,23,42,.16)}
+.tour-img{height:200px;background-color:#e0f2fe;background-size:cover;background-position:center;position:relative;overflow:hidden}
+.tour-img:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(8,15,28,.50),transparent 60%)}
+.tour-badge{position:absolute;z-index:2;left:12px;top:12px;border-radius:999px;background:rgba(255,255,255,.94);color:#0f172a;padding:7px 10px;font-size:11px;font-weight:950}
+.tour-duration{position:absolute;z-index:2;right:12px;top:12px;border-radius:999px;background:rgba(0,0,0,.6);color:#fff;padding:7px 10px;font-size:11px;font-weight:850}
+.tour-body{padding:16px}
+.tour-body h3{font-size:17px;margin:0 0 6px;letter-spacing:-.01em}
+.tour-body p{margin:6px 0;color:#65778d;font-size:13px;line-height:1.5}
+.tour-price{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid #e6edf7}
+.tour-price b{font-size:18px;font-weight:950;color:#0f172a}
+.tour-price small{color:#65778d;font-size:11px}
+
+/* ===== CONCIERGE + MAP ===== */
+.map-layout{display:grid;grid-template-columns:1.4fr .8fr;gap:20px}
+.city-map{height:560px;border-radius:32px;overflow:hidden;position:relative;background:linear-gradient(135deg,#e0f2fe,#fef3c7);border:1px solid #bae6fd;box-shadow:var(--shadow2)}
+.city-map:before{content:"";position:absolute;inset:0;background-image:linear-gradient(28deg,transparent 0 44%,rgba(14,165,233,.20) 44% 45%,transparent 45%),linear-gradient(120deg,transparent 0 36%,rgba(255,255,255,.16) 36% 37%,transparent 37%),linear-gradient(90deg,rgba(15,23,42,.06) 1px,transparent 1px),linear-gradient(rgba(15,23,42,.06) 1px,transparent 1px);background-size:100% 100%,100% 100%,52px 52px,52px 52px}
+.heat{position:absolute;border-radius:50%;filter:blur(14px);opacity:.55}
+.h1{left:14%;top:18%;width:240px;height:175px;background:rgba(14,165,233,.30)}
+.h2{left:46%;top:35%;width:280px;height:205px;background:rgba(255,255,255,.24)}
+.h3{left:5%;top:62%;width:230px;height:160px;background:rgba(16,165,111,.22)}
+.poi{position:absolute;border-radius:999px;background:#fff;border:1px solid #dbe2eb;box-shadow:var(--shadow2);padding:9px 12px;font-size:12px;font-weight:950;color:#31445d}
+.poi.p1{left:13%;top:15%}.poi.p2{left:55%;top:21%}.poi.p3{left:36%;top:57%}.poi.p4{left:70%;top:72%}.poi.p5{left:20%;top:78%}
+.map-pin{position:absolute;width:36px;height:36px;border:3px solid #fff;border-radius:50%;background:#0ea5e9;box-shadow:0 0 0 10px rgba(14,165,233,.20),0 12px 30px rgba(15,23,42,.18);cursor:pointer;animation:pulse 1.6s infinite;display:grid;place-items:center;color:#fff;font-size:16px}
+.map-pin.gold{background:#fff;box-shadow:0 0 0 10px rgba(255,255,255,.16),0 12px 30px rgba(15,23,42,.18)}
+.map-pin.green{background:#16a76f;box-shadow:0 0 0 10px rgba(22,167,111,.20),0 12px 30px rgba(15,23,42,.18)}
+.m1{left:32%;top:36%}.m2{left:60%;top:48%}.m3{left:24%;top:70%}.m4{left:78%;top:32%}.m5{left:48%;top:78%}
+.map-overlay{position:absolute;left:18px;right:18px;bottom:18px;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);border:1px solid #dbe2eb;border-radius:22px;padding:16px;box-shadow:var(--shadow2)}
+.map-overlay b{font-size:18px}
+.map-overlay span{display:block;color:#65778d;font-size:13px;margin-top:4px}
+
+.concierge-card{display:grid;gap:10px}
+.conc-item{display:flex;gap:12px;align-items:center;background:#fff;border:1px solid #bae6fd;border-radius:16px;padding:13px}
+.conc-item .ico{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#e0f2fe,#fff);border:1px solid #bae6fd;display:grid;place-items:center;color:#0c4a6e;font-size:18px;flex:0 0 auto}
+.conc-item b{display:block;font-size:14px}
+.conc-item small{display:block;color:#65778d;font-size:12px;margin-top:3px;line-height:1.4}
+
+/* ===== RESTAURANT MENU ===== */
+.restaurant-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.restaurant-photo{height:420px;background-color:#e0f2fe;background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=80');background-size:cover;background-position:center;border-radius:28px;position:relative;overflow:hidden;border:1px solid rgba(15,23,42,.08);box-shadow:var(--shadow2)}
+.restaurant-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(8,15,28,.55),transparent 60%)}
+.restaurant-photo .photo-caption{position:absolute;left:22px;right:22px;bottom:22px;color:#fff;z-index:2}
+.restaurant-photo .photo-caption b{font-size:24px;display:block}
+.restaurant-photo .photo-caption span{color:#bae6fd;display:block;margin-top:6px;font-size:14px}
+.menu-list{display:grid;gap:10px}
+.menu-item{display:grid;grid-template-columns:60px 1fr auto;gap:14px;align-items:center;background:#fff;border:1px solid #e6edf7;border-radius:18px;padding:13px;transition:.16s;cursor:pointer}
+.menu-item:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(15,23,42,.10)}
+.menu-thumb{width:60px;height:60px;border-radius:14px;background-color:#e0f2fe;background-size:cover;background-position:center;overflow:hidden}
+.menu-item b{display:block;font-size:14px}
+.menu-item small{display:block;color:#65778d;font-size:11px;margin-top:3px}
+.menu-price{font-weight:950;font-size:18px;color:#0f172a;letter-spacing:-.02em}
+
+/* ===== CONFERENCE HALLS ===== */
+.halls-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.hall{padding:0;cursor:pointer;transition:.22s;background:#fff;border-radius:24px;overflow:hidden;box-shadow:var(--shadow2);border:1px solid rgba(15,23,42,.08)}
+.hall:hover{transform:translateY(-4px);box-shadow:0 22px 50px rgba(15,23,42,.16)}
+.hall-img{height:200px;background-color:#1e293b;background-size:cover;background-position:center;position:relative}
+.hall-img:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(8,15,28,.55),transparent 60%)}
+.hall-capacity{position:absolute;left:12px;top:12px;border-radius:999px;background:rgba(14,165,233,.92);color:#fff;padding:7px 11px;font-size:11px;font-weight:950}
+.hall-body{padding:18px}
+.hall-body b{font-size:17px;display:block;letter-spacing:-.01em}
+.hall-body small{display:block;color:#65778d;font-size:12px;margin-top:3px;line-height:1.45}
+.hall-features{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.hall-features span{border-radius:999px;background:#e0f2fe;color:#475569;padding:5px 9px;font-size:10px;font-weight:850}
+.hall-foot{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid #e6edf7}
+
+/* ===== TRANSFER + AIRPORT ===== */
+.transfer-layout{display:grid;grid-template-columns:1.4fr .8fr;gap:20px}
+.transfer-mock{background:linear-gradient(135deg,#0f172a,#0ea5e9);border-radius:28px;padding:24px;color:#fff;position:relative;overflow:hidden}
+.transfer-mock:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 30%,rgba(14,165,233,.4),transparent 50%)}
+.transfer-mock .top{display:flex;justify-content:space-between;margin-bottom:18px;position:relative;z-index:1}
+.transfer-route{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;margin:18px 0;position:relative;z-index:1}
+.transfer-point{padding:10px 14px;border-radius:14px;background:rgba(255,255,255,.10);text-align:center;min-width:120px}
+.transfer-point small{opacity:.7;font-size:11px;display:block;text-transform:uppercase;letter-spacing:.06em}
+.transfer-point b{font-size:16px;display:block;margin-top:3px;font-weight:950}
+.transfer-line{height:3px;background:linear-gradient(90deg,rgba(255,255,255,.4),rgba(255,255,255,.1));position:relative}
+.transfer-line:before{content:"🚗";position:absolute;top:-15px;left:50%;transform:translateX(-50%);font-size:24px;animation:drive 3s ease-in-out infinite}
+@keyframes drive{0%,100%{left:10%}50%{left:80%}}
+.transfer-info{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;position:relative;z-index:1}
+.transfer-info div{background:rgba(255,255,255,.10);border-radius:14px;padding:10px;text-align:center}
+.transfer-info small{opacity:.7;font-size:10px;display:block}
+.transfer-info b{font-size:14px;color:#fff}
+
+/* ===== SPA & WELLNESS ===== */
+.spa-layout{display:grid;grid-template-columns:1.4fr 1fr;gap:20px}
+.spa-photo{height:420px;background-color:#e0f2fe;background-image:url('https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1200&q=80');background-size:cover;background-position:center;border-radius:28px;position:relative;overflow:hidden;border:1px solid rgba(15,23,42,.08);box-shadow:var(--shadow2)}
+.spa-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(8,15,28,.50),transparent 60%)}
+.spa-photo .photo-caption{position:absolute;left:22px;right:22px;bottom:22px;color:#fff;z-index:2}
+.spa-photo .photo-caption b{font-size:24px;display:block}
+.spa-photo .photo-caption span{color:#bae6fd;display:block;margin-top:6px;font-size:14px}
+.spa-services{display:grid;gap:10px}
+.spa-item{display:flex;justify-content:space-between;gap:10px;align-items:center;background:#fff;border:1px solid #bae6fd;border-radius:16px;padding:13px}
+.spa-item b{font-size:13px;display:block}
+.spa-item small{color:#65778d;font-size:11px;display:block;margin-top:3px}
+.spa-price{font-weight:950;color:#0c4a6e}
+
+/* ===== KIDS CLUB ===== */
+.kids-layout{display:grid;grid-template-columns:1.4fr 1fr;gap:20px}
+.kids-photo{height:380px;background-color:#fef3c7;background-image:url('https://images.unsplash.com/photo-1606566245049-22097d926aaf?auto=format&fit=crop&w=1200&q=80');background-size:cover;background-position:center;border-radius:28px;position:relative;overflow:hidden;border:1px solid rgba(15,23,42,.08);box-shadow:var(--shadow2)}
+.kids-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(8,15,28,.50),transparent 60%)}
+.kids-photo .photo-caption{position:absolute;left:22px;right:22px;bottom:22px;color:#fff;z-index:2}
+.kids-photo .photo-caption b{font-size:22px;display:block}
+.kids-photo .photo-caption span{color:#fef3c7;display:block;margin-top:6px;font-size:13px}
+.kids-programs{display:grid;gap:10px}
+.kids-program{display:flex;justify-content:space-between;gap:10px;align-items:center;background:linear-gradient(135deg,#fef3c7,#fff);border:1px solid #fde68a;border-radius:16px;padding:13px}
+.kids-program .ico{width:40px;height:40px;border-radius:12px;background:#fff;border:1px solid #fde68a;display:grid;place-items:center;font-size:20px;color:#0f172a;flex:0 0 auto}
+.kids-program b{font-size:13px;display:block}
+.kids-program small{color:#65778d;font-size:11px;display:block;margin-top:3px}
+.kids-time{font-weight:950;font-size:13px;color:#0f172a;white-space:nowrap}
+
+/* ===== HOUSEKEEPING ===== */
+.house-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.house-floor{background:#fff;border:1px solid rgba(15,23,42,.08);box-shadow:var(--shadow2);border-radius:22px;padding:14px;min-height:480px}
+.house-head{display:flex;justify-content:space-between;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #e6edf7}
+.house-head b{font-size:14px;color:#0f172a}
+.house-head span{font-size:11px;color:#65778d;font-weight:850}
+.h-room{border:2px solid #e6edf7;border-radius:14px;padding:11px;margin-bottom:10px;transition:.16s;cursor:pointer}
+.h-room:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(15,23,42,.10)}
+.h-room.clean{border-color:#16a76f;background:linear-gradient(135deg,#dcfce7,#fff)}
+.h-room.dirty{border-color:#fff;background:linear-gradient(135deg,#fef3c7,#fff)}
+.h-room.cleaning{border-color:#0ea5e9;background:linear-gradient(135deg,#e0f2fe,#fff)}
+.h-room.occupied{border-color:#475569;background:linear-gradient(135deg,#475569,#1e293b);color:#fff}
+.h-room .hr-top{display:flex;justify-content:space-between;font-weight:950;font-size:13px;margin-bottom:4px}
+.h-room .hr-meta{font-size:11px;opacity:.85}
+
+/* ===== LOYALTY ===== */
+.loyalty-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.tier-list{display:grid;gap:12px}
+.tier{border-radius:22px;padding:18px;background:linear-gradient(135deg,#e0f2fe,#fff);border:1px solid #bae6fd;display:grid;grid-template-columns:60px 1fr auto;gap:14px;align-items:center}
+.tier.featured{border:2px solid #fff;background:linear-gradient(135deg,#fef3c7,#fff);box-shadow:0 18px 40px rgba(255,255,255,.16)}
+.tier-icon{width:60px;height:60px;border-radius:18px;background:#fff;border:1px solid #bae6fd;display:grid;place-items:center;font-size:30px}
+.tier.featured .tier-icon{background:linear-gradient(135deg,#fff,#fff);color:#0f172a;border-color:transparent}
+.tier b{font-size:18px;display:block}
+.tier small{color:#65778d;font-size:12px;display:block;margin-top:4px;line-height:1.45}
+.tier-stat{text-align:center}
+.tier-stat b{font-size:24px;display:block;color:#0c4a6e}
+.tier.featured .tier-stat b{color:#0f172a}
+.tier-stat span{display:block;font-size:11px;color:#65778d;margin-top:2px;font-weight:850}
+
+.guest-cabinet{padding:22px;background:linear-gradient(135deg,#0f172a,#0ea5e9);color:#fff;border-radius:28px;position:relative;overflow:hidden}
+.guest-cabinet:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 30%,rgba(14,165,233,.4),transparent 50%)}
+.guest-cabinet .vip-badge{display:inline-block;background:linear-gradient(135deg,#fff,#fff);color:#0f172a;padding:5px 10px;border-radius:999px;font-weight:950;font-size:11px;margin-bottom:8px}
+.guest-cabinet .row{display:flex;justify-content:space-between;padding:4px 0;font-size:13px;opacity:.92}
+.guest-cabinet b{font-size:14px}
+
+/* ===== MOBILE APP ===== */
+.app-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
+.phone-mockup{background:linear-gradient(135deg,#0f172a,#0ea5e9);border-radius:40px;padding:14px;max-width:280px;margin:0 auto;box-shadow:0 30px 60px rgba(15,23,42,.30)}
+.phone-screen{background:#f5f7fa;border-radius:28px;padding:14px;height:480px;overflow:hidden}
+.phone-status{display:flex;justify-content:space-between;font-size:10px;color:#0f172a;margin-bottom:10px;font-weight:850}
+.phone-content{padding:6px}
+.phone-greeting{margin-bottom:12px}
+.phone-greeting b{display:block;font-size:14px;color:#0f172a}
+.phone-greeting small{color:#65778d;font-size:11px;display:block;margin-top:3px}
+.phone-card{background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;box-shadow:0 4px 12px rgba(15,23,42,.06)}
+.phone-card b{display:block;font-size:12px;color:#0f172a}
+.phone-card small{color:#65778d;font-size:10px;display:block;margin-top:3px}
+.phone-card .big-num{font-size:22px;font-weight:950;color:#0ea5e9;display:block;margin-top:6px;letter-spacing:-.02em}
+.phone-card.gold-card{background:linear-gradient(135deg,#fef3c7,#fff);border:1px solid #fde68a}
+.phone-card.gold-card .big-num{color:#fff}
+.phone-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.phone-actions button{border:0;background:#fff;border-radius:10px;padding:8px;font-size:10px;font-weight:850;color:#0c4a6e;box-shadow:0 4px 12px rgba(15,23,42,.06);cursor:pointer}
+.phone-actions button.primary{background:linear-gradient(135deg,#0ea5e9,#38bdf8);color:#fff}
+.app-features{display:grid;gap:12px}
+.app-feat{display:flex;gap:12px;align-items:center;background:#fff;border:1px solid #bae6fd;border-radius:18px;padding:13px}
+.app-feat .ico{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#e0f2fe,#fff);border:1px solid #bae6fd;display:grid;place-items:center;color:#0c4a6e;font-size:18px;flex:0 0 auto}
+.app-feat b{display:block;font-size:14px}
+.app-feat small{color:#65778d;font-size:12px;display:block;margin-top:3px;line-height:1.4}
+
+/* ===== REVIEWS ===== */
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.review{padding:22px;background:#fff;border:1px solid rgba(15,23,42,.08);border-radius:22px;box-shadow:var(--shadow2);position:relative}
+.review-quote{font-size:48px;color:#0ea5e9;opacity:.3;line-height:1;position:absolute;top:14px;right:18px;font-family:Georgia,serif}
+.review-text{color:#475569;font-size:14px;line-height:1.55;margin:0 0 14px}
+.review-stars{color:#fff;font-size:14px;margin-bottom:10px;letter-spacing:2px}
+.review-author{display:flex;align-items:center;gap:12px;padding-top:12px;border-top:1px solid #e6edf7}
+.review-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#0ea5e9,#38bdf8);color:#fff;display:grid;place-items:center;font-weight:950;font-size:14px}
+.review-author b{display:block;font-size:13px;color:#0f172a}
+.review-author small{color:#65778d;font-size:11px;display:block;margin-top:2px}
+
+/* ===== ADMIN ===== */
+.dash{display:grid;grid-template-columns:260px 1fr;gap:20px}
+.side{background:#0f172a;color:#cbd5e1;border-radius:28px;padding:18px}
+.side button{width:100%;border:0;background:transparent;color:#cbd5e1;display:flex;gap:10px;align-items:center;text-align:left;border-radius:16px;padding:12px;margin-bottom:5px;cursor:pointer;font-weight:850;font-size:14px}
+.side button.active,.side button:hover{background:rgba(255,255,255,.10);color:#fff}
+.admin-view{display:grid;gap:18px}
+.admin-title{display:flex;justify-content:space-between;gap:14px;align-items:center}
+.admin-title h3{margin:0;font-size:26px;color:#0f172a}
+.admin-title p{margin:5px 0 0;color:#65778d}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.kpi{border-radius:22px;background:#fff;border:1px solid rgba(15,23,42,.08);padding:18px;box-shadow:var(--shadow2)}
+.kpi span{font-size:12px;color:#65778d}
+.kpi b{display:block;font-size:28px;margin:6px 0;color:#0f172a;letter-spacing:-.02em;font-weight:950}
+.kpi small{font-weight:950;color:#0c4a6e}
+.chart{height:240px;display:flex;align-items:end;gap:10px;padding:14px 4px 28px}
+.chart div{flex:1;height:var(--h);border-radius:14px 14px 6px 6px;background:linear-gradient(180deg,#38bdf8,#0f172a);position:relative}
+.chart div:after{content:attr(data-m);position:absolute;left:50%;bottom:-24px;transform:translateX(-50%);font-size:11px;color:#65778d;font-weight:850}
+.data-table{display:grid;gap:10px}
+.data-row{display:grid;grid-template-columns:1.1fr .75fr .7fr .75fr;gap:10px;align-items:center;background:#e0f2fe;border:1px solid #bae6fd;border-radius:18px;padding:13px}
+.data-row span,.data-row small{color:#65778d;font-size:12px}
+.data-row b{font-size:14px}
+.action-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.action-card{background:linear-gradient(135deg,#fff,#e0f2fe);border:1px solid #bae6fd;border-radius:22px;padding:18px;box-shadow:var(--shadow2)}
+.action-card b{display:block;font-size:24px;color:#0f172a;font-weight:950}
+.action-card span{display:block;color:#65778d;font-size:13px;margin-top:4px}
+.automation{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.auto-card{border-radius:22px;background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;padding:18px;border:1px solid #334155}
+.auto-card small{color:#38bdf8;font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.auto-card b{display:block;font-size:18px;margin:6px 0;font-weight:950}
+.auto-card p{color:#cbd5e1;font-size:12px;margin:0;line-height:1.5}
+.glow-card{background:linear-gradient(135deg,#0f172a,#0ea5e9)!important;color:#fff;border:0;box-shadow:0 24px 60px rgba(14,165,233,.26)}
+.glow-card b{color:#fff!important}
+.glow-card p,.glow-card span{color:#bae6fd!important}
+.bar{height:9px;border-radius:999px;background:#e0f2fe;overflow:hidden;margin-top:12px}
+.bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#0ea5e9,#fff);width:var(--w)}
+
+/* ===== FOOTER ===== */
+.footer{background:#0f172a;color:#fff;padding:48px 0 60px}
+.footer-grid{display:flex;justify-content:space-between;gap:20px;align-items:center}
+.footer p{color:#94a3b8;margin:6px 0 0}
+.contact{display:flex;gap:10px;flex-wrap:wrap}
+.contact a{padding:10px 13px;border-radius:999px;background:rgba(255,255,255,.10);color:#fff;font-weight:850}
+
+@media(max-width:1000px){
+  .links{display:none}
+  .hero-grid,.hero-ui,.rooms-shell,.cal-layout,.tours,.map-layout,.restaurant-layout,.halls-grid,.spa-layout,.kids-layout,.transfer-layout,.loyalty-layout,.app-layout,.reviews-grid,.house-grid,.dash{grid-template-columns:1fr}
+  .grid-3,.grid-2,.kpis,.action-grid,.tours,.halls-grid,.reviews-grid,.house-grid{grid-template-columns:repeat(2,1fr)}
+  .head{display:block}
+  .head p{margin-top:14px}
+  .book-widget{position:relative;top:auto}
+  .data-row{grid-template-columns:1fr}
+  .city-map{height:420px}
+  .restaurant-photo,.spa-photo{height:320px}
+  .hero-banner{min-height:480px;padding:60px 0 50px}
+}
+@media(max-width:620px){
+  .wrap{width:min(100% - 24px,1200px)}
+  .nav-inner{height:auto;padding:12px 0}
+  .brand small,.nav .btn{display:none}
+  .section{padding:60px 0}
+  h1{font-size:36px}
+  .lead{font-size:16px}
+  .stats,.grid-3,.grid-2,.tours,.halls-grid,.reviews-grid,.house-grid,.kpis,.action-grid{grid-template-columns:1fr}
+  .footer-grid{display:block}
+  .contact{margin-top:18px}
+  .hero-banner{min-height:420px;padding:50px 0 40px}
+}
+
+/* ===== CLEAN WHITE ACCENTS: gold/orange removed by request ===== */
+.btn.gold{background:#fff!important;color:#0f172a!important;border:1px solid rgba(15,23,42,.12)!important;box-shadow:var(--shadow2)!important}
+.small-btn.gold{background:#fff!important;color:#0f172a!important;border:1px solid rgba(15,23,42,.12)!important}
+.tag.gold,.tag.wait,.tag.orange{background:#fff!important;color:#0f172a!important;border:1px solid rgba(15,23,42,.12)!important}
+.room-badge.gold,.property-badge.gold,.doctor-badge.gold,.promo-badge{background:rgba(255,255,255,.94)!important;color:#0f172a!important}
+.icon.gold{background:#fff!important;color:#0f172a!important;border:1px solid #dbe2eb!important}
+.tour-tab.active,.calc-tab.active,.spec-tab.active,.slot.active,.tour-tab.active{background:linear-gradient(135deg,#0f172a,#0ea5e9)!important;color:#fff!important}
+.accent{background:linear-gradient(135deg,#38bdf8 0%,#fff 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important}
+.kicker .dot,.dot{background:#fff!important;box-shadow:0 0 0 7px rgba(255,255,255,.22)!important}
+@keyframes pulse{0%{box-shadow:0 0 0 7px rgba(255,255,255,.22)}50%{box-shadow:0 0 0 12px rgba(255,255,255,0)}100%{box-shadow:0 0 0 7px rgba(255,255,255,.22)}}
+.summary-box .total-line b,.rate-card.featured .price,.transfer-info b,.guest-cabinet .row b,.phone-card.gold-card .big-num,.invest-stat b,.promo-discount,.config-total .total-line b,.lead-row b,.pulse-row b{color:#fff!important}
+.room-amenities span.gold,.property-meta span.gold,.hall-features span.gold{background:#fff!important;color:#0f172a!important;border:1px solid #dbe2eb!important}
+.tier.featured .tier-icon{background:#fff!important;color:#0f172a!important;border:1px solid #dbe2eb!important}
+.promo.gold{background:linear-gradient(135deg,#0f172a,#0ea5e9)!important;color:#fff!important}
+.promo.gold h3,.promo.gold p,.promo.gold .promo-discount,.promo.gold .promo-foot small{color:#fff!important}
+
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top"><div class="logo">W</div><div><b>WEBCOREX</b><small>Hotel OS</small></div></a>
+    <div class="links">
+      <a href="#advantages">Преимущества</a>
+      <a href="#rooms">Номера</a>
+      <a href="#calendar">Бронирование</a>
+      <a href="#tours">Туры</a>
+      <a href="#map">Карта</a>
+      <a href="#restaurant">Ресторан</a>
+      <a href="#conference">Конференц</a>
+      <a href="#transfer">Трансфер</a>
+      <a href="#spa">Spa</a>
+      <a href="#kids">Дети</a>
+      <a href="#housekeeping">Housekeeping</a>
+      <a href="#loyalty">Лояльность</a>
+      <a href="#app">Приложение</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#admin">Админка</a>
+    </div>
+    <a class="btn gold" href="#contact">Получить демо</a>
+  </div>
+</nav>
+
+<main id="top">
+
+<!-- HERO BANNER (полноширинная длинная фотография) -->
+<section class="hero">
+  <div class="hero-banner">
+    <div class="wrap">
+      <div class="hero-overlay">
+        <div class="kicker"><span class="dot"></span> Для отелей, хостелов, апарт-отелей и турбаз Таджикистана</div>
+        <h1><span class="accent">Hotel OS</span><br>сайт отеля, бронирование, консьерж и управление номерным фондом</h1>
+        <p class="lead">Современный сайт с онлайн-бронированием и фото номеров, календарь загрузки и динамические цены, туры и экскурсии, консьерж-бот в Telegram, ресторан и конференц-залы, трансфер из аэропорта, спа и детский клуб, программа лояльности и housekeeping для персонала.</p>
+        <div class="actions">
+          <a class="btn gold" href="#rooms">Выбрать номер</a>
+          <a class="btn white" href="#calendar">Забронировать</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ПОД HERO: статистика + виджеты -->
+  <div class="hero-secondary">
+    <div class="wrap hero-grid">
+      <div>
+        <h3 style="margin:0 0 14px;font-size:20px;color:#0f172a">📈 Эффект после внедрения Hotel OS</h3>
+        <div class="stats">
+          <div class="stat"><b>+42%</b><span>рост прямых бронирований без Booking</span></div>
+          <div class="stat"><b>+18%</b><span>средний чек благодаря допродажам</span></div>
+          <div class="stat"><b>−68%</b><span>no-show благодаря предоплате</span></div>
+        </div>
+      </div>
+      <div class="side-ui">
+        <div class="mini-panel">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <b style="font-size:14px">Бронирования сегодня</b>
+            <span class="tag">live</span>
+          </div>
+          <div class="booking-mock">
+            <div class="bk-line"><div><b>#A4-218 · Suite Panorama</b><br><small>Мадина С. · 3 ночи · Platinum</small></div><span class="tag gold">VIP</span></div>
+            <div class="bk-line"><div><b>#B2-104 · Standard</b><br><small>Фаррух А. · заезд сегодня</small></div><span class="tag green">заезд</span></div>
+            <div class="bk-line"><div><b>#C1-301 · Family</b><br><small>Олимджон Р. · 7 ночей</small></div><span class="tag">подтв.</span></div>
+            <div class="bk-line"><div><b>#D2-205 · Deluxe</b><br><small>Джамиля Х. · ожидает</small></div><span class="tag hot">предоплата</span></div>
+          </div>
+        </div>
+        <div class="tracker-mock">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <b style="font-size:14px">📊 Сегодня в отеле</b>
+            <span class="tag">live</span>
+          </div>
+          <div class="tracker-row">
+            <div class="tracker-cell"><small>Загрузка</small><b>82%</b></div>
+            <div class="tracker-cell"><small>ADR</small><b>3 920</b></div>
+            <div class="tracker-cell"><small>RevPAR</small><b>3 220</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ADVANTAGES -->
+<section class="section white" id="advantages">
+  <div class="wrap">
+    <div class="head">
+      <h2>Преимущества Hotel OS</h2>
+      <p>Сайт отеля, бронирование, консьерж, housekeeping, ресторан, spa, лояльность и аналитика владельца в одной системе.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card"><div class="icon">1</div><h3>Прямые бронирования</h3><p>Ключевой модуль системы, который снижает ручную работу, повышает контроль и помогает бизнесу зарабатывать больше.</p></div><div class="card"><div class="icon">2</div><h3>Динамические цены</h3><p>Ключевой модуль системы, который снижает ручную работу, повышает контроль и помогает бизнесу зарабатывать больше.</p></div><div class="card"><div class="icon">3</div><h3>Housekeeping</h3><p>Ключевой модуль системы, который снижает ручную работу, повышает контроль и помогает бизнесу зарабатывать больше.</p></div><div class="card"><div class="icon">4</div><h3>Консьерж 24/7</h3><p>Ключевой модуль системы, который снижает ручную работу, повышает контроль и помогает бизнесу зарабатывать больше.</p></div><div class="card"><div class="icon">5</div><h3>Ресторан и spa</h3><p>Ключевой модуль системы, который снижает ручную работу, повышает контроль и помогает бизнесу зарабатывать больше.</p></div><div class="card"><div class="icon">6</div><h3>Лояльность гостей</h3><p>Ключевой модуль системы, который снижает ручную работу, повышает контроль и помогает бизнесу зарабатывать больше.</p></div><div class="card"><div class="icon">7</div><h3>Мобильное приложение</h3><p>Ключевой модуль системы, который снижает ручную работу, повышает контроль и помогает бизнесу зарабатывать больше.</p></div><div class="card"><div class="icon">8</div><h3>Админка владельца</h3><p>Ключевой модуль системы, который снижает ручную работу, повышает контроль и помогает бизнесу зарабатывать больше.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMS -->
+<section class="section sky" id="problems">
+  <div class="wrap">
+    <div class="head">
+      <h2>Проблемы, которые знакомы каждому отелю</h2>
+      <p>Зависимость от Booking с комиссией 18%, пустые номера в будни, гости не знают о ваших услугах, персонал путает уборку, а консьерж отвечает только в рабочие часы.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card"><div class="icon red">💸</div><h3>Booking забирает 18–25%</h3><p>Каждое бронирование через агрегатор — минус комиссия. Свой канал возвращает маржу владельцу.</p></div>
+      <div class="card"><div class="icon gold">📅</div><h3>Пустые номера в будни</h3><p>Нет динамических цен, нет понимания загрузки, нет инструментов привлечения гостей в низкий сезон.</p></div>
+      <div class="card"><div class="icon">🧹</div><h3>Housekeeping в хаосе</h3><p>Горничные не знают, какие номера убирать. Администратор звонит и проверяет.</p></div>
+      <div class="card"><div class="icon gov">🗣</div><h3>Консьерж работает 9–18</h3><p>Гость хочет заказать ужин в полночь — никто не отвечает. Ставит плохой отзыв.</p></div>
+      <div class="card"><div class="icon green">⭐</div><h3>Гости возвращаются редко</h3><p>Без программы лояльности даже постоянные клиенты уходят туда, где есть бонусы.</p></div>
+      <div class="card"><div class="icon">📊</div><h3>Нет аналитики отеля</h3><p>Какие номера продаются лучше, какой сезон сильный, какие допуслуги приносят деньги — владелец не знает.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ROOMS -->
+<section class="section white" id="rooms">
+  <div class="wrap">
+    <div class="head">
+      <h2>Каталог номеров с фото и реальным наличием</h2>
+      <p>Гость видит категорию, площадь, вид из окна, amenities и честные отзывы. Цена и наличие обновляются в реальном времени из PMS-системы отеля. Бронирование за 60 секунд.</p>
+    </div>
+    <div class="rooms-shell">
+      <div class="book-widget">
+        <h3 style="margin:0 0 14px;font-size:22px">Бронирование</h3>
+        <div class="date-row">
+          <div class="field"><label>Заезд</label><input type="date" value="2026-06-26"></div>
+          <div class="field"><label>Выезд</label><input type="date" value="2026-06-29"></div>
+        </div>
+        <div class="field"><label>Гостей</label><select><option>1 взрослый</option><option selected>2 взрослых</option><option>2 взр + 1 ребёнок</option><option>Семья (2+2)</option></select></div>
+        <div class="field"><label>Тип номера</label><select><option>Любой</option><option>Standard</option><option>Deluxe</option><option>Suite</option><option>Family</option></select></div>
+        <div class="field"><label>Промокод</label><input placeholder="SUMMER20 · −20%"></div>
+        <div class="summary-box">
+          <div class="line"><span>3 ночи · Standard</span><span>9 600 TJS</span></div>
+          <div class="line"><span>Завтрак включён</span><span style="color:#fff">включён</span></div>
+          <div class="line"><span>Скидка промокод</span><span style="color:#fff">−1 920 TJS</span></div>
+          <div class="total-line"><div><small style="opacity:.7">К оплате</small><br><b>7 680 TJS</b></div><button class="btn gold" style="padding:10px 16px;font-size:13px;color:#0f172a" onclick="alert('Бронь подтверждена!')">Бронировать</button></div>
+        </div>
+        <div class="notice" style="margin-top:14px;padding:14px;border-radius:18px;background:linear-gradient(135deg,#dcfce7,#fff);border:1px solid #bbf7d0"><div class="icon green">✓</div><p style="color:#475569"><strong style="color:#0f172a">Бесплатная отмена</strong> за 24 часа до заезда. Без предоплаты.</p></div>
+      </div>
+      <div class="rooms">
+        <article class="room">
+          <div class="room-img" style="background-image:url('https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=900&q=80')">
+            <div class="room-badges"><span class="room-badge">Standard</span></div>
+            <span class="room-rating">★ 4.7</span>
+          </div>
+          <div class="room-body">
+            <div class="room-top"><h3>Standard · 28 м²</h3><div class="room-price">3 200 TJS<small>/ночь</small></div></div>
+            <div class="room-amenities"><span>🛏 King-size</span><span>🚿 Душ</span><span>📺 Smart TV</span><span>❄️ Кондиционер</span><span>☕ Кофе-машина</span></div>
+            <p class="room-desc">Уютный номер с видом во двор или на город. Идеален для деловых поездок и коротких визитов. Завтрак включён.</p>
+            <div class="room-foot"><small>Осталось 6 номеров · мгновенное бронирование</small><div class="room-actions"><button class="small-btn outline">Подробнее</button><button class="small-btn gold">3 200 TJS</button></div></div>
+          </div>
+        </article>
+        <article class="room">
+          <div class="room-img" style="background-image:url('https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80')">
+            <div class="room-badges"><span class="room-badge sky">Deluxe · хиты</span></div>
+            <span class="room-rating">★ 4.8</span>
+          </div>
+          <div class="room-body">
+            <div class="room-top"><h3>Deluxe · 38 м²</h3><div class="room-price">4 200 TJS<small>/ночь</small></div></div>
+            <div class="room-amenities"><span>🛏 King-size</span><span class="gold">🛁 Ванна</span><span>🏔 Вид на горы</span><span>📺 Smart TV 55″</span><span>👔 Гардеробная</span><span>🍷 Мини-бар</span></div>
+            <p class="room-desc">Просторный номер с панорамными окнами и видом на горы. Рабочая зона, гардеробная, ванная комната с ванной и тропическим душем.</p>
+            <div class="room-foot"><small>Осталось 4 номера · рекомендуем</small><div class="room-actions"><button class="small-btn outline">Подробнее</button><button class="small-btn gold">4 200 TJS</button></div></div>
+          </div>
+        </article>
+        <article class="room">
+          <div class="room-img" style="background-image:url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=80')">
+            <div class="room-badges"><span class="room-badge gold">Suite · VIP</span></div>
+            <span class="room-rating">★ 4.9</span>
+          </div>
+          <div class="room-body">
+            <div class="room-top"><h3>Suite Panorama · 75 м²</h3><div class="room-price">4 800 TJS<small>/ночь</small></div></div>
+            <div class="room-amenities"><span class="gold">🛁 Джакузи</span><span>🛋 Гостиная</span><span>🏔 Панорама гор</span><span>☕ Капсульная кофе-машина</span><span>🍷 Мини-бар</span><span>👔 Гардеробная</span><span>🛌 King-size premium</span></div>
+            <p class="room-desc">Премиальный номер с отдельной гостиной, панорамным видом и джакузи. Идеален для романтического уикенда или особого случая. Комплимент от шефа.</p>
+            <div class="room-foot"><small>Осталось 2 номера · популярен для пар</small><div class="room-actions"><button class="small-btn outline">Подробнее</button><button class="small-btn gold">4 800 TJS</button></div></div>
+          </div>
+        </article>
+        <article class="room">
+          <div class="room-img" style="background-image:url('https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=900&q=80')">
+            <div class="room-badges"><span class="room-badge">Family · 4 чел.</span></div>
+            <span class="room-rating">★ 4.8</span>
+          </div>
+          <div class="room-body">
+            <div class="room-top"><h3>Family Room · 55 м²</h3><div class="room-price">5 600 TJS<small>/ночь</small></div></div>
+            <div class="room-amenities"><span>🛏 2 комнаты</span><span>👶 Детская кроватка</span><span>🎮 Игровая зона</span><span>🚿 2 ванные</span><span>🍽 Мини-кухня</span><span>📺 Smart TV</span></div>
+            <p class="room-desc">Два смежных номера для семьи с детьми. Детская кроватка, игровая зона, мини-кухня. Завтрак + детское меню включены.</p>
+            <div class="room-foot"><small>Осталось 3 номера · семейный формат</small><div class="room-actions"><button class="small-btn outline">Подробнее</button><button class="small-btn gold">5 600 TJS</button></div></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALENDAR & DYNAMIC PRICING -->
+<section class="section sky" id="calendar">
+  <div class="wrap">
+    <div class="head">
+      <h2>Календарь загрузки и динамические цены</h2>
+      <p>Владелец видит заполненность номеров на 90 дней вперёд, устанавливает цены по дням недели и сезонам, получает AI-рекомендации по оптимальной цене для максимальной выручки.</p>
+    </div>
+    <div class="cal-layout">
+      <div class="calendar-card">
+        <div class="cal-month"><b>Июнь 2026</b><div><button onclick="alert('Предыдущий месяц')">‹</button> <button onclick="alert('Следующий месяц')">›</button></div></div>
+        <div class="cal-grid">
+          <div class="cal-dow">Пн</div><div class="cal-dow">Вт</div><div class="cal-dow">Ср</div><div class="cal-dow">Чт</div><div class="cal-dow">Пт</div><div class="cal-dow">Сб</div><div class="cal-dow">Вс</div>
+          <div class="cal-day">1</div><div class="cal-day">2</div><div class="cal-day">3</div><div class="cal-day">4</div><div class="cal-day">5</div><div class="cal-day">6</div><div class="cal-day">7</div>
+          <div class="cal-day">8</div><div class="cal-day">9</div><div class="cal-day">10</div><div class="cal-day">11</div><div class="cal-day">12</div><div class="cal-day low">13<span class="dot-mark"></span></div><div class="cal-day">14</div>
+          <div class="cal-day">15</div><div class="cal-day">16</div><div class="cal-day">17</div><div class="cal-day">18</div><div class="cal-day">19</div><div class="cal-day full">20</div><div class="cal-day full">21</div>
+          <div class="cal-day">22</div><div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day">25</div><div class="cal-day active">26<span class="dot-mark"></span></div><div class="cal-day active">27<span class="dot-mark"></span></div><div class="cal-day">28</div>
+          <div class="cal-day">29</div><div class="cal-day">30</div><div class="cal-day"></div><div class="cal-day"></div><div class="cal-day"></div><div class="cal-day"></div><div class="cal-day"></div>
+        </div>
+        <div class="cal-legend">
+          <span><i class="ls free"></i> Свободно · 32%</span>
+          <span><i class="ls low"></i> Мало мест · 18%</span>
+          <span><i class="ls full"></i> Заполнено · 50%</span>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin:0 0 14px;font-size:22px">Динамические цены · Июнь</h3>
+        <div class="rate-list">
+          <div class="rate-card"><div><b>Будни · Пн–Чт</b><small>Загрузка 64% · стандартная цена</small></div><div class="price">3 200 TJS</div></div>
+          <div class="rate-card"><div><b>Выходные · Пт–Сб</b><small>Загрузка 92% · повышенный спрос</small></div><div class="price">4 800 TJS</div></div>
+          <div class="rate-card featured"><div><b>Высокий сезон · 13–27 июня</b><small>Конференция · загрузка 100%</small></div><div class="price">5 400 TJS</div></div>
+          <div class="rate-card"><div><b>Низкий сезон · Июль</b><small>Загрузка 38% · рекомендуется акция</small></div><div class="price">2 600 TJS</div></div>
+        </div>
+        <div class="notice" style="margin-top:14px;padding:14px"><div class="icon gold">💡</div><p><strong style="color:#0f172a">AI-совет:</strong> поднимите цену Deluxe на 8% в дни конференции — это даст дополнительные <b style="color:#0f172a">+186 000 TJS</b> выручки за месяц.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOURS -->
+<section class="section white" id="tours">
+  <div class="wrap">
+    <div class="head">
+      <h2>Туры и экскурсии от партнёров</h2>
+      <p>Гость бронирует отель и сразу выбирает экскурсии: горы, исторические места, гастрономия, приключения. Отель получает комиссию с каждого тура — это допродажа без расходов.</p>
+    </div>
+    <div class="tour-tabs">
+      <span class="tour-tab active" onclick="pickTourTab(this)">🏔 Природа</span>
+      <span class="tour-tab" onclick="pickTourTab(this)">🏛 История</span>
+      <span class="tour-tab" onclick="pickTourTab(this)">🍷 Гастро</span>
+      <span class="tour-tab" onclick="pickTourTab(this)">🚵 Приключения</span>
+      <span class="tour-tab" onclick="pickTourTab(this)">🌌 Вечерние</span>
+    </div>
+    <div class="tours">
+      <article class="tour"><div class="tour-img" style="background-image:url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80')"><span class="tour-badge">🏔 Природа</span><span class="tour-duration">⏱ 8 часов</span></div><div class="tour-body"><h3>Озеро Искандеркуль</h3><p>Живописное горное озеро, водопады, пикник на природе. Группа до 12 человек, гид на русском.</p><div class="tour-price"><b>680 TJS</b><small>с человека</small></div></div></article>
+      <article class="tour"><div class="tour-img" style="background-image:url('https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=600&q=80')"><span class="tour-badge">🏛 История</span><span class="tour-duration">⏱ 5 часов</span></div><div class="tour-body"><h3>Древний Худжанд</h3><p>Крепость, базар, мечеть, музей. Погружение в историю Великого Шёлкового пути.</p><div class="tour-price"><b>420 TJS</b><small>с человека</small></div></div></article>
+      <article class="tour"><div class="tour-img" style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&q=80')"><span class="tour-badge">🍷 Гастро</span><span class="tour-duration">⏱ 3 часа</span></div><div class="tour-body"><h3>Ужин с дегустацией</h3><p>Авторские блюда местной кухни от шефа. Вино, история региона, живая музыка.</p><div class="tour-price"><b>540 TJS</b><small>с человека</small></div></div></article>
+      <article class="tour"><div class="tour-img" style="background-image:url('https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=600&q=80')"><span class="tour-badge">🚵 Приключения</span><span class="tour-duration">⏱ 6 часов</span></div><div class="tour-body"><h3>Треккинг в Фанские горы</h3><p>Поход средней сложности, опытный гид, обед у озера. Для активных путешественников.</p><div class="tour-price"><b>820 TJS</b><small>с человека</small></div></div></article>
+      <article class="tour"><div class="tour-img" style="background-image:url('https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=600&q=80')"><span class="tour-badge">🌌 Вечерний</span><span class="tour-duration">⏱ 4 часа</span></div><div class="tour-body"><h3>Звёздное небо в горах</h3><p>Ночной тур к смотровой площадке. Ужин-барбекю, телескоп, астроном-гид.</p><div class="tour-price"><b>740 TJS</b><small>с человека</small></div></div></article>
+      <article class="tour"><div class="tour-img" style="background-image:url('https://images.unsplash.com/photo-1545569310-c6e8b6b1b1c8?auto=format&fit=crop&w=600&q=80')"><span class="tour-badge">🍷 Гастро</span><span class="tour-duration">⏱ 2 часа</span></div><div class="tour-body"><h3>Мастер-класс плова</h3><p>Готовим настоящий плов с местным мастером. Уносите рецепт и сувенир.</p><div class="tour-price"><b>280 TJS</b><small>с человека</small></div></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- CONCIERGE + MAP -->
+<section class="section sky" id="map">
+  <div class="wrap">
+    <div class="head">
+      <h2>Консьерж-сервис и карта достопримечательностей</h2>
+      <p>Гость открывает карту с ресторанами, музеями, парками, развлечениями и сразу бронирует столик или билет. Консьерж работает 24/7 через Telegram-бота.</p>
+    </div>
+    <div class="map-layout">
+      <div class="city-map">
+        <span class="heat h1"></span><span class="heat h2"></span><span class="heat h3"></span>
+        <span class="poi p1">🏛 Музей</span>
+        <span class="poi p2">🏔 Гора</span>
+        <span class="poi p3">🍷 Ресторан</span>
+        <span class="poi p4">🎭 Театр</span>
+        <span class="poi p5">🏛 Парк</span>
+        <span class="map-pin m1" style="cursor:pointer" onclick="setPOI('Озеро Искандеркуль','🚗 2 часа от отеля · тур от 680 TJS')">🚗</span>
+        <span class="map-pin gold m2" onclick="setPOI('Ресторан Рохат','🍷 национальная кухня · бронирование через отель')">🍷</span>
+        <span class="map-pin green m3" onclick="setPOI('Горы Фанские','🏔 треккинг от 820 TJS')">🏔</span>
+        <span class="map-pin m4" onclick="setPOI('Базар','🛍 сувениры и специи · пешком 10 мин')">🛍</span>
+        <span class="map-pin gold m5" onclick="setPOI('Старый город','🏛 история и архитектура')">🏛</span>
+        <div class="map-overlay">
+          <b id="poiTitle">Ресторан Рохат</b>
+          <span id="poiSub">Национальная кухня · бронирование через отель · ★ 4.8</span>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="padding:20px">
+          <h3 style="margin:0 0 14px">🤖 Консьерж в Telegram</h3>
+          <div class="concierge-card">
+            <div class="conc-item"><div class="ico">🍽</div><div><b>Заказ ужина в номер</b><small>Меню ресторана · доставка за 35 минут · оплата на счёт</small></div></div>
+            <div class="conc-item"><div class="ico">🚖</div><div><b>Такси и трансфер</b><small>Аэропорт, вокзал, достопримечательности · фикс. цена</small></div></div>
+            <div class="conc-item"><div class="ico">🎫</div><div><b>Билеты на экскурсии</b><small>Музеи, театры, концерты · доставка билета в номер</small></div></div>
+            <div class="conc-item"><div class="ico">💆</div><div><b>Спа и массаж</b><small>В номере или в спа-центре · запись на любое время</small></div></div>
+            <div class="conc-item"><div class="ico">👶</div><div><b>Няня и детский клуб</b><small>Сертифицированные няни · игры и развитие для детей</small></div></div>
+            <div class="conc-item"><div class="ico">🛍</div><div><b>Покупки и доставка</b><small>Цветы, подарки, техника, аптека</small></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESTAURANT -->
+<section class="section white" id="restaurant">
+  <div class="wrap">
+    <div class="head">
+      <h2>Ресторан отеля: меню и бронирование столика</h2>
+      <p>Гость бронирует столик в ресторане отеля через сайт или приложение. Шеф-повар видит все заказы и бронирования в реальном времени.</p>
+    </div>
+    <div class="restaurant-layout">
+      <div class="restaurant-photo">
+        <div class="photo-caption">
+          <b>Ресторан «Панорама»</b>
+          <span>шеф-повар Джамшед · авторская кухня · завтрак 7:00–11:00 · ужин 18:00–23:00</span>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin:0 0 14px;font-size:18px">🍽 Меню ресторана</h3>
+        <div class="menu-list">
+          <div class="menu-item"><div class="menu-thumb" style="background-image:url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=200&q=80')"></div><div><b>Пицца «Деревенская»</b><small>моцарелла · трюфель · руккола</small></div><span class="menu-price">89 TJS</span></div>
+          <div class="menu-item"><div class="menu-thumb" style="background-image:url('https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=200&q=80')"></div><div><b>Сет «Филадельфия XL»</b><small>48 роллов · для компании</small></div><span class="menu-price">165 TJS</span></div>
+          <div class="menu-item"><div class="menu-thumb" style="background-image:url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=200&q=80')"></div><div><b>Цезарь с курицей</b><small>романо · пармезан · сухарики</small></div><span class="menu-price">48 TJS</span></div>
+          <div class="menu-item"><div class="menu-thumb" style="background-image:url('https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=200&q=80')"></div><div><b>Тирамису</b><small>маскарпоне · савоярди · какао</small></div><span class="menu-price">42 TJS</span></div>
+          <div class="menu-item"><div class="menu-thumb" style="background-image:url('https://images.unsplash.com/photo-1546964124-0cce460f38ef?auto=format&fit=crop&w=200&q=80')"></div><div><b>Стейк Рибай 300г</b><small>мраморная говядина · угли</small></div><span class="menu-price">189 TJS</span></div>
+          <div class="menu-item"><div class="menu-thumb" style="background-image:url('https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=200&q=80')"></div><div><b>Латте с лавандой</b><small>эспрессо · овсяное молоко</small></div><span class="menu-price">28 TJS</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONFERENCE HALLS -->
+<section class="section sky" id="conference">
+  <div class="wrap">
+    <div class="head">
+      <h2>Конференц-залы и банкеты</h2>
+      <p>Корпоративные клиенты бронируют залы для конференций, свадеб и банкетов. Онлайн-калькулятор стоимости, меню, рассадка гостей — всё в системе.</p>
+    </div>
+    <div class="halls-grid">
+      <article class="hall"><div class="hall-img" style="background-image:url('https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=600&q=80')"><span class="hall-capacity">до 200 чел.</span></div><div class="hall-body"><b>Конференц-зал «Панорама»</b><small>этаж 5 · проектор 4K · звук Bose · сцена</small><div class="hall-features"><span>📽 Проектор</span><span>🎤 Звук</span><span>📶 Wi-Fi 1G</span><span>🎬 Сцена</span><span>☕ Кофе-брейк</span></div><div class="hall-foot"><span style="color:#65778d;font-size:12px">от <b style="color:#0f172a;font-size:18px">12 000 TJS</b>/день</span><button class="small-btn">Бронировать</button></div></div></article>
+      <article class="hall"><div class="hall-img" style="background-image:url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=80')"><span class="hall-capacity">до 80 чел.</span></div><div class="hall-body"><b>Банкетный зал «Бархат»</b><small>этаж 1 · танцпол · бар · декор</small><div class="hall-features"><span>💃 Танцпол</span><span>🍷 Бар</span><span>🎂 Торт-бар</span><span>💡 Свет</span><span>🎵 DJ</span></div><div class="hall-foot"><span style="color:#65778d;font-size:12px">от <b style="color:#0f172a;font-size:18px">8 400 TJS</b>/вечер</span><button class="small-btn">Бронировать</button></div></div></article>
+      <article class="hall"><div class="hall-img" style="background-image:url('https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=600&q=80')"><span class="hall-capacity">до 12 чел.</span></div><div class="hall-body"><b>Переговорная «Бизнес»</b><small>этаж 3 · TV 75″ · конференц-связь</small><div class="hall-features"><span>📺 TV 75″</span><span>📞 Zoom</span><span>☕ Кофе</span><span>📝 Флипчарт</span></div><div class="hall-foot"><span style="color:#65778d;font-size:12px">от <b style="color:#0f172a;font-size:18px">1 200 TJS</b>/час</span><button class="small-btn">Бронировать</button></div></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- AIRPORT TRANSFER -->
+<section class="section white" id="transfer">
+  <div class="wrap">
+    <div class="head">
+      <h2>Трансфер из аэропорта и по городу</h2>
+      <p>Гость заказывает трансфер при бронировании — водитель встречает с табличкой в аэропорту. Фиксированная цена, отслеживание рейса, Mercedes/BMW комфорт-класса.</p>
+    </div>
+    <div class="transfer-layout">
+      <div class="transfer-mock">
+        <div class="top"><span>🚗 Трансфер #TF-2840</span><span style="color:#fff">● live</span></div>
+        <div class="transfer-route">
+          <div class="transfer-point"><small>Откуда</small><b>✈ Аэропорт DYU</b></div>
+          <div class="transfer-line"></div>
+          <div class="transfer-point"><small>Куда</small><b>🏨 Отель</b></div>
+        </div>
+        <div class="transfer-info">
+          <div><small>Водитель</small><b>Азиз</b></div>
+          <div><small>Авто</small><b>Mercedes E</b></div>
+          <div><small>ETA</small><b>14:25</b></div>
+          <div><small>Рейс</small><b>S7 1842</b></div>
+          <div><small>Цена</small><b>320 TJS</b></div>
+          <div><small>Статус</small><b style="color:#16a76f">прибыл</b></div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="padding:20px;background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;border-color:#334155">
+          <h3 style="color:#fff">🚗 Типы трансфера</h3>
+          <div style="display:grid;gap:10px;margin-top:14px">
+            <div style="padding:14px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);display:flex;justify-content:space-between;align-items:center"><div><b style="color:#fff">🚙 Стандарт</b><br><small style="color:#94a3b8">Toyota Camry · 4 пассажира</small></div><b style="color:#fff">240 TJS</b></div>
+            <div style="padding:14px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);display:flex;justify-content:space-between;align-items:center"><div><b style="color:#fff">🚘 Комфорт</b><br><small style="color:#94a3b8">Mercedes E · Wi-Fi · вода</small></div><b style="color:#fff">320 TJS</b></div>
+            <div style="padding:14px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);display:flex;justify-content:space-between;align-items:center"><div><b style="color:#fff">🚐 Семья</b><br><small style="color:#94a3b8">Mercedes V · до 7 пасс. · детское кресло</small></div><b style="color:#fff">480 TJS</b></div>
+            <div style="padding:14px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);display:flex;justify-content:space-between;align-items:center"><div><b style="color:#fff">🚖 VIP</b><br><small style="color:#94a3b8">BMW 7 · персональный водитель</small></div><b style="color:#fff">680 TJS</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPA & WELLNESS -->
+<section class="section sky" id="spa">
+  <div class="wrap">
+    <div class="head">
+      <h2>Spa & Wellness — программы здоровья</h2>
+      <p>Гости бронируют массаж, пилинг, обёртывание и спа-программы. Wellness-консультант подбирает программу под запрос: релакс, детокс, похудение, восстановление после перелёта.</p>
+    </div>
+    <div class="spa-layout">
+      <div class="spa-photo">
+        <div class="photo-caption">
+          <b>Spa-центр «Амрита»</b>
+          <span>массажи, хамам, пилинг, обёртывание · wellness-программы от 2 часов</span>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin:0 0 14px;font-size:18px">💆 Spa-программы</h3>
+        <div class="spa-services">
+          <div class="spa-item"><div><b>Классический массаж 60 мин</b><small>расслабляющий · спина и шея</small></div><span class="spa-price">320 TJS</span></div>
+          <div class="spa-item"><div><b>Spa-программа «Райский сад» · 2ч</b><small>массаж + пилинг + маска</small></div><span class="spa-price">680 TJS</span></div>
+          <div class="spa-item"><div><b>Хамам + пилинг</b><small>турецкая баня · 90 минут</small></div><span class="spa-price">480 TJS</span></div>
+          <div class="spa-item"><div><b>Детокс-программа · 3ч</b><small>обёртывание + массаж + чай</small></div><span class="spa-price">920 TJS</span></div>
+          <div class="spa-item"><div><b>Wellness для двоих</b><small>2 часа · массаж + джакузи + вино</small></div><span class="spa-price">1 480 TJS</span></div>
+          <div class="spa-item"><div><b>Антистресс-программа</b><small>для бизнес-гостей · 90 минут</small></div><span class="spa-price">520 TJS</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KIDS CLUB -->
+<section class="section cream" id="kids">
+  <div class="wrap">
+    <div class="head">
+      <h2>Детский клуб и программы для малышей</h2>
+      <p>Родители отдыхают, дети заняты с воспитателями. Детский клуб с развивающими программами, няни по запросу, детское меню в ресторане.</p>
+    </div>
+    <div class="kids-layout">
+      <div class="kids-photo">
+        <div class="photo-caption">
+          <b>Детский клуб «Sunshine»</b>
+          <span>дети 3–12 лет · воспитатели · развивающие игры · 8:00–22:00</span>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin:0 0 14px;font-size:18px">🧒 Программы и услуги</h3>
+        <div class="kids-programs">
+          <div class="kids-program"><div class="ico">🎨</div><div><b>Творческая мастерская</b><small>рисование, лепка, поделки</small></div><span class="kids-time">10:00–12:00</span></div>
+          <div class="kids-program"><div class="ico">🏃</div><div><b>Спортивные игры</b><small>футбол, бассейн, эстафеты</small></div><span class="kids-time">14:00–16:00</span></div>
+          <div class="kids-program"><div class="ico">📚</div><div><b>Чтение и сказки</b><small>с интерактивом и анимацией</small></div><span class="kids-time">16:00–17:00</span></div>
+          <div class="kids-program"><div class="ico">🍕</div><div><b>Детская кухня</b><small>готовят пиццу и печенье</small></div><span class="kids-time">17:00–18:00</span></div>
+          <div class="kids-program"><div class="ico">🎬</div><div><b>Мультфильмы и кино</b><small>в кинозале отеля</small></div><span class="kids-time">19:00–21:00</span></div>
+          <div class="kids-program"><div class="ico">👶</div><div><b>Няня по запросу</b><small>сертифицированные няни 24/7</small></div><span class="kids-time">по запросу</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOUSEKEEPING -->
+<section class="section mint" id="housekeeping">
+  <div class="wrap">
+    <div class="head">
+      <h2>Housekeeping: цифровая панель горничных</h2>
+      <p>Горничная видит на телефоне, какие номера нужно убрать, в каком порядке и что особенного (extra towels, late checkout). Администратор контролирует статус уборки в реальном времени.</p>
+    </div>
+    <div class="house-grid">
+      <div class="house-floor">
+        <div class="house-head"><b>🏢 Этаж 1</b><span>4 номера</span></div>
+        <div class="h-room occupied"><div class="hr-top"><span><span class="hr-emoji">👤</span>101 · Deluxe</span><span style="opacity:.75">гость</span></div><div class="hr-meta">Выезд завтра · поздний check-out</div></div>
+        <div class="h-room dirty"><div class="hr-top"><span><span class="hr-emoji">🧹</span>102 · Standard</span><span>требует</span></div><div class="hr-meta">Гость выехал 09:30 · приоритет</div></div>
+        <div class="h-room cleaning"><div class="hr-top"><span><span class="hr-emoji">✨</span>103 · Suite</span><span>в процессе</span></div><div class="hr-meta">Горничная: Нигина · 25 минут</div></div>
+        <div class="h-room clean"><div class="hr-top"><span><span class="hr-emoji">✓</span>104 · Family</span><span>готово</span></div><div class="hr-meta">Проверено 11:20 · мини-бар полон</div></div>
+      </div>
+      <div class="house-floor">
+        <div class="house-head"><b>🏢 Этаж 2</b><span>4 номера</span></div>
+        <div class="h-room occupied"><div class="hr-top"><span><span class="hr-emoji">👤</span>201 · Standard</span><span style="opacity:.75">гость</span></div><div class="hr-meta">Заезд сегодня · поздний 22:00</div></div>
+        <div class="h-room clean"><div class="hr-top"><span><span class="hr-emoji">✓</span>202 · Deluxe</span><span>готово</span></div><div class="hr-meta">Готово к заселению</div></div>
+        <div class="h-room occupied"><div class="hr-top"><span><span class="hr-emoji">👤</span>203 · Suite</span><span style="opacity:.75">VIP</span></div><div class="hr-meta">Platinum · не беспокоить</div></div>
+        <div class="h-room dirty"><div class="hr-top"><span><span class="hr-emoji">🧹</span>204 · Standard</span><span>требует</span></div><div class="hr-meta">Экспресс-уборка · 15 мин</div></div>
+      </div>
+      <div class="house-floor">
+        <div class="house-head"><b>🏢 Этаж 3</b><span>4 номера</span></div>
+        <div class="h-room clean"><div class="hr-top"><span><span class="hr-emoji">✓</span>301 · Family</span><span>готово</span></div><div class="hr-meta">Детская кроватка · welcome fruit</div></div>
+        <div class="h-room occupied"><div class="hr-top"><span><span class="hr-emoji">👤</span>302 · Standard</span><span style="opacity:.75">гость</span></div><div class="hr-meta">Проживание 3 ночи</div></div>
+        <div class="h-room occupied"><div class="hr-top"><span><span class="hr-emoji">👤</span>303 · Suite</span><span style="opacity:.75">гость</span></div><div class="hr-meta">Проживание 7 ночей</div></div>
+        <div class="h-room dirty"><div class="hr-top"><span><span class="hr-emoji">🧹</span>304 · Deluxe</span><span>требует</span></div><div class="hr-meta">Выезд 10:45 · глубокая уборка</div></div>
+      </div>
+      <div class="house-floor" style="background:linear-gradient(135deg,#0f172a,#0ea5e9);color:#fff;border-color:#334155">
+        <div class="house-head"><b style="color:#fff">📊 Сводка дня</b><span style="color:#bae6fd">12 номеров</span></div>
+        <div style="background:rgba(255,255,255,.10);border-radius:14px;padding:12px;margin-bottom:8px"><b style="font-size:13px;display:block;color:#fff">✓ Готово к заселению</b><span style="color:#16a76f;font-weight:950;font-size:24px">4</span></div>
+        <div style="background:rgba(255,255,255,.10);border-radius:14px;padding:12px;margin-bottom:8px"><b style="font-size:13px;display:block;color:#fff">🧹 Требует уборки</b><span style="color:#fff;font-weight:950;font-size:24px">4</span></div>
+        <div style="background:rgba(255,255,255,.10);border-radius:14px;padding:12px;margin-bottom:8px"><b style="font-size:13px;display:block;color:#fff">✨ В процессе</b><span style="color:#38bdf8;font-weight:950;font-size:24px">1</span></div>
+        <div style="background:rgba(255,255,255,.10);border-radius:14px;padding:12px"><b style="font-size:13px;display:block;color:#fff">👤 Проживают</b><span style="color:#fff;font-weight:950;font-size:24px">6</span></div>
+        <div style="margin-top:10px;font-size:12px;color:#bae6fd;font-weight:850">Загрузка <b style="color:#16a76f">75%</b> · Среднее время уборки <b style="color:#38bdf8">28 мин</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOYALTY -->
+<section class="section white" id="loyalty">
+  <div class="wrap">
+    <div class="head">
+      <h2>Программа лояльности для постоянных гостей</h2>
+      <p>Гость копит ночи, получает персональные скидки, ранний заезд/поздний выезд, апгрейд номера. Platinum-члены получают бесплатный трансфер и комплимент от шефа.</p>
+    </div>
+    <div class="loyalty-layout">
+      <div class="card">
+        <h3>Уровни программы</h3>
+        <div class="tier-list" style="margin-top:14px">
+          <div class="tier"><div class="tier-icon">🥉</div><div><b>Classic</b><small>регистрация, 5% бонусы ночами, стандартные привилегии</small></div><div class="tier-stat"><b>2 480</b><span>гостей</span></div></div>
+          <div class="tier"><div class="tier-icon">🥈</div><div><b>Silver</b><small>10% бонусы, бесплатный завтрак, поздний выезд до 14:00</small></div><div class="tier-stat"><b>820</b><span>гостей</span></div></div>
+          <div class="tier featured"><div class="tier-icon">🥇</div><div><b>Gold</b><small>15% бонусы, апгрейд номера при наличии, комплимент</small></div><div class="tier-stat"><b>320</b><span>гостей</span></div></div>
+          <div class="tier"><div class="tier-icon">💎</div><div><b>Platinum</b><small>20% бонусы, бесплатный трансфер, ранний заезд/поздний выезд</small></div><div class="tier-stat"><b>96</b><span>гостей</span></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="guest-cabinet">
+          <span class="vip-badge">👑 Platinum Member</span>
+          <b style="font-size:18px;display:block;margin:8px 0">Мадина Саидова</b>
+          <p style="color:#bae6fd;font-size:13px;margin:0 0 14px">14 ночей · 28 400 бонусов · 9 визитов</p>
+          <div style="background:rgba(255,255,255,.10);border-radius:14px;padding:14px;margin-bottom:14px">
+            <div class="row"><span>Ближайшее бронирование</span><b>26.06 · Suite Panorama</b></div>
+            <div class="row"><span>Бесплатный трансфер</span><b style="color:#fff">включён</b></div>
+            <div class="row"><span>Комплимент от шефа</span><b style="color:#fff">приветственное</b></div>
+            <div class="row"><span>Промокод на 20% скидку</span><b style="color:#fff">PLAT-MADINA</b></div>
+          </div>
+          <div class="bar" style="background:rgba(255,255,255,.18)"><i style="width:78%;background:#fff"></i></div>
+        </div>
+        <div class="grid-2" style="margin-top:14px">
+          <div class="action-card"><b>+34%</b><span>повторных гостей</span></div>
+          <div class="action-card"><b>+22%</b><span>средний чек</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOBILE APP -->
+<section class="section sky" id="app">
+  <div class="wrap">
+    <div class="head">
+      <h2>Мобильное приложение гостя</h2>
+      <p>Гость скачивает приложение и управляет всем из одного экрана: бронирования, чеки, ключ от номера, консьерж, заказ еды, карта отеля. Push-уведомления и QR-код для входа в номер.</p>
+    </div>
+    <div class="app-layout">
+      <div class="phone-mockup">
+        <div class="phone-screen">
+          <div class="phone-status">
+            <span>9:41</span>
+            <span>●●●●● WiFi 100%</span>
+          </div>
+          <div class="phone-content">
+            <div class="phone-greeting">
+              <b>Добро пожаловать,</b>
+              <small>Мадина · комната 218</small>
+            </div>
+            <div class="phone-card gold-card">
+              <b>Suite Panorama</b>
+              <small>заезд 26.06 · 3 ночи</small>
+              <div class="big-num">PLAT-218</div>
+              <small style="color:#fff">QR для входа в номер</small>
+            </div>
+            <div class="phone-actions">
+              <button class="primary">🍽 Еда</button>
+              <button>🚖 Трансфер</button>
+              <button>💆 Spa</button>
+              <button>🏛 Тур</button>
+            </div>
+            <div class="phone-card" style="margin-top:8px">
+              <b>Счёт за номер</b>
+              <small>проживание + услуги</small>
+              <div class="big-num">14 400 TJS</div>
+            </div>
+            <div class="phone-card">
+              <b>🤖 Консьерж 24/7</b>
+              <small>«Хочу заказать ужин»</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin:0 0 14px;font-size:18px">📱 Возможности приложения</h3>
+        <div class="app-features">
+          <div class="app-feat"><div class="ico">🔑</div><div><b>Цифровой ключ от номера</b><small>QR-код для входа · работает с любым замком</small></div></div>
+          <div class="app-feat"><div class="ico">📋</div><div><b>Бронирования в одном месте</b><small>текущие, прошлые, будущие · одним тапом</small></div></div>
+          <div class="app-feat"><div class="ico">💳</div><div><b>Цифровой счёт и оплата</b><small>проживание + услуги · Apple/Google Pay</small></div></div>
+          <div class="app-feat"><div class="ico">🤖</div><div><b>Чат с консьержем 24/7</b><small>AI-помощник + живой оператор</small></div></div>
+          <div class="app-feat"><div class="ico">🍽</div><div><b>Заказ еды в номер</b><small>меню ресторана · доставка за 35 минут</small></div></div>
+          <div class="app-feat"><div class="ico">🗺</div><div><b>Карта отеля и города</b><small>навигация по отелю · достопримечательности</small></div></div>
+          <div class="app-feat"><div class="ico">⭐</div><div><b>Отзыв после выезда</b><small>NPS · рейтинг · фото</small></div></div>
+          <div class="app-feat"><div class="ico">🎁</div><div><b>Бонусы и промокоды</b><small>loyalty · реферальная программа</small></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section white" id="reviews">
+  <div class="wrap">
+    <div class="head">
+      <h2>Отзывы гостей — репутация отеля</h2>
+      <p>Все отзывы с Booking, TripAdvisor, Google и внутренней системы — в одной панели. AI анализирует тональность, владелец видит, что хвалят и что улучшить.</p>
+    </div>
+    <div style="display:flex;gap:18px;align-items:center;margin-bottom:18px;flex-wrap:wrap">
+      <div style="background:linear-gradient(135deg,#0f172a,#0ea5e9);color:#fff;padding:18px 24px;border-radius:22px;display:flex;gap:18px;align-items:center"><div><b style="font-size:36px;display:block;letter-spacing:-.02em">4.9</b><small style="color:#bae6fd">из 5</small></div><div><div style="color:#fff;font-size:18px;letter-spacing:4px">★★★★★</div><small style="color:#bae6fd">на основе 1 284 отзывов</small></div></div>
+      <div style="background:#fff;border:1px solid #e6edf7;border-radius:22px;padding:14px 18px;display:flex;gap:18px"><div><b style="font-size:24px;color:#0f172a">9.2</b><small style="display:block;color:#65778d">Booking</small></div><div><b style="font-size:24px;color:#0f172a">4.8</b><small style="display:block;color:#65778d">TripAdvisor</small></div><div><b style="font-size:24px;color:#0f172a">4.9</b><small style="display:block;color:#65778d">Google</small></div></div>
+    </div>
+    <div class="reviews-grid">
+      <div class="review">
+        <span class="review-quote">"</span>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">Невероятный отель! Suite с панорамой гор — это что-то невероятное. Персонал говорит на русском и английском, ресторан отличный, спа прекрасный. Однозначно вернёмся!</p>
+        <div class="review-author"><div class="review-avatar">МС</div><div><b>Мадина Саидова</b><small>Душанбе · 12.06.2026 · Suite Panorama</small></div></div>
+      </div>
+      <div class="review">
+        <span class="review-quote">"</span>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">Бронировал через сайт — всё за 2 минуты. Утром встретили в аэропорту с табличкой. Консьерж в Telegram помог с билетами на концерт. Сервис как в 5-звёздочном отеле!</p>
+        <div class="review-author"><div class="review-avatar">ФА</div><div><b>Фаррух Алиев</b><small>Москва · 08.06.2026 · Deluxe</small></div></div>
+      </div>
+      <div class="review">
+        <span class="review-quote">"</span>
+        <div class="review-stars">★★★★☆</div>
+        <p class="review-text">Отличный Family Room с детской кроваткой. Детский клуб — спасение для родителей! Единственное — Wi-Fi в номере на верхнем этаже иногда тормозит. В остальном всё супер.</p>
+        <div class="review-author"><div class="review-avatar">ОР</div><div><b>Олимджон Рахимов</b><small>Худжанд · 02.06.2026 · Family Room</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADMIN -->
+<section class="section cream" id="admin">
+  <div class="wrap">
+    <div class="head">
+      <h2>Админ-панель владельца отеля</h2>
+      <p>Загрузка номеров, бронирования, гости, цены, housekeeping, консьерж-сервис, маркетинг, отчёты — всё в одном окне с мобильной версией для менеджера.</p>
+    </div>
+    <div class="dash">
+      <aside class="side">
+        <button class="active" onclick="showHotelAdmin('dashboard',this)">📊 Dashboard</button>
+        <button onclick="showHotelAdmin('bookings',this)">📅 Бронирования</button>
+        <button onclick="showHotelAdmin('guests',this)">👥 Гости</button>
+        <button onclick="showHotelAdmin('pricing',this)">💰 Цены</button>
+        <button onclick="showHotelAdmin('hk',this)">🧹 Housekeeping</button>
+        <button onclick="showHotelAdmin('staff',this)">👨‍💼 Персонал</button>
+        <button onclick="showHotelAdmin('restaurant',this)">🍽 Ресторан</button>
+        <button onclick="showHotelAdmin('reviews',this)">⭐ Отзывы</button>
+        <button onclick="showHotelAdmin('reports',this)">📈 Отчёты</button>
+      </aside>
+      <div id="hotelAdminView" class="admin-view"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section sky" id="contact">
+  <div class="wrap">
+    <div class="card" style="padding:34px;background:linear-gradient(135deg,#fff,#e0f2fe);border:1px solid #bae6fd">
+      <div class="head" style="margin-bottom:0">
+        <div>
+          <div class="kicker" style="background:linear-gradient(135deg,#0f172a,#0ea5e9);color:#fff;border:0"><span class="dot"></span> Запуск под ваш отель</div>
+          <h2>Настроим Hotel OS под ваш номерной фонд, цены и сервис</h2>
+        </div>
+        <p>Подключим сайт, бронирование, динамические цены, программу лояльности, консьерж-бота, housekeeping, PMS, мобильное приложение гостя, отчёты владельцу и интеграцию с Booking/Airbnb.</p>
+      </div>
+      <div class="actions" style="margin:26px 0 0">
+        <a class="btn" href="tel:+992666666960">+992 666-666-960</a>
+        <a class="btn gold" href="https://webcorex.net">webcorex.net</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div class="brand"><div class="logo">W</div><div><b style="color:#fff">WEBCOREX</b><p>Hotel OS · сайт, бронирование, консьерж, housekeeping, ресторан, spa и лояльность для отелей</p></div></div>
+    <div class="contact">
+      <a href="tel:+992666666960">+992 666-666-960</a>
+      <a href="https://webcorex.net">webcorex.net</a>
+      <a href="#top">Наверх ↑</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ===== TOURS TAB =====
+function pickTourTab(el){el.parentElement.querySelectorAll('.tour-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active')}
+
+// ===== MAP POI =====
+function setPOI(t,s){document.getElementById('poiTitle').textContent=t;document.getElementById('poiSub').textContent=s}
+
+// ===== ADMIN VIEWS =====
+const hotelAdminViews={
+dashboard:`<div class="admin-title"><div><h3>Центр управления отелем</h3><p>Загрузка, бронирования, гости и финансы в реальном времени.</p></div><span class="tag">live</span></div>
+<div class="kpis">
+  <div class="kpi"><span>Загрузка сегодня</span><b>82%</b><small>↑ 8%</small></div>
+  <div class="kpi"><span>Выручка за день</span><b>68 400</b><small>TJS</small></div>
+  <div class="kpi"><span>Заезды</span><b>14</b><small>гостей</small></div>
+  <div class="kpi"><span>ADR · средняя цена</span><b>3 920</b><small>TJS ↑ 12%</small></div>
+</div>
+<div class="grid-2">
+  <div class="card"><h3>Загрузка по дням недели</h3><div class="chart"><div style="--h:42%" data-m="Пн"></div><div style="--h:58%" data-m="Вт"></div><div style="--h:50%" data-m="Ср"></div><div style="--h:76%" data-m="Чт"></div><div style="--h:63%" data-m="Пт"></div><div style="--h:88%" data-m="Сб"></div><div style="--h:70%" data-m="Вс"></div></div></div>
+  <div class="card glow-card"><h3>AI-рекомендация</h3><p>В ближайшие 2 недели конференция заполнит отель на 100%. Поднимите цену на Suite на 15% — это добавит <b style="color:#fff">+184 000 TJS</b> выручки.</p><div class="bar"><i style="width:86%"></i></div></div>
+</div>`,
+
+bookings:`<div class="admin-title"><div><h3>Бронирования и заезды</h3><p>Все брони с типом номера, источником, оплатой и статусом.</p></div><span class="tag hot">5 требуют внимания</span></div>
+<div class="data-table">
+  <div class="data-row"><div><b>#A4-218 · Suite Panorama</b><br><span>Мадина С. · 3 ночи · Platinum</span></div><span>прямое бронирование</span><span class="tag gold">VIP</span><small>check-in завтра</small></div>
+  <div class="data-row"><div><b>#B2-104 · Standard</b><br><span>Фаррух А. · 2 ночи</span></div><span>Booking.com</span><span class="tag green">заезд сегодня</span><small>предоплата 100%</small></div>
+  <div class="data-row"><div><b>#C1-301 · Family</b><br><span>Олимджон Р. · 7 ночей</span></div><span>сайт отеля</span><span class="tag">подтверждено</span><small>ребёнок 5 лет</small></div>
+  <div class="data-row"><div><b>#D2-205 · Deluxe</b><br><span>Джамиля Х. · 1 ночь</span></div><span>Airbnb</span><span class="tag wait">ждём предоплату</span><small>гостья без отзыва</small></div>
+</div>
+<div class="action-grid">
+  <div class="action-card"><b>32</b><span>активных бронирований</span></div>
+  <div class="action-card"><b>14</b><span>заездов сегодня</span></div>
+  <div class="action-card"><b>68%</b><span>прямых бронирований</span></div>
+</div>`,
+
+guests:`<div class="admin-title"><div><h3>База гостей и история</h3><p>Все гости с историей проживаний, предпочтениями и сегментацией.</p></div><span class="tag">3 720 гостей в базе</span></div>
+<div class="data-table">
+  <div class="data-row"><div><b>Мадина Саидова</b><br><span>Platinum · 14 ночей · 9 визитов</span></div><span>+992 900 12 34 56</span><span class="tag gold">VIP</span><small>любит Suite Panorama</small></div>
+  <div class="data-row"><div><b>Фаррух Алиев</b><br><span>Gold · 8 ночей · 4 визита</span></div><span>Telegram</span><span class="tag">постоянный</span><small>всегда Standard</small></div>
+  <div class="data-row"><div><b>Олимджон Рахимов</b><br><span>Silver · 3 ночи · 1 визит</span></div><span>+992 555 11 22 33</span><span class="tag blue">новый</span><small>семья с ребёнком</small></div>
+</div>`,
+
+pricing:`<div class="admin-title"><div><h3>Управление ценами</h3><p>Динамические цены по сезонам, дням недели и категориям номеров.</p></div><span class="tag gold">авто-цены</span></div>
+<div class="action-grid">
+  <div class="action-card"><b>5 400 TJS</b><span>Suite · высокий сезон</span></div>
+  <div class="action-card"><b>4 200 TJS</b><span>Deluxe · будни</span></div>
+  <div class="action-card"><b>2 600 TJS</b><span>Standard · низкий сезон</span></div>
+</div>
+<div class="automation" style="margin-top:14px">
+  <div class="auto-card"><small>AI-pricing</small><b>оптимальная цена</b><p>система рекомендует цену на основе спроса и конкурентов</p></div>
+  <div class="auto-card"><small>Правила</small><b>дни недели</b><p>автоповышение цен на пятницу–субботу на +30%</p></div>
+  <div class="auto-card"><small>Конкуренты</small><b>мониторинг</b><p>ежедневный парсинг цен конкурентов в регионе</p></div>
+  <div class="auto-card"><small>Last-minute</small><b>скидки</b><p>автоскидка 20% на непроданные номера за 3 дня</p></div>
+</div>`,
+
+hk:`<div class="admin-title"><div><h3>Housekeeping</h3><p>Статусы уборки, горничные, контроль качества и мини-бар.</p></div><span class="tag">live</span></div>
+<div class="grid-2">
+  <div class="card"><h3>Загрузка горничных</h3>
+    <div style="display:grid;gap:8px;margin-top:12px">
+      <div style="display:flex;justify-content:space-between;background:#e0f2fe;padding:10px 14px;border-radius:14px"><b>Нигина</b><span>4 номера · 92 мин</span></div>
+      <div style="display:flex;justify-content:space-between;background:#e0f2fe;padding:10px 14px;border-radius:14px"><b>Мадина</b><span>3 номера · 68 мин</span></div>
+      <div style="display:flex;justify-content:space-between;background:#e0f2fe;padding:10px 14px;border-radius:14px"><b>Зара</b><span>5 номеров · 115 мин</span></div>
+    </div>
+  </div>
+  <div class="card glow-card"><h3>Среднее время уборки</h3><p style="color:#bae6fd">28 минут на номер — на 12% быстрее, чем в среднем по рынку. Качество: <b style="color:#fff">4.9 / 5</b> по оценкам гостей.</p><div class="bar"><i style="width:88%"></i></div><p style="color:#bae6fd;margin-top:14px">Автоматический контроль: если номер красный больше 20 минут — горничная получает уведомление.</p></div>
+</div>`,
+
+staff:`<div class="admin-title"><div><h3>Персонал отеля</h3><p>Администраторы, горничные, шеф-повар, консьерж и KPI каждого.</p></div><span class="tag">команда 24</span></div>
+<div class="data-table">
+  <div class="data-row"><div><b>Зебо (администратор)</b><br><span>смена 07:00–19:00 · 12ч</span></div><span>★ 4.9 гостей</span><span class="tag green">отлично</span><small>заселила 14 гостей</small></div>
+  <div class="data-row"><div><b>Нигина (старшая горничная)</b><br><span>смена 08:00–17:00</span></div><span>★ 4.8 номеров</span><span class="tag green">отлично</span><small>4 уборки сегодня</small></div>
+  <div class="data-row"><div><b>Джамшед (консьерж)</b><br><span>смена 09:00–21:00</span></div><span>★ 4.9 рекомендаций</span><span class="tag green">отлично</span><small>организовал 6 туров</small></div>
+  <div class="data-row"><div><b>Джамшед (шеф-повар)</b><br><span>смена 11:00–23:00</span></div><span>★ 4.9 блюд</span><span class="tag gold">лидер</span><small>124 блюда в день</small></div>
+</div>`,
+
+restaurant:`<div class="admin-title"><div><h3>Ресторан отеля</h3><p>Заказы, бронирования столиков, выручка и популярные блюда.</p></div><span class="tag">сегодня · live</span></div>
+<div class="action-grid">
+  <div class="action-card"><b>84</b><span>заказов сегодня</span></div>
+  <div class="action-card"><b>18 200</b><span>выручка зала, TJS</span></div>
+  <div class="action-card"><b>22</b><span>броней столиков</span></div>
+</div>
+<div class="data-table" style="margin-top:14px">
+  <div class="data-row"><div><b>Пицца «Деревенская»</b><br><span>★ 4.8 · 18 заказов сегодня</span></div><span>89 TJS</span><span class="tag green">хит</span><small>маржа 68%</small></div>
+  <div class="data-row"><div><b>Стейк Рибай 300г</b><br><span>★ 4.9 · 12 заказов</span></div><span>189 TJS</span><span class="tag gold">премиум</span><small>маржа 74%</small></div>
+  <div class="data-row"><div><b>Тирамису</b><br><span>★ 4.9 · 24 заказа</span></div><span>42 TJS</span><span class="tag green">хит</span><small>маржа 82%</small></div>
+</div>`,
+
+reviews:`<div class="admin-title"><div><h3>Отзывы и рейтинг</h3><p>Все отзывы с Booking, TripAdvisor, Google и внутренней системы + AI-анализ тональности.</p></div><span class="tag gold">9.2 / 10</span></div>
+<div class="action-grid">
+  <div class="action-card"><b>1 284</b><span>отзывов за год</span></div>
+  <div class="action-card"><b>96%</b><span>положительных</span></div>
+  <div class="action-card"><b>+12</b><span>за неделю</span></div>
+</div>
+<div class="card" style="margin-top:14px"><h3>Что хвалят и что улучшить</h3><p><b style="color:#0f172a">Хвалят:</b> «отличный персонал», «чистые номера», «вкусные завтраки», «помощь консьержа». <b style="color:#0f172a">Точки роста:</b> скорость check-in в часы пик и Wi-Fi в номерах верхних этажей.</p></div>`,
+
+reports:`<div class="admin-title"><div><h3>Отчёты владельца</h3><p>ADR, RevPAR, загрузка, выручка по каналам и автоматические отчёты.</p></div><span class="tag">PDF/Excel/Telegram</span></div>
+<div class="action-grid">
+  <div class="action-card"><b>2.18M TJS</b><span>выручка за месяц</span></div>
+  <div class="action-card"><b>74%</b><span>средняя загрузка</span></div>
+  <div class="action-card"><b>3 920 TJS</b><span>ADR · средняя цена за номер</span></div>
+</div>
+<div class="card"><h3>Что получает владелец в ежедневном отчёте</h3><p>Загрузка номеров по категориям, ADR, RevPAR, источники бронирований (прямые vs Booking vs Airbnb), средний чек, допуслуги (ресторан, спа, трансфер), отзывы, KPI персонала и AI-рекомендации по ценам на следующий период.</p></div>`
+};
+
+function showHotelAdmin(tab,btn){
+  document.getElementById('hotelAdminView').innerHTML=hotelAdminViews[tab]||hotelAdminViews.dashboard;
+  document.querySelectorAll('#admin .side button').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+}
+
+showHotelAdmin('dashboard');
+</script>
+</body>
+</html>
