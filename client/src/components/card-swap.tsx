@@ -72,8 +72,8 @@ export function CardSwap({
     <div
       className="relative w-full select-none"
       style={{ perspective: "1100px", height: containerHeight }}
-      onMouseEnter={() => pauseOnHover && setPaused(true)}
-      onMouseLeave={() => pauseOnHover && setPaused(false)}
+      onMouseEnter={() => !isMobile && pauseOnHover && setPaused(true)}
+      onMouseLeave={() => !isMobile && pauseOnHover && setPaused(false)}
     >
       <div className="absolute inset-0 flex items-center justify-center">
         <div
