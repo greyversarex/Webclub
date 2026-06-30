@@ -70,7 +70,7 @@ export function CardSwap({
 
   return (
     <div
-      className="relative w-full select-none overflow-hidden"
+      className="relative w-full select-none"
       style={{ perspective: "1100px", height: containerHeight }}
       onMouseEnter={() => pauseOnHover && setPaused(true)}
       onMouseLeave={() => pauseOnHover && setPaused(false)}
