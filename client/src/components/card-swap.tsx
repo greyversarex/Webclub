@@ -60,7 +60,7 @@ export function CardSwap({
 
   const total = cards.length;
 
-  const effCardDistance = isMobile ? 26 : cardDistance;
+  const effCardDistance = isMobile ? 0 : cardDistance;
   const effVerticalDistance = isMobile ? 44 : verticalDistance;
   const containerHeight = isMobile ? 430 : 560;
   const stackHeight = isMobile ? 300 : 360;
