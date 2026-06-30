@@ -37,7 +37,7 @@ export default function Home() {
         <Header />
         <main>
           <HeroSection />
-          <AppsShowcaseSection />
+          {!isMobile && <AppsShowcaseSection />}
           <WhatWeBuildSection />
           <PortfolioSection />
           <TechStackSection />
