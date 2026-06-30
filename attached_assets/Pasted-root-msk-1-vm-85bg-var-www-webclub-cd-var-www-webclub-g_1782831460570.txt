@@ -1,0 +1,293 @@
+root@msk-1-vm-85bg:/var/www/webclub# cd /var/www/webclub && git pull
+Already up to date.
+root@msk-1-vm-85bg:/var/www/webclub# cd /var/www/webclub && git pull
+remote: Enumerating objects: 31, done.
+remote: Counting objects: 100% (31/31), done.
+remote: Compressing objects: 100% (6/6), done.
+remote: Total 20 (delta 14), reused 20 (delta 14), pack-reused 0 (from 0)
+Unpacking objects: 100% (20/20), 176.11 KiB | 1.73 MiB/s, done.
+From https://github.com/greyversarex/Webclub
+   1551a51..81d722a  main       -> origin/main
+Updating 1551a51..81d722a
+Fast-forward
+ .agents/memory/MEMORY.md                           |   1 +
+ .agents/memory/hero-orbit-comet-sync.md            |  15 ++
+ .replit                                            |   8 +-
+ ...www-webclub-git-pull-npm-run-_1782831098059.txt | 235 +++++++++++++++++++++
+ attached_assets/image_1782830052899.png            | Bin 0 -> 173413 bytes
+ client/src/components/hero-showcase.tsx            |  52 ++++-
+ client/src/index.css                               |   8 -
+ 7 files changed, 298 insertions(+), 21 deletions(-)
+ create mode 100644 .agents/memory/hero-orbit-comet-sync.md
+ create mode 100644 attached_assets/Pasted-root-msk-1-vm-85bg-cd-var-www-webclub-git-pull-npm-run-_1782831098059.txt
+ create mode 100644 attached_assets/image_1782830052899.png
+root@msk-1-vm-85bg:/var/www/webclub# NODE_OPTIONS=--max-old-space-size=2048 npm run build
+
+> rest-express@1.0.0 build
+> tsx script/build.ts
+
+building client...
+vite v5.4.20 building for production...
+transforming (1) index.htmlBrowserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+transforming (5) ../node_modules/@tanstack/react-query/build/modern/index.j
+A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+✓ 78 modules transformed.
+x Build failed in 7.10s
+[vite]: Rollup failed to resolve import "ogl" from "/var/www/webclub/client/src/components/galaxy-background.tsx".
+This is most likely unintended because it can break your application at runtime.
+If you do want to externalize this module explicitly add it to
+`build.rollupOptions.external`
+    at viteWarn (/var/www/webclub/node_modules/vite/dist/node/chunks/dep-D_zLpgQd.js:65854:17)
+    at onwarn (/var/www/webclub/node_modules/@vitejs/plugin-react/dist/index.js:90:7)
+    at onRollupWarning (/var/www/webclub/node_modules/vite/dist/node/chunks/dep-D_zLpgQd.js:65884:5)
+    at onwarn (/var/www/webclub/node_modules/vite/dist/node/chunks/dep-D_zLpgQd.js:65549:7)
+    at <anonymous> (/var/www/webclub/node_modules/rollup/dist/es/shared/node-entry.js:19452:13)
+    at Object.logger (/var/www/webclub/node_modules/rollup/dist/es/shared/node-entry.js:21178:9)
+    at ModuleLoader.handleInvalidResolvedId (/var/www/webclub/node_modules/rollup/dist/es/shared/node-entry.js:20067:26)
+    at <anonymous> (/var/www/webclub/node_modules/rollup/dist/es/shared/node-entry.js:20025:26) {
+  watchFiles: [
+    '/var/www/webclub/client/index.html',
+    '/var/www/webclub/client/src/main.tsx',
+    '/var/www/webclub/package.json',
+    '/var/www/webclub/client/src/index.css',
+    '/var/www/webclub/node_modules/react/jsx-runtime.js',
+    '/var/www/webclub/client/src/App.tsx',
+    '/var/www/webclub/node_modules/react-dom/client.js',
+    '/var/www/webclub/node_modules/react/cjs/react-jsx-runtime.production.min.js',
+    '/var/www/webclub/node_modules/react-dom/index.js',
+    '/var/www/webclub/node_modules/@tanstack/react-query/build/modern/index.js',
+    '/var/www/webclub/node_modules/react/index.js',
+    '/var/www/webclub/node_modules/wouter/esm/index.js',
+    '/var/www/webclub/client/src/lib/queryClient.ts',
+    '/var/www/webclub/client/src/components/ui/toaster.tsx',
+    '/var/www/webclub/client/src/components/theme-provider.tsx',
+    '/var/www/webclub/client/src/lib/language-context.tsx',
+    '/var/www/webclub/client/src/components/ui/tooltip.tsx',
+    '/var/www/webclub/client/src/pages/home.tsx',
+    '/var/www/webclub/client/src/components/intro-animation.tsx',
+    '/var/www/webclub/client/src/components/floating-contact.tsx',
+    '/var/www/webclub/client/src/pages/not-found.tsx',
+    '/var/www/webclub/client/src/hooks/use-network-quality.ts',
+    '/var/www/webclub/client/src/hooks/use-scroll-animation.ts',
+    '/var/www/webclub/client/src/hooks/use-toast.ts',
+    '/var/www/webclub/client/src/lib/translations.ts',
+    '/var/www/webclub/client/src/lib/utils.ts',
+    '/var/www/webclub/client/src/components/adaptive-video.tsx',
+    '/var/www/webclub/client/src/components/advantages-section.tsx',
+    '/var/www/webclub/client/src/components/apps-showcase-section.tsx',
+    '/var/www/webclub/client/src/components/chat-widget.tsx',
+    '/var/www/webclub/client/src/components/circuit-background.tsx',
+    '/var/www/webclub/client/src/components/contact-section.tsx',
+    '/var/www/webclub/client/src/components/cursor-illumination.tsx',
+    '/var/www/webclub/client/src/components/electric-pulses.tsx',
+    '/var/www/webclub/client/src/components/falling-numbers.tsx',
+    '/var/www/webclub/client/src/components/footer.tsx',
+    '/var/www/webclub/client/src/components/galaxy-background.tsx',
+    '/var/www/webclub/client/src/components/header.tsx',
+    '/var/www/webclub/client/src/components/hero-section.tsx',
+    '/var/www/webclub/client/src/components/hero-showcase.tsx',
+    '/var/www/webclub/client/src/components/interactive-background.tsx',
+    '/var/www/webclub/client/src/components/magic-rings.tsx',
+    '/var/www/webclub/client/src/components/mini-runner-game.tsx',
+    '/var/www/webclub/client/src/components/portfolio-section.tsx',
+    '/var/www/webclub/client/src/components/process-section.tsx',
+    '/var/www/webclub/client/src/components/services-section.tsx',
+    '/var/www/webclub/client/src/components/tech-stack-section.tsx',
+    '/var/www/webclub/client/src/components/testimonials-section.tsx',
+    '/var/www/webclub/client/src/components/theme-toggle.tsx',
+    '/var/www/webclub/client/src/components/what-we-build-section.tsx',
+    '/var/www/webclub/client/src/hooks/use-mobile.tsx',
+    '/var/www/webclub/client/src/components/ui/accordion.tsx',
+    '/var/www/webclub/client/src/components/ui/alert-dialog.tsx',
+    '/var/www/webclub/client/src/components/ui/alert.tsx',
+    '/var/www/webclub/client/src/components/ui/aspect-ratio.tsx',
+    '/var/www/webclub/client/src/components/ui/avatar.tsx',
+    '/var/www/webclub/client/src/components/ui/badge.tsx',
+    '/var/www/webclub/client/src/components/ui/breadcrumb.tsx',
+    '/var/www/webclub/client/src/components/ui/button.tsx',
+    '/var/www/webclub/client/src/components/ui/calendar.tsx',
+    '/var/www/webclub/client/src/components/ui/card.tsx',
+    '/var/www/webclub/client/src/components/ui/carousel.tsx',
+    '/var/www/webclub/client/src/components/ui/chart.tsx',
+    '/var/www/webclub/client/src/components/ui/checkbox.tsx',
+    '/var/www/webclub/client/src/components/ui/collapsible.tsx',
+    '/var/www/webclub/client/src/components/ui/command.tsx',
+    '/var/www/webclub/client/src/components/ui/context-menu.tsx',
+    '/var/www/webclub/client/src/components/ui/dialog.tsx',
+    '/var/www/webclub/client/src/components/ui/drawer.tsx',
+    '/var/www/webclub/client/src/components/ui/dropdown-menu.tsx',
+    '/var/www/webclub/client/src/components/ui/form.tsx',
+    '/var/www/webclub/client/src/components/ui/hover-card.tsx',
+    '/var/www/webclub/client/src/components/ui/input-otp.tsx',
+    '/var/www/webclub/client/src/components/ui/input.tsx',
+    '/var/www/webclub/client/src/components/ui/label.tsx',
+    '/var/www/webclub/client/src/components/ui/menubar.tsx',
+    '/var/www/webclub/client/src/components/ui/navigation-menu.tsx',
+    '/var/www/webclub/client/src/components/ui/pagination.tsx',
+    '/var/www/webclub/client/src/components/ui/popover.tsx',
+    '/var/www/webclub/client/src/components/ui/progress.tsx',
+    '/var/www/webclub/client/src/components/ui/radio-group.tsx',
+    '/var/www/webclub/client/src/components/ui/resizable.tsx',
+    '/var/www/webclub/client/src/components/ui/scroll-area.tsx',
+    '/var/www/webclub/client/src/components/ui/select.tsx',
+    '/var/www/webclub/client/src/components/ui/separator.tsx',
+    '/var/www/webclub/client/src/components/ui/sheet.tsx',
+    '/var/www/webclub/client/src/components/ui/sidebar.tsx',
+    '/var/www/webclub/client/src/components/ui/skeleton.tsx',
+    '/var/www/webclub/client/src/components/ui/slider.tsx',
+    '/var/www/webclub/client/src/components/ui/switch.tsx',
+    '/var/www/webclub/client/src/components/ui/table.tsx',
+    '/var/www/webclub/client/src/components/ui/tabs.tsx',
+    '/var/www/webclub/client/src/components/ui/textarea.tsx',
+    '/var/www/webclub/client/src/components/ui/toast.tsx',
+    '/var/www/webclub/client/src/components/ui/toggle-group.tsx',
+    '/var/www/webclub/client/src/components/ui/toggle.tsx',
+    '/var/www/webclub/tailwind.config.ts',
+    '/var/www/webclub/node_modules/react-dom/cjs/react-dom.production.min.js',
+    '/var/www/webclub/node_modules/react/cjs/react.production.min.js',
+    '/var/www/webclub/node_modules/@tanstack/react-query/build/modern/types.js',
+    ... 40 more items
+  ]
+}
+root@msk-1-vm-85bg:/var/www/webclub# ^C
+root@msk-1-vm-85bg:/var/www/webclub# sudo fallocate -l 2G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+Setting up swapspace version 1, size = 2 GiB (2147479552 bytes)
+no label, UUID=37ac22eb-6fe6-4a81-9dab-608240b91ad8
+/swapfile none swap sw 0 0
+root@msk-1-vm-85bg:/var/www/webclub# NODE_OPTIONS=--max-old-space-size=2048 npm run build
+
+> rest-express@1.0.0 build
+> tsx script/build.ts
+
+building client...
+vite v5.4.20 building for production...
+transforming (1) index.htmlBrowserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+transforming (5) ../node_modules/wouter/esm/index.js
+A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+✓ 57 modules transformed.
+x Build failed in 4.71s
+[vite]: Rollup failed to resolve import "ogl" from "/var/www/webclub/client/src/components/galaxy-background.tsx".
+This is most likely unintended because it can break your application at runtime.
+If you do want to externalize this module explicitly add it to
+`build.rollupOptions.external`
+    at viteWarn (/var/www/webclub/node_modules/vite/dist/node/chunks/dep-D_zLpgQd.js:65854:17)
+    at onwarn (/var/www/webclub/node_modules/@vitejs/plugin-react/dist/index.js:90:7)
+    at onRollupWarning (/var/www/webclub/node_modules/vite/dist/node/chunks/dep-D_zLpgQd.js:65884:5)
+    at onwarn (/var/www/webclub/node_modules/vite/dist/node/chunks/dep-D_zLpgQd.js:65549:7)
+    at <anonymous> (/var/www/webclub/node_modules/rollup/dist/es/shared/node-entry.js:19452:13)
+    at Object.logger (/var/www/webclub/node_modules/rollup/dist/es/shared/node-entry.js:21178:9)
+    at ModuleLoader.handleInvalidResolvedId (/var/www/webclub/node_modules/rollup/dist/es/shared/node-entry.js:20067:26)
+    at <anonymous> (/var/www/webclub/node_modules/rollup/dist/es/shared/node-entry.js:20025:26) {
+  watchFiles: [
+    '/var/www/webclub/client/index.html',
+    '/var/www/webclub/client/src/main.tsx',
+    '/var/www/webclub/package.json',
+    '/var/www/webclub/node_modules/react/jsx-runtime.js',
+    '/var/www/webclub/node_modules/react-dom/client.js',
+    '/var/www/webclub/client/src/App.tsx',
+    '/var/www/webclub/client/src/index.css',
+    '/var/www/webclub/node_modules/react/cjs/react-jsx-runtime.production.min.js',
+    '/var/www/webclub/node_modules/react-dom/index.js',
+    '/var/www/webclub/node_modules/react/index.js',
+    '/var/www/webclub/node_modules/wouter/esm/index.js',
+    '/var/www/webclub/client/src/components/ui/toaster.tsx',
+    '/var/www/webclub/node_modules/@tanstack/react-query/build/modern/index.js',
+    '/var/www/webclub/client/src/lib/queryClient.ts',
+    '/var/www/webclub/client/src/components/theme-provider.tsx',
+    '/var/www/webclub/client/src/components/ui/tooltip.tsx',
+    '/var/www/webclub/client/src/lib/language-context.tsx',
+    '/var/www/webclub/client/src/components/intro-animation.tsx',
+    '/var/www/webclub/client/src/components/floating-contact.tsx',
+    '/var/www/webclub/client/src/pages/not-found.tsx',
+    '/var/www/webclub/client/src/pages/home.tsx',
+    '/var/www/webclub/client/src/hooks/use-network-quality.ts',
+    '/var/www/webclub/client/src/hooks/use-scroll-animation.ts',
+    '/var/www/webclub/client/src/hooks/use-toast.ts',
+    '/var/www/webclub/client/src/lib/translations.ts',
+    '/var/www/webclub/client/src/lib/utils.ts',
+    '/var/www/webclub/client/src/components/adaptive-video.tsx',
+    '/var/www/webclub/client/src/components/advantages-section.tsx',
+    '/var/www/webclub/client/src/components/apps-showcase-section.tsx',
+    '/var/www/webclub/client/src/components/chat-widget.tsx',
+    '/var/www/webclub/client/src/components/circuit-background.tsx',
+    '/var/www/webclub/client/src/components/contact-section.tsx',
+    '/var/www/webclub/client/src/components/cursor-illumination.tsx',
+    '/var/www/webclub/client/src/components/electric-pulses.tsx',
+    '/var/www/webclub/client/src/components/falling-numbers.tsx',
+    '/var/www/webclub/client/src/components/footer.tsx',
+    '/var/www/webclub/client/src/components/galaxy-background.tsx',
+    '/var/www/webclub/client/src/components/header.tsx',
+    '/var/www/webclub/client/src/components/hero-section.tsx',
+    '/var/www/webclub/client/src/components/hero-showcase.tsx',
+    '/var/www/webclub/client/src/components/interactive-background.tsx',
+    '/var/www/webclub/client/src/components/magic-rings.tsx',
+    '/var/www/webclub/client/src/components/mini-runner-game.tsx',
+    '/var/www/webclub/client/src/components/portfolio-section.tsx',
+    '/var/www/webclub/client/src/components/process-section.tsx',
+    '/var/www/webclub/client/src/components/services-section.tsx',
+    '/var/www/webclub/client/src/components/tech-stack-section.tsx',
+    '/var/www/webclub/client/src/components/testimonials-section.tsx',
+    '/var/www/webclub/client/src/components/theme-toggle.tsx',
+    '/var/www/webclub/client/src/components/what-we-build-section.tsx',
+    '/var/www/webclub/client/src/hooks/use-mobile.tsx',
+    '/var/www/webclub/client/src/components/ui/accordion.tsx',
+    '/var/www/webclub/client/src/components/ui/alert-dialog.tsx',
+    '/var/www/webclub/client/src/components/ui/alert.tsx',
+    '/var/www/webclub/client/src/components/ui/aspect-ratio.tsx',
+    '/var/www/webclub/client/src/components/ui/avatar.tsx',
+    '/var/www/webclub/client/src/components/ui/badge.tsx',
+    '/var/www/webclub/client/src/components/ui/breadcrumb.tsx',
+    '/var/www/webclub/client/src/components/ui/button.tsx',
+    '/var/www/webclub/client/src/components/ui/calendar.tsx',
+    '/var/www/webclub/client/src/components/ui/card.tsx',
+    '/var/www/webclub/client/src/components/ui/carousel.tsx',
+    '/var/www/webclub/client/src/components/ui/chart.tsx',
+    '/var/www/webclub/client/src/components/ui/checkbox.tsx',
+    '/var/www/webclub/client/src/components/ui/collapsible.tsx',
+    '/var/www/webclub/client/src/components/ui/command.tsx',
+    '/var/www/webclub/client/src/components/ui/context-menu.tsx',
+    '/var/www/webclub/client/src/components/ui/dialog.tsx',
+    '/var/www/webclub/client/src/components/ui/drawer.tsx',
+    '/var/www/webclub/client/src/components/ui/dropdown-menu.tsx',
+    '/var/www/webclub/client/src/components/ui/form.tsx',
+    '/var/www/webclub/client/src/components/ui/hover-card.tsx',
+    '/var/www/webclub/client/src/components/ui/input-otp.tsx',
+    '/var/www/webclub/client/src/components/ui/input.tsx',
+    '/var/www/webclub/client/src/components/ui/label.tsx',
+    '/var/www/webclub/client/src/components/ui/menubar.tsx',
+    '/var/www/webclub/client/src/components/ui/navigation-menu.tsx',
+    '/var/www/webclub/client/src/components/ui/pagination.tsx',
+    '/var/www/webclub/client/src/components/ui/popover.tsx',
+    '/var/www/webclub/client/src/components/ui/progress.tsx',
+    '/var/www/webclub/client/src/components/ui/radio-group.tsx',
+    '/var/www/webclub/client/src/components/ui/resizable.tsx',
+    '/var/www/webclub/client/src/components/ui/scroll-area.tsx',
+    '/var/www/webclub/client/src/components/ui/select.tsx',
+    '/var/www/webclub/client/src/components/ui/separator.tsx',
+    '/var/www/webclub/client/src/components/ui/sheet.tsx',
+    '/var/www/webclub/client/src/components/ui/sidebar.tsx',
+    '/var/www/webclub/client/src/components/ui/skeleton.tsx',
+    '/var/www/webclub/client/src/components/ui/slider.tsx',
+    '/var/www/webclub/client/src/components/ui/switch.tsx',
+    '/var/www/webclub/client/src/components/ui/table.tsx',
+    '/var/www/webclub/client/src/components/ui/tabs.tsx',
+    '/var/www/webclub/client/src/components/ui/textarea.tsx',
+    '/var/www/webclub/client/src/components/ui/toast.tsx',
+    '/var/www/webclub/client/src/components/ui/toggle-group.tsx',
+    '/var/www/webclub/client/src/components/ui/toggle.tsx',
+    '/var/www/webclub/tailwind.config.ts',
+    '/var/www/webclub/node_modules/react-dom/cjs/react-dom.production.min.js',
+    '/var/www/webclub/node_modules/react/cjs/react.production.min.js',
+    '/var/www/webclub/node_modules/wouter/esm/use-browser-location.js',
+    ... 23 more items
+  ]
+}
+root@msk-1-vm-85bg:/var/www/webclub#
