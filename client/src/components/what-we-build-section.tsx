@@ -902,16 +902,19 @@ export function WhatWeBuildSection() {
                 className={`flex flex-col transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
                 style={{ transitionDelay: isVisible ? `${200 + displayIdx * 100}ms` : "0ms" }}
                 data-testid={`card-direction-${i}`}>
-                <div className="flex items-center gap-3 mb-5 px-1 min-h-[3.25rem]">
-                  <div className={`relative w-11 h-11 rounded-2xl bg-gradient-to-br ${gradient} flex items-center justify-center shadow-lg ring-1 ring-white/50 shrink-0`}>
-                    <span className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white/35 to-transparent" />
-                    <Icon className="w-5 h-5 text-white relative" />
+                <div className="mb-6 px-1">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className={`text-[11px] font-bold tracking-[0.2em] uppercase bg-gradient-to-r ${gradient} bg-clip-text text-transparent`}>
+                      0{displayIdx + 1}
+                    </span>
+                    <div className={`h-px flex-1 bg-gradient-to-r ${gradient} opacity-40`} />
                   </div>
-                  <div className="min-w-0">
-                    <h3 className="font-display text-base md:text-lg font-bold text-white tracking-tight leading-tight" data-testid={`text-direction-title-${i}`}>
-                      {item.title}
-                    </h3>
-                  </div>
+                  <h3 className="font-display text-xl md:text-2xl font-bold text-white leading-tight tracking-tight" data-testid={`text-direction-title-${i}`}>
+                    {item.title}
+                  </h3>
+                  <p className="mt-1.5 text-sm text-white/45 leading-snug">
+                    {item.description}
+                  </p>
                 </div>
 
                 <TiltCard className="group/showcase relative flex-1 flex flex-col justify-center">
