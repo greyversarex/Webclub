@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/language-context";
-import { HeroShowcase } from "./hero-showcase";
+import { HeroCardStack } from "./hero-card-stack";
 
 const TECH_BADGES = ["AI", "CRM", "ERP", "Web", "Mobile", "Automation"];
 
@@ -129,9 +129,9 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* ── Right: interactive product showcase ──────────────── */}
+          {/* ── Right: swapping solution cards ──────────────── */}
           <div className="order-1 lg:order-2 w-full">
-            <HeroShowcase reduced={reduced} />
+            <HeroCardStack reduced={reduced} />
           </div>
 
         </div>
