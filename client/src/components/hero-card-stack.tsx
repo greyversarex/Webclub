@@ -8,7 +8,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { CardSwap, type CardSwapItem } from "./card-swap";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 interface SolutionCard {
   key: string;
@@ -112,29 +111,6 @@ function CardFace({ s }: { s: SolutionCard }) {
 }
 
 export function HeroCardStack({ reduced = false }: { reduced?: boolean }) {
-  const isMobile = useIsMobile();
-
-  // Mobile: a clean static list of all solutions — no switching effects, best performance.
-  if (isMobile) {
-    return (
-      <div className="flex flex-col gap-4">
-        {SOLUTIONS.map((s) => (
-          <div
-            key={s.key}
-            className="rounded-2xl overflow-hidden border border-white/12 aspect-[16/10]"
-            style={{
-              background:
-                "linear-gradient(160deg, rgba(20,22,40,0.92), rgba(8,9,20,0.96))",
-            }}
-            data-testid={`hero-card-mobile-${s.key}`}
-          >
-            <CardFace s={s} />
-          </div>
-        ))}
-      </div>
-    );
-  }
-
   const cards: CardSwapItem[] = SOLUTIONS.map((s) => ({
     id: s.key,
     content: <CardFace s={s} />,
