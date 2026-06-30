@@ -695,13 +695,6 @@
 }
 
 /* Hero product showcase — orbit, float and card transitions (CSS/SVG only) */
-.hero-orbit-rotate {
-  animation: hero-orbit-rotate 18s linear infinite;
-  transform-origin: center;
-}
-@keyframes hero-orbit-rotate {
-  to { transform: rotate(360deg); }
-}
 .hero-float {
   animation: hero-float 6.5s ease-in-out infinite;
 }
@@ -722,7 +715,6 @@
   .hero-badge {
     animation: none !important;
   }
-  .hero-orbit-rotate { animation: none !important; }
   .hero-float { animation: none !important; }
   .hero-card-in { animation: none !important; }
   .hero-eyebrow-dot { animation: none !important; }

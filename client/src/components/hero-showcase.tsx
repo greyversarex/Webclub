@@ -1,4 +1,10 @@
-import { useEffect, useRef, useState, type ComponentType } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ComponentType,
+  type TransitionEvent,
+} from "react";
 import {
   Smartphone,
   ShoppingBag,
@@ -299,6 +305,8 @@ export function HeroShowcase({ reduced }: { reduced: boolean }) {
   const { t } = useLanguage();
   const items = t.heroShowcase.items;
   const [active, setActive] = useState(0);
+  /* continuous comet angle (deg); each service sits 60° apart */
+  const [rotation, setRotation] = useState(0);
   const [paused, setPaused] = useState(false);
   const [visible, setVisible] = useState(true);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -313,11 +321,32 @@ export function HeroShowcase({ reduced }: { reduced: boolean }) {
     return () => obs.disconnect();
   }, []);
 
+  /* Rest on the active icon, then send the comet flying to the next one.
+     Keyed on `rotation` so any change — auto-advance OR a manual click —
+     resets this timer and no stale flight can fire (avoids overshoot). */
   useEffect(() => {
     if (reduced || paused || !visible) return;
-    const id = setTimeout(() => setActive((a) => (a + 1) % items.length), 3600);
+    const id = setTimeout(() => setRotation((r) => r + 60), 3000);
     return () => clearTimeout(id);
-  }, [active, reduced, paused, visible, items.length]);
+  }, [rotation, reduced, paused, visible]);
+
+  /* Comet reached an icon → switch the featured service to it. */
+  const handleArrive = (e: TransitionEvent<HTMLDivElement>) => {
+    if (e.target !== e.currentTarget || e.propertyName !== "transform") return;
+    const idx = ((Math.round(rotation / 60) % items.length) + items.length) % items.length;
+    setActive(idx);
+  };
+
+  /* Manual selection: fly the comet to the chosen icon (shortest direction). */
+  const goTo = (i: number) => {
+    setRotation((r) => {
+      const current = ((r % 360) + 360) % 360;
+      let delta = i * 60 - current;
+      if (delta > 180) delta -= 360;
+      if (delta < -180) delta += 360;
+      return r + delta;
+    });
+  };
 
   const ActiveScreen = SCREENS[active];
   const ActiveIcon = ICONS[active];
@@ -349,11 +378,20 @@ export function HeroShowcase({ reduced }: { reduced: boolean }) {
         style={{ width: "99%", height: "99%" }}
       />
 
-      {/* traveling comet riding the orbit */}
+      {/* traveling comet riding the orbit — flies to the active icon and
+          triggers the switch the moment it lands (handleArrive) */}
       {!reduced && (
-        <div className="absolute inset-0 pointer-events-none hero-orbit-rotate">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            transform: `rotate(${rotation}deg)`,
+            transformOrigin: "center",
+            transition: "transform 0.85s cubic-bezier(0.5, 0, 0.2, 1)",
+          }}
+          onTransitionEnd={handleArrive}
+        >
           <span
-            className="absolute w-2 h-2 rounded-full bg-cyan-300"
+            className="absolute w-2.5 h-2.5 rounded-full bg-cyan-300"
             style={{
               top: "9.6%",
               left: "50%",
@@ -373,7 +411,7 @@ export function HeroShowcase({ reduced }: { reduced: boolean }) {
           <button
             key={i}
             type="button"
-            onClick={() => setActive(i)}
+            onClick={() => goTo(i)}
             className={`absolute z-20 -translate-x-1/2 -translate-y-1/2 rounded-2xl flex items-center justify-center border backdrop-blur-md transition-all duration-500 ${
               isActive
                 ? "w-11 h-11 sm:w-12 sm:h-12 border-white/30 bg-white/10 scale-110"
