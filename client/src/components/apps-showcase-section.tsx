@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useInView } from "@/hooks/use-in-view";
 import {
   Wifi, BatteryFull, Home, Send, MessageCircle, User, ArrowUpRight, ArrowDownLeft,
   Search, Bell, Settings, BarChart3, Users, Package, ChevronRight, Filter,
@@ -32,11 +33,12 @@ function InteractivePhone() {
     { id: "ch5", name: "Алексей", last: "Звонил тебе", time: "вчера", unread: 0, color: "from-emerald-400 to-teal-500", initials: "А", online: false },
   ];
 
+  const [rootRef, inView] = useInView<HTMLDivElement>();
   const [hovered, setHovered] = useState(false);
   const [autoStep, setAutoStep] = useState(0);
 
   useEffect(() => {
-    if (hovered) return;
+    if (hovered || !inView) return;
     const delays = [3000, 2500, 2000, 3000, 2500];
     const cycle = autoStep % 5;
     const timer = setTimeout(() => {
@@ -50,10 +52,10 @@ function InteractivePhone() {
       setAutoStep(s => s + 1);
     }, delays[cycle]);
     return () => clearTimeout(timer);
-  }, [hovered, autoStep]);
+  }, [hovered, autoStep, inView]);
 
   return (
-    <div className="relative mx-auto" style={{ width: 290 }} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+    <div ref={rootRef} className="relative mx-auto" style={{ width: 290 }} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <div className="relative bg-slate-950 rounded-[42px] p-[6px] shadow-[0_30px_80px_-15px_rgba(0,0,0,0.5)]">
         <div className="absolute top-[6px] left-1/2 -translate-x-1/2 w-28 h-6 bg-slate-950 rounded-b-2xl z-20" />
         <div className="absolute -left-[3px] top-24 w-[3px] h-12 bg-slate-800 rounded-l" />
@@ -332,11 +334,12 @@ function InteractivePhone() {
 
 function InteractiveLaptop() {
   const [view, setView] = useState<"dashboard" | "orders" | "customers" | "analytics" | "settings">("dashboard");
+  const [rootRef, inView] = useInView<HTMLDivElement>();
   const [hovered, setHovered] = useState(false);
   const [autoStep, setAutoStep] = useState(0);
 
   useEffect(() => {
-    if (hovered) return;
+    if (hovered || !inView) return;
     const views: ("dashboard" | "orders" | "customers" | "analytics" | "settings")[] = ["orders", "customers", "analytics", "settings", "dashboard"];
     const delays = [3000, 2500, 2500, 2500, 3500];
     const timer = setTimeout(() => {
@@ -344,10 +347,10 @@ function InteractiveLaptop() {
       setAutoStep(s => s + 1);
     }, delays[autoStep % 5]);
     return () => clearTimeout(timer);
-  }, [hovered, autoStep]);
+  }, [hovered, autoStep, inView]);
 
   return (
-    <div className="relative w-full max-w-[760px] mx-auto" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+    <div ref={rootRef} className="relative w-full max-w-[760px] mx-auto" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <div className="bg-slate-900 rounded-t-2xl p-2.5 shadow-[0_30px_80px_-15px_rgba(0,0,0,0.4)]">
         <div className="flex justify-center pb-1.5">
           <div className="w-1.5 h-1.5 rounded-full bg-slate-700" />

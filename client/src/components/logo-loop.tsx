@@ -82,6 +82,8 @@ function useAnimationLoop(
         : `translate3d(${-offsetRef.current}px,0,0)`;
     }
 
+    let isVisible = true;
+
     const animate = (ts: number) => {
       if (lastTimestampRef.current === null) lastTimestampRef.current = ts;
       const dt = Math.max(0, ts - lastTimestampRef.current) / 1000;
@@ -97,11 +99,35 @@ function useAnimationLoop(
           ? `translate3d(0,${-next}px,0)`
           : `translate3d(${-next}px,0,0)`;
       }
+      if (!isVisible) {
+        rafRef.current = null;
+        return;
+      }
       rafRef.current = requestAnimationFrame(animate);
     };
 
+    // Pause the marquee while it is scrolled off screen.
+    const io =
+      typeof IntersectionObserver !== 'undefined'
+        ? new IntersectionObserver(
+            ([entry]) => {
+              isVisible = entry.isIntersecting;
+              if (isVisible && rafRef.current === null) {
+                lastTimestampRef.current = null;
+                rafRef.current = requestAnimationFrame(animate);
+              } else if (!isVisible && rafRef.current !== null) {
+                cancelAnimationFrame(rafRef.current);
+                rafRef.current = null;
+              }
+            },
+            { rootMargin: '100px' },
+          )
+        : null;
+    io?.observe(track);
+
     rafRef.current = requestAnimationFrame(animate);
     return () => {
+      io?.disconnect();
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
       rafRef.current = null;
       lastTimestampRef.current = null;

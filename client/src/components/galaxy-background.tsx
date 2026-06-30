@@ -282,10 +282,16 @@ export function GalaxyBackground({
     });
 
     const mesh = new Mesh(gl, { geometry, program });
-    let animateId: number;
+    ctn.appendChild(gl.canvas);
 
-    function update(t: number) {
-      animateId = requestAnimationFrame(update);
+    const prefersReducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true;
+
+    let animateId = 0;
+    let running = false;
+
+    function renderFrame(t: number) {
       if (!disableAnimation) {
         program.uniforms.uTime.value = t * 0.001;
         program.uniforms.uStarSpeed.value = (t * 0.001 * starSpeed) / 10.0;
@@ -302,8 +308,37 @@ export function GalaxyBackground({
 
       renderer.render({ scene: mesh });
     }
-    animateId = requestAnimationFrame(update);
-    ctn.appendChild(gl.canvas);
+
+    function update(t: number) {
+      if (!running) return;
+      animateId = requestAnimationFrame(update);
+      renderFrame(t);
+    }
+
+    function startLoop() {
+      if (running || prefersReducedMotion) return;
+      running = true;
+      animateId = requestAnimationFrame(update);
+    }
+
+    function stopLoop() {
+      running = false;
+      if (animateId) cancelAnimationFrame(animateId);
+    }
+
+    // Pause rendering when the tab is in the background.
+    function handleVisibility() {
+      if (document.hidden) stopLoop();
+      else startLoop();
+    }
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    if (prefersReducedMotion) {
+      // Honor reduced-motion: paint a single static frame, skip the loop.
+      renderFrame(performance.now());
+    } else if (!document.hidden) {
+      startLoop();
+    }
 
     function handleMouseMove(e: MouseEvent) {
       const rect = ctn.getBoundingClientRect();
@@ -323,7 +358,8 @@ export function GalaxyBackground({
     }
 
     return () => {
-      cancelAnimationFrame(animateId);
+      stopLoop();
+      document.removeEventListener('visibilitychange', handleVisibility);
       window.removeEventListener('resize', resize);
       if (mouseInteraction) {
         ctn.removeEventListener('mousemove', handleMouseMove);
