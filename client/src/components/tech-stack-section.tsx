@@ -1,4 +1,5 @@
-import { SiReact, SiNodedotjs, SiTypescript, SiPython, SiPostgresql, SiMongodb, SiDocker, SiAmazonwebservices, SiVuedotjs, SiAngular, SiGo, SiKubernetes } from "react-icons/si";
+import { SiReact, SiNodedotjs, SiTypescript, SiPython, SiPostgresql, SiMongodb, SiDocker, SiVuedotjs, SiAngular, SiGo, SiKubernetes } from "react-icons/si";
+import { Cloud } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/lib/language-context";
 
@@ -10,7 +11,7 @@ const technologies = [
   { name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1" },
   { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
   { name: "Docker", icon: SiDocker, color: "#2496ED" },
-  { name: "AWS", icon: SiAmazonwebservices, color: "#FF9900" },
+  { name: "AWS", icon: Cloud, color: "#FF9900" },
   { name: "Vue.js", icon: SiVuedotjs, color: "#4FC08D" },
   { name: "Angular", icon: SiAngular, color: "#DD0031" },
   { name: "Go", icon: SiGo, color: "#00ADD8" },
