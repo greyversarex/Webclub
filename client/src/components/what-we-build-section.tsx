@@ -822,20 +822,44 @@ function TiltCard({ children, className }: { children: React.ReactNode; classNam
 
 function PhoneFrame({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative mx-auto w-full max-w-[360px]">
+    <div className="relative mx-auto w-full max-w-[300px]">
       {/* side buttons */}
-      <span className="absolute -left-[2px] top-[96px] w-[3px] h-8 rounded-l-sm bg-slate-700" />
-      <span className="absolute -left-[2px] top-[144px] w-[3px] h-12 rounded-l-sm bg-slate-700" />
-      <span className="absolute -right-[2px] top-[128px] w-[3px] h-16 rounded-r-sm bg-slate-700" />
+      <span className="absolute -left-[2px] top-[80px] w-[3px] h-7 rounded-l-sm bg-slate-700" />
+      <span className="absolute -left-[2px] top-[120px] w-[3px] h-10 rounded-l-sm bg-slate-700" />
+      <span className="absolute -right-[2px] top-[108px] w-[3px] h-14 rounded-r-sm bg-slate-700" />
       {/* body */}
       <div className="relative rounded-[2.7rem] p-[3px] bg-gradient-to-b from-slate-600 via-slate-800 to-black shadow-[0_35px_80px_-22px_rgba(0,0,0,0.75)]">
         <div className="relative rounded-[2.5rem] p-[7px] bg-black">
-          <div className="relative rounded-[2rem] overflow-hidden bg-white">
+          <div className="relative rounded-[2rem] overflow-hidden bg-white" style={{ height: 560 }}>
             {/* dynamic island */}
-            <div className="absolute top-2 left-1/2 -translate-x-1/2 z-30 w-20 h-5 rounded-full bg-black flex items-center justify-end pr-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-slate-600" />
+            <div className="absolute top-2 left-1/2 -translate-x-1/2 z-30 w-[72px] h-[18px] rounded-full bg-black" />
+            {/* status bar */}
+            <div className="relative z-20 flex items-center justify-between px-5 pt-2 pb-1 bg-transparent">
+              <span className="text-[10px] font-semibold text-black/80" style={{ paddingTop: 2 }}>9:41</span>
+              <div className="flex items-center gap-[3px] mt-[18px]">
+                {/* signal bars */}
+                <svg viewBox="0 0 17 12" className="w-[17px] h-[12px]" fill="currentColor">
+                  <rect x="0" y="9" width="3" height="3" rx="0.5" className="text-black/80" />
+                  <rect x="4.5" y="6" width="3" height="6" rx="0.5" className="text-black/80" />
+                  <rect x="9" y="3" width="3" height="9" rx="0.5" className="text-black/80" />
+                  <rect x="13.5" y="0" width="3" height="12" rx="0.5" className="text-black/80" />
+                </svg>
+                {/* wifi */}
+                <svg viewBox="0 0 16 12" className="w-[16px] h-[12px]" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                  <path d="M8 10.5h.01M3.5 6.5A6.5 6.5 0 0 1 12.5 6.5M1 3.5A10 10 0 0 1 15 3.5" className="text-black/80" />
+                </svg>
+                {/* battery */}
+                <svg viewBox="0 0 25 12" className="w-[25px] h-[12px]" fill="none">
+                  <rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="currentColor" strokeOpacity="0.35" className="text-black" />
+                  <rect x="2" y="2" width="16" height="8" rx="2" fill="currentColor" className="text-black/80" />
+                  <path d="M23 4v4a2 2 0 0 0 0-4z" fill="currentColor" className="text-black/50" />
+                </svg>
+              </div>
             </div>
-            {children}
+            {/* scrollable content */}
+            <div className="overflow-hidden" style={{ height: 'calc(100% - 44px)' }}>
+              {children}
+            </div>
           </div>
         </div>
       </div>
@@ -845,18 +869,18 @@ function PhoneFrame({ children }: { children: React.ReactNode }) {
 
 function BrowserFrame({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-[0_35px_80px_-22px_rgba(0,0,0,0.7)]">
+    <div className="relative mx-auto w-full max-w-[300px] rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-[0_35px_80px_-22px_rgba(0,0,0,0.7)]">
       {/* chrome bar */}
-      <div className="flex items-center gap-2 px-4 h-10 bg-gradient-to-b from-slate-700 to-slate-800 border-b border-black/40">
+      <div className="flex items-center gap-2 px-4 h-10 bg-gradient-to-b from-slate-700 to-slate-800 border-b border-black/40 shrink-0">
         <span className="w-3 h-3 rounded-full bg-[#ff5f57]" />
         <span className="w-3 h-3 rounded-full bg-[#febc2e]" />
         <span className="w-3 h-3 rounded-full bg-[#28c840]" />
-        <div className="ml-3 flex-1 max-w-[230px] h-6 rounded-md bg-slate-900/70 flex items-center px-3 gap-1.5">
+        <div className="ml-3 flex-1 max-w-[180px] h-6 rounded-md bg-slate-900/70 flex items-center px-3 gap-1.5">
           <Lock className="w-3 h-3 text-emerald-400 shrink-0" />
           <span className="text-[10px] text-slate-300 font-mono truncate">altitude.tj</span>
         </div>
       </div>
-      <div className="bg-white">{children}</div>
+      <div className="bg-white overflow-hidden" style={{ height: 560 }}>{children}</div>
     </div>
   );
 }
