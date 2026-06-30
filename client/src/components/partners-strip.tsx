@@ -26,9 +26,6 @@ const techLogos = [
 export function PartnersStrip() {
   return (
     <div className="relative border-t border-white/5 bg-white/[0.02] backdrop-blur-sm py-6 overflow-hidden">
-      <div className="mb-1 text-center text-[10px] uppercase tracking-[0.3em] text-white/25 font-semibold select-none">
-        Технологии
-      </div>
       <div style={{ height: 52, position: 'relative' }}>
         <LogoLoop
           logos={techLogos}
