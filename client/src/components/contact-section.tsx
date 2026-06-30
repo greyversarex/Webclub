@@ -181,7 +181,7 @@ export function ContactSection() {
               </div>
 
               <div className="flex justify-center pt-2">
-                <div className="relative w-[280px] h-[280px] max-w-full">
+                <div className="relative w-[180px] h-[180px] max-w-full">
                   <div
                     className="absolute inset-0 pointer-events-none"
                     style={{
@@ -220,7 +220,7 @@ export function ContactSection() {
                       type="submit"
                       disabled={isSubmitting}
                       data-testid="button-submit-contact"
-                      className="group w-[168px] h-[168px] rounded-full flex flex-col items-center justify-center gap-2 text-white font-semibold bg-gradient-to-b from-white/15 to-white/[0.04] border border-white/25 ring-1 ring-violet-400/30 backdrop-blur-md shadow-[0_0_45px_-8px_rgba(168,85,247,0.75)] transition-all hover:scale-105 hover:from-white/20 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
+                      className="group w-[108px] h-[108px] rounded-full flex flex-col items-center justify-center gap-2 text-white font-semibold bg-gradient-to-b from-white/15 to-white/[0.04] border border-white/25 ring-1 ring-violet-400/30 backdrop-blur-md shadow-[0_0_45px_-8px_rgba(168,85,247,0.75)] transition-all hover:scale-105 hover:from-white/20 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
                     >
                       {isSubmitting ? (
                         <Loader2 className="w-6 h-6 animate-spin" />
