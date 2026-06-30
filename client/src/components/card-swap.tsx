@@ -20,7 +20,7 @@ export function CardSwap({
   delay = 4000,
   cardDistance = 56,
   verticalDistance = 64,
-  skew = 6,
+  skew = 3,
   pauseOnHover = true,
   reduced = false,
 }: CardSwapProps) {
@@ -71,7 +71,7 @@ export function CardSwap({
             return (
               <div
                 key={card.id}
-                className="absolute left-0 top-0 w-full rounded-2xl overflow-hidden will-change-transform"
+                className="absolute left-0 top-0 w-full rounded-2xl overflow-hidden"
                 style={{
                   height: 300,
                   transform: `translate3d(${tx}px, ${ty}px, ${tz}px) skewY(${effSkew}deg)`,
@@ -86,7 +86,6 @@ export function CardSwap({
                   boxShadow: isFront
                     ? "0 30px 70px -20px rgba(0,0,0,0.75), 0 0 0 1px rgba(139,92,246,0.18)"
                     : "0 20px 50px -24px rgba(0,0,0,0.7)",
-                  backdropFilter: "blur(6px)",
                 }}
               >
                 {card.content}
