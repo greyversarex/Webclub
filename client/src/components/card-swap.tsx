@@ -66,7 +66,7 @@ export function CardSwap({
   const stackHeight = isMobile ? 300 : 360;
   const stackTranslateY = isMobile ? 56 : 80;
   const stackWidth = isMobile ? "min(100%, 340px)" : "min(100%, 540px)";
-  const baseSkew = isMobile ? Math.min(skew, 2) : skew;
+  const baseSkew = isMobile ? 0 : skew;
 
   return (
     <div
