@@ -3,3 +3,4 @@
 - [Cosmic site background](cosmic-galaxy-bg.md) — sections stay transparent for the site-wide Galaxy WebGL bg; "unable to create webgl context" in screenshots is a headless limit, not a bug.
 - [WebGL preview fallback](webgl-preview-fallback.md) — Replit preview iframe can't create a GL context; every WebGL/3D feature needs a CSS fallback (detect + lazy + error boundary).
 - [Hero orbit comet sync](hero-orbit-comet-sync.md) — drive comet angle from state, switch on transitionend, key auto-advance timer on rotation (not active) to avoid stale-flight overshoot.
+- [Mobile performance gating](mobile-perf-gating.md) — gate heavy home animations behind useIsMobile (init synchronously); the frozen partners marquee was main-thread starvation, not a LogoLoop bug.

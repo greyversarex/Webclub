@@ -2,6 +2,7 @@ import { SiReact, SiNodedotjs, SiTypescript, SiPython, SiPostgresql, SiMongodb, 
 import { Cloud } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/lib/language-context";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const technologies = [
   { name: "React", icon: SiReact, color: "#61DAFB" },
@@ -25,6 +26,7 @@ export function TechStackSection() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const { t } = useLanguage();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -42,7 +44,8 @@ export function TechStackSection() {
   }, []);
 
   useEffect(() => {
-    if (!isVisible) {
+    // Skip the per-icon pulse loop on mobile — it caused jank/lag.
+    if (!isVisible || isMobile) {
       setActiveIndex(null);
       return;
     }
@@ -54,7 +57,7 @@ export function TechStackSection() {
     }, PULSE_INTERVAL);
 
     return () => clearInterval(id);
-  }, [isVisible]);
+  }, [isVisible, isMobile]);
 
   return (
     <section ref={sectionRef} className="py-16 md:py-24">

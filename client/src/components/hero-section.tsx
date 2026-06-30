@@ -79,7 +79,7 @@ export function HeroSection() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-10 items-center">
 
           {/* ── Left: copy ─────────────────────────────────────── */}
-          <div className="order-2 lg:order-1 self-center">
+          <div className="order-1 lg:order-1 self-center">
             <div
               className="hero-rise inline-flex items-center gap-2 mb-6 px-3 py-1 rounded-full border border-white/15 bg-white/5 backdrop-blur-sm"
               data-testid="hero-eyebrow"
@@ -153,7 +153,7 @@ export function HeroSection() {
           </div>
 
           {/* ── Right: swapping solution cards ──────────────── */}
-          <div className="order-1 lg:order-2 w-full">
+          <div className="order-2 lg:order-2 w-full">
             <HeroCardStack reduced={reduced} />
           </div>
 

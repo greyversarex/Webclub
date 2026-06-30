@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { Star, Quote } from "lucide-react";
+import { Star, Quote, ChevronsLeftRight } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/lib/language-context";
 
@@ -37,8 +37,10 @@ function TypewriterText({
 
     const reduce =
       typeof window !== "undefined" &&
-      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+      (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ||
+        window.matchMedia?.("(max-width: 767px)").matches);
     if (reduce) {
+      // On mobile (or reduced motion) show the full text instantly — no per-char timers.
       setCount(text.length);
       return;
     }
@@ -111,12 +113,12 @@ export function TestimonialsSection() {
 
         <div
           ref={scrollRef}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6"
+          className="flex snap-x snap-mandatory overflow-x-auto gap-5 -mx-4 px-4 pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:px-0 md:pb-0 md:overflow-visible md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6"
         >
           {reviews.map((review, i) => (
             <div
               key={i}
-              className={`relative flex flex-col bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 shadow-[0_2px_16px_rgba(0,0,0,0.3)] p-6 transition-all duration-700 hover:shadow-[0_8px_32px_rgba(139,92,246,0.2)] hover:-translate-y-1 hover:border-violet-400/30 ${
+              className={`relative flex flex-col shrink-0 w-[85%] sm:w-[60%] snap-center md:w-auto bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 shadow-[0_2px_16px_rgba(0,0,0,0.3)] p-6 transition-all duration-700 hover:shadow-[0_8px_32px_rgba(139,92,246,0.2)] hover:-translate-y-1 hover:border-violet-400/30 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
               style={{ transitionDelay: isVisible ? `${i * 80}ms` : "0ms" }}
@@ -163,6 +165,12 @@ export function TestimonialsSection() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Swipe hint — mobile only */}
+        <div className="md:hidden mt-4 flex items-center justify-center gap-1.5 text-white/50">
+          <ChevronsLeftRight className="w-4 h-4" />
+          <span className="text-xs font-medium">{t.portfolio.swipeHint ?? "Свайпайте"}</span>
         </div>
 
         <div

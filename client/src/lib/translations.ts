@@ -106,6 +106,7 @@ export const translations = {
         { title: "Корпоративный сайт", category: "Веб", description: "Демонстрация деятельности и реализуемых товаров компании. Ознакомление, приём заказов и привлечение клиентов." },
         { title: "Финансовый учёт", category: "Финансы", description: "Оффлайн приложение для отслеживания доходов, расходов и задач." },
       ],
+      swipeHint: "Свайпайте",
     },
     techStack: {
       title: "Наш стек технологий",
@@ -329,6 +330,7 @@ export const translations = {
         { title: "Corporate Website", category: "Web", description: "Showcasing company activities and products. Customer acquisition, order intake and brand awareness." },
         { title: "Financial Tracker", category: "Finance", description: "Offline app for tracking income, expenses and tasks." },
       ],
+      swipeHint: "Swipe",
     },
     techStack: {
       title: "Our technology stack",
@@ -552,6 +554,7 @@ export const translations = {
         { title: "Сайти корпоративӣ", category: "Веб", description: "Намоиши фаъолият ва молҳои ширкат. Шиносоӣ, қабули фармоишҳо ва ҷалби мизоҷон." },
         { title: "Баҳисобгирии молиявӣ", category: "Молия", description: "Барномаи офлайн барои пайгирии даромадҳо, хароҷот ва вазифаҳо." },
       ],
+      swipeHint: "Лағжонед",
     },
     techStack: {
       title: "Стеки технологияҳои мо",

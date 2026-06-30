@@ -1,7 +1,8 @@
 import { useRef, useState, useEffect, useCallback } from "react";
-import { ChevronLeft, ChevronRight, Play, ArrowUpRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Play, ArrowUpRight, ChevronsLeftRight } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/lib/language-context";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { AdaptiveVideo, type AdaptiveVideoHandle, type VideoSources } from "@/components/adaptive-video";
 
 import ecommercePlatform from "@assets/generated_images/e-commerce_platform_mockup.png";
@@ -69,6 +70,7 @@ const AUTO_MS = 8000;
 export function PortfolioSection() {
   const { ref, isVisible } = useScrollAnimation();
   const { t } = useLanguage();
+  const isMobile = useIsMobile();
   const projects = t.portfolio.projects;
   const total = projects.length;
 
@@ -76,6 +78,8 @@ export function PortfolioSection() {
   const [paused, setPaused] = useState(false);
   const [playing, setPlaying] = useState(false);
   const videoRef = useRef<AdaptiveVideoHandle>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
 
   const accent = accents[active % accents.length];
   const project = projects[active];
@@ -89,6 +93,22 @@ export function PortfolioSection() {
     setActive(i);
     setPlaying(false);
   }, []);
+
+  // Touch swipe (mobile) — swipe left/right on the video to change project.
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  }, []);
+  const onTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    const dy = e.changedTouches[0].clientY - touchStartY.current;
+    touchStartX.current = null;
+    touchStartY.current = null;
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
+      go(dx < 0 ? active + 1 : active - 1);
+    }
+  }, [active, go]);
 
   // Auto-advance — paused on hover or while a video is actively playing.
   useEffect(() => {
@@ -140,14 +160,19 @@ export function PortfolioSection() {
           onMouseLeave={() => setPaused(false)}
         >
           {/* Featured video frame */}
-          <div className="relative">
-            {/* Rotating orbital glow */}
+          <div
+            className="relative"
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+            style={{ touchAction: "pan-y" }}
+          >
+            {/* Rotating orbital glow — lighter blur on mobile for performance */}
             <div
               className="absolute -inset-10 pointer-events-none opacity-60"
               style={{
                 background: `conic-gradient(from 0deg, transparent, ${accent.ring}, transparent 40%)`,
-                animation: "orbital-spin 14s linear infinite",
-                filter: "blur(38px)",
+                animation: isMobile ? "none" : "orbital-spin 14s linear infinite",
+                filter: isMobile ? "blur(20px)" : "blur(38px)",
               }}
               aria-hidden="true"
             />
@@ -206,6 +231,12 @@ export function PortfolioSection() {
                 <span className="text-white font-bold">{String(active + 1).padStart(2, "0")}</span>
                 <span className="text-white/30"> / {String(total).padStart(2, "0")}</span>
               </span>
+            </div>
+
+            {/* Swipe hint — mobile only */}
+            <div className="md:hidden absolute bottom-3 left-1/2 -translate-x-1/2 z-30 flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/55 backdrop-blur-sm border border-white/15 pointer-events-none">
+              <ChevronsLeftRight className="w-3.5 h-3.5 text-white/80" />
+              <span className="text-[11px] font-medium text-white/80">{t.portfolio.swipeHint ?? "Свайпайте"}</span>
             </div>
           </div>
 

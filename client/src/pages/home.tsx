@@ -10,24 +10,26 @@ import { ContactSection } from "@/components/contact-section";
 import { PartnersStrip } from "@/components/partners-strip";
 import { ChatWidget } from "@/components/chat-widget";
 import { GalaxyBackground } from "@/components/galaxy-background";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function Home() {
+  const isMobile = useIsMobile();
   return (
     <div className="min-h-screen bg-background relative overflow-x-hidden">
-      {/* Galaxy WebGL background */}
+      {/* Galaxy WebGL background — lighter on mobile for performance */}
       <GalaxyBackground
         mouseRepulsion={false}
-        mouseInteraction
-        density={1.5}
-        glowIntensity={0.4}
+        mouseInteraction={!isMobile}
+        density={isMobile ? 0.8 : 1.5}
+        glowIntensity={isMobile ? 0.22 : 0.4}
         saturation={0.4}
         hueShift={130}
-        twinkleIntensity={0.4}
+        twinkleIntensity={isMobile ? 0.2 : 0.4}
         rotationSpeed={0.1}
         repulsionStrength={3.5}
         autoCenterRepulsion={0}
-        starSpeed={0.7}
-        speed={0.6}
+        starSpeed={isMobile ? 0.4 : 0.7}
+        speed={isMobile ? 0.4 : 0.6}
         transparent={false}
       />
 
