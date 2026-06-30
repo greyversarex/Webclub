@@ -37,8 +37,10 @@ export function HeroSection() {
             radial-gradient(60% 55% at 40% 105%, rgba(99,102,241,0.20), transparent 60%),
             linear-gradient(180deg, #04060f 0%, #080a1c 48%, #04050d 100%)
           `,
-          WebkitMaskImage: "linear-gradient(to bottom, #000 82%, transparent 100%)",
-          maskImage: "linear-gradient(to bottom, #000 82%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, transparent 0%, #000 14%, #000 80%, transparent 100%)",
+          maskImage:
+            "linear-gradient(to bottom, transparent 0%, #000 14%, #000 80%, transparent 100%)",
         }}
       />
       {/* drifting neon aurora for the WOW factor */}
@@ -53,6 +55,10 @@ export function HeroSection() {
           filter: "blur(80px)",
           opacity: 0.9,
           mixBlendMode: "screen",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, transparent 0%, #000 18%, #000 78%, transparent 100%)",
+          maskImage:
+            "linear-gradient(to bottom, transparent 0%, #000 18%, #000 78%, transparent 100%)",
         }}
       />
       {/* fine neon grid for depth */}
