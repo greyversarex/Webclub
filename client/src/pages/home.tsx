@@ -7,6 +7,7 @@ import { TechStackSection } from "@/components/tech-stack-section";
 import { ProcessSection } from "@/components/process-section";
 import { TestimonialsSection } from "@/components/testimonials-section";
 import { ContactSection } from "@/components/contact-section";
+import { PartnersStrip } from "@/components/partners-strip";
 import { ChatWidget } from "@/components/chat-widget";
 import { GalaxyBackground } from "@/components/galaxy-background";
 
@@ -42,6 +43,7 @@ export default function Home() {
           <TestimonialsSection />
           <ContactSection />
         </main>
+        <PartnersStrip />
       </div>
       <ChatWidget />
     </div>
