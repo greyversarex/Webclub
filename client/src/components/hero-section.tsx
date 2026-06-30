@@ -73,7 +73,7 @@ export function HeroSection() {
               data-testid="text-hero-title"
             >
               {t.hero.title1}{" "}
-              <span className="it-shimmer-text bg-gradient-to-r from-violet-300 via-white to-cyan-200 bg-clip-text text-transparent">
+              <span className="it-shimmer-text bg-clip-text text-transparent">
                 {t.hero.titleHighlight}
               </span>
               {" "}
