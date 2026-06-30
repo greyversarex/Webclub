@@ -56,7 +56,7 @@ export function Header() {
             <img 
               src="/logo.png" 
               alt="WEBCOREX Logo" 
-              className="w-12 h-12 md:w-16 md:h-16 object-contain brightness-125 saturate-[1.1]"
+              className="w-12 h-12 md:w-16 md:h-16 object-contain"
             />
             <span className="it-shimmer-text font-display font-bold text-xl md:text-2xl bg-gradient-to-r from-violet-300 via-white to-violet-300 bg-clip-text text-transparent pl-[0px] pr-[0px] ml-[-17px] mr-[-17px]">
               WEBCOREX

@@ -91,7 +91,7 @@ export function HeroSection() {
             </div>
 
             <h1
-              className="hero-rise font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-[1.05] mb-6"
+              className="hero-rise font-display text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-[1.1] sm:leading-[1.05] mb-6 break-words"
               style={{ animationDelay: "0.06s" }}
               data-testid="text-hero-title"
             >

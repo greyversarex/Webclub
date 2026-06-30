@@ -13,7 +13,7 @@ import { GalaxyBackground } from "@/components/galaxy-background";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background relative">
+    <div className="min-h-screen bg-background relative overflow-x-hidden">
       {/* Galaxy WebGL background */}
       <GalaxyBackground
         mouseRepulsion={false}

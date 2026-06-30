@@ -26,7 +26,18 @@ export function CardSwap({
 }: CardSwapProps) {
   const [order, setOrder] = useState<number[]>(() => cards.map((_, i) => i));
   const [paused, setPaused] = useState(false);
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(max-width: 639px)").matches,
+  );
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   useEffect(() => {
     setOrder(cards.map((_, i) => i));
@@ -49,31 +60,39 @@ export function CardSwap({
 
   const total = cards.length;
 
+  const effCardDistance = isMobile ? 26 : cardDistance;
+  const effVerticalDistance = isMobile ? 44 : verticalDistance;
+  const containerHeight = isMobile ? 430 : 560;
+  const stackHeight = isMobile ? 300 : 360;
+  const stackTranslateY = isMobile ? 56 : 80;
+  const stackWidth = isMobile ? "min(100%, 340px)" : "min(100%, 540px)";
+  const baseSkew = isMobile ? Math.min(skew, 2) : skew;
+
   return (
     <div
-      className="relative w-full select-none"
-      style={{ perspective: "1100px", height: 560 }}
+      className="relative w-full select-none overflow-hidden"
+      style={{ perspective: "1100px", height: containerHeight }}
       onMouseEnter={() => pauseOnHover && setPaused(true)}
       onMouseLeave={() => pauseOnHover && setPaused(false)}
     >
       <div className="absolute inset-0 flex items-center justify-center">
         <div
           className="relative"
-          style={{ width: "min(100%, 540px)", height: 360, transform: "translateY(80px)" }}
+          style={{ width: stackWidth, height: stackHeight, transform: `translateY(${stackTranslateY}px)` }}
         >
           {cards.map((card, i) => {
             const slot = order.indexOf(i);
             const isFront = slot === 0;
-            const tx = slot * cardDistance;
-            const ty = -slot * verticalDistance;
+            const tx = slot * effCardDistance;
+            const ty = -slot * effVerticalDistance;
             const tz = -slot * 60;
-            const effSkew = reduced ? 0 : skew;
+            const effSkew = reduced ? 0 : baseSkew;
             return (
               <div
                 key={card.id}
                 className="absolute left-0 top-0 w-full rounded-2xl overflow-hidden"
                 style={{
-                  height: 360,
+                  height: stackHeight,
                   transform: `translate3d(${tx}px, ${ty}px, ${tz}px) skewY(${effSkew}deg)`,
                   zIndex: total - slot,
                   transition: reduced
