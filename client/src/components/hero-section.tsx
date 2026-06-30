@@ -26,29 +26,46 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex items-center pt-24 pb-20 overflow-hidden">
-      {/* ── Deep blue atmospheric background (covers the galaxy in the hero) ── */}
+      {/* ── Neon atmospheric background (covers the galaxy in the hero) ── */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background: `
-            radial-gradient(70% 55% at 72% 40%, rgba(56,86,180,0.20), transparent 68%),
-            radial-gradient(60% 50% at 18% 22%, rgba(40,60,130,0.12), transparent 70%),
-            linear-gradient(180deg, #04060f 0%, #070b1a 50%, #04060f 100%)
+            radial-gradient(55% 50% at 80% 26%, rgba(139,92,246,0.34), transparent 62%),
+            radial-gradient(48% 46% at 64% 72%, rgba(217,70,239,0.22), transparent 64%),
+            radial-gradient(52% 48% at 14% 30%, rgba(56,189,248,0.18), transparent 66%),
+            radial-gradient(60% 55% at 40% 105%, rgba(99,102,241,0.20), transparent 60%),
+            linear-gradient(180deg, #04060f 0%, #080a1c 48%, #04050d 100%)
           `,
           WebkitMaskImage: "linear-gradient(to bottom, #000 82%, transparent 100%)",
           maskImage: "linear-gradient(to bottom, #000 82%, transparent 100%)",
         }}
       />
-      {/* soft volumetric fog near the showcase */}
+      {/* drifting neon aurora for the WOW factor */}
       <div
-        className="absolute pointer-events-none"
+        className={reduced ? "absolute inset-0 pointer-events-none" : "hero-aurora absolute inset-0 pointer-events-none"}
         style={{
-          top: "26%",
-          left: "52%",
-          width: "52%",
-          height: "55%",
-          background: "radial-gradient(circle, rgba(90,120,220,0.16), transparent 70%)",
-          filter: "blur(70px)",
+          background: `
+            radial-gradient(40% 38% at 72% 32%, rgba(168,85,247,0.45), transparent 60%),
+            radial-gradient(34% 34% at 30% 64%, rgba(34,211,238,0.32), transparent 62%),
+            radial-gradient(30% 30% at 56% 88%, rgba(236,72,153,0.30), transparent 60%)
+          `,
+          filter: "blur(80px)",
+          opacity: 0.9,
+          mixBlendMode: "screen",
+        }}
+      />
+      {/* fine neon grid for depth */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.06]"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, rgba(139,92,246,0.6) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(56,189,248,0.5) 1px, transparent 1px)
+          `,
+          backgroundSize: "54px 54px",
+          WebkitMaskImage: "radial-gradient(60% 55% at 60% 40%, #000, transparent 80%)",
+          maskImage: "radial-gradient(60% 55% at 60% 40%, #000, transparent 80%)",
         }}
       />
 
