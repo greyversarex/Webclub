@@ -1,0 +1,35 @@
+root@msk-1-vm-85bg:~# cd /var/www/webclub && npm install && NODE_OPTIONS=--max-old-space-size=2048 npm run build && pm2 restart webclub
+⠋^C
+root@msk-1-vm-85bg:/var/www/webclub# ^C
+root@msk-1-vm-85bg:/var/www/webclub# cd /var/www/webclub && npm install --no-audit --no-fund --verbose
+npm verbose cli /usr/bin/node /usr/bin/npm
+npm info using npm@10.8.2
+npm info using node@v20.20.2
+npm verbose title npm install
+npm verbose argv "install" "--no-audit" "--no-fund" "--loglevel" "verbose"
+npm verbose logfile logs-max:10 dir:/root/.npm/_logs/2026-06-30T15_19_06_801Z-
+npm verbose logfile /root/.npm/_logs/2026-06-30T15_19_06_801Z-debug-0.log
+npm verbose shrinkwrap failed to load node_modules/.package-lock.json out of date, updated: node_modules
+npm verbose stack Error: ENOTEMPTY: directory not empty, rename '/var/www/webclub/node_modules/its-fine' -> '/var/www/webclub/node_modules/.its-fine-cPhfd6N6'
+npm verbose stack     at async Object.rename (node:internal/fs/promises:780:10)
+npm verbose stack     at async moveFile (/usr/lib/node_modules/npm/node_modules/@npmcli/fs/lib/move-file.js:30:5)
+npm verbose stack     at async Promise.allSettled (index 12)
+npm verbose stack     at async [reifyPackages] (/usr/lib/node_modules/npm/node_modules/@npmcli/arborist/lib/arborist/reify.js:325:11)
+npm verbose stack     at async Arborist.reify (/usr/lib/node_modules/npm/node_modules/@npmcli/arborist/lib/arborist/reify.js:142:5)
+npm verbose stack     at async Install.exec (/usr/lib/node_modules/npm/lib/commands/install.js:150:5)
+npm verbose stack     at async Npm.exec (/usr/lib/node_modules/npm/lib/npm.js:207:9)
+npm verbose stack     at async module.exports (/usr/lib/node_modules/npm/lib/cli/entry.js:74:5)
+npm error code ENOTEMPTY
+npm error syscall rename
+npm error path /var/www/webclub/node_modules/its-fine
+npm error dest /var/www/webclub/node_modules/.its-fine-cPhfd6N6
+npm error errno -39
+npm error ENOTEMPTY: directory not empty, rename '/var/www/webclub/node_modules/its-fine' -> '/var/www/webclub/node_modules/.its-fine-cPhfd6N6'
+npm verbose cwd /var/www/webclub
+npm verbose os Linux 6.8.0-124-generic
+npm verbose node v20.20.2
+npm verbose npm  v10.8.2
+npm verbose exit -39
+npm verbose code -39
+npm error A complete log of this run can be found in: /root/.npm/_logs/2026-06-30T15_19_06_801Z-debug-0.log
+root@msk-1-vm-85bg:/var/www/webclub#
