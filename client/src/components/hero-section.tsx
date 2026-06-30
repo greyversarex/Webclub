@@ -38,11 +38,9 @@ export function HeroSection() {
             linear-gradient(180deg, #04060f 0%, #080a1c 48%, #04050d 100%)
           `,
           WebkitMaskImage:
-            "linear-gradient(to bottom, transparent 0%, #000 14%, #000 80%, transparent 100%), linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%)",
-          WebkitMaskComposite: "source-in",
+            "linear-gradient(to bottom, transparent 0%, #000 14%, #000 80%, transparent 100%)",
           maskImage:
-            "linear-gradient(to bottom, transparent 0%, #000 14%, #000 80%, transparent 100%), linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%)",
-          maskComposite: "intersect",
+            "linear-gradient(to bottom, transparent 0%, #000 14%, #000 80%, transparent 100%)",
         }}
       />
       {/* drifting neon aurora for the WOW factor */}
@@ -58,11 +56,9 @@ export function HeroSection() {
           opacity: 0.9,
           mixBlendMode: "screen",
           WebkitMaskImage:
-            "linear-gradient(to bottom, transparent 0%, #000 18%, #000 78%, transparent 100%), linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%)",
-          WebkitMaskComposite: "source-in",
+            "linear-gradient(to bottom, transparent 0%, #000 18%, #000 78%, transparent 100%)",
           maskImage:
-            "linear-gradient(to bottom, transparent 0%, #000 18%, #000 78%, transparent 100%), linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%)",
-          maskComposite: "intersect",
+            "linear-gradient(to bottom, transparent 0%, #000 18%, #000 78%, transparent 100%)",
         }}
       />
       {/* fine neon grid for depth */}
