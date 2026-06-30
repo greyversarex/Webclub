@@ -67,16 +67,18 @@ export function CardSwap({
             const tx = slot * cardDistance;
             const ty = -slot * verticalDistance;
             const tz = -slot * 60;
+            const effSkew = reduced ? 0 : skew;
             return (
               <div
                 key={card.id}
                 className="absolute left-0 top-0 w-full rounded-2xl overflow-hidden will-change-transform"
                 style={{
                   height: 300,
-                  transform: `translate3d(${tx}px, ${ty}px, ${tz}px) skewY(${skew}deg)`,
+                  transform: `translate3d(${tx}px, ${ty}px, ${tz}px) skewY(${effSkew}deg)`,
                   zIndex: total - slot,
-                  transition:
-                    "transform 0.9s cubic-bezier(0.34, 1.4, 0.5, 1), opacity 0.6s ease",
+                  transition: reduced
+                    ? "none"
+                    : "transform 0.9s cubic-bezier(0.34, 1.4, 0.5, 1), opacity 0.6s ease",
                   opacity: slot > 3 ? 0 : 1,
                   border: "1px solid rgba(255,255,255,0.12)",
                   background:

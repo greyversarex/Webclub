@@ -1,4 +1,12 @@
-import { ShoppingBag, Globe, Smartphone, Landmark, type LucideIcon } from "lucide-react";
+import {
+  Smartphone,
+  ShoppingBag,
+  Globe,
+  Rocket,
+  Workflow,
+  MonitorCog,
+  type LucideIcon,
+} from "lucide-react";
 import { CardSwap, type CardSwapItem } from "./card-swap";
 
 interface SolutionCard {
@@ -7,55 +15,70 @@ interface SolutionCard {
   tag: string;
   icon: LucideIcon;
   gradient: string;
-  glow: string;
-  image?: string;
+  image: string;
 }
 
 const SOLUTIONS: SolutionCard[] = [
   {
-    key: "ecom",
-    title: "Интернет-магазины",
-    tag: "E-commerce",
-    icon: ShoppingBag,
-    gradient: "from-rose-500 to-amber-500",
-    glow: "rgba(244,114,182,0.45)",
-  },
-  {
-    key: "corporate",
-    title: "Корпоративные сайты",
-    tag: "Web",
-    icon: Globe,
-    gradient: "from-cyan-500 to-blue-500",
-    glow: "rgba(34,211,238,0.45)",
-  },
-  {
-    key: "mobile",
-    title: "Мобильные приложения",
+    key: "apps",
+    title: "Приложения и игры",
     tag: "iOS / Android",
     icon: Smartphone,
     gradient: "from-violet-500 to-fuchsia-500",
-    glow: "rgba(168,85,247,0.45)",
+    image: "/solutions/apps.png",
   },
   {
-    key: "banking",
-    title: "Банковские и госпроекты",
-    tag: "FinTech / GovTech",
-    icon: Landmark,
+    key: "ecommerce",
+    title: "Коммерция и продажи",
+    tag: "E-commerce",
+    icon: ShoppingBag,
+    gradient: "from-rose-500 to-amber-500",
+    image: "/solutions/ecommerce.png",
+  },
+  {
+    key: "websites",
+    title: "Сайты и лендинги",
+    tag: "Web",
+    icon: Globe,
+    gradient: "from-cyan-500 to-blue-500",
+    image: "/solutions/websites.png",
+  },
+  {
+    key: "automation",
+    title: "Автоматизация",
+    tag: "CRM / ERP",
+    icon: Workflow,
     gradient: "from-indigo-500 to-violet-600",
-    glow: "rgba(129,140,248,0.45)",
+    image: "/solutions/automation.png",
+  },
+  {
+    key: "startup",
+    title: "Стартапы и MVP",
+    tag: "Startup / MVP",
+    icon: Rocket,
+    gradient: "from-sky-500 to-indigo-500",
+    image: "/solutions/startup.png",
+  },
+  {
+    key: "systems",
+    title: "Системное ПО",
+    tag: "Desktop",
+    icon: MonitorCog,
+    gradient: "from-purple-500 to-indigo-600",
+    image: "/solutions/systems.png",
   },
 ];
 
 function CardFace({ s }: { s: SolutionCard }) {
   const Icon = s.icon;
   return (
-    <div className="relative h-full w-full flex flex-col" style={{ transform: "skewY(0deg)" }}>
-      {/* top bar — laptop/browser chrome */}
-      <div className="flex items-center gap-1.5 px-4 h-8 border-b border-white/10 bg-white/[0.03] shrink-0">
+    <div className="relative h-full w-full flex flex-col">
+      {/* top bar — browser/laptop chrome */}
+      <div className="flex items-center gap-1.5 px-4 h-8 border-b border-white/10 bg-white/[0.04] shrink-0">
         <span className="w-2.5 h-2.5 rounded-full bg-rose-400/80" />
         <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
         <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/80" />
-        <div className="ml-3 flex items-center gap-1.5 text-[10px] text-white/40 font-medium">
+        <div className="ml-3 flex items-center gap-1.5 text-[10px] text-white/55 font-medium">
           <span className={`inline-flex items-center justify-center w-4 h-4 rounded bg-gradient-to-br ${s.gradient}`}>
             <Icon className="w-2.5 h-2.5 text-white" />
           </span>
@@ -63,31 +86,25 @@ function CardFace({ s }: { s: SolutionCard }) {
         </div>
       </div>
 
-      {/* image / preview area */}
+      {/* screenshot */}
       <div className="relative flex-1 overflow-hidden">
-        {s.image ? (
-          <img src={s.image} alt={s.title} className="absolute inset-0 w-full h-full object-cover" />
-        ) : (
-          <div
-            className="absolute inset-0 flex flex-col items-center justify-center gap-4"
-            style={{
-              background: `radial-gradient(120% 90% at 50% 0%, ${s.glow}, transparent 60%)`,
-            }}
-          >
-            <span className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br ${s.gradient} shadow-lg`}>
-              <Icon className="w-8 h-8 text-white" />
+        <img
+          src={s.image}
+          alt={s.title}
+          loading="lazy"
+          className="absolute inset-0 w-full h-full object-cover object-top"
+        />
+        {/* title overlay */}
+        <div className="absolute inset-x-0 bottom-0 px-4 py-3 bg-gradient-to-t from-black/90 via-black/45 to-transparent">
+          <div className="flex items-center gap-2">
+            <span className={`inline-flex items-center justify-center w-6 h-6 rounded-lg bg-gradient-to-br ${s.gradient} shadow`}>
+              <Icon className="w-3.5 h-3.5 text-white" />
             </span>
-            <span className="px-3 text-center font-display font-bold text-lg text-white leading-tight">
+            <span className="font-display font-bold text-base text-white drop-shadow">
               {s.title}
             </span>
           </div>
-        )}
-        {/* title overlay when image present */}
-        {s.image && (
-          <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/85 via-black/40 to-transparent">
-            <span className="font-display font-bold text-base text-white">{s.title}</span>
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );
