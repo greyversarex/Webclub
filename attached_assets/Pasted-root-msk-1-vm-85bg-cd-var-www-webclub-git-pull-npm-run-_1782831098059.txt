@@ -1,0 +1,235 @@
+root@msk-1-vm-85bg:~# cd /var/www/webclub && git pull && npm run build && pm2 restart webclub
+remote: Enumerating objects: 288, done.
+remote: Counting objects: 100% (288/288), done.
+remote: Compressing objects: 100% (124/124), done.
+remote: Total 261 (delta 133), reused 258 (delta 130), pack-reused 0 (from 0)
+Receiving objects: 100% (261/261), 4.28 MiB | 905.00 KiB/s, done.
+Resolving deltas: 100% (133/133), completed with 21 local objects.
+From https://github.com/greyversarex/Webclub
+   e8f6f0a..1551a51  main       -> origin/main
+Updating e8f6f0a..1551a51
+Fast-forward
+ .agents/agent_assets_metadata.toml                 |    2 +-
+ .agents/memory/MEMORY.md                           |    3 +
+ .agents/memory/cosmic-galaxy-bg.md                 |   18 +
+ .agents/memory/hero-centered-float-transform.md    |   13 +
+ .agents/memory/webgl-preview-fallback.md           |   30 +
+ .replit                                            |    4 +
+ .../mockup-sandbox/.replit-artifact/artifact.toml  |   22 +
+ artifacts/mockup-sandbox/components.json           |   21 +
+ artifacts/mockup-sandbox/index.html                |   31 +
+ artifacts/mockup-sandbox/mockupPreviewPlugin.ts    |  199 +
+ artifacts/mockup-sandbox/package-lock.json         | 5159 ++++++++++++++++++++
+ artifacts/mockup-sandbox/package.json              |   75 +
+ artifacts/mockup-sandbox/public/favicon.svg        |    3 +
+ .../src/.generated/mockup-components.ts            |    8 +
+ artifacts/mockup-sandbox/src/App.tsx               |  146 +
+ .../components/mockups/process-section/Journey.tsx |  151 +
+ .../components/mockups/process-section/Orbital.tsx |  233 +
+ .../mockups/process-section/Pipeline.tsx           |  216 +
+ .../components/mockups/process-section/Stepper.tsx |  240 +
+ .../components/mockups/process-section/_group.css  |   27 +
+ .../mockup-sandbox/src/components/ui/accordion.tsx |   55 +
+ .../src/components/ui/alert-dialog.tsx             |  139 +
+ .../mockup-sandbox/src/components/ui/alert.tsx     |   59 +
+ .../src/components/ui/aspect-ratio.tsx             |    5 +
+ .../mockup-sandbox/src/components/ui/avatar.tsx    |   50 +
+ .../mockup-sandbox/src/components/ui/badge.tsx     |   43 +
+ .../src/components/ui/breadcrumb.tsx               |  115 +
+ .../src/components/ui/button-group.tsx             |   83 +
+ .../mockup-sandbox/src/components/ui/button.tsx    |   65 +
+ .../mockup-sandbox/src/components/ui/calendar.tsx  |  213 +
+ .../mockup-sandbox/src/components/ui/card.tsx      |   76 +
+ .../mockup-sandbox/src/components/ui/carousel.tsx  |  260 +
+ .../mockup-sandbox/src/components/ui/chart.tsx     |  367 ++
+ .../mockup-sandbox/src/components/ui/checkbox.tsx  |   28 +
+ .../src/components/ui/collapsible.tsx              |   11 +
+ .../mockup-sandbox/src/components/ui/command.tsx   |  153 +
+ .../src/components/ui/context-menu.tsx             |  198 +
+ .../mockup-sandbox/src/components/ui/dialog.tsx    |  120 +
+ .../mockup-sandbox/src/components/ui/drawer.tsx    |  116 +
+ .../src/components/ui/dropdown-menu.tsx            |  201 +
+ .../mockup-sandbox/src/components/ui/empty.tsx     |  104 +
+ .../mockup-sandbox/src/components/ui/field.tsx     |  244 +
+ .../mockup-sandbox/src/components/ui/form.tsx      |  176 +
+ .../src/components/ui/hover-card.tsx               |   27 +
+ .../src/components/ui/input-group.tsx              |  168 +
+ .../mockup-sandbox/src/components/ui/input-otp.tsx |   69 +
+ .../mockup-sandbox/src/components/ui/input.tsx     |   22 +
+ .../mockup-sandbox/src/components/ui/item.tsx      |  193 +
+ artifacts/mockup-sandbox/src/components/ui/kbd.tsx |   28 +
+ .../mockup-sandbox/src/components/ui/label.tsx     |   26 +
+ .../mockup-sandbox/src/components/ui/menubar.tsx   |  254 +
+ .../src/components/ui/navigation-menu.tsx          |  128 +
+ .../src/components/ui/pagination.tsx               |  117 +
+ .../mockup-sandbox/src/components/ui/popover.tsx   |   31 +
+ .../mockup-sandbox/src/components/ui/progress.tsx  |   28 +
+ .../src/components/ui/radio-group.tsx              |   42 +
+ .../mockup-sandbox/src/components/ui/resizable.tsx |   45 +
+ .../src/components/ui/scroll-area.tsx              |   46 +
+ .../mockup-sandbox/src/components/ui/select.tsx    |  159 +
+ .../mockup-sandbox/src/components/ui/separator.tsx |   29 +
+ .../mockup-sandbox/src/components/ui/sheet.tsx     |  140 +
+ .../mockup-sandbox/src/components/ui/sidebar.tsx   |  727 +++
+ .../mockup-sandbox/src/components/ui/skeleton.tsx  |   15 +
+ .../mockup-sandbox/src/components/ui/slider.tsx    |   26 +
+ .../mockup-sandbox/src/components/ui/sonner.tsx    |   31 +
+ .../mockup-sandbox/src/components/ui/spinner.tsx   |   16 +
+ .../mockup-sandbox/src/components/ui/switch.tsx    |   27 +
+ .../mockup-sandbox/src/components/ui/table.tsx     |  120 +
+ .../mockup-sandbox/src/components/ui/tabs.tsx      |   53 +
+ .../mockup-sandbox/src/components/ui/textarea.tsx  |   22 +
+ .../mockup-sandbox/src/components/ui/toast.tsx     |  127 +
+ .../mockup-sandbox/src/components/ui/toaster.tsx   |   33 +
+ .../src/components/ui/toggle-group.tsx             |   61 +
+ .../mockup-sandbox/src/components/ui/toggle.tsx    |   43 +
+ .../mockup-sandbox/src/components/ui/tooltip.tsx   |   32 +
+ artifacts/mockup-sandbox/src/hooks/use-mobile.tsx  |   19 +
+ artifacts/mockup-sandbox/src/hooks/use-toast.ts    |  189 +
+ artifacts/mockup-sandbox/src/index.css             |  185 +
+ artifacts/mockup-sandbox/src/lib/utils.ts          |    6 +
+ artifacts/mockup-sandbox/src/main.tsx              |    5 +
+ artifacts/mockup-sandbox/tsconfig.json             |   22 +
+ artifacts/mockup-sandbox/vite.config.ts            |   72 +
+ ...-Art-Direction-We-are-NOT-cre_1782580878877.txt |  228 +
+ ...sh-Color-Triangle-from-ogl-im_1782575530283.txt |  333 ++
+ ...sh-Color-Triangle-from-ogl-im_1782575678830.txt |  333 ++
+ ...om-react-import-as-THREE-from_1782597498699.txt |  240 +
+ .../government_services_portal.png                 |  Bin 722384 -> 1356793 bytes
+ attached_assets/image_1782577544130.png            |  Bin 0 -> 751262 bytes
+ attached_assets/image_1782578859411.png            |  Bin 0 -> 627552 bytes
+ attached_assets/image_1782580266237.png            |  Bin 0 -> 620495 bytes
+ attached_assets/image_1782580826778.png            |  Bin 0 -> 620495 bytes
+ attached_assets/image_1782589801141.png            |  Bin 0 -> 359750 bytes
+ attached_assets/image_1782592088303.png            |  Bin 0 -> 150762 bytes
+ attached_assets/image_1782592658710.png            |  Bin 0 -> 304729 bytes
+ attached_assets/image_1782597530156.png            |  Bin 0 -> 72785 bytes
+ attached_assets/image_1782637781296.png            |  Bin 0 -> 20364 bytes
+ client/src/components/adaptive-video.tsx           |   12 +-
+ client/src/components/apps-showcase-section.tsx    |    4 +-
+ client/src/components/contact-section.tsx          |  129 +-
+ client/src/components/galaxy-background.tsx        |  369 ++
+ client/src/components/header.tsx                   |   30 +-
+ client/src/components/hero-section.tsx             |  361 +-
+ client/src/components/hero-showcase.tsx            |  453 ++
+ client/src/components/magic-rings.tsx              |  305 ++
+ client/src/components/portfolio-section.tsx        |  307 +-
+ client/src/components/process-section.tsx          |  271 +-
+ client/src/components/section-robot.tsx            |  154 -
+ client/src/components/tech-stack-section.tsx       |    6 +-
+ client/src/components/testimonials-section.tsx     |   22 +-
+ client/src/components/what-we-build-section.tsx    |  120 +-
+ client/src/index.css                               |  156 +-
+ client/src/lib/translations.ts                     |   45 +
+ client/src/pages/home.tsx                          |  102 +-
+ package-lock.json                                  |  755 ++-
+ package.json                                       |    5 +
+ replit.md                                          |    1 -
+ 116 files changed, 16757 insertions(+), 849 deletions(-)
+ create mode 100644 .agents/memory/cosmic-galaxy-bg.md
+ create mode 100644 .agents/memory/hero-centered-float-transform.md
+ create mode 100644 .agents/memory/webgl-preview-fallback.md
+ create mode 100644 artifacts/mockup-sandbox/.replit-artifact/artifact.toml
+ create mode 100644 artifacts/mockup-sandbox/components.json
+ create mode 100644 artifacts/mockup-sandbox/index.html
+ create mode 100644 artifacts/mockup-sandbox/mockupPreviewPlugin.ts
+ create mode 100644 artifacts/mockup-sandbox/package-lock.json
+ create mode 100644 artifacts/mockup-sandbox/package.json
+ create mode 100644 artifacts/mockup-sandbox/public/favicon.svg
+ create mode 100644 artifacts/mockup-sandbox/src/.generated/mockup-components.ts
+ create mode 100644 artifacts/mockup-sandbox/src/App.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/mockups/process-section/Journey.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/mockups/process-section/Orbital.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/mockups/process-section/Pipeline.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/mockups/process-section/Stepper.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/mockups/process-section/_group.css
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/accordion.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/alert-dialog.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/alert.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/aspect-ratio.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/avatar.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/badge.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/breadcrumb.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/button-group.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/button.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/calendar.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/card.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/carousel.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/chart.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/checkbox.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/collapsible.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/command.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/context-menu.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/dialog.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/drawer.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/dropdown-menu.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/empty.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/field.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/form.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/hover-card.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/input-group.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/input-otp.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/input.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/item.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/kbd.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/label.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/menubar.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/navigation-menu.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/pagination.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/popover.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/progress.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/radio-group.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/resizable.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/scroll-area.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/select.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/separator.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/sheet.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/sidebar.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/skeleton.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/slider.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/sonner.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/spinner.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/switch.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/table.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/tabs.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/textarea.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/toast.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/toaster.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/toggle-group.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/toggle.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/components/ui/tooltip.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/hooks/use-mobile.tsx
+ create mode 100644 artifacts/mockup-sandbox/src/hooks/use-toast.ts
+ create mode 100644 artifacts/mockup-sandbox/src/index.css
+ create mode 100644 artifacts/mockup-sandbox/src/lib/utils.ts
+ create mode 100644 artifacts/mockup-sandbox/src/main.tsx
+ create mode 100644 artifacts/mockup-sandbox/tsconfig.json
+ create mode 100644 artifacts/mockup-sandbox/vite.config.ts
+ create mode 100644 attached_assets/Pasted-WEBCOREX-Hero-Digital-Core-Art-Direction-We-are-NOT-cre_1782580878877.txt
+ create mode 100644 attached_assets/Pasted-import-Renderer-Program-Mesh-Color-Triangle-from-ogl-im_1782575530283.txt
+ create mode 100644 attached_assets/Pasted-import-Renderer-Program-Mesh-Color-Triangle-from-ogl-im_1782575678830.txt
+ create mode 100644 attached_assets/Pasted-import-useEffect-useRef-from-react-import-as-THREE-from_1782597498699.txt
+ create mode 100644 attached_assets/image_1782577544130.png
+ create mode 100644 attached_assets/image_1782578859411.png
+ create mode 100644 attached_assets/image_1782580266237.png
+ create mode 100644 attached_assets/image_1782580826778.png
+ create mode 100644 attached_assets/image_1782589801141.png
+ create mode 100644 attached_assets/image_1782592088303.png
+ create mode 100644 attached_assets/image_1782592658710.png
+ create mode 100644 attached_assets/image_1782597530156.png
+ create mode 100644 attached_assets/image_1782637781296.png
+ create mode 100644 client/src/components/galaxy-background.tsx
+ create mode 100644 client/src/components/hero-showcase.tsx
+ create mode 100644 client/src/components/magic-rings.tsx
+ delete mode 100644 client/src/components/section-robot.tsx
+
+> rest-express@1.0.0 build
+> tsx script/build.ts
+
+building client...
+vite v5.4.20 building for production...
+transforming (1) index.htmlBrowserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+transforming (4) src/App.tsx
+A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
