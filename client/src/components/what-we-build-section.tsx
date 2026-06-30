@@ -833,8 +833,8 @@ function PhoneFrame({ children }: { children: React.ReactNode }) {
           <div className="relative rounded-[2rem] overflow-hidden bg-white" style={{ height: 560 }}>
             {/* dynamic island */}
             <div className="absolute top-[10px] left-1/2 -translate-x-1/2 z-30 w-[80px] h-[22px] rounded-full bg-black" />
-            {/* status bar — sits below the dynamic island (top ~36px) */}
-            <div className="relative z-20 flex items-center justify-between px-5 bg-transparent" style={{ paddingTop: 38, paddingBottom: 4 }}>
+            {/* status bar — aligned with dynamic island (top: 10px, height: 22px) */}
+            <div className="relative z-20 flex items-center justify-between px-5 bg-transparent" style={{ paddingTop: 10, height: 42 }}>
               <span className="text-[10px] font-semibold leading-none text-black/80">9:41</span>
               <div className="flex items-center gap-[5px]">
                 {/* signal bars */}
@@ -857,7 +857,7 @@ function PhoneFrame({ children }: { children: React.ReactNode }) {
               </div>
             </div>
             {/* content below status bar */}
-            <div className="overflow-hidden" style={{ height: 'calc(100% - 56px)' }}>
+            <div className="overflow-hidden" style={{ height: 'calc(100% - 42px)' }}>
               {children}
             </div>
           </div>
