@@ -173,31 +173,27 @@
   position: relative;
   background-image: linear-gradient(
     110deg,
-    #7c3aed 0%,
-    #6366f1 14%,
-    #38bdf8 26%,
-    #ffffff 34%,
-    #ffffff 40%,
-    #22d3ee 50%,
-    #818cf8 66%,
-    #c084fc 82%,
-    #7c3aed 100%
+    #a78bfa 0%,
+    #818cf8 22%,
+    #60a5fa 38%,
+    #e0e7ff 48%,
+    #67e8f9 60%,
+    #c084fc 80%,
+    #a78bfa 100%
   );
-  background-size: 300% auto;
+  background-size: 240% auto;
   animation:
-    itShimmer 3.2s linear infinite,
-    itGlowPulse 3.2s ease-in-out infinite;
+    itShimmer 7s linear infinite,
+    itGlowPulse 7s ease-in-out infinite;
 }
 
 @keyframes itGlowPulse {
   0%,
   100% {
-    filter: drop-shadow(0 0 14px rgba(124, 58, 237, 0.35))
-      drop-shadow(0 0 4px rgba(56, 189, 248, 0.25));
+    filter: drop-shadow(0 0 12px rgba(124, 58, 237, 0.25));
   }
   50% {
-    filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.65))
-      drop-shadow(0 0 12px rgba(56, 189, 248, 0.55));
+    filter: drop-shadow(0 0 18px rgba(168, 85, 247, 0.4));
   }
 }
 
