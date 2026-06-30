@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/lib/language-context";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 const BASE_W = 1280;
 const BASE_H = 800;
@@ -46,9 +45,9 @@ const prototypeMeta: Proto[] = [
   { slug: "audit", download: "Webcorex-Audit-OS.html", icon: ShieldCheck, accent: { from: "#fb7185", to: "#a78bfa", ring: "rgba(251,113,133,0.45)", chip: "bg-rose-500/15 text-rose-200 border-rose-400/30", icon: "text-rose-300" } },
 ];
 
-function PreviewFrame({ src, title, enableIframe }: { src: string; title: string; enableIframe: boolean }) {
+function PreviewFrame({ src, title }: { src: string; title: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(0.28);
+  const [scale, setScale] = useState(0.18);
   const [inView, setInView] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
@@ -64,11 +63,10 @@ function PreviewFrame({ src, title, enableIframe }: { src: string; title: string
   }, []);
 
   // Mount the iframe only while it is near the viewport, and unmount it once
-  // the user scrolls well past the section — this frees the running prototype
-  // documents so they don't compete with the rest of the page (and the WebGL
-  // background) for resources.
+  // the user scrolls well past the section — this keeps only a handful of the
+  // prototype documents alive at a time, so live previews stay smooth even on
+  // phones (and don't compete with the WebGL background).
   useEffect(() => {
-    if (!enableIframe) return;
     const el = containerRef.current;
     if (!el) return;
     const io = new IntersectionObserver(
@@ -77,11 +75,11 @@ function PreviewFrame({ src, title, enableIframe }: { src: string; title: string
         setInView(visible);
         if (!visible) setLoaded(false);
       },
-      { rootMargin: "250px 0px" },
+      { rootMargin: "200px 0px" },
     );
     io.observe(el);
     return () => io.disconnect();
-  }, [enableIframe]);
+  }, []);
 
   return (
     <div ref={containerRef} className="relative w-full aspect-[16/10] overflow-hidden bg-[#0a0a14]">
@@ -91,7 +89,7 @@ function PreviewFrame({ src, title, enableIframe }: { src: string; title: string
         }`}
         aria-hidden="true"
       />
-      {enableIframe && inView && (
+      {inView && (
         <iframe
           src={src}
           title={title}
@@ -118,37 +116,36 @@ function PreviewFrame({ src, title, enableIframe }: { src: string; title: string
 export function PrototypesSection() {
   const { ref, isVisible } = useScrollAnimation();
   const { t } = useLanguage();
-  const isMobile = useIsMobile();
   const items = t.prototypes.items;
 
   return (
     <section
       ref={ref as React.RefObject<HTMLElement>}
       id="prototypes"
-      className="py-16 md:py-24 relative overflow-hidden"
+      className="py-14 md:py-24 relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
         {/* Heading */}
-        <div className="text-center mb-10 md:mb-14">
+        <div className="text-center mb-8 md:mb-14">
           <div
             className={`inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-700 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
             <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
-            <span className="text-xs font-mono uppercase tracking-[0.25em] text-white/60">
+            <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] text-white/60">
               {t.prototypes.eyebrow}
             </span>
           </div>
           <h2
-            className={`font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white transition-all duration-700 ${
+            className={`font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 text-white transition-all duration-700 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
             {t.prototypes.title}
           </h2>
           <p
-            className={`text-white/60 text-base md:text-lg max-w-3xl mx-auto transition-all duration-700 delay-100 ${
+            className={`text-white/60 text-sm sm:text-base md:text-lg max-w-3xl mx-auto transition-all duration-700 delay-100 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
@@ -164,7 +161,7 @@ export function PrototypesSection() {
         </div>
 
         {/* Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 md:gap-6">
           {prototypeMeta.map((meta, i) => {
             const item = items[i];
             if (!item) return null;
@@ -178,7 +175,7 @@ export function PrototypesSection() {
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                 }`}
                 style={{
-                  transitionDelay: `${150 + i * 70}ms`,
+                  transitionDelay: `${120 + i * 60}ms`,
                   background: `linear-gradient(135deg, ${accent.from}, transparent 45%, ${accent.to})`,
                 }}
               >
@@ -192,32 +189,21 @@ export function PrototypesSection() {
                     aria-label={`${t.prototypes.open} — ${item.title}`}
                     data-testid={`link-prototype-preview-${meta.slug}`}
                   >
-                    <PreviewFrame src={file} title={item.title} enableIframe={!isMobile} />
+                    <PreviewFrame src={file} title={item.title} />
 
-                    {/* Static fallback for mobile (iframe disabled) */}
-                    {isMobile && (
-                      <div
-                        className="absolute inset-0 flex items-center justify-center"
-                        style={{ background: `radial-gradient(circle at 50% 40%, ${accent.ring}, transparent 70%)` }}
-                        aria-hidden="true"
-                      >
-                        <Icon className={`w-14 h-14 ${accent.icon} opacity-80`} />
-                      </div>
-                    )}
-
-                    {/* Top fade for legibility */}
-                    <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#0b0b16] to-transparent pointer-events-none" />
+                    {/* Bottom fade for legibility */}
+                    <div className="absolute inset-x-0 bottom-0 h-12 sm:h-16 bg-gradient-to-t from-[#0b0b16] to-transparent pointer-events-none" />
 
                     {/* Live badge */}
-                    <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/55 backdrop-blur-sm border border-white/15">
+                    <span className="absolute top-2 left-2 sm:top-3 sm:left-3 inline-flex items-center gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-black/55 backdrop-blur-sm border border-white/15">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      <span className="text-[10px] font-medium uppercase tracking-wider text-white/80">
+                      <span className="text-[9px] sm:text-[10px] font-medium uppercase tracking-wider text-white/80">
                         {t.prototypes.live}
                       </span>
                     </span>
 
-                    {/* Hover open hint */}
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    {/* Hover open hint (desktop) */}
+                    <div className="absolute inset-0 hidden sm:flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/25 text-sm font-medium text-white">
                         {t.prototypes.open}
                         <ArrowUpRight className="w-4 h-4" />
@@ -226,23 +212,23 @@ export function PrototypesSection() {
                   </a>
 
                   {/* Content */}
-                  <div className="p-5 flex flex-col gap-3 flex-1">
+                  <div className="p-3 sm:p-5 flex flex-col gap-2 sm:gap-3 flex-1">
                     <div className="flex items-center gap-2.5">
                       <span
-                        className="flex items-center justify-center w-9 h-9 rounded-lg border border-white/10 bg-white/5 flex-shrink-0"
+                        className="hidden sm:flex items-center justify-center w-9 h-9 rounded-lg border border-white/10 bg-white/5 flex-shrink-0"
                         style={{ boxShadow: `0 0 18px -6px ${accent.ring}` }}
                       >
                         <Icon className={`w-5 h-5 ${accent.icon}`} />
                       </span>
-                      <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold border backdrop-blur-sm ${accent.chip}`}>
+                      <span className={`inline-flex items-center px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[10px] sm:text-[11px] font-semibold border backdrop-blur-sm ${accent.chip}`}>
                         {item.category}
                       </span>
                     </div>
 
-                    <h3 className="font-display font-bold text-xl text-white leading-tight" data-testid={`text-prototype-title-${meta.slug}`}>
+                    <h3 className="font-display font-bold text-base sm:text-xl text-white leading-tight" data-testid={`text-prototype-title-${meta.slug}`}>
                       {item.title}
                     </h3>
-                    <p className="text-white/55 text-sm leading-relaxed">
+                    <p className="text-white/55 text-xs sm:text-sm leading-relaxed line-clamp-2 sm:line-clamp-none">
                       {item.description}
                     </p>
 
@@ -252,22 +238,22 @@ export function PrototypesSection() {
                         href={file}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold text-[#0b0b16] transition-all active:scale-[0.97]"
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 px-2.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold text-[#0b0b16] transition-all active:scale-[0.97]"
                         style={{ backgroundImage: `linear-gradient(135deg, ${accent.from}, ${accent.to})` }}
                         data-testid={`button-prototype-open-${meta.slug}`}
                       >
                         {t.prototypes.open}
-                        <ArrowUpRight className="w-4 h-4" />
+                        <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                       </a>
                       <a
                         href={file}
                         download={meta.download}
-                        className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-medium text-white/80 border border-white/15 bg-white/5 hover:bg-white/10 hover:text-white hover:border-white/30 transition-all active:scale-[0.97]"
+                        className="inline-flex items-center justify-center gap-1.5 px-2.5 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl text-sm font-medium text-white/80 border border-white/15 bg-white/5 hover:bg-white/10 hover:text-white hover:border-white/30 transition-all active:scale-[0.97]"
                         aria-label={`${t.prototypes.download} — ${item.title}`}
                         data-testid={`button-prototype-download-${meta.slug}`}
                       >
                         <Download className="w-4 h-4" />
-                        <span className="hidden sm:inline">{t.prototypes.download}</span>
+                        <span className="hidden md:inline">{t.prototypes.download}</span>
                       </a>
                     </div>
                   </div>
