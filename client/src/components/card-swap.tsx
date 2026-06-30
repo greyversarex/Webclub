@@ -18,8 +18,8 @@ interface CardSwapProps {
 export function CardSwap({
   cards,
   delay = 4000,
-  cardDistance = 56,
-  verticalDistance = 64,
+  cardDistance = 64,
+  verticalDistance = 72,
   skew = 3,
   pauseOnHover = true,
   reduced = false,
@@ -52,14 +52,14 @@ export function CardSwap({
   return (
     <div
       className="relative w-full select-none"
-      style={{ perspective: "1100px", height: 440 }}
+      style={{ perspective: "1100px", height: 560 }}
       onMouseEnter={() => pauseOnHover && setPaused(true)}
       onMouseLeave={() => pauseOnHover && setPaused(false)}
     >
       <div className="absolute inset-0 flex items-center justify-center">
         <div
           className="relative"
-          style={{ width: "min(100%, 460px)", height: 300, transform: "translateY(120px)" }}
+          style={{ width: "min(100%, 540px)", height: 360, transform: "translateY(80px)" }}
         >
           {cards.map((card, i) => {
             const slot = order.indexOf(i);
@@ -73,13 +73,13 @@ export function CardSwap({
                 key={card.id}
                 className="absolute left-0 top-0 w-full rounded-2xl overflow-hidden"
                 style={{
-                  height: 300,
+                  height: 360,
                   transform: `translate3d(${tx}px, ${ty}px, ${tz}px) skewY(${effSkew}deg)`,
                   zIndex: total - slot,
                   transition: reduced
                     ? "none"
                     : "transform 0.9s cubic-bezier(0.34, 1.4, 0.5, 1), opacity 0.6s ease",
-                  opacity: slot > 3 ? 0 : 1,
+                  opacity: slot > 2 ? 0 : 1,
                   border: "1px solid rgba(255,255,255,0.12)",
                   background:
                     "linear-gradient(160deg, rgba(20,22,40,0.92), rgba(8,9,20,0.96))",
