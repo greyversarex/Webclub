@@ -59,7 +59,7 @@ export function CardSwap({
       <div className="absolute inset-0 flex items-center justify-center">
         <div
           className="relative"
-          style={{ width: "min(100%, 460px)", height: 300, transform: "translateY(90px)" }}
+          style={{ width: "min(100%, 460px)", height: 300, transform: "translateY(120px)" }}
         >
           {cards.map((card, i) => {
             const slot = order.indexOf(i);
